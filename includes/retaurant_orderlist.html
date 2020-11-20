@@ -1,0 +1,343 @@
+<script language="javascript"> 
+function IsNumeric(sText)
+{
+   var ValidChars = "0123456789";
+   var IsNumber=true;
+   var Char;
+
+ 
+   for (i = 0; i < sText.length && IsNumber == true; i++) 
+      { 
+      Char = sText.charAt(i); 
+      if (ValidChars.indexOf(Char) == -1) 
+         {
+         IsNumber = false;
+         }
+      }
+   return IsNumber;
+   
+   }
+function validation()
+{
+
+  if (document.edit.customers_firstname.value == "" )
+  {
+    alert("First Name is a required field.");
+    document.edit.customers_firstname.focus();
+    return false;
+  }
+  
+   if (document.edit.customers_lastname.value == "" )
+  {
+    alert("Last Name is a required field.");
+    document.edit.customers_lastname.focus();
+    return false;
+  }
+  
+ 
+  
+  if (document.edit.customers_dob.value == "" )
+  {
+    alert("DOB is a required field.");
+    document.edit.customers_dob.focus();
+    return false;
+  }
+   if (document.edit.customers_email_address.value.indexOf("@") == -1 || document.edit.customers_email_address.value == "")
+  {
+    alert("Email is a required field!, may be you have missd @ symbol");
+    document.edit.customers_email_address.focus();
+    return false;
+  }
+  
+  if (document.edit.customers_email_address.value.indexOf(".") == -1 || document.edit.customers_email_address.value == "")
+  {
+    alert("Email is a required field!, may be you have missd . symbol");
+    document.edit.customers_email_address.focus();
+    return false;
+  }
+   if (document.edit.customers_address1.value == "" )
+  {
+    alert("Customer Address is a required field.");
+    document.edit.customers_address1.focus();
+    return false;
+  }
+  
+   if (document.edit.customers_town.value == "" )
+  {
+    alert("Town is a required field.");
+    document.edit.customers_town.focus();
+    return false;
+  }
+    if (document.edit.customers_postcode.value == "" )
+  {
+    alert("Post Code is a required field.");
+    document.edit.customers_postcode.focus();
+    return false;
+  }
+   if (document.edit.customers_telephone.value == "" )
+  {
+    alert("Phone No is a required field.");
+    document.edit.customers_telephone.focus();
+    return false;
+  }
+  if (document.edit.customers_password.value == "" )
+  {
+    alert("Password is a required field!");
+    document.edit.customers_password.focus();
+    return false;
+  }
+  
+   if (document.edit.recustomers_password.value == "" )
+  {
+    alert("Re-Type Password is a required field!");
+    document.edit.recustomers_password.focus();
+    return false;
+  }
+  
+  if (document.edit.recustomers_password.value!=document.edit.customers_password.value)
+  {
+    alert("Passwords don't match. Please try again");
+	document.edit.c_password.value = "";
+    document.edit.c_password.focus();
+    return false;
+  }
+ 
+  return true;
+  
+}
+</script>
+<script type="text/JavaScript">
+<!--
+
+
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+//-->
+</script>
+<body>
+<table width="710" border="0" align="right" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center"><?php  require_once('includes/account_home.html');?></td>
+  </tr>
+  <tr>
+    <td height="10"></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" align="left" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/red_box1_01.jpg" width="15" height="39" alt="" /></td>
+        <td width="100%" background="images/red_box1_02.jpg" class="heading">Order Overview</td>
+        <td><img src="images/red_box1_03.jpg" width="14" height="39" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/red_box1_04.jpg">&nbsp;</td>
+        <td valign="top" bgcolor="#9E0112"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td><table width="100%" border="0" cellpadding="0" cellspacing="0" class="stitle">
+              
+              <tr>
+                <td valign="top" bgcolor="#9E0112"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="bodytext">
+                  <?php
+				
+				$sql="Select * from customers where customers_id='".$_SESSION['customers_id']."'";
+				$result=mysql_query($sql);
+				$row=mysql_fetch_array($result);
+				?>
+                  <tr>
+                    <td width="95%" valign="middle" align="center">
+                      <table width="100%" border="0" cellspacing="2" cellpadding="2">
+                        
+                        <tr>
+                          <td align="center" valign="middle"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+                            
+                            <tr>
+                              <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td><form action="index-action-my_orderlist" method="post" name="orderlist" id="orderlist">
+							  <table width="100%" border="0" align="center" cellpadding="2" cellspacing="1" class="normal_text">
+                                <tr>
+                                  <?php $d= ($_REQUEST["sdate"] != "")?$_REQUEST["sdate"]:date('Y-m-d'); ?>
+                                  <td width="25%"><strong>Show orders From:</strong> </td>
+                                  <td width="27%"><input name="sdate"  id="sdate" value="<? echo $d ?>" size="12" />
+                                                    <a href="javascript:void(0)" onClick="if(self.gfPop)gfPop.fPopCalendar(document.orderlist.sdate);return false;" ><img class="PopcalTrigger" align="top" src="calander/calbtn.gif" width="34" height="22" border="0" alt=""></a></td>
+                                  <td width="4%"><strong>To</strong></td>
+								  <?php $d= ($_REQUEST["edate"] != "")?$_REQUEST["edate"]:date('Y-m-d'); ?>
+                                  <td width="29%"><input name="edate"  id="edate" value="<? echo $d ?>" size="12"/>
+                                                    <a href="javascript:void(0)" onClick="if(self.gfPop)gfPop.fPopCalendar(document.orderlist.edate);return false;" ><img class="PopcalTrigger" align="absmiddle" src="calander/calbtn.gif" width="34" height="22" border="0" alt="" /></a></td>
+                                  <td width="15%"><input type="submit" name="Submit"  class="button_grn"  value="Search" /></td>
+                                </tr>
+                              </table>
+							  </form></td>
+                            </tr>
+                            <?php if($message!=""){?>
+                            <tr>
+                              <td align="center" class="message"><?php echo $message;?></td>
+                            </tr>
+                            <?php }?>
+                            <tr>
+                              <td><a href="index-action-my_orderlist" class="nav"><strong>Show All</strong></a></td>
+                            </tr>
+                            <tr>
+                              <td><div style="border-top:1px dashed #333333"> </div></td>
+                            </tr>
+                            <tr>
+                              <td><table width="100%" border="0" cellpadding="4" cellspacing="0" class="normal_text">
+                                <!--<tr border=0> 
+          <td colspan="10" class="fieldtext"></td>
+        </tr> -->
+                                <tr bgcolor="#930003">
+                                  <td width="18" class="fieldtext" >&nbsp;</td>
+                                  <td width="59" class="fieldtext" ><strong>SI </strong></td>
+                                  <td width="152" align="center" class="fieldtext" ><strong>Order No </strong></td>
+                                  <td width="120" align="center" class="fieldtext"><strong>Order Date</strong></td>
+                                  <td width="121" align="right" class="fieldtext"><strong> Amount</strong></td>
+                                  <td width="155" align="center" class="fieldtext"><strong>Payment Status</strong></td>
+                                </tr>
+                                <?php
+		$rids=$_SESSION['resid'];
+			
+				if ($_REQUEST["sdate"]!="" and $_REQUEST["edate"]!="" ){
+				
+				
+					$query = "SELECT * FROM customer_order  WHERE DATE_FORMAT(ordate, '%Y-%m-%d')  between '".$_REQUEST["sdate"]."' and  '".$_REQUEST["edate"]."' and customers_id='".$_SESSION['customers_id']."' order by orid desc";	
+					$result = $db->execQuery($query);
+					$aruserinfo = $db->resultArray($result);
+					
+					
+				}else{
+					$query = "SELECT * FROM customer_order  WHERE customers_id='".$_SESSION['customers_id']."' order by orid desc";	
+				}
+			
+		
+		$success = $db->checkExists($query);
+		if ($success == true){
+			$qty=15;
+			$result = $db->execQuery($query);
+			$arinfo = $db->resultArray($result);
+			if ($_REQUEST["stq"]==""){
+			 $stq=0;
+			}else{
+			 $stq=$_REQUEST["stq"];
+			}
+			$v=($stq/$qty)+1;
+			if (sizeof($arinfo)>1){
+				$ste=$stq+$qty;
+				$st2=sizeof($arinfo) % $qty;
+				
+				if ($ste > sizeof($arinfo)){
+					$ste=sizeof($arinfo);
+				}
+				$st1=(sizeof($arinfo)-$st2)/$qty;
+				for ($z=0; $z <= $st1 ; $z++){
+				
+				if ($v==($z+1)){
+					$pageIn.='<span class="current">'.($z+1).'</span>';
+				}else{
+				$pageIn.="<a href=index-action-my_orderlist-stq-".($z*$qty).""." class=nav11>".($z+1)."</a>";
+				}
+				}
+			}else{
+				$ste=sizeof($arinfo);
+			}
+			
+			for ($i = $stq; $i < $ste; $i++)
+			{
+			
+				$cuid=$arinfo[$i]['customers_id'];	
+				$sqlc="Select * from customers where customers_id=$cuid";
+				$resultc=mysql_query($sqlc);
+				$rowc=mysql_fetch_array($resultc);
+				$sql = "SELECT * FROM ratings where customer_id=".$_SESSION["customers_id"]." AND rid=".$arinfo[$i]["rid"]." AND orid=".$arinfo[$i]['orid'];
+				$db->execQuery($sql);
+				$ratings = $db->row();
+			
+		?>
+                                <tr >
+                                  <td width="18" valign="top">&nbsp;</td>
+                                  <td width="59" valign="top"><?php echo $i+1; ?></td>
+                                  <td width="120" align="center" valign="top">[ <a href="index-action-orderdetails-tabm-rcttb-orid-<? echo $arinfo[$i]["orid"]; ?>" ><?php echo order_id($arinfo[$i]["orid"]); ?></a> ] <a href="index-action-orderdetails-tabm-rcttb-orid-<? echo $arinfo[$i]["orid"]; ?>" ><?php if(!$ratings){?> Leave Feedback <?php } ?></a></td>
+                                  <td align="center" valign="top"><?php echo show_date($arinfo[$i]["ordate"], "d/m/Y H:i");?></td>
+                                  <!--<td width="62"><?php //echo $arimageinfo[0]["ImgURL"]; ?></td>-->
+                                  <td align="right" valign="top">&pound;&nbsp;
+                                                    <?php 
+					$tcalid=$arinfo[$i]["orid"];
+					$sqltpr="select sum(uprice*qantity) as tprice from order_detail where orid='$tcalid'";
+					$resulttpr=mysql_query($sqltpr);
+					$rowprt=mysql_fetch_array($resulttpr);
+					$number = $rowprt["tprice"]+$arinfo[$i]["hnd_fee"];
+					if($arinfo[$i]["pay_mathod"]=="Online"){
+						$number += $arinfo[$i]["ccfee"];					
+					}
+					 if ($arinfo[$i]["order_type"]=="1"){
+					 	$number += $arinfo[$i]["del_cost"];					
+					 }
+                    $english_format_number = number_format($number, 2, '.', '');
+					echo $english_format_number;
+					 ?></td>
+                                  <td align="center" valign="top"><?php if ($arinfo[$i]["pstatus"]=="0"){
+						echo "Not Paid"; 
+						}else{ echo "Paid"; }?>                                  </td>
+                                </tr>
+                                <?php
+	   }
+	}
+	?>
+                              </table></td>
+                            </tr>
+                            <tr>
+                              <td><div style="border-top:1px dashed #333333"> </div></td>
+                            </tr>
+                            <tr>
+                              <td>&nbsp;</td>
+                            </tr>
+                            
+                          </table></td>
+                        </tr>
+                        <tr>
+                          <td align="center" valign="middle"><div class="pagination">
+                            <?php
+		if ($v>1){
+		?>
+                            <a  href="index-action-my_orderlist-stq-<?php echo(($v-2)*$qty)?>">&laquo; Previous </a>
+                            <?php }else{?>
+                            <span class="disabled">&laquo; Previous </span>
+                            <?php }?>
+                            <?php echo $pageIn;?>
+                            <?php
+		 if ($v <$z){
+		 ?>
+                            <a href="index-action-my_orderlist-stq-<?php echo(($v)*$qty)?>">Next 
+                              &raquo;</a>
+                            <?php }else{?>
+                            <SPAN class=disabled>Next 
+                              &raquo;
+                                                                                    <?php }?>
+                            </SPAN></div></td>
+                        </tr>
+                      </table>
+                    </form></td>
+                  </tr>
+                </table></td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></td>
+        <td background="images/red_box1_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/red_box1_07.jpg" width="15" height="17" alt="" /></td>
+        <td background="images/red_box1_08.jpg"></td>
+        <td><img src="images/red_box1_09.jpg" width="14" height="17" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <iframe width=174 height=189 name="gToday:normal:agenda.js" id="gToday:normal:agenda.js" src="calander/ipopeng.htm" scrolling="no" frameborder="0" style="visibility:visible; z-index:999; position:absolute; top:-500px; left:-500px;"></iframe>
+</table>

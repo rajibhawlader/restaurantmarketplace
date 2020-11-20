@@ -1,0 +1,20 @@
+/**
+ * XRMS
+ * IE-specific adjustments to style and layout
+ */
+/* enforce right margin for sidebar */
+body,
+#page_header,
+#navline,
+#msg,
+#Main #Sidebar {
+    margin-right: 1px;
+}
+/* IE does better with fixed Sidebar size */
+#Main #Sidebar {
+    width: 20em;
+}
+#Main #Content {
+    margin: 0em 20.2em 0em 0em;
+    width: auto;
+}

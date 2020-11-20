@@ -1,0 +1,173 @@
+<script language="javascript"> 
+function IsNumeric(sText)
+{
+   var ValidChars = "0123456789";
+   var IsNumber=true;
+   var Char;
+
+ 
+   for (i = 0; i < sText.length && IsNumber == true; i++) 
+      { 
+      Char = sText.charAt(i); 
+      if (ValidChars.indexOf(Char) == -1) 
+         {
+         IsNumber = false;
+         }
+      }
+   return IsNumber;
+   
+   }
+function validation()
+{
+
+  if (document.edit.customers_firstname.value == "" )
+  {
+    alert("First Name is a required field.");
+    document.edit.customers_firstname.focus();
+    return false;
+  }
+  
+   if (document.edit.customers_lastname.value == "" )
+  {
+    alert("Last Name is a required field.");
+    document.edit.customers_lastname.focus();
+    return false;
+  }
+     if (document.edit.customers_email_address.value.indexOf("@") == -1 || document.edit.customers_email_address.value == "")
+  {
+    alert("Email is a required field!, may be you have missd @ symbol");
+    document.edit.customers_email_address.focus();
+    return false;
+  }
+  
+  if (document.edit.customers_email_address.value.indexOf(".") == -1 || document.edit.customers_email_address.value == "")
+  {
+    alert("Email is a required field!, may be you have missd . symbol");
+    document.edit.customers_email_address.focus();
+    return false;
+  }
+   if (document.edit.customer_text.value == "" )
+  {
+    alert("Testimonial is a required field.");
+    document.edit.customer_text.focus();
+    return false;
+  }
+  
+  
+ 
+  return true;
+  
+}
+</script>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="center"><table width="99%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+        <td background="images/box_02.jpg"><span class="box_title_text">Customer Testimonial </span></td>
+        <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/box_04.jpg">&nbsp;</td>
+        <td width="100%" valign="top"><table width="100%" border="0" align="center" cellpadding="2" cellspacing="1" class="bodytext">
+          
+          <tr>
+            <td align="left" ><strong>Write your opinion  about Indianfoodsonline.co.uk</strong></td>
+          </tr>
+          <tr>
+            <td align="center" valign="top"><table width="100%" border="0" cellspacing="2" cellpadding="2">
+              <tr>
+                <td colspan="2" valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0" class="bodytext">
+
+                    
+                  <tr>
+                    <td >&nbsp;</td>
+                      <td valign="top"><form action="index-action-insert_testimonial" method="post" enctype="multipart/form-data" name="edit" id="edit" onsubmit="return validation(this)"><table width="100%" border="0" cellspacing="2" cellpadding="2">
+                        <tr>
+                          <td align="center" valign="middle"><table width="100%" border="0" cellpadding="2" cellspacing="2" bgcolor="#FFFFFF" class="bodytext">
+                            <tr>
+                              <td align="left"><strong>Your Personal Details </strong></td>
+                              <td width="26%" align="left">&nbsp;</td>
+                              <td width="44%" align="right">* Required information</td>
+                            </tr>
+							
+                            <tr>
+                              <td width="30%" align="right">First Name: </td>
+                              <td colspan="2" align="left"><input name="customers_firstname" type="text"  id="customers_firstname" value="<?php echo $customers_firstname;?>" size="35"/>
+                                *								</td>
+                            </tr>
+                            <tr>
+                              <td align="right">Last Name : </td>
+                              <td colspan="2" align="left"><input name="customers_lastname" type="text"  id="customers_lastname" value="<?php echo $customers_lastname;?>" size="35"/>
+                                *</td>
+                            </tr>
+                            <tr>
+                              <td align="right">E-mail Address: </td>
+                              <td colspan="2" align="left"><input name="customers_email_address" type="text"  id="customers_email_address" value="<?php echo $customers_email_address;?>" size="35"/>
+                                *</td>
+                            </tr>
+
+                          </table></td>
+                        </tr>
+                        <tr>
+                          <td align="center" valign="top"><table width="100%" border="0" cellpadding="2" cellspacing="2" bgcolor="#FFFFFF" class="bodytext">
+                            <tr>
+                              <td colspan="2" align="left"><strong>Your Address </strong></td>
+                            </tr>
+                            <tr>
+                              <td width="30%" align="right">Address: </td>
+                              <td width="70%" align="left"><input name="customers_address" type="text"  id="customers_address" value="<?php echo $customers_address;?>" size="35"/></td>
+                            </tr>
+                            <tr>
+                              <td align="right">Company Name : </td>
+                              <td align="left"><input name="customers_company" type="text"  id="customers_company" value="<?php echo $customers_company;?>" size="35"/></td>
+                            </tr>
+
+                          </table></td>
+                        </tr>
+                        
+                        <tr>
+                          <td align="center" valign="middle"><table width="100%" border="0" cellpadding="1" cellspacing="1" bgcolor="#FFFFFF" class="bodytext">
+                            <tr>
+                              <td colspan="2" align="left"><strong>Write Testimonial About  Indianfoodsonline.co.uk * </strong></td>
+                            </tr>
+                            <tr>
+                              <td colspan="2" align="center"><textarea name="customer_text" cols="45" rows="3" id="customer_text"><?php echo strip_tags(html_entity_decode($customers_firstname));?></textarea></td>
+                              </tr>
+                            <tr>
+                              <td width="30%" align="right">&nbsp;</td>
+                              <td width="70%" align="left"><input type="image" src="images/continue.jpg" width="79" height="39" border="0" name="submit" /></td>
+                            </tr>
+                          </table></td>
+                        </tr>
+                      </table>
+                      </form></td>
+                      <td >&nbsp;</td>
+                    </tr>
+                  
+                                </table></td>
+                </tr>
+              <tr>
+                <td width="51%">&nbsp;</td>
+                <td width="49%">&nbsp;</td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></td>
+        <td background="images/box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+        <td background="images/box_08.jpg">&nbsp;</td>
+        <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  
+</table>

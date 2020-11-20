@@ -1,0 +1,116 @@
+Options +FollowSymLinks
+#Rewrite Base /indianfoodonline_New/
+RewriteEngine on
+
+RewriteRule index-action-(.*)-tabm(.*)-orid-(.*) index.php?action=$1&tabm=$2&orid=$3 [L]
+
+
+#
+RewriteRule index-action-(.*)-pid-(.*) index.php?action=$1&pid=$2 [L]
+RewriteRule ^faq$ index.php?action=pages&pid=2 [L]
+RewriteRule ^site-map$ index.php?action=pages&pid=3 [L]
+RewriteRule ^privacy-policy$ index.php?action=pages&pid=4 [L]
+RewriteRule ^terms-of-use$ index.php?action=pages&pid=5 [L]
+RewriteRule ^about-us$ index.php?action=pages&pid=6 [L]
+RewriteRule ^restaurant-info$ index.php?action=pages&pid=7 [L]
+RewriteRule ^contact-us$ index.php?action=contact [L]
+RewriteRule ^sign-up$ index.php?action=sign_up [L]
+#
+#
+RewriteRule index-tbq-(.*) index.php?tbq=$1 [L]
+RewriteRule ^/$ index.php?action=hm [L]
+RewriteRule ^customer-registration$ index.php?action=customer_registration [L]
+#
+#
+RewriteRule index-action-(.*)-pid-(.*)-tbq-(.*) index.php?action=$1&pid=$2&tbq=$3 [L]
+RewriteRule ^help$ index.php?action=pages&pid=10&tbq=hl [L]
+RewriteRule ^indian-curry-club$ index.php?action=pages&pid=11&tbq=icc [L]
+RewriteRule ^royalty-points$ index.php?action=pages&pid=13&tbq=rps [L]
+#
+
+
+
+#RewriteRule index-action-(.*)-pid-(.*) index.php?action=$1&pid=$2 [L]
+
+
+RewriteRule index-action-(.*)-tbq-(.*) index.php?action=$1&tbq=$2 [L]
+
+RewriteRule index-action-(.*)-areaid-(.*) index.php?action=$1&areaid=$2 [L]
+
+RewriteRule index-action-(.*)-rid-(.*) index.php?action=$1&rid=$2 [L]
+
+RewriteRule (.*)--(.*) index.php?action=restaurant_details_view&rid=$2 [L]
+
+RewriteRule (.*)-menu-(.*) index.php?action=menu_list&rid=$2 [L]
+
+RewriteRule index-action-(.*)-id-(.*) index.php?action=$1&id=$2 [L]
+
+RewriteRule index-action-(.*)-stq-(.*) index.php?action=$1&stq=$2 [L]
+
+RewriteRule index-action-(.*)-cid-(.*) index.php?action=$1&cid=$2 [L]
+
+RewriteRule index-action-(.*)-mid-(.*) index.php?action=$1&mid=$2 [L]
+
+RewriteRule index-action-(.*)-plid-(.*) index.php?action=$1&plid=$2 [L]
+
+RewriteRule index-action-(.*)-tp-(.*) index.php?action=$1&tp=$2 [L]
+
+RewriteRule index-action-(.*)-orid-(.*) index.php?action=$1&orid=$2 [L]
+
+RewriteRule index-action-(.*)-idp-(.*) index.php?action=$1&idp=$2 [L]
+
+RewriteRule index-action-(.*)-uid-(.*) index.php?action=$1&uid=$2 [L]
+
+RewriteRule index-action-(.*)-tbq-(.*) index.php?action=$1&tbq=$2 [L]
+
+RewriteRule index-action-(.*)-tbq-(.*) index.php?action=$1&tbq=$2 [L]
+
+RewriteRule index-action-(.*)-dpid-(.*) index.php?action=$1&dpid=$2 [L]
+
+RewriteRule index-action-(.*)-catid-(.*) index.php?action=$1&catid=$2 [L]
+
+RewriteRule index-action-(.*)-cust_id-(.*) index.php?action=$1&cust_id=$2 [L]
+
+RewriteRule index-action-(.*)-ca_id-(.*) index.php?action=$1&ca_id=$2 [L]
+
+
+
+
+RewriteRule index-action-(.*)-mid-(.*)-pType-(.*) index.php?action=$1&mid=$2&pType=$3 [L]
+
+RewriteRule index-action-(.*)-stq-(.*)-h-(.*) index.php?action=$1&stq=$2&h=$3 [L]
+
+RewriteRule index-action-(.*)-orid-(.*)-tabm-(.*) index.php?action=$1&orid=$2&tabm=$3 [L]
+
+RewriteRule index-action-(.*)-product_id-(.*)-pType-(.*) index.php?action=$1&product_id=$2&pType=$3 [L]
+
+RewriteRule index-action-(.*)-sub-(.*)-resid(.*) index.php?action=$1&sub=$2&resid=$3 [L]
+
+RewriteRule index-action-(.*)-tabm-(.*)-stq-(.*)-h-(.*) index.php?action=$1&tabm=$2&stq=$3&h=$4 [L]
+
+RewriteRule index-action-(.*) index.php?action=$1 [L]	
+RewriteRule ^customer-registration$ index.php?action=customer-registration [L]
+
+
+RewriteRule restaurants index.php?action=restaurants [L]	
+
+
+
+
+#Redirect /admin/template/ http://www.indianfoodsonline.co.uk/admin/
+
+#Redirect /includes/  http://www.indianfoodsonline.co.uk/
+
+ErrorDocument 404 /redirectpage.php
+
+RewriteRule ^includes/ http://www.indianfoodsonline.co.uk/redirectpage.php
+
+
+RewriteRule ^includes/(.*).html$ http://www.indianfoodsonline.co.uk/
+
+
+RewriteRule ^admin/template/ http://www.indianfoodsonline.co.uk/redirectadminpage.php
+
+
+RewriteRule ^admin/template/(.*).html$ http://www.indianfoodsonline.co.uk/admin/
+

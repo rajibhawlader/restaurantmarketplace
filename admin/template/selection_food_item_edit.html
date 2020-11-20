@@ -1,0 +1,213 @@
+<script language="javascript"> 
+function IsNumeric(sText)
+{
+   var ValidChars = "0123456789.";
+   var IsNumber=true;
+   var Char;
+
+ 
+   for (i = 0; i < sText.length && IsNumber == true; i++) 
+      { 
+      Char = sText.charAt(i); 
+      if (ValidChars.indexOf(Char) == -1) 
+         {
+         IsNumber = false;
+         }
+      }
+   return IsNumber;
+   
+   }
+function validation()
+{
+
+  if (document.edit.product_title.value == "" )
+  {
+    alert("Menu Title is a required field.");
+    document.edit.product_title.focus();
+    return false;
+  }if (document.edit.food_code.value == "" )
+  {
+    alert("Food Item Code is a required field.");
+    document.edit.food_code.focus();
+    return false;
+  }
+  if (document.edit.price.value == "" )
+  {
+    alert("Price is a required field!");
+    document.edit.price.focus();
+    return false;
+  }
+  
+   if(!IsNumeric(document.edit.price.value))
+{
+	alert("Enter  Money value at Price.");
+	document.edit.price.value=="";
+	document.edit.price.focus();
+	return false;
+}
+ 
+  return true;
+  
+}
+</script>
+<script type="text/JavaScript">
+<!--
+
+
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+//-->
+</script><body>
+
+<?php
+//print_r($_REQUEST);
+$cat_id=$_REQUEST['cid'];
+$prod_id=$_REQUEST['parent_product_id'];
+?>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0"  bgcolor="#FFFFFF">
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="1%" height="400" valign="top">&nbsp;</td>
+    <td width="99%" align="left" valign="top"><table width="99%" border="0" align="left" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+        <td background="images/box_02.jpg"><span class="box_title_text">&quot;<? echo $_SESSION[rname];?>&quot; Restaurant Management </span></td>
+        <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/box_04.jpg">&nbsp;</td>
+        <td width="100%" valign="top"><table width="100%" border="0" cellspacing="1" cellpadding="1"  class="bodytext">
+            <tr>
+              <td width="81%">&nbsp;</td>
+            </tr>
+            <tr>
+              <td></td>
+            </tr>
+              <?
+					  $sqlpr="Select * from product where product_id='".$_REQUEST['product_id']."'";
+					  $resultpr=mysql_query($sqlpr);
+					  $rowpr=mysql_fetch_array($resultpr);
+					  ?>
+            <tr>
+              <td valign="top"><table width="100%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#F2F2F2" class="bodytext">
+
+                <tr bordercolor="#F0F0F0">
+                  <td align="center" valign="top"><form action="index.php?action=update_selection_food_item&product_id=<?php echo $rowpr['product_id']; ?>&parent_product_id=<?=$prod_id?>&cid=<?=$cat_id?>&tabm=rcttb" method="post" enctype="multipart/form-data" name="edit" id="edit" onSubmit="return validation(this)">
+                            <table width="100%" border="0" cellpadding="2" cellspacing="2" bgcolor="#FFFFFF" class="bodytext">
+                           
+                              <tr>
+                                <td colspan="3" align="left"><strong>Update Selection of Item</strong></td>
+                              </tr>
+                            
+                                 <?PHP if($message!=""){?>
+                              <tr>
+                                <td colspan="3" align="center"><span class="message"><?PHP echo $message;
+									  
+									  ?></span></td>
+                              </tr>
+                              <?}?>
+                              <tr>
+                                <td width="52%" align="right"><strong> Category : </strong></td>
+                                <td colspan="2" align="left" valign="top">
+								<label class="text_red">
+
+								
+
+                                    <?PHP
+				$rids=$_SESSION['resid'];
+				$querylic = "SELECT * FROM categories where rid='$rids' and categories_id=$cat_id ";
+	$resultlic =@mysql_query($querylic);
+	while($arofferinfolic = @mysql_fetch_assoc($resultlic)){
+	?>
+								<input type="hidden" name="categories_id" value="<?PHP echo $arofferinfolic["categories_id"]; ?>">
+								<?PHP echo $arofferinfolic["categories_name"]; ?>
+                                    <?}?>
+       
+								  
+								  </label>
+							    </td>
+                              </tr>
+							  <td width="52%" align="right"><strong>Item Name : </strong></td>
+                                <td width="20%" align="left" valign="top">
+								<select name="parent_product_id" class="textbox_wht" id="categories_id">
+                                    <?php
+				//$rids=$_SESSION['resid'];
+				
+				$querylparentpro = "SELECT product_id FROM product where categories_id=$cat_id and product_id=$prod_id";
+				$result = $db->execQuery($querylparentpro);
+
+			    $arofparentpro = $db->resultArray($result);				
+				$querylpro = "SELECT product_id,product_title FROM product where categories_id=$cat_id and parent_id=0";
+				$resultlpro =@mysql_query($querylpro);
+				while($arofpro = @mysql_fetch_assoc($resultlpro))
+				{
+?>					
+	<option value="<?PHP echo $arofpro["product_id"];?>" <? if($arofparentpro[0]['product_id']==$arofpro["product_id"]){?>selected="selected" <?php }?>><?PHP echo $arofpro['product_title']; ?></option>
+                    
+	<?
+				}
+	?>
+
+								 </select>       
+                           </td>
+                              <tr>
+                                <td width="52%" align="right"><strong>Selection of Item Name : </strong></td>
+                                <td colspan="2" align="left" valign="top"><input name="product_title" type="text" class="textbox_wht" id="product_title" value="<?php echo $rowpr['product_title']; ?>" size="35" /></td>
+                              </tr>
+                              <tr>
+                                <td align="right"><strong>Selection of Item Short Name : </strong></td>
+                                <td colspan="2" align="left" valign="top"><input name="food_code" type="text" class="textbox_wht" id="food_code" size="25" value="<?php echo $rowpr['food_code']; ?>" /></td>
+                              </tr>
+                              <tr>
+                                <td align="right" valign="top"><strong>Upload Image :</strong></td>
+                                <td width="20%" align="left" valign="top"><input type="file" name="file" /></td>
+                                <td width="28%" rowspan="2" align="left" valign="top"><? if($rowpr["thumb_image"]!=""){ ?><img src="../<?PHP echo $rowpr["thumb_image"]; ?>" ><?}?></td>
+                              </tr>
+                              <tr>
+                                <td align="right"><strong>Price : </strong></td>
+                                <td align="left" valign="top"><input name="price" type="text" class="textbox_wht" id="price" value="<?php echo $rowpr['price']; ?>" size="25" /></td>
+                              </tr>
+                              <tr>
+                                <td align="right" valign="top"><strong>Selection of Item Description : </strong></td>
+                                <td colspan="2" align="left" valign="top"><textarea name="product_desc" cols="25" rows="3" id="product_desc" ><?php echo $rowpr['product_desc']; ?></textarea></td>
+                              </tr>
+                              <tr>
+                                <td>&nbsp;</td>
+                                <td colspan="2" align="left"><input type="submit" name="Submit" value="Update" class="button_grn" /></td>
+                              </tr>
+                              <tr>
+                                <td>&nbsp;</td>
+                                <td colspan="2" align="left">&nbsp;</td>
+                              </tr>
+                            </table>
+                        </form></td>
+                </tr>
+                
+                
+                <tr>
+                  <td valign="top">&nbsp;</td>
+                </tr>
+              </table></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+        </table></td>
+        <td background="images/box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+        <td background="images/box_08.jpg">&nbsp;</td>
+        <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>

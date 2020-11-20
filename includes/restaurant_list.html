@@ -1,0 +1,202 @@
+<?
+unset($_SESSION['cart']);
+	unset($_SESSION['qty']);
+	unset($_SESSION['rids']);
+	$d=date('l');
+	
+?><script language=javascript>
+	function wol(a) {
+	LeftPosition=(screen.width) ? (screen.width)/3.5 : 0;
+	TopPosition=(screen.height) ? (screen.height)/7 : 0;
+	id=window.open("includes/restrurent_open_times.php?id="+a+"",a,"scrollbars,height=250,width=400,top=" + TopPosition + ",left=" + LeftPosition);
+	if(id.window.focus){id.window.focus();}
+	}
+</script>
+<table width="96%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      
+      <tr>
+        <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+        <td background="images/box_02.jpg"><span class="box_title_text">Restaurant List </span></td>
+        <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/box_04.jpg">&nbsp;</td>
+        <td width="100%"  valign="top"><table width="100%" border="0" cellpadding="4" cellspacing="1" class="bodytext">
+                            <tbody>
+                              <tr>
+                                <td valign="top"><a href="index.php" class="nav3"><strong>Home</strong></a> / <span class="nrmlink">Restaurants</span></td>
+                              </tr>
+                              <tr>
+                                <td valign="top"><table width="100%" border="0" cellpadding="0" cellspacing="0" class="subtitle">
+                                    <tr>
+                                      <td width="49%">A-Z Listing</td>
+                                      <td width="51%"><div align="right">
+                                      <?php
+                                      if($_REQUEST['areaid']!='')
+                                      {
+                           		    	$query = "SELECT * FROM resturant   WHERE area_id=".$_REQUEST['areaid']." and aactive='1' ORDER BY rname DESC";
+                                      }else if($_REQUEST['cuisineid']!='')
+                                      {
+                                      	$query = "SELECT * FROM resturant WHERE cuisine=".$_REQUEST['cuisineid']." and aactive='1' ORDER BY rname DESC";
+                                      }
+									  else if($_REQUEST['PCD']!='')
+                                      {
+                                      	$query = "SELECT * FROM resturant WHERE zipcode like'".$_REQUEST['PCD']."%' and aactive='1'";
+                                      }
+     					               $result = $db->execQuery($query);
+                    					$arinfoMain = $db->resultArray();                    					
+                                      	echo sizeof($arinfoMain);
+                                      ?> Restaurants found</div></td>
+                                    </tr>
+                                </table></td>
+                              </tr>
+                              <tr>
+                                <td valign="top"><table width="100%" border="0" align="center" cellpadding="4" cellspacing="1" bgcolor="#DFDFDF" class="bodytext" id="ResultsList">
+                                  <tbody>
+                                    <tr>
+                                      <td bgcolor="#FFFFFF"><table width="100%" border="0" cellpadding="4" cellspacing="1" class="nrmlink">
+                                          <tbody>
+                                            <tr>
+                                              <td width="17"><div align="left"></div></td>
+                                              <td><div align="left"></div></td>
+                                            </tr>
+                                          </tbody>
+                                      </table></td>
+                                    </tr>
+                                    <?php
+	                //if(sizeof($arinfoMain)<= 0)
+				    for ($i = 0; $i < sizeof($arinfoMain); $i++) {
+			    ?>
+                                    <tr>
+                                      <td width="50%" height="156" bgcolor="<?php if($i%2==0)echo '#F5F5F5'; else echo '#ffffff'; ?>";><table class="bodytext" border="0" cellpadding="4" cellspacing="1" width="100%">
+                                          <tbody>
+                                              <tr>
+                                                <td width="12%"><? if($arinfoMain[$i]['logo']!=''){?><img src="<?php echo $arinfoMain[$i]['logo'];?>" name="imgMainPic" id="imgMainPic" /><?} ?></td>
+                                                <td rowspan="2"><table width="100%" border="0" class="nrm02">
+                                                  <tr>
+                                                    <td colspan="2"><strong><?php echo $arinfoMain[$i]["rname"]; ?></strong></td>
+                                                    <td width="64%" rowspan="4"><table width="100%" border="0" cellpadding="0" cellspacing="0" class="bodytext">
+                                                      <tr>
+                                                        <td width="50%">Delivery Radius:</td>
+                                                        <td width="50%" class="subtitle"><div align="right"><?php 	
+														$ridd=$arinfoMain[$i]['rid'];			    
+														$queryd = "SELECT * FROM delevary_policy where  rid='$ridd'";
+														$resultd = $db->execQuery($queryd);
+														$arinfod= $db->resultArray($resultd);
+														echo $arinfod[0]['radious'];
+														?></div></td>
+                                                      </tr>
+                                                      <tr>
+                                                        <td>Take away time:</td>
+                                                        <td class="subtitle"><div align="right"><?php echo $arinfod[0]['take_time'];?></div></td>
+                                                      </tr>
+                                                      <tr>
+                                                        <td>Delivery time:</td>
+                                                        <td class="subtitle"><div align="right"><?php echo $arinfod[0]['del_time'];?></div></td>
+                                                      </tr>
+                                                      <tr>
+                                                        <td>Min Delivery Order:</td>
+                                                        <td class="subtitle"><div align="right"><?php echo $arinfod[0]['min_order'];?></div></td>
+                                                      </tr>
+                                                      <tr>
+                                                        <td colspan="2"></td>
+                                                        <td></td>
+                                                      </tr>
+                                                      <tr>
+                                                        <td colspan="2"><a href="#" class="nav4"><b></b></a><b><a onclick="javascript:wol(<?php echo $arinfoMain[$i]['rid']; ?>); return false;"  href="#" target="_blank" class="nav4">View restaurant open times</a></b></td>
+                                                      </tr>
+                                                      <tr>
+                                                        <td  colspan="2"><table width="100%" border="0" cellpadding="0" class="bodytext">
+                                                          <tr>
+                                                            <td width="10%">Web</td>
+                                                            <td width="90%"><a href="http://<?php echo $arinfoMain[$i]['web'];?>" class="nav4" target="_blank"><?php echo $arinfoMain[$i]['web']; ?></a></td>
+                                                          </tr>
+                                                          <tr>
+                                                            <td colspan="2"><? $queryt = "SELECT * FROM timeschedule   WHERE rid=".$_REQUEST['id']; ?></td>
+                                                          </tr>
+                                                        </table></td>
+                                                      </tr>
+                                                      <tr>
+                                                        <td></td>
+                                                      </tr>
+                                                    </table></td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>Restaurant Type </td>
+                                                    <td width="21%"><?php 				    
+                    $query1 = "SELECT * FROM cusin where id=".$arinfoMain[$i]["area_id"];
+                    $result1 = $db->execQuery($query1);
+                    $arinfo1= $db->resultArray();
+                    echo $arinfo1[0]['name'];
+                    ?></td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>Area:                                                      </td>
+                                                    <td><?php 				    
+                    $query1 = "SELECT * FROM area where id=".$arinfoMain[$i]["area_id"];
+                    $result1 = $db->execQuery($query1);
+                    $arinfo1= $db->resultArray();
+                    echo $arinfo1[0]['name'];
+                    ?></td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td colspan="2">&nbsp;</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td colspan="3"><table width="100%" border="0" class="bodytext">
+                                                      <tr>
+                                                        <td width="33%">
+														<?php 
+														$ridsf=$arinfoMain[$i]['rid'];
+														$sqlpol="SELECT * FROM policy,resturant_policy WHERE policy.id=resturant_policy.policy_id and policy.status=1 and policy.id='1' and rid ='$ridsf'";
+														$resultpol=mysql_query($sqlpol);
+														$rowpol=mysql_fetch_array($resultpol);
+														if($rowpol["name"]!=""){
+														 ?><a href="index-action-menu_list-rid-<?php echo $arinfoMain[$i]['rid'];?>"><img src="images/active_order_delivery.jpg" width="123" height="39" border="0" /></a><?php }else{?> <img src="images/inactive_order_delivery.jpg" width="123" height="39" />														<?}?></td>
+                                                        <td width="33%"><?php 
+														$sqlpol="SELECT * FROM policy,resturant_policy WHERE policy.id=resturant_policy.policy_id and policy.status=1 and policy.id='2' and rid ='$ridsf'";
+														$resultpol=mysql_query($sqlpol);
+														$rowpol=mysql_fetch_array($resultpol);
+														if($rowpol["name"]!=""){
+														 ?><a href="index-action-menu_list_collection-rid-<?php echo $arinfoMain[$i]['rid'];?>"><img src="images/active_order_collection.jpg" width="123" height="39" border="0" /></a><?}else{?>
+                                                        <img src="images/inactive_order_collection.jpg" width="123" height="39" border="0" />                                                          <?}?></td>
+                                                        <td width="34%"><?php 
+														$sqlpol="SELECT * FROM policy,resturant_policy WHERE policy.id=resturant_policy.policy_id and policy.status=1 and policy.id='3' and rid ='$ridsf'";
+														$resultpol=mysql_query($sqlpol);
+														$rowpol=mysql_fetch_array($resultpol);
+														if($rowpol["name"]!=""){
+														 ?><a href="index-action-reservetion_order-rid-<?php echo $arinfoMain[$i]['rid'];?>"><img src="images/active_reservation.jpg" width="123" height="39" border="0" /></a><?}else{?>
+                                                        <img src="images/inactive_reservation.jpg" width="123" height="39" border="0" />                                                          <?}?></td>
+                                                      </tr>
+                                                    </table></td>
+                                                  </tr>
+                                                </table>                                                  
+                                                <a href="resturants_bath_bottelino's.php"></a></td>
+                                              </tr>
+                                            
+                                            
+                                            <tr>
+                                              <td height="40" valign="bottom"><div><img src="images/2_002.gif" alt="2.5/5" title="2.5/5" /></div></td>
+                                            </tr>
+                                          </tbody>
+                                      </table></td>
+                                    </tr>
+                                    <?php } ?>
+                                  </tbody>
+                                </table></td>
+                              </tr>
+                            </tbody>
+                        </table></td>
+        <td background="images/box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+        <td background="images/box_08.jpg">&nbsp;</td>
+        <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+      </tr>
+</table>

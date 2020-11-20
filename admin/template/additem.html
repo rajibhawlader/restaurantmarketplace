@@ -1,0 +1,350 @@
+<script language="javascript"> 
+function IsNumeric(sText)
+{
+   var ValidChars = "0123456789.";
+   var IsNumber=true;
+   var Char;
+
+ 
+   for (i = 0; i < sText.length && IsNumber == true; i++) 
+      { 
+      Char = sText.charAt(i); 
+      if (ValidChars.indexOf(Char) == -1) 
+         {
+         IsNumber = false;
+         }
+      }
+   return IsNumber;
+   
+   }
+function validation()
+{
+
+  if (document.edit.product_title.value == "" )
+  {
+    alert("Menu Title is a required field.");
+    document.edit.product_title.focus();
+    return false;
+  }if (document.edit.food_code.value == "" )
+  {
+    alert("Food Item Code is a required field.");
+    document.edit.food_code.focus();
+    return false;
+  }
+  if (document.edit.price.value == "" )
+  {
+    alert("Price is a required field!");
+    document.edit.price.focus();
+    return false;
+  }
+  
+   if(!IsNumeric(document.edit.price.value))
+{
+	alert("Enter  Money value at Price.");
+	document.edit.price.value=="";
+	document.edit.price.focus();
+	return false;
+}
+ 
+  return true;
+  
+}
+</script>
+<script type="text/JavaScript">
+<!--
+
+
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+//-->
+</script>
+<script type="text/JavaScript">
+<!--
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+//-->
+</script>
+<body onLoad="MM_preloadImages('images/paging_over_01.gif','images/paging_over_03.gif')">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="8%" height="400" valign="top">&nbsp;</td>
+    <td width="92%" align="left" valign="top"><table width="96%" border="0" align="left" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+        <td background="images/box_02.jpg"><span class="box_title_text">&quot;<? echo $_SESSION[rname];?>&quot; Restaurant Management </span></td>
+        <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/box_04.jpg">&nbsp;</td>
+        <td width="100%" valign="top"><table width="100%" border="0" cellspacing="1" cellpadding="1"  class="bodytext">
+            <tr>
+              <td width="81%">&nbsp;</td>
+            </tr>
+            <tr>
+              <td></td>
+            </tr>
+            
+            <tr>
+              <td valign="top"><table width="100%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#F2F2F2" class="bodytext">
+
+                <tr>
+                  <td align="center" valign="top"><form action="index.php?action=insert_item&tabm=rcttb" method="post" enctype="multipart/form-data" name="edit" id="edit" onSubmit="return validation(this)">
+                            <table width="100%" border="0" cellpadding="2" cellspacing="2" bgcolor="#FFFFFF" class="bodytext">
+                             
+                              <tr>
+                                <td colspan="2" align="left"><strong>Add New Food Item</strong></td>
+                              </tr>
+                              <tr>
+                                <td colspan="2" align="center"><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#F0F0F0" class="bodytext" id="AutoNumber4">
+                                  <tr>
+                                    <td width="27%">&nbsp;</td>
+                                    <td width="2%">&nbsp;</td>
+                                    <td width="9%" align="left">&nbsp;</td>
+                                    <td width="2%"><img border="0" src="images/plus.gif" width="9" height="9" /></td>
+                                    <td width="25%" align="left"><a class="nav" href="index.php?action=resturant_menu&amp;rid=<?php echo $_SESSION['resid']; ?>&tabm=rcttb">Restaurant Management Home </a></td>
+                                    <td width="2%"><img border="0" src="images/plus.gif" width="9" height="9" /></td>
+                                    <td width="16%"><a class="nav" href="index.php?action=menu_cetegory&tabm=rcttb">Manage Category </a></td>
+                                    <td width="2%"><img border="0" src="images/plus.gif" width="9" height="9" /></td>
+                                    <td width="15%"><a class="nav" href="index.php?action=additem&tabm=rcttb">Manage Food Item </a></td>
+                                  </tr>
+                                </table></td>
+                              </tr>
+                               <?PHP if($message!=""){?>
+                              <tr>
+                                <td colspan="2" align="center"><span class="message"><?PHP echo $message;
+									  
+									  ?></span></td>
+                              </tr>
+                              <?}?>
+                              <tr>
+                                <td width="31%" align="right"><strong> Category: </strong></td>
+                                <td width="69%" align="left" valign="top"><select name="categories_id" class="textbox_wht" id="categories_id">
+                                    <?PHP
+				$rids=$_SESSION['resid'];
+				$querylic = "SELECT * FROM categories where rid='$rids'";
+	$resultlic =@mysql_query($querylic);
+	while($arofferinfolic = @mysql_fetch_assoc($resultlic)){
+	?>
+                                    <option value="<?PHP echo $arofferinfolic["categories_id"]; ?>"><?PHP echo $arofferinfolic["categories_name"]; ?></option>
+                                    <?}?>
+                                  </select>                                </td>
+                              </tr>
+                              <tr>
+                                <td width="31%" align="right"><strong>Food Item Title : </strong></td>
+                                <td align="left" valign="top"><input name="product_title" type="text" class="textbox_wht" id="product_title" size="45" /></td>
+                              </tr>
+                              <tr>
+                                <td align="right"><strong>Food Item Code : </strong></td>
+                                <td align="left" valign="top"><input name="food_code" type="text" class="textbox_wht" id="food_code" size="25" /></td>
+                              </tr>
+                              <tr>
+                                <td align="right" valign="top"><strong>Upload Image  :</strong></td>
+                                <td align="left" valign="top"><input type="file" name="file" /></td>
+                              </tr>
+                              <tr>
+                                <td align="right"><strong>Price : </strong></td>
+                                <td align="left" valign="top"><input name="price" type="text" class="textbox_wht" id="price" size="20" /></td>
+                              </tr>
+                              <tr>
+                                <td align="right" valign="top"><strong>Food Item description : </strong></td>
+                                <td align="left" valign="top"><textarea name="product_desc" cols="25" rows="3" id="product_desc" ></textarea></td>
+                              </tr>
+                              <tr>
+                                <td>&nbsp;</td>
+                                <td align="left"><input type="submit" name="Submit" value="Submit" class="button_grn" /></td>
+                              </tr>
+                              <tr>
+                                <td>&nbsp;</td>
+                                <td align="left">&nbsp;</td>
+                              </tr>
+                            </table>
+                        </form></td>
+                </tr>
+                
+                <tr>
+                  <td><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#DFDFDF" class="bodytext">
+                      <!--<tr border=0> 
+          <td colspan="10" ></td>
+        </tr> -->
+                      <tr align="center">
+                        <td colspan="5" bgcolor="#F2F2F2" ><table width="60%" border="0" cellpadding="2" cellspacing="2" bgcolor="#CCCCCC" class="bodytext">
+                              <form action="index.php?action=search_food_item&tabm=rcttb" method="post" name="frmsearchitem" id="frmsearchitem">
+                              <tr>
+                                <td width="43%" align="right"><strong>Search Food Item:</strong></td>
+                                <td width="40%"><input name="product_title" type="text" id="product_title" size="25"></td>
+                                <td width="17%"><input type="submit" name="button" id="button" value="Search" class="button_grn"></td>
+                              </tr>
+                               </form>
+                                <form action="index.php?action=search_food_item&tabm=rcttb" method="post" name="frmsearchitembc" id="frmsearchitembc">
+                              <tr>
+                                <td align="right"><strong> Food Item by Category:</strong></td>
+                                <td><select name="scategories_id" class="textbox_wht" id="scategories_id">
+                                  <?PHP
+				$rids=$_SESSION['resid'];
+				$querylic = "SELECT * FROM categories where rid='$rids'";
+	$resultlic =@mysql_query($querylic);
+	while($arofferinfolic = @mysql_fetch_assoc($resultlic)){
+	?>
+                                  <option value="<?PHP echo $arofferinfolic["categories_id"]; ?>"><?PHP echo $arofferinfolic["categories_name"]; ?></option>
+                                  <?}?>
+                                </select></td>
+                                <td><input type="submit" name="buttonc" id="buttonc" value="Search" class="button_grn"></td>
+                              </tr>
+                             </form>
+                            </table></td>
+                      </tr>
+                      <tr>
+                        <td colspan="5" bgcolor="#F2F2F2" ><strong>Food Items&nbsp;&nbsp;</strong> [<a href="index.php?action=additem&tabm=rcttb" class="nav">Show All</a>]</td>
+                      </tr>
+                      <tr>
+                        <td width="227" bgcolor="#F2F2F2" ><strong>Item Name </strong></td>
+                        <td width="227" bgcolor="#F2F2F2" ><strong>Category Name </strong></td>
+                        <td width="319" bgcolor="#F2F2F2" ><strong>Description</strong></td>
+                        <td width="93" bgcolor="#F2F2F2" ><strong>Price</strong></td>
+                        <td width="149" bgcolor="#F2F2F2" ><strong>Action</strong></td>
+                      </tr>
+                      <?php
+	$pids=$_REQUEST["DPID"];
+	$ridsp=$_SESSION['resid'];
+    if($_REQUEST["product_title"]!="")
+    {
+    $query = "SELECT product.* FROM product,categories where categories.categories_id=product.categories_id and categories.rid='$ridsp' and product_title='".$_REQUEST["product_title"]."'";
+    }else if($_REQUEST[scategories_id]!="")
+    {
+     $query = "SELECT product.* FROM product,categories where categories.categories_id=product.categories_id and categories.rid='$ridsp' and product.categories_id='".$_REQUEST["scategories_id"]."'";
+    }else
+    {
+	$query = "SELECT product.* FROM product,categories where categories.categories_id=product.categories_id and categories.rid='$ridsp'";	
+    }
+			
+			
+		//$result = $db->execQuery($query);
+		//$arinfo = $db->resultArray();
+		//for ($i = 0; $i < sizeof($arinfo); $i++) {
+		$success = $db->checkExists($query);
+		if ($success == true){
+			$qty=10;
+			$result = $db->execQuery($query);
+			$arinfo = $db->resultArray($result);
+			if ($_REQUEST["stq"]==""){
+			 $stq=0;
+			}else{
+			 $stq=$_REQUEST["stq"];
+			}
+			$v=($stq/$qty)+1;
+			if (sizeof($arinfo)>1){
+				$ste=$stq+$qty;
+				$st2=sizeof($arinfo) % $qty;
+				
+				if ($ste > sizeof($arinfo)){
+					$ste=sizeof($arinfo);
+				}
+				$st1=(sizeof($arinfo)-$st2)/$qty;
+				for ($z=0; $z <= $st1 ; $z++){
+				
+				if ($v==($z+1)){
+					$pageIn.=($z+1);
+				}else{
+				$pageIn.="<a href=index.php?action=additem&tabm=rcttb&stq=".($z*$qty)."&h=".$h." class=nav>".($z+1)."</a>";
+				}
+				}
+			}else{
+				$ste=sizeof($arinfo);
+			}
+			for ($i = $stq; $i < $ste; $i++)
+			{
+					
+			
+		?>
+                      <tr class="bodytext">
+                        <td width="227" valign="top" bgcolor="#FFFFFF"><?php echo stripslashes($arinfo[$i]["product_title"]); ?></td>
+                        <td width="227" valign="top" bgcolor="#FFFFFF"><?php $catid=stripslashes($arinfo[$i]["categories_id"]);
+                        $sqlc="Select * from categories where categories_id='$catid'";
+                        $resultc=mysql_query($sqlc);
+                        $rowc=mysql_fetch_array($resultc);
+                        echo $rowc["categories_name"];
+                         ?></td>
+                        <td width="319" valign="top" bgcolor="#FFFFFF"><?php echo substr($arinfo[$i]["product_desc"],0,200); echo "..."; ?></td>
+                        <td width="93" valign="top" bgcolor="#FFFFFF"><?php echo stripslashes($arinfo[$i]["price"]); ?> $ </td>
+                        <!--<td width="62"><?php //echo $arimageinfo[0]["ImgURL"]; ?></td>-->
+                        <td valign="top" bgcolor="#FFFFFF">&nbsp;<a href="index.php?action=pro_edit&amp;product_id=<?php echo $arinfo[$i]['product_id'] ?>&tabm=rcttb" class="nav">Edit</a> | <a href="index.php?action=pro_del&amp;product_id=<?php echo $arinfo[$i]['product_id'] ?>&tabm=rcttb" class="nav"onclick="return confirm('Are you sure you want to delete this?');">Delete</a></td>
+                      </tr>
+                      <?php
+	   }
+	}
+	?>
+                      <tr class="bodytext1">
+                        <td colspan="5" align="center" valign="top" bgcolor="#FFFFFF"><?
+	if ($v > 0){
+		echo ("<samp  class=bodytext>Page ".$v." Of ".$z."</samp>");
+	}
+	?></td>
+                      </tr>
+                      <tr class="bodytext1">
+                        <td colspan="5" align="center" valign="top" bgcolor="#FFFFFF"><table width="60%" border="0" cellpadding="0" cellspacing="0" align="center">
+                            <tr>
+                              <td><?php
+		if ($v>1){
+		?>
+                                  <a class="nav1" href="index.php?action=additem&tabm=rcttb&amp;stq=<?php echo(($v-2)*$qty)?>&amp;h=1" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('a','','images/paging_over_01.gif',1)"><img src="images/paging_01.gif" name="a" width="30" height="32" border="0" id="a" /> </a>
+                                  <?php
+		}else{ ?>
+                                  <img src="images/paging_01.gif" height="32" border="0" />
+                                  <?}
+		?>                              </td>
+                              <td width="100%" background="images/paging_body.gif" height="32" align="center" class="bodytext"><? echo ("Pages- ".$pageIn);?></td>
+                              <td><?php
+		 if ($v <$z){
+		 ?>
+                                  <a class="nav1" href="index.php?action=additem&tabm=rcttb&amp;stq=<?php echo(($v)*$qty)?>&amp;h=1" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('b','','images/paging_over_03.gif',1)"><img src="images/paging_03.gif" name="b" width="30" height="32" border="0" id="b" /></a>
+                                  <?php
+		 }else{ ?>
+                                  <img src="images/paging_03.gif" width="30" height="32" border="0" />
+                                  <?}
+		 ?>                              </td>
+                            </tr>
+                        </table></td>
+                      </tr>
+                  </table></td>
+                </tr>
+                <tr>
+                  <td valign="top">&nbsp;</td>
+                </tr>
+              </table></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+        </table></td>
+        <td background="images/box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+        <td background="images/box_08.jpg">&nbsp;</td>
+        <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>

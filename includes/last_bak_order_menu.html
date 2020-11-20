@@ -1,0 +1,298 @@
+
+<script src="js/ajax.js"></script>
+<script type="text/javascript" src="images/jquery-1.js"></script>
+<script type="text/javascript" src="images/animatedcollapse.js"></script>
+
+
+<script type="text/javascript">
+function addtocard(valu)
+{
+//alert(document.getElementById('orderList'));
+	var url = 'cart.php?idp='+valu;
+	makeRequest(url,'orderList');
+	
+//alert(document.getElementById('orderList'));	
+
+return false;
+}
+function addtocardminus(valu)
+{
+//alert(document.getElementById('orderList'));
+	var url = 'cart.php?qt=m&idp='+valu;
+	makeRequest(url,'orderList');
+	
+//alert(document.getElementById('orderList'));	
+
+return false;
+}
+function addtocarddel(valu)
+{
+//alert(document.getElementById('orderList'));
+	var url = 'cart.php?qt=y&idp='+valu;
+	makeRequest(url,'orderList');
+	
+//alert(document.getElementById('orderList'));	
+
+return false;
+}
+function loadProduct(valu)
+{
+	var url = 'product_list.php?id='+valu;
+	makeRequest(url,'productList');
+return false;
+}
+</script>
+<script type="text/javascript" src="images/jquery-1.js"></script>
+<script type="text/javascript" src="images/animatedcollapse.js">
+
+
+
+</script>
+
+
+<script type="text/javascript">
+
+animatedcollapse.addDiv('jason', 'fade=1,height=80px');
+animatedcollapse.addDiv('kelly', 'fade=1,height=100px');
+animatedcollapse.addDiv('michael', 'fade=1,height=120px');
+
+animatedcollapse.addDiv('cat', 'fade=0,speed=400,group=pets');
+animatedcollapse.addDiv('dog', 'fade=0,speed=400,group=pets,persist=1,hide=1');
+animatedcollapse.addDiv('rabbit', 'fade=0,speed=400,group=pets,hide=1');
+		  <?php
+		            $query1 = "SELECT * FROM categories where rid=".$_REQUEST['rid'];
+                    $result1 = $db->execQuery($query1);
+                    $arinfo1= $db->resultArray();
+                    for ($i = 0; $i < sizeof($arinfo1); $i++)
+					{
+					echo "animatedcollapse.addDiv('".$arinfo1[$i]['categories_id']."', 'fade=0,speed=400,group=pets,hide=1');";
+					}
+					
+		  ?>
+animatedcollapse.init();
+
+</script>
+<script>
+if (!document.layers)
+document.write('<div id="divStayTopLeft" style="position:absolute">');
+</script>
+
+
+
+
+<script type="text/javascript">
+
+var verticalpos="frombottom"
+
+if (!document.layers)
+document.write('</div>')
+	var startX;
+	var startY;
+function JSFX_FloatTopDiv()
+{
+	var ns = (navigator.appName.indexOf("Netscape") != -1);
+	var d = document;
+	function ml(id)
+	{
+		var el=d.getElementById?d.getElementById(id):d.all?d.all[id]:d.layers[id];
+		if(d.layers)el.style=el; 
+		el.sP=function(x,y){ this.style.left= Math.round(x); this.style.top= Math.round(y);};
+		el.x = startX; 
+		if (verticalpos=="fromtop"){
+		el.y = startY;
+		}else{
+		el.y = ns ? pageYOffset + innerHeight : document.body.scrollTop + document.body.clientHeight;
+		el.y -= startY;
+		}
+		return el;
+	}
+	window.stayTopLeft=function()
+	{
+		if (verticalpos=="fromtop"){
+		var pY = ns ? pageYOffset : document.body.scrollTop;
+		ftlObj.y += (pY + startY - ftlObj.y)/8;
+		}
+		else{
+		var pY = ns ? pageYOffset + innerHeight : document.body.scrollTop + document.body.clientHeight;
+		ftlObj.y += (pY - startY - ftlObj.y)/8;
+		}
+		ftlObj.sP(ftlObj.x, ftlObj.y);
+		setTimeout("stayTopLeft()", 10);
+	}
+	ftlObj = ml("divStayTopLeft"); 
+	stayTopLeft();
+}
+//JSFX_FloatTopDiv();
+</script>
+<style type="text/css">
+
+/*Credits: Dynamic Drive CSS Library */
+/*URL: http://www.dynamicdrive.com/style/ */
+
+.glossymenu{
+list-style-type: none;
+margin: 0px 0;
+padding: 0;
+width: 100%;
+border: 0px solid #9A9A9A;
+border-bottom-width: 0;
+
+}
+
+.glossymenu li a{
+background: white url(images/glossybackMenu1.gif) repeat-x bottom left;
+font: bold 13px "Lucida Grande", "Trebuchet MS", Verdana, Helvetica, sans-serif;
+color: #666666;
+display: block;
+width: 100%;
+padding: 3px 0;
+padding-left: 10px;
+text-decoration: none;
+
+}
+.topMenu{
+background: white url(images/glossyback1.gif) repeat-x bottom left;
+font: bold 13px "Lucida Grande", "Trebuchet MS", Verdana, Helvetica, sans-serif,;
+color: white;
+display: block;
+width: auto;
+padding: 1px 0;
+padding-3eft: 0px;
+text-decoration: none;
+
+}
+* html .glossymenu li a{ /*IE only. Actual menu width minus left padding of A element (10px) */
+width: 206px;
+}
+
+.glossymenu li a:visited, .glossymenu li a:active{
+color: #666666;
+}
+
+.glossymenu li a:hover{
+background-image: url(images/glossyback2.gif);
+}
+
+</style>
+
+</head>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>&nbsp;</td>
+    <td width="425" valign="top">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="249" valign="top"><table width="98%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="16%">&nbsp;</td>
+        <td width="84%">
+      <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+        <tr>
+          <td colspan="3"><img src="images/Untitled-1_01.png" width="225" height="35" /></td>
+          </tr>
+        <tr>
+          <td width="9" background="images/Untitled-1_05.png"></td>
+            <td>
+              <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+                
+                <?php 
+					$query1 = "SELECT * FROM categories  where rid=".$_REQUEST['rid']." ORDER BY sort_order asc";
+                    $result1 = $db->execQuery($query1);
+                    $arinfo1= $db->resultArray(result1);
+                    for ($i = 0; $i < sizeof($arinfo1); $i++)
+					{		  
+					if($arinfo1[$i]['parent_id']=='0')
+					{
+		  ?>
+                <tr>
+                  <td><div align="center"><a href="javascript:animatedcollapse.toggle('<?php echo $arinfo1[$i]['categories_id']; ?>')" class="topMenu"><?php echo $arinfo1[$i]['categories_name']; ?></a> </div>			</td>
+                </tr>
+                <?php 
+			}
+			 ?>
+                <tr width="100%">
+                  <td>
+                    <div speed="400"  id="<?php echo $arinfo1[$i]['categories_id']; ?>" style="none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;"> 
+                      <div align="center">
+                        <ul class="glossymenu">
+                          <?php
+					$querySub = "SELECT * FROM categories where parent_id=".$arinfo1[$i]['categories_id'];
+                    $resultSub = $db->execQuery($querySub);
+                    $arinfoSub= $db->resultArray(resultSub);
+                    for ($j = 0; $j <  sizeof($arinfoSub); $j++)
+					{		
+				  
+				  ?>
+                  <li><a onclick="javascript:return loadProduct('<?php echo $arinfoSub[$j]['categories_id']?>')"><?php echo $arinfoSub[$j]['categories_name']?></a></li>
+		                    <?php }
+					?>
+                        </ul>
+                      </div>
+                    </div></td>
+                </tr>
+                <?php }?>
+                <tr>
+                  <td height="2"></td>
+                </tr>
+              </table>            </td>
+            <td width="9" background="images/Untitled-1_04.png" align="right"></td>
+          </tr>
+        <tr>
+          <td height="7"><img src="images/Untitled-1_06.png" width="9" height="7" /></td>
+            <td height="7"><img src="images/Untitled-1_07.png" width="206" height="7" /></td>
+            <td height="7"><img src="images/Untitled-1_08.png" width="10" height="7" /></td>
+          </tr>
+      </table>
+    </td>
+      </tr>
+    </table></td>
+    <td  valign="top"><p><span id="productList"><?php require_once('menu_welcome.php');?></span></p>
+    <p>&nbsp;</p>
+     <p>&nbsp;</p>
+      <p>&nbsp;</p>
+       <p>&nbsp;</p>
+    </td>
+    <td width="244" valign="top"><layer  left="881" top="62" width="336" height="121" id="divStayTopLeft">
+
+<table width="225" border="0">
+  <tr>
+    <td width="225"><img src="images/index_01.png" width="225" height="35" /></td>
+  </tr>
+  <tr>
+    <td width="225" align="center"><!--EDIT BELOW CODE TO YOUR OWN MENU-->
+      <table border="0" width="216" cellspacing="3" cellpadding="0" bgcolor="#CCCCCC" class="bodytext">
+  <tr align="center">
+    <td bgcolor="#FFFFFF"><div id="orderList"><?php  require_once('cart.php');?></div></td>
+  </tr>
+  <tr>
+    <td width="100%"><div align="center"><a href="index-action-order_place"><img src="images/button_proceed_order.jpg" width="139" height="39" border="0" /></a></div></td>
+  </tr>
+</table></td>
+  </tr>
+</table>
+</layer>
+    </td>
+  </tr>
+</table>
+<script language="javascript">
+
+var winW = 630, winH = 460;
+
+if (parseInt(navigator.appVersion)>3) { 
+if (navigator.appName=="Netscape") { 
+winW = window.innerWidth;
+winH = window.innerHeight; 
+}
+if (navigator.appName.indexOf("Microsoft")!=-1) {
+winW = document.body.offsetWidth;
+winH = document.documentElement.clientHeight; //document.body.offsetHeight; 
+//alert("Window width = "+winW+" : "+"Window height = "+winH);
+}
+}
+
+
+startX=winW/2+240;
+startY=winH/2+65;
+JSFX_FloatTopDiv();
+</script>

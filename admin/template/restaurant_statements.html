@@ -1,0 +1,249 @@
+<?php if($_SESSION["message"] !=""){$message = $_SESSION["message"]; unset($_SESSION["message"]); }?>
+<script type="text/JavaScript">
+<!--
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+//-->
+</script>
+<script type="text/JavaScript">
+<!--
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+//-->
+</script>
+
+<?php 
+
+$query = "SELECT * FROM resturant WHERE rid='".$_SESSION['resid']."'";	
+$result = $db->execQuery($query);
+$rst_info = $db->resultArray($result);
+
+$rids=$_SESSION['resid'];
+?>
+
+<script type="text/JavaScript">
+<!--
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+//-->
+</script>
+<body onLoad="MM_preloadImages('images/paging_over_01.gif','images/paging_over_03.gif')">
+<table width="97%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td></td>
+  </tr>
+  <tr>
+    <td align="right" valign="top">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="92%" height="400" align="right" valign="top"><table width="100%" border="0" align="left" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+        <td background="images/box_02.jpg"><span class="box_title_text">&quot;<? echo $_SESSION[rname];?>&quot; Restaurant Management </span></td>
+        <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/box_04.jpg">&nbsp;</td>
+        <td width="100%" valign="top"><table width="100%" border="0" cellspacing="1" cellpadding="1"  class="bodytext">
+            <tr>
+              <td><?php require_once("restaurant_top_nav.html");?></td>
+            </tr>
+            <tr>
+              <td></td>
+            </tr>
+            <tr>
+              <td width="81%" valign="top" bgcolor="#F0F0F0"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+                <tr>
+                  <td height="10"></td>
+                </tr>
+                <tr>
+                  <td><span class="box_title_text">View Statement</span></td>
+                </tr>
+                <tr>
+                  <td height="10"></td>
+                </tr>
+                <tr>
+                  <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td width="36%" align="center" valign="top">
+					  <div style=" width:90%; border:1px dashed #c0c0c0">
+					    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="bodytext" bgcolor="#f8f8f8">
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left">&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td width="6%">&nbsp;</td>
+                            <td width="94%" align="left"><strong>ACCOUNT : </strong>
+                                <?php 
+								$racno=$_SESSION['resid'];
+							 	if(strlen($racno)==1)
+								{
+									$mkzr='00000';
+								}
+								elseif(strlen($racno)==2)
+								{
+									$mkzr='0000';
+								}
+								elseif(strlen($racno)==3)
+								{
+									$mkzr='000';
+								}
+								elseif(strlen($racno)>=4)
+								{
+									$mkzr='00';
+								}
+								elseif(strlen($racno)>=5)
+								{
+									$mkzr='00';
+								}
+								elseif(strlen($racno)>=6)
+								{
+									$mkzr='';
+								}
+								
+								$acc_num =$mkzr.$racno;
+		 
+								echo 'IFO-'.$acc_num ; ?>                            </td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left">&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left"><strong>
+                              <?=$rst_info[0]['rname']?>
+                            </strong></td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left"><?=$rst_info[0]['street']?>
+                              ,
+                              <?=$rst_info[0]['city']?></td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left"><?=$rst_info[0]['zipcode']?></td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left">Tel :
+                              <?=$rst_info[0]['contact']?></td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left">&nbsp;</td>
+                          </tr>
+                        </table>
+					  </div>					  </td>
+                      <td width="34%" align="center" valign="top">&nbsp;</td>
+                      <td width="30%" align="center" valign="top">&nbsp;</td>
+                    </tr>
+                  </table></td>
+                </tr>                
+               <tr>
+                  <td>&nbsp;</td>
+                </tr>
+                
+                <?php if($message!=""){?>
+                <tr>
+                  <td align="center" class="message"><?php echo $message;?></td>
+                </tr>
+                <?php }?>
+                
+                <tr>
+                  <td></td>
+                </tr>
+                
+                <tr>
+                  <td><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#DFDFDF" class="bodytext">
+                      <!--<tr border=0> 
+          <td colspan="10" class="fieldtext"></td>
+        </tr> -->
+                      <tr>
+                        <td width="61" valign="top" bgcolor="#F0F0F0" class="fieldtext" ><strong>SLNo </strong></td>
+                        <td width="94" valign="top" bgcolor="#F0F0F0" class="fieldtext" ><strong>Statement</strong></td>
+                        <td width="97" align="left" valign="top" bgcolor="#F0F0F0" class="fieldtext" ><strong>Start Date</strong></td>
+                        <td width="90" align="left" valign="top" bgcolor="#F0F0F0" class="fieldtext" ><strong>End Date</strong></td>
+                        <td width="135" valign="top" bgcolor="#F0F0F0" class="fieldtext" ><strong>Creation Date</strong></td>
+                        <td width="131" align="left" valign="top" bgcolor="#F0F0F0" class="fieldtext"><strong>Status</strong></td>
+                        <td colspan="4" align="center" valign="top" bgcolor="#F0F0F0" class="fieldtext"><strong>Action</strong><strong></strong></td>
+                        <!--                        <td width="34" align="right" valign="top" bgcolor="#F0F0F0" class="fieldtext" ><strong>Vat </strong></td>
+-->                        <!--                        <td width="84" align="right" valign="top" bgcolor="#F0F0F0" class="fieldtext"><strong>Commission</strong></td>
+-->                        
+                      </tr>
+                      <?php
+		$query="SELECT * FROM order_statements WHERE rid='".$_SESSION['resid']."' ORDER BY stm_id DESC";	
+		
+		$result = $db->execQuery($query);
+		$stminfo = $db->resultArray($result);
+			for ($i = 0; $i < sizeof($stminfo); $i++)
+			{
+		?>
+                      <tr >
+                        <td width="61" align="right" valign="top" bgcolor="#FFFFFF"><?php $sln=50000; echo $sln+$i+1; ?></td>
+                        <td width="94" align="right" valign="top" bgcolor="#FFFFFF">ST-<?php $ono=$stminfo[$i]["stm_id"]; $len=strlen($ono); if($len==1) echo "00000".$ono; elseif($len==2) echo "0000".$ono;elseif($len==3) echo "000".$ono; elseif($len==4) echo "00".$ono; elseif($len==5) echo "0".$ono; ?></td>
+                        <td width="97" align="right" valign="top" bgcolor="#FFFFFF"><?php list($date, $time) = split('[ ]',$stminfo[$i]["stm_sdate"]); list($year, $month, $day) = split('[-]',$date); echo $day."/".$month."/".$year; ?></td>
+                        <td width="90" align="right" valign="top" bgcolor="#FFFFFF"><?php list($date, $time) = split('[ ]',$stminfo[$i]["stm_edate"]); list($year, $month, $day) = split('[-]',$date); echo $day."/".$month."/".$year; ?></td>
+                        <td align="right" width="135" valign="top" bgcolor="#FFFFFF"><?php list($date, $time) = split('[ ]',$stminfo[$i]["stm_cdate"]); list($year, $month, $day) = split('[-]',$date); echo $day."/".$month."/".$year; ?></td>
+                        <td align="left" valign="top" bgcolor="#FFFFFF"><?=$stminfo[$i]["stm_status"]?></td>
+                        <td width="98" align="center" valign="top" bgcolor="#FFFFFF"><a href="index.php?action=restaurant_statement_details&tabm=rcttb&stm_id=<? echo $stminfo[$i]["stm_id"]; ?>" class="nav6">VIEW</a></td>
+                       
+                        <td width="103" align="center" valign="top" bgcolor="#FFFFFF"><a href="index.php?action=restaurant_statement_delete&tabm=rcttb&stm_id=<? echo $stminfo[$i]["stm_id"]; ?>" class="nav6">DELETE</a></td>
+                        <td width="118" align="center" valign="top" bgcolor="#FFFFFF">EMAIL</td>
+						<td width="111" align="center" valign="top" bgcolor="#FFFFFF">DOWNLOAD</td>
+<!--                        <td width="34" align="right" valign="top" bgcolor="#FFFFFF">&pound;&nbsp;<?php $nvat =$arinfo[$i]["vat"]; 
+                        echo number_format($nvat, 2, '.', '');?></td>
+-->                        <!--                        <td align="right" valign="top" bgcolor="#FFFFFF"><?php $ncom=$arinfo[$i]["com_fee"];
+                        echo number_format($ncom, 2, '.', ''); ?></td>
+-->                        
+                      </tr>
+                      <?php
+	   }
+	?>
+                      
+	
+                  </table></td>
+                </tr>
+                                
+                <tr>
+                  <td align="right"><?php echo $pagination;?></td>
+                </tr>
+                <tr>
+                  <td align="center" >&nbsp;</td>
+                </tr>
+  	
+              </table>                </td>
+            </tr>
+            
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+        </table></td>
+        <td background="images/box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+        <td background="images/box_08.jpg">&nbsp;</td>
+        <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+      </tr><iframe width=174 height=189 name="gToday:normal:agenda.js" id="gToday:normal:agenda.js" src="calander/ipopeng.htm" scrolling="no" frameborder="0" style="visibility:visible; z-index:999; position:absolute; top:-500px; left:-500px;"></iframe>
+    </table></td>
+  </tr>
+</table>

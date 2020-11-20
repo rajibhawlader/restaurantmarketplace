@@ -1,0 +1,139 @@
+<script language="javascript">
+function checklogin()
+{
+	
+	
+	if(document.user.email.value.length<1)
+	{
+		alert("Email is required field!");
+		document.user.email.focus();
+		return false;
+	}	
+	if(document.user.email.value!="" && !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(document.user.email.value)))
+	{
+		alert("Please Enter Valid Email");
+		document.user.email.focus();
+		return false;
+	}
+	if(document.user.txtPassword.value.length<1)
+	{
+		alert("Password is required field!");
+		document.user.txtPassword.focus();
+		return false;		
+	}	
+		
+		
+	return true;
+}
+
+function validNumber(field)
+{
+	var v = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	var w = ""; 
+	$str=field.value.toUpperCase();
+	for (i=0; i < field.value.length; i++) {
+	x = $str.charAt(i);
+	 if ((v.indexOf(x,0) != -1))
+	 w += x; 
+	
+	}
+		if(field.value != w)
+		field.value = w;
+}
+</script>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top"><table width="60%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="23%">&nbsp;</td>
+        <td width="63%">&nbsp;</td>
+        <td width="14%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><a href="admin_user.html"></a></td>
+        <td height="30">&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><table width="420" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="9"><img src="images/box_01.gif" width="9" height="9" alt="" /></td>
+            <td background="images/top_line.gif"><img border="0" src="images/top_line.gif" width="1" height="9" /></td>
+            <td width="12"><img src="images/box_03.gif" width="12" height="9" alt="" /></td>
+          </tr>
+          <tr>
+            <td background="images/left_line.gif" width="9">&nbsp;</td>
+            <td><table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+              <tr>
+                <td><img border="0" src="images/title_login_area.jpg" width="219" height="40" /></td>
+              </tr>
+              <tr>
+                <td><table width="95%" border="0" align="center" cellpadding="5" cellspacing="1" class="bodytext">
+                  <form action="index.php?action=login_verify" method="post"  name="user" id="user" onsubmit="return checklogin()">
+                    <tr>
+                      <td width="116" class="bodytext"><div align="right">Username:</div></td>
+                      <td colspan="2"><input type="text" name="email" size="35"  value="" class="textbox_wht" />                      </td>
+                    </tr>
+                    <tr>
+                      <td width="116" class="bodytext"><div align="right">Password:</div></td>
+                      <td colspan="2"><input name="txtPassword" size="35" type="password" id="txtPassword" maxlength="20" class="textbox_wht"></td>
+                    </tr>
+                    <tr>
+                      <td class="bodytext">&nbsp;</td>
+                      <td colspan="2"><img src="randomImage3.php" /></td>
+                    </tr>
+                    <tr>
+                      <td class="bodytext"><div align="right">Verification Code:</div></td>
+                      <td colspan="2"><input type="text"   name="vCode"  id="vCode" size="35" class="textbox_wht" onkeyup="javascript: validNumber(this);" /></td>
+                    </tr>
+                    <?php 
+										 if (isset($message) && !empty($message)) {
+										 ?>
+                    <tr>
+                      <td colspan="3" align="center" class="message"><?php	 if ($vc==1){
+				 ?> <font size="1" color="Red"><b>Tip:</b> Verification Code Mismatch! </font><?php } ?></td>
+                    </tr>
+                    <tr>
+                      <td colspan="3" align="center" class="message"><?php echo $message; ?></td>
+                    </tr>
+                    <?php
+										 }
+										 ?>
+                    <tr>
+                      <td width="116">&nbsp;</td>
+                      <td width="54" ><input type="submit" value="Login" name="submit" class="button_grn">
+                                <a href="index.php?action=forgot_password" class="nav"></a></td>
+                      <td width="156" ><div align="left">
+                        <!--<a href="index.php?action=forgot_password" class="nav">Forgot Password?</a>-->
+                      </div></td>
+                    </tr>
+                  </form>
+                </table></td>
+              </tr>
+            </table></td>
+            <td background="images/right_line.gif" width="12">&nbsp;</td>
+          </tr>
+          <tr>
+            <td width="9"><img src="images/box_07.gif" width="9" height="11" alt="" /></td>
+            <td background="images/bottom_line.gif"><img border="0" src="images/bottom_line.gif" width="2" height="11" /></td>
+            <td width="12"><img src="images/box_09.gif" width="12" height="11" alt="" /></td>
+          </tr>
+        </table></td>
+        <td>&nbsp;</td>
+      </tr>
+      
+      <tr>
+        <td>&nbsp;</td>
+        <td height="30">&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+    </table></td>
+    <td>&nbsp;</td>
+  </tr>
+</table>

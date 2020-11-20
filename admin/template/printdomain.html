@@ -1,0 +1,100 @@
+<script language="javascript">
+function checkfield()
+{
+	
+	
+	if (document.user.lname.value == "" )
+  {
+    alert("Resturant Type is a required field!");
+    document.user.lname.focus();
+    return false;
+  }
+		
+		
+	return true;
+}
+</script>
+<script type="text/JavaScript">
+<!--
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+//-->
+</script>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="4%" height="400" valign="top">&nbsp;</td>
+    <td width="91%" align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td align="center" valign="top"><table width="99%" border="0" align="center" cellpadding="0" cellspacing="0">
+            <tr>
+              <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+              <td background="images/box_02.jpg"><span class="box_title_text">Print Domain set Up.</span> </td>
+              <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+            </tr>
+            <tr>
+              <td background="images/box_04.jpg">&nbsp;</td>
+              <td width="100%" valign="top"><table width="100%" border="0">
+
+                <tr>
+                  <td height="164" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td align="center"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+                          <tr>
+                            <td class="fieldtext"> <?Php 
+									
+									$resquery="Select * from printdomain";
+									
+									$resultres=mysql_query($resquery);
+									$rowres=mysql_fetch_array($resultres);
+									?></td>
+                          </tr>
+                          <tr>
+                            <td height="144"><form action="index.php?action=insert_service_domain&tabm=rcttb" method="post" enctype="multipart/form-data" name="edit" id="edit" onSubmit="return validation(this)">
+                      <table width="100%" border="0" cellspacing="2" cellpadding="2"  class="bodytext">
+                        <tr>
+                          <td colspan="3" align="center"><span class="message"><?php echo $message; ?></span></td>
+                          </tr>
+                        <tr>
+                          <td width="33%" align="right"><strong>Service Domain Name: </strong></td>
+                          <td width="31%" align="left"><input name="pdname" type="text" class="textbox_wht" id="pdname" value="<?php echo $rowres["pdname"]; ?>" size="40" />
+                              <input name="pid" type="hidden" id="pid" value="<?php echo $rowres["pid"]; ?>" /></td>
+                          <td width="36%" align="left">[i.e abc.com]</td>
+                        </tr>
+                        <tr>
+                          <td align="right" valign="top">&nbsp;</td>
+                          <td colspan="2" align="left"><input type="submit" name="Submit" value="Submit" class="button_grn"/></td>
+                        </tr>
+                      </table>
+                  </form></td>
+                          </tr>
+                        </table></td>
+                        </tr>
+                  </table></td>
+                </tr>
+              </table></td>
+              <td background="images/box_06.jpg">&nbsp;</td>
+            </tr>
+            <tr>
+              <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+              <td background="images/box_08.jpg">&nbsp;</td>
+              <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+            </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+</table>

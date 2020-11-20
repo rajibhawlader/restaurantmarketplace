@@ -1,0 +1,191 @@
+<?php
+if($_REQUEST["status"] !="" && $_REQUEST["id"]  > 0){
+	$customers_id = (int)$_REQUEST["id"];
+	$status = (int)$_REQUEST["status"];
+	$sql = 'UPDATE customers SET status = "'.$status.'" WHERE customers_id ='.$customers_id;
+	$db->execQuery($sql);
+	$_REQUEST["type"] = $status;
+}
+if($_SESSION["message"] != ""){$message = $_SESSION["message"]; unset($_SESSION["message"]);};
+?>
+<script type="text/JavaScript">
+<!--
+
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+//-->
+</script>
+<script type="text/JavaScript">
+<!--
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+//-->
+</script>
+<body onLoad="MM_preloadImages('images/paging_over_01.gif','images/paging_over_03.gif')">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="4%" height="400" valign="top">&nbsp;</td>
+    <td width="86%" align="center" valign="top"><table width="99%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+        <td background="images/box_02.jpg"><span class="box_title_text">Existing Customer List </span></td>
+        <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/box_04.jpg">&nbsp;</td>
+        <td width="100%" valign="top"><table width="85%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td>
+<form method="post" action="index.php?action=existing_customer"><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#F0F0F0" class="bodytext">
+	<tr>		
+		<td>
+			<select name="type" onChange="javascript: this.form.submit();">
+				<option value="" <?php if($_REQUEST["type"] == ""){?> selected="selected" <?php } ?> > -- ALL -- </option>
+				<option value="0" <?php if($_REQUEST["type"] == "0"){?> selected="selected" <?php } ?> >Pending</option>
+				<option value="1" <?php if($_REQUEST["type"] == "1"){?> selected="selected" <?php } ?> >Active</option>
+				<option value="2" <?php if($_REQUEST["type"] == "2"){?> selected="selected" <?php } ?> >Suspended</option>
+			</select>
+		</td>
+		<td>Customer Name:</td>
+		<td><input type="text" name="name" size="25" value="<?php echo $_REQUEST["name"];?>" /></td>
+		<td>Customer Email:</td>
+		<td><input type="text" name="email" size="25"  value="<?php echo $_REQUEST["email"];?>" /></td>		
+		<td><input type="submit" name="search" value="Search" /></td>		
+	</tr>
+</table></form>				
+			</td>
+          </tr>
+		  <tr>
+		  	<td>&nbsp;</td>
+		  </tr>	
+          <?php 
+										 if (isset($message) && !empty($message)) {
+										 ?>
+          <tr>
+            <td colspan="2" align="center" class="message"><?php echo $message; ?></td>
+          </tr>
+          <?php
+										 }
+										 ?>
+          <tr>
+            <td><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#D9DDE1" class="bodytext">
+                <tr>
+                  <td bgcolor="#EEF0F2" ><strong>Customer Name</strong></td>
+                  <td bgcolor="#EEF0F2" ><strong>Email Address</strong></td>
+				   <td bgcolor="#EEF0F2" width="10%"><strong>Status</strong></td>
+                  <td bgcolor="#EEF0F2"  width="15%" align="center"><strong>Action</strong></td>
+                </tr>
+                <?php 
+			
+					$name = $_REQUEST["name"];
+					$email = $_REQUEST["email"];
+					$type = $_REQUEST["type"];
+				 	if($name != ""){
+						$query_arr[] = " (customers_firstname LIKE '%%".$name."%' || customers_lastname LIKE '%%".$name."%') ";
+					}
+					
+					if($email != ""){
+						$query_arr[] = " customers_email_address LIKE '%%".$email."%'";
+					}
+					if($type != ""){
+						$query_arr[] = "   	status='".$type."'";
+					}
+					$query_where = (is_array($query_arr))?implode(" AND ", $query_arr):false;
+			
+					
+					if($query_where !=""){				
+				    	$query = "SELECT * FROM customers where $query_where ORDER BY customers_id ASC";
+						$total_query = "SELECT count(*) FROM customers where $query_where ORDER BY customers_id ASC";
+					}else{
+						$query = "SELECT * FROM customers ORDER BY customers_id ASC";
+						$total_query = "SELECT count(*) FROM customers ORDER BY customers_id ASC";
+					}
+					
+					
+					
+					
+					 $ref = $db->execQuery($total_query);
+				$total = $db->result($ref);
+				
+					$targetpage = "index.php?action=existing_customer&tabm="; 	//your file name  (the name of this file)
+					$targetpage .= $query_string;
+					$limit = 50; 								//how many items to show per page
+					$page = $_REQUEST['page'];
+					if($page) 
+						$start = ($page - 1) * $limit; 			//first item to display on this page
+					else
+						$start = 0;								//if no page var is given, set start to 0
+						
+					
+				$pagination = pagination($targetpage, $total, $page, $limit);
+				// pagination end	
+					
+				$query.=" LIMIT $start, $limit";						
+				$result = $db->execQuery($query);
+				$arinfo = $db->resultArray($result);	
+			
+					
+						for ($i = 0; $i < sizeof($arinfo); $i++)
+						{
+					
+			//**********************88
+					
+			    ?>
+                <tr>
+                  <td bgcolor="#FFFFFF" class="bodytext"><?php echo $arinfo[$i]["customers_firstname"]." ".$arinfo[$i]["customers_lastname"]; ?></td>
+                  <td bgcolor="#FFFFFF" class="bodytext"><?php echo strtolower($arinfo[$i]["customers_email_address"]); ?></td>
+				   <td bgcolor="#FFFFFF" class="bodytext"><?php  echo ($arinfo[$i]["status"] != 0)?($arinfo[$i]["status"] == 1)?"<a  class='nav' href='index.php?action=existing_customer&tabm=&id=".$arinfo[$i]["customers_id"]."&status=2' title='Suspend it'>Active</a>":"<a class='nav' href='index.php?action=existing_customer&tabm=&id=".$arinfo[$i]["customers_id"]."&status=1' title='Activate it'>Suspended</a>":"<a class='nav' href='index.php?action=existing_customer&tabm=&id=".$arinfo[$i]["customers_id"]."&status=1'  title='Activate it'>Pending?</a>"; ?></td>
+                  <td align="center" bgcolor="#FFFFFF" class="bodytext"><?php if($arinfo[$i]["status"] == 2){?><a class="nav" href="index.php?action=customer_del&id=<?php echo $arinfo[$i]['customers_id']; ?>&tabm=&amp;type=<?php echo $_REQUEST["type"];?>" onClick="return confirm('All information about customer and order history.\n Are you sure you want to delete this?');">Delete</a> | <?php } ?>
+				  <a class="nav" href="index.php?action=customer_view&cid=<?php echo $arinfo[$i]['customers_id']; ?>&tabm=">View</a>
+				  </td>
+                </tr>
+                <?php
+                    }
+					
+				?>
+            </table></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          
+          <tr>
+            <td align="center">
+			 <?php echo $pagination;?>			
+			</td>
+          </tr>
+        </table></td>
+        <td background="images/box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+        <td background="images/box_08.jpg">&nbsp;</td>
+        <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+      </tr>
+    </table>
+    </td>
+    <td width="4%">&nbsp;</td>
+  </tr>
+</table>

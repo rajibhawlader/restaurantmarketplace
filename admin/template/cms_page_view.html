@@ -1,0 +1,164 @@
+<?
+include("spaw/spaw.inc.php");
+?>
+<script language="javascript">
+function checkfield()
+{
+	
+	
+	if (document.user.post_title.value == "" )
+  {
+    alert("Page is a required field!");
+    document.user.post_title.focus();
+    return false;
+  }
+		
+		
+	return true;
+}
+</script>
+<script type="text/JavaScript">
+<!--
+
+
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+//-->
+</script>
+<style type="text/css">
+<!--
+.style2 {	font-size: 14px;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.style5 {font-size: 12px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; }
+-->
+</style>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="16%" height="400" valign="top">&nbsp;</td>
+    <td width="84%" align="left" valign="top"><table width="90%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td align="center"><table width="99%" border="0" align="center" cellpadding="0" cellspacing="0">
+            <tr>
+              <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+              <td background="images/box_02.jpg"><span class="box_title_text">Content / Page Update  </span></td>
+              <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+            </tr>
+            <tr>
+              <td background="images/box_04.jpg">&nbsp;</td>
+              <td width="100%" valign="top"><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td width="9"><img src="images/box_01.gif" width="9" height="9" alt="" /></td>
+                  <td background="images/top_line.gif"><img border="0" src="images/top_line.gif" width="1" height="9" /></td>
+                  <td width="12"><img src="images/box_03.gif" width="12" height="9" alt="" /></td>
+                </tr>
+                <tr>
+                  <td background="images/left_line.gif" width="9">&nbsp;</td>
+                  <td><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+
+                     
+                      <tr>
+                        <td colspan="3" align="right" class="message"><a href="index.php?action=cms_page_list&tabm=cmst" class="nav"><strong>&lt;&lt; Back To Page List </strong></a></td>
+                      </tr>
+					   <?php 
+										 if (isset($message) && !empty($message)) {
+										 ?>
+                      <tr>
+                        <td colspan="3" align="center" class="message"><?php echo $message; ?></td>
+                      </tr>
+                      <?php
+										 }
+										 ?>
+                      <tr>
+                        <td><? 
+				$query = "SELECT * FROM cms_posts WHERE ID=".$_REQUEST["ID"]."";
+				$result = $db->execQuery($query);
+                $arinfo = $db->resultArray($result);
+								 ?>
+                            <table width="100%" border="0" align="center" cellpadding="5" cellspacing="1" class="bodytext">
+                              <form action="index.php?action=update_cms_page&ID=<? echo $arinfo[0]["ID"];?>&tabm=cmst" method="post"  name="user" id="user" onSubmit="return checkfield()">
+                                <tr>
+                                  <td colspan="3" class="bodytext">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="3" class="bodytext"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                      <tr>
+                                        <td width="6%" align="left" valign="top"><div align="right"><span class="style5">Title</span> :</div></td>
+                                        <td width="22%" align="left" valign="top"><input name="post_title" type="text" class="textbox_wht" id="post_title" value="<?php echo $arinfo[0]["post_title"];?>" size="25" /></td>
+                                        <td width="11%" align="left" valign="top">&nbsp;</td>
+                                        <td width="15%" align="left" valign="top">&nbsp;</td>
+                                      </tr>
+                                      <tr>
+                                        <td align="left" valign="top">&nbsp;</td>
+                                        <td align="left" valign="top">&nbsp;</td>
+                                        <td align="left" valign="top">&nbsp;</td>
+                                        <td align="left" valign="top">&nbsp;</td>
+                                      </tr>
+                                  </table></td>
+                                </tr>
+                                <tr>
+                                  <td colspan="3" valign="top" bgcolor="#F0F0F0" class="bodytext"><span class="style2">Page</span></td>
+                                </tr>
+                                <tr>
+                                  <td colspan="3" align="left" valign="top" bgcolor="#F0F0F0" class="bodytext"><?php 
+					    
+								$sw = new SpawEditor('post_content',stripslashes($arinfo[0]["post_content"]));
+								$sw->show();
+				?></td>
+                                </tr>
+								
+				  <tr>
+                               <td colspan="3" valign="top" bgcolor="#F0F0F0" class="bodytext"><span class="style2">Meta</span></td>
+                               </tr>
+                                <tr>
+                                  <td colspan="3" align="left" valign="top" bgcolor="#F0F0F0" class="bodytext">
+								  <textarea name="meta_content" style="width:100%; height:400;"><?=stripslashes($arinfo[0]["meta_info"])?></textarea>
+								</td>
+                                </tr>				
+                                <tr>
+                                  <td width="2">&nbsp;</td>
+                                  <td width="308" ><input type="submit" value="Update" name="submit" class="button_grn" />                                  </td>
+                                  <td width="382" ><div align="left">
+                                    <!--<a href="index.php?action=forgot_password" class="nav">Forgot Password?</a>-->
+                                  </div></td>
+                                </tr>
+                              </form>
+                            </table></td>
+                      </tr>
+                  </table></td>
+                  <td background="images/right_line.gif" width="12">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td width="9"><img src="images/box_07.gif" width="9" height="11" alt="" /></td>
+                  <td background="images/bottom_line.gif"><img border="0" src="images/bottom_line.gif" width="2" height="11" /></td>
+                  <td width="12"><img src="images/box_09.gif" width="12" height="11" alt="" /></td>
+                </tr>
+              </table></td>
+              <td background="images/box_06.jpg">&nbsp;</td>
+            </tr>
+            <tr>
+              <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+              <td background="images/box_08.jpg">&nbsp;</td>
+              <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+            </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+</table>

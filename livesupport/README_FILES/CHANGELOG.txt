@@ -1,0 +1,1810 @@
+  Version 2.15.0:  (Released: August 20, 2008)
+-================================================================== 
+ CHANGE OVERVIEW:
+ ------------------------------------------------------------------
+ - Fixed SQL injection vulnerability (thanks to GulfTech Security Research)
+ - Fixed Cross Site Scripting vulnerabilty with "department" in
+   livehelp_js.php (see http://secunia.com/advisories/31340/ )
+ - Removed hard coded width 142px from generated HTML section..
+ - updated spanish lang file to use charset "ISO-8859-1"
+ - Fixed issue with operator channels sometimes getting crossed with
+   multiple operators are chatting (3+) 
+ - Fixed issue with being able to re-name operators.
+ - Fixed issues noted by "exdiogene" :
+    a) ablity to login with URI instead of filling the login form    
+    b) Problems with the international characters not properly displayed. 
+    c) Added Charset to operator settings to allow different charsets for operators.
+        (Use new Charset type dropmenu in list of users online)
+    d) Added more language conversions for users list in admin.
+ - "Live help only" users can no longer change monitor settings. 
+ - Fixed Issue with messages that are sent at the exact same second as
+   another person being lost in the chat and not shown.   
+ - Added option to transfer a user to an Operator rather then to a department.
+ - Updated the admin list of users and chaters to have the option of 
+ -   using ajax rather then refreshing. New Ajax users list type dropmenu
+    
+  FILES CHANGED: 
+ -------------------------------------------------------------------------
+   admin_users_refresh.php, xmlhttp.php, admin_users_xmlhttp.php,
+   user_chat_xmlhttp.php, admin_chat_xmlhttp.php, admin_chat_bot.php
+   admin_actions.php, functions.php, admin_image.php, htmltags.php,
+   is_xmlhttp.php, autoinvite.php, helpwindow.php, live.php,
+   admin_common.php, config_cslh.php, setup.php, mastersettings.php,
+   security_functions.php, is_flush.php, livehelp_js.php, admin_users.php
+   lang/lang-*.php files
+   
+  DATABASE ALTERATIONS:
+ --------------------------------------------------------------------------   
+ none
+
+
+  Version 2.14.6:  (Released: March 1, 2008)
+-================================================================== 
+ CHANGE OVERVIEW:
+ ------------------------------------------------------------------
+ - Fixed Minor Cross Site Scripting vulnerabilties in 
+   livehelp.php, user_questions.php, lostsheep.php, and leavemessage.php
+ - Added scrolling to department choice page.
+ - added ability to re-name visitor ip addreses from admin.
+ - when listing transcripts it now defaults to showing all deparments
+   unless the user looking at the transcripts does not have access to 
+   all transcripts. 
+ - Updated online Docs 
+  
+  FILES CHANGED: 
+ -------------------------------------------------------------------------
+  livehelp.php, setup.php, leavemesssage.php, livehelp_js.php   
+  
+  DATABASE ALTERATIONS:
+ --------------------------------------------------------------------------   
+none
+
+
+  Version 2.14.5:  (Released: September 1, 2007)
+-================================================================== 
+ CHANGE OVERVIEW:
+ ------------------------------------------------------------------
+ another minor release to fix some small details of the 2.14.x release 
+ series .. 
+ - Fixed Issue with broken tab graphics on tabs with long names.
+   had a bit of e-mail reuarding this issue..  it is fixed now
+   sorry it took so long..
+ - Fixed Issue with time sometimes being very large such as:
+    Duration: 48693 hrs 38 min 26 sec 
+ - Added click highlighting to the html code.. and changed it
+   from a image link to a text link.. 
+     
+  FILES CHANGED: 
+ -------------------------------------------------------------------------
+ setup.php, htmltags.php, livehelp_js.php, user_top.php, functions.php
+ images/*/left-tab.gif,images/*/right-tab.gif,
+ images/*/left-tab-on.gif,images/*/right-tab-on.gif, functions.php
+ 
+  DATABASE ALTERATIONS:
+ --------------------------------------------------------------------------   
+none
+ 
+ 
+ 
+ 
+  Version 2.14.4:  (Released: July 1, 2007)
+-================================================================== 
+ CHANGE OVERVIEW:
+ ------------------------------------------------------------------
+ minor release to fix some small details of the new 2.14.x release 
+ series .. it is all good now :-)  
+ - fixed "whatissaid" javascript issue.
+ - Added try catch javascript for xmlhttp requests result .innerlayer calls
+   this fixs the IE issue of sometimes saying "null is not an object" 
+   
+  FILES CHANGED: 
+ -------------------------------------------------------------------------
+ setup.php, mastersettings.php, user_chat_refresh.php, external_chat_xmlhttp.php,
+ admin_connect.php, admin_chat_xmlhttp.php, user_chat_xmlhttp.php
+ 
+  DATABASE ALTERATIONS:
+ --------------------------------------------------------------------------   
+ALTER TABLE `livehelp_config` ADD `smtp_portnum` int( 10 ) NOT NULL default '25'
+ 
+ 
+  Version 2.14.3:  (Released: June 14, 2007)
+-================================================================== 
+ CHANGE OVERVIEW:
+ ------------------------------------------------------------------
+ - Upgraded the LC2 server file to version 2.5 
+ - Fixed wrong navigation.css files in white,yellow and brown designs
+ - Added Close mysql connection to the close of the session to 
+   try to avoid many sleeping mysql connections.
+ - Fixed tabs in the data section to match color scheme. 
+ - Added htmlspecialchars to all textarea fields to avoid html conflicts
+    
+  FILES CHANGED: 
+ -------------------------------------------------------------------------
+ user_questions.php, user_chat_refresh.php, external_chat_xmlhttp.php,
+ admin_connect.php, admin_chat_xmlhttp.php, admin_chat_refresh.php,
+ admin_chat_flush.php, user_chat_flush.php, client_visitors.php,
+ setup.php, user_questions.php, department_functions.php
+ 
+ 
+  Version 2.14.2:  (Released: June 12, 2007)
+-================================================================== 
+ CHANGE OVERVIEW:
+ ------------------------------------------------------------------
+  - Updated the CSS of the tabs so that they are a lot easier to 
+    custom change the design of. now you only need to change 4 images
+    rather then 12. 
+  - Added charset encoding to the xmlhttp request response which 
+    should solve the unknown character problem !!
+  - Fixed mod_security issue with leaveamessage.php
+  - Changed all the lang files from utf-8 to native lang charsets if
+    you have trouble with encoding change charset in the 
+    lang/lang-[yourlanguage].php file.
+  - Added ability to use external SMTP server to send e-mail using
+    smtp host, username and password. 
+  
+  FILES CHANGED: 
+ ------------------------------------------------------------------------- 
+ xmlhttp.php, user_chat_xmlhttp.php, admin_chat_xmlhttp.php,
+ admin_options.php, user_top.php, functions.php, navigation.php,
+ admin_rooms.php, setup.php, lang/lang-*.php files
+ (a lot of images in images/* were changed too)
+ 
+ DATABASE ALTERATIONS:
+ --------------------------------------------------------------------------   
+ALTER TABLE `livehelp_config` ADD `smtp_host` VARCHAR( 255 ) NOT NULL default ''
+ALTER TABLE `livehelp_config` ADD `smtp_username` VARCHAR( 60 ) NOT NULL default ''
+ALTER TABLE `livehelp_config` ADD `smtp_password` VARCHAR( 60 ) NOT NULL default ''
+ALTER TABLE `livehelp_config` ADD `owner_email` VARCHAR( 255 ) NOT NULL default ''
+  
+  
+  
+  
+  Version 2.14.1:  (Released: June 6, 2007)
+-================================================================== 
+ CHANGE OVERVIEW:
+ ------------------------------------------------------------------
+  - Sessions are now stored in the database rather then using 
+    the session file.
+  - Fixed issue with No chat icon showing when NO auto invites are 
+    set to active..
+  - Fixed issue with missing attribute of  type="text/javascript" for
+    users side of chat which caused problems in some version of 
+    IE (sometimes??)
+  - Sessions are now enabled by defualt now on chat icon.. This should
+    help with the "0 page visit" and [ip address]_1 _2 people... 
+  - added some more try and catch statments to ajax calls in chat to 
+    avoid javascript errors during chat due to unloaded divs..
+  - re-programmed the xmlhttp request to not use the 
+    @if (@_jscript_version >= 5)  conditional  and it now just uses try catch
+    which solves some of the IE 6 errors.
+  
+  FILES CHANGED: 
+ ------------------------------------------------------------------------- 
+ All of them changed.
+ 
+ DATABASE ALTERATIONS:
+ --------------------------------------------------------------------------   
+CREATE TABLE `livehelp_sessions` (
+  `session_id` varchar(100) NOT NULL default '',
+  `session_data` text NOT NULL,
+  `expires` int(11) NOT NULL default '0',
+   PRIMARY KEY  (`session_id`)
+   ) TYPE=MyISAM;
+   
+  
+  Version 2.14.0:  (Released: May 22, 2007)
+-================================================================== 
+ CHANGE OVERVIEW:
+ ------------------------------------------------------------------
+ - Fixed Mac Browser "white space line" issue and auto invite not 
+   working for Safari browsers. 
+ - Fixed missing "view" array element in language files.
+ - Fixed problem with default value for text and blob fields preventing 
+   install on newer mysql versions.
+ - Fixed upgrade issue with auto-increment field {the get_identity() error}  
+ - Fixed valign on q&a mod so that the question folders are aligned to the
+   top..
+ - The scratch space now does NOT allow html characters to prevent operators
+   from causing havic 
+ - Fixed "keep getting logged out" error by deprecating match ip to 
+   session feature and deprecating option not to use sessions.. 
+ - deprecated flush() and refresh default chat modes... They still exist
+   in the installation but are only used if AJAX fails which 
+   because of browsers these days that is doubtful.. This Fixes
+   some users "white screen" chat problems and users shooting 
+   selfs in foot.
+ 
+ FILES CHANGED: 
+ ------------------------------------------------------------------------- 
+ All of them changed... but most important is mastersettings.php, 
+ navigation.php, qa.php, user_qa.php, livehelp.php  and lang-swedish.php 
+ 
+ DATABASE ALTERATIONS:
+ --------------------------------------------------------------------------   
+ None ...
+
+
+
+  Version 2.13.1:  (Released: November 27, 2006)
+-================================================================== 
+ CHANGE OVERVIEW:
+ ------------------------------------------------------------------
+ - Fixed javascript error with script tag which was preventing
+   the chat from working in Internet Explorer 7.0 
+ - Fixed auto invite for none-department generated code.
+ - Fixed undefined variable in hide/show departments.
+   
+ FILES CHANGED: 
+ -------------------------------------------------------------------------
+ is_xmlhttp.php, setup.php
+ 
+ DATABASE ALTERATIONS:
+ --------------------------------------------------------------------------   
+ None. 
+  
+ 
+ 
+ Version 2.13.0:  (Released: November 15, 2006)
+-================================================================== 
+ CHANGE OVERVIEW:
+ ------------------------------------------------------------------
+ - Added a basic chat request queue system by adding a new section
+   in the list of users called "Chat Requests" with list of chat 
+   requests waiting for an operator with time of the request listed
+   next to the user.  
+ - Re-arranged " Chatting Users" section to be ordered by operator 
+   and then list which chats that operator is currently involved in 
+   below their operator name.
+ - Updated Operator History page to show Total time monitoring traffic,
+   total time logged in and total time chatting.
+ - Added links in Operator history page to transcripts of the chats 
+ - Added option to re-name ipaddress usernames for active chat sessions
+   where no questions are asked before the chat.       
+ - updated "chat colors" window to show the usernames of the chatters
+   with the color of their text.     
+ - Fixed Bug with non-department generated code always showing live help as 
+   offline.
+ - Fixed Issue with mod_security and requests with the string
+   "http://" or "https://" inside the querystring for page and referer values.
+ - Fixed max int issue with incrementing timestamp value by one.. 
+ - Fixed issue with the usernames for operators being changed to operatorname_1 , 
+    operatorname_2 , using the windows client  
+ - Fixed paging issue with department transcripts (bug #1589448 )
+
+   
+ FILES CHANGED: 
+ -------------------------------------------------------------------------
+ admin_users_refresh.php, user_questions.php, user_connect.php,
+ user_chat_flush.php, livehelp.php, gc.php , logout.php,
+ navigation.php, livehelp_js.php, data_transcripts.php, functions.php,
+ visitor_common.php, operators_history.php, images.php , admin_chat_bot.php,
+ admin_actions.php, setup.php
+ 
+  
+ DATABASE ALTERATIONS:
+ --------------------------------------------------------------------------   
+ None. 
+
+
+  Version 2.12.9:  (Released: May 1, 2006)
+-================================================================== 
+ CHANGE OVERVIEW:
+ ------------------------------------------------------------------
+ - Fixed Insecure smilies when using HTTPS mode for chat. 
+ - Removed "|" character from transfered title and referer pages as it
+   seemed to cause some servers not to show the online/offline image..
+ - Generated HTML code (non-javascript) now opens in a new window.
+ - fixed bug with commas in converted urls 
+ - added fix for mod_security with questions marks in query string.
+ - Added option to hide selected departments from department listing page. 
+ - Fixed bug with closed session page always showing the default departments header.
+ - increase default wait time for time out from 1 minute to 5 minutes.
+ - Fixed Extra space that appears at the bottom of image when no 
+   "powered by" image is selected.
+ - Added additional support for Windows application via client_visitors.php
+ - Added links to new Windows App and New Support Packages in overview index.     
+ - Limited the sizes of the title, referer and url in the javascript query to
+   live help to fix problem with long SEO title tags overflowing the page request.
+   
+ FILES CHANGED: 
+ -------------------------------------------------------------------------
+ navigation.php, livehelp_js.php, setup.php, wentaway.php, choosedepartment.php,
+ departments.php, visitor_common.php, image.php, user_bot.php, functions.php,
+ external_bot.php, admin_chat_bot.php, htmltags.php, client_visitors.php , gc.php
+  
+ DATABASE ALTERATIONS:
+ --------------------------------------------------------------------------   
+ALTER TABLE `livehelp_departments` ADD `visible` INT( 1 ) DEFAULT '1' NOT NULL ;
+ 
+
+
+  Version 2.12.8:  (Released: February 28, 2006)
+=================================================================== 
+ CHANGE OVERVIEW:
+ ----------------------------------------------------------------------
+ - Added ability to Track PATH a visitors have taken on site. You can now
+   track where people go from any selected page and what percentage of the
+   traffic goes to that page.
+ - Added ability to invite based on time online 
+ - Added options in Department settings to enable or disable smilies for visitors window.
+ - Admin now defaults to use PHP sessions rather then cookies. Helps with
+   some users not being able to log in.
+ - Re-named "XML HTTP" to "AJAX" .. seems this has become the buzz word for
+   XML HTTP requests..  It is the same thing I have been doing for 3 years 
+   just named different these days.
+ - Added Fix for https secure operator chats giving secure/insecure notice
+   errors when logging in.
+ - Canned messages are now appended to currently typed text rather then 
+   replacing the text.
+ - Fixed spacing issues with answers to questions on beinging of chat.
+ - Added support for special norwegian letters for xml http requests.
+ - fixed some small spelling errors..  
+ - fixed issue with $ signs in the password...
+ - added langage file for Portuguese_Portugal 
+ - fixed javascript error with undefined object.
+ - Added option to filter query string requsts for modsecurity.. Also
+   title, referer and page name are all filtered for non-printable chars.
+ - added more filters for email headers to avoid spam attacks. 
+ - Added notices on tracking referers and page visits from generate html page. 
+     
+ FILES CHANGED: 
+ -------------------------------------------------------------------------
+ department_function.php, setup.php, departments.php, user_bot.php,
+ mastersettings.php, data_visits.php, htmltags.php, data_paths.php,
+ data_clean.php, admin_users_refresh.php, functions.php, livehelp_js.php,
+ data.php, visitor_common.php, user_questions.php, security_functions.php,
+ lostsheep.php, leavemessage.php,user_chat_xmlhttp.php, admin_chat_xmlhttp.php
+  
+ DATABASE ALTERATIONS:
+ --------------------------------------------------------------------------   
+CREATE TABLE `livehelp_paths_firsts` (
+  `id` int(11) unsigned NOT NULL auto_increment,
+  `visit_recno` int(11) unsigned NOT NULL default '0',
+  `exit_recno` int(11) unsigned NOT NULL default '0',
+  `dateof` int(8) NOT NULL default '0',
+  `visits` int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`id`),
+  KEY `visit_recno` (`visit_recno`,`dateof`,`visits`)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+
+CREATE TABLE `livehelp_paths_monthly` (
+  `id` int(11) unsigned NOT NULL auto_increment,
+  `visit_recno` int(11) unsigned NOT NULL default '0',
+  `exit_recno` int(11) unsigned NOT NULL default '0',
+  `dateof` int(8) NOT NULL default '0',
+  `visits` int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`id`),
+  KEY `visit_recno` (`visit_recno`,`dateof`,`visits`)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+
+ALTER TABLE `livehelp_departments` ADD `smiles` CHAR( 1 ) NOT NULL DEFAULT 'Y';  
+
+
+ Version 2.12.7:  (Released: December 2, 2005)
+============================================================================ 
+ CHANGE OVERVIEW:
+ ---------------------------------------------------------------------------
+ - Added check to prevent/remove duplicate sessions with same sessionID.
+ - Fixed undefined notices in data_messages.  
+ - charset bug with having UTF-8 (I guess I can not win) seems to work for 
+   me now.
+ - added missing html tag for charset on admin_chat_bot.php and 
+   external_bot.php
+     
+ FILES CHANGED: 
+ -------------------------------------------------------------------------
+ setup.php, functions.php, data_messages.php, lang/lang-*.php, 
+ admin_chat_bot.php and external_bot.php
+ 
+ DATABASE ALTERATIONS:
+ --------------------------------------------------------------------------   
+  No database alterations.  
+  
+  
+ Version 2.12.6:  (Released: November 16, 2005)
+============================================================================ 
+ CHANGE OVERVIEW:
+ ---------------------------------------------------------------------------
+ - Fixed minor HTML Insertion problem with users Questions 
+ - Fixed another charset bug with typing preview not showing correctly for 
+   characters like " å ä ö " etc... and jsut showing " ? ? ? "
+   Also changed default encoding to UTF-8
+ - Fixed extra slash in the path to the live help online image and 
+   leave a message image.    
+ - When Hide icon when not online is enabled there is no
+   longer the 2X6 transparent gif showing.. nothing appears.  
+ - Added option to not focus for external chat windows.  
+ - Count of current visitors online is now increased to the count of
+   visitors active in the past 4 minutes rather then last 2 minutes.
+ - Charset on copyright fixed.
+      
+ FILES CHANGED: 
+ -------------------------------------------------------------------------
+ almost all the files had changes in this release... it would be best to
+ replace all files.
+ 
+ DATABASE ALTERATIONS:
+ --------------------------------------------------------------------------   
+  No database alterations.
+ 
+ 
+   
+ Version 2.12.5:  (Released: September 30, 2005)
+============================================================================ 
+ CHANGE OVERVIEW:
+ ---------------------------------------------------------------------------
+ - Fixed charset bug with typing preview not showing correctly for some
+   languages (was showing encoded chars like %02%0s etc..)
+ - Fixed bug where if non-department specific code is generated the javascript
+   icon was sometimes showing offline rather then online due to program 
+   picking status of the operators from the default department rather then
+   any department.
+ - Fixed issue with sound alert playing multiple times when more then one
+   visitors shows up or more then one chat request was made at the same time.
+ - Added ability for operators with non-admin access to change their own
+   password/details.   
+ - Removed unneeded javascript from Dynamic Dyo libraries.
+ - Update all translation files
+ - Added 2 new layer invites
+ - Fixed 2 images on brown color template that were incorrect.
+ - Expanded the layer invite size to allow bigger layer images to be used.
+   It was clipping them before.
+ - Type of view was not being passed for the paging links for data referers 
+   this is fixed.
+ - When a new department is created all users with admin access are now auto
+   added to that department.     
+ - Added ability for visitor to be notified that the operator is currently 
+   typing text WITHOUT the full text preview option.
+ - added number of hidden visitors for operators to see number of visitors
+   outside their own department that are online.
+ - Limited permissions so that Operators can only view transcripts and messages 
+   of the Departments that they belong to in the data tab. 
+ - Fixed bug with new departments being created without a e-mail box but
+   having e-mail required.. also fixed SQL error on auto creating e-mail if
+   e-mail functions are enabled but no e-mail field exists.   
+ - Added "Restricted" and "Live Help Only" access option for operators who 
+   should only see "live help" and "data" (which is "Restricted") or 
+   only see the Live Help tab and nothing else which is "Live Help only"  
+ - fixed image type error in functions.php for non-gif images.
+      
+   
+ FILES CHANGED: 
+ --------------------------------------------------------------------------   
+ lang/lang-*.php, 
+ functions.php, modules.php, navigation.php, admin_options.php,
+ departments.php, operators.php, login.php, scratch.php, data.php,
+ admin_common.php, leavemessage.php, livehelp_js.php,
+ department_function.php, data_transcripts.php, csv.php,
+ data_messages.php, external_bot.php, admin_chat_bot.php
+ admin_users_refresh.php, external_chat_xmlhttp.php,
+ image.php, setup.php, user_chat_xmlhttp.php, admin_chat_xmlhttp.php,
+ visitor_common.php, user_bot.php , xmlhttp.php
+ 
+ DATABASE ALTERATIONS:
+ --------------------------------------------------------------------------   
+   ALTER TABLE `livehelp_users` CHANGE `showtype` `showtype` INT( 10 ) DEFAULT '1' NOT NULL
+  
+  
+ Version 2.12.4:  (Released: August 27, 2005)
+============================================================================ 
+ CHANGE OVERVIEW:
+ --------------------------------------------------------------------------
+ - Updated setup to auto detect old version and upgrade easy without
+   re-inputting anything. (See UPGRADE.txt ) 
+ - Updated Translations for : Spanish, French, Portuguese Brazilian,
+   German, Italian, and Swedish.
+ - Fixed issue with Path slashes being the wrong way for WINDOWS hosted
+   users this caused layer invites, smilies, and languages to not work
+   on windows servers. 
+ - removed name from "From:" header in leaveamessage which was causing
+   some IIS servers to hickup.
+ - If no department is specified all operators can now see the visitor.   
+ - Changed choose a department page to have online/offline "lights" layout 
+ - Fixed issue with loosing session ID if using PHP version 4.1.0 or earlier.
+ - Added top header graphics to session closed and choose department pages. 
+ - Added Ability to order the listing of departments on the choose a department page.    
+ - Fixed Ability to send invites based on page currently visiting.
+ - Added ability to collapse list of chatters the same way as visitors.
+   
+ FILES CHANGED: 
+ --------------------------------------------------------------------------   
+   lang/lang-Spanish.php , lang/lang-French.php ,lang/lang-Portuguese_Brazilian.php ,
+   lang/lang-German.php ,lang/lang-Swedish.php  , functions.php, 
+   choosedepartment.php, leaveamessage.php, setup.php, config_cslh.php 
+   smile.php, admin_common.php, autoinvite.php, edit_layer.php, edit_smile.php
+   layer.php, mastersettings.php, departments.php , department_function.php
+ 
+ DATABASE ALTERATIONS:
+ --------------------------------------------------------------------------   
+ ALTER TABLE `livehelp_departments` ADD `ordering` INT( 5 ) UNSIGNED DEFAULT '0' NOT NULL
+   
+  
+  
+ Version 2.12.3:  (Released: August 7, 2005)
+============================================================================ 
+ CHANGE OVERVIEW:
+ ---------------------------------------------------------------------------
+ - Fixed XML HTTP to not use POST requests for older browsers( caused white screens or 
+   non-responsive chats for users using old browsers including Netscape 6 
+   and some AOL browsers. XHTML now uses GET requests rather then POST requests.   
+ - Fixed bug with updating existing image maps and having them update in the 
+   database.
+ - Fixed bug with French Language file which stopped chat from working.
+ - Fixed some updefined indexes in the keyword archiving function.
+ - If not sending messages by e-mail on the leave a messages option you can
+   now not require the e-mail field.
+ - Updated the way that sound was embeded for alerting of chats to 
+   use bgsound if Ie or opera
+ - changed the Interval to 2 seconds rather then 3 seconds for update requests
+   in the chat.
+ 
+ FILES CHANGED: 
+ --------------------------------------------------------------------------
+ external_frameset.php, functions.php, external_chat_xmlhttp.php
+ admin_chat_xmlhttp.php, user_chat_xmlhttp.php, setup.php
+ leavemessage.php, login.php, image.php, edit_layer.php,
+ admin_users_refresh.php, javascript/xmlhttp.js
+ 
+ DATABASE ALTERATIONS:
+ --------------------------------------------------------------------------   
+  No database alterations.
+   
+ 
+ Version 2.12.2:  (Released: July 10, 2005)
+============================================================================ 
+ CHANGE OVERVIEW:
+ --------------------------------------------------------------------------
+ - Fixed bug where if a user has two different pages open monitored
+   by crafty syntax the page visits no longer get into a loop between the
+   two different pages opened.
+ - The clear screen icon on client side of chat now works :-)
+ - small issue with animated arrows on admin navigation is fixed.
+ - Updated default values on installation to have '0' rather then 
+   now() for bigint fields in livehelp_users which solves some mysql installation issues.
+ - Fixed issue with cut off username php field in advanced options.
+ - Fixed bug with [+] sign on the data tabs not working for earlier months
+ - Erase transcripts via clean-up tab now works.
+ - Referer and Page visit tracking is default 'N' (Off) in setup.php    
+ - Updated Language files to include more text
+ - The number of pings was off by a factor of 2 so pinging the visitor was
+   being done twice as long then set. This is fixed.
+
+   
+ FILES CHANGED: 
+ --------------------------------------------------------------------------
+data_functions.php , data_clean.php , navigation.php , data_messages.php
+data_referers.php , data_users.php , data_transcripts.php , image.php
+data_visits.php , gc.php , livehelp_js.php , htmltags.php 
+setup.php
+
+ DATABASE ALTERATIONS:
+ --------------------------------------------------------------------------     
+Added a index on page in livehelp_visit_track and 
+In the installation livehelp_users fields lastaction and chataction have
+been changed to default '0' rather then default now() this I believe only
+changes new installations as old installs seem to have auto turned the now()
+into 0. Also changed the defaults for tracking, reftracking, and 
+keywordtrack to 'N' :
+
+ALTER TABLE `livehelp_visit_track` ADD INDEX ( `page` ) 
+
+  lastaction BIGINT(14) DEFAULT '0'
+  chataction BIGINT(14) DEFAULT '0'
+ `tracking` char(1) NOT NULL default 'N',
+ `reftracking` char(1) NOT NULL default 'N',
+ `keywordtrack` char(1) NOT NULL default 'N',
+     
+   
+ 
+ Version 2.12.1:  (Released: June 22, 2005)
+============================================================================ 
+ CHANGE OVERVIEW:
+ --------------------------------------------------------------------------
+ - Fixed a SQL  problem with the keyword tracking
+   sql queries. For a quick fix to version 2.12.0 find line #1434 
+   in functions.php and change it from:
+         $keywords = str_replace("'","",$keywords);
+   to 
+         $keywords = filter_sql(str_replace("'","",$keywords));
+ - converted a few short hand php tags "<?" to long hand "<?php"
+ - in transcripts logs and messages in data tab, time was not following time offset 
+   setting this is fixed.    
+ - Fixed bug with not being able to disable keyword or username tracking.
+ - Updated French and Swedish Translation 
+ 
+ FILES CHANGED: 
+ --------------------------------------------------------------------------
+ details.php, data_users.php, data_keywords.php, functions.php
+ leavemessage.php, operators_history.php, images.php gc.php
+ setup.php, lang/lang-French.php, lang/lang-Swedish.php 
+   
+ DATABASE ALTERATIONS:
+ --------------------------------------------------------------------------     
+ No database alterations between 2.12.0 and 2.12.1
+  
+  
+  Version 2.12.0:  (Released: June 11, 2005)
+============================================================================ 
+  CHANGE OVERVIEW:
+  --------------------------------------------------------------------------
+  - Added Department, operator names and chat time to transcripts.
+  - Added options to search transcripts by date, operator, 
+    phrase or department.
+  - Added Ability to Track Keywords in data tab.    
+  - Changed layout of data page to "tab" the
+    referers, page visits, transcripts, User identities, messages,  
+    Keywords, and data clean up options.        
+  - Added Database table for "Leave a Message" Messages and data 
+    as an alternative to sending message by e-mail.    
+  - Added ability to export a CSV file of "Leave a Message" Messages and data 
+  - When 'hide icons if not online' was checked the 'powered by
+    crafty syntax' text was  still displayed even though the image
+    is not displayed. This is fixed.  
+  - fixed bug where if you are sending html the regexp for auto links
+    was altering the message. This is fixed.
+  - Page tracking and Referer tracking can be enabled/disabled 
+    separatly now. You can not turn on referer tracking but turn
+    off page tracking.
+  - Fixed issue with encoded characters in XML HTTP requests
+  - Added option to not have a greeting or message shown when chat is 
+    answered.
+  - Fixed issue with chat somtimes being closed on the users side 
+    upon begining chat due to live help thinking the user was idle.
+  - Added a few missing Char Encoding tags to a few pages.
+  - Fixed bug with showing referer graph for visit links on second level
+    of domain tree expanded in data tab.  
+  - added option to not use server e-mail functions by department or not
+    use database for leave a message messages.
+  - Added e-mail field to list of fields shown in e-mail message.  
+  - Added ability to change subject line for leave a message. 
+  - Added more text to translation lang files.  
+  - Added option NOT to remember visitors by username upon re-visit.
+  - Fixed several mispellings and typos.
+    
+ FILES CHANGED: 
+ --------------------------------------------------------------------------
+    config_cslh.php, details.php, livehelp_js.php, user_top.php, 
+    data_*.php , csv.php , live.php , user_chat_xmlhttp.php
+    external_bot.php, user_bot.php, livehelp.php, security_functions.php
+    user_chat_flush.php, user_questions.php, view_transcript.php
+    data.php, modules.php , operators.php, image.php, user_connect.php
+    department_functions.php, visitor_common.php, security.php
+    navigation.php, admin_chat_flush.php, admin_actions.php, invite.php
+    leavemessage.php, view_message.php, wentaway.php, functions.php,
+    mastersettings.php, setup.php lang/*.php class/*.*
+        
+ DATABASE ALTERATIONS:
+ --------------------------------------------------------------------------
+   ALTER TABLE `livehelp_departments` ADD `emailfun` CHAR( 1 ) DEFAULT 'Y' NOT NULL ;
+   ALTER TABLE `livehelp_departments` ADD `dbfun` CHAR( 1 ) DEFAULT 'Y' NOT NULL ;
+   ALTER TABLE `livehelp_departments` ADD `everythingelse` text NOT NULL;
+ 
+   ALTER TABLE `livehelp_config` ADD `reftracking` CHAR( 1 ) DEFAULT 'Y' NOT NULL;
+   ALTER TABLE `livehelp_config` ADD `keywordtrack` CHAR( 1 ) DEFAULT 'Y' NOT NULL;
+   ALTER TABLE `livehelp_config` ADD `topkeywords` int(10) DEFAULT '50' NOT NULL;
+   ALTER TABLE `livehelp_config` ADD `rememberusers` CHAR( 1 ) DEFAULT 'Y' NOT NULL;
+   ALTER TABLE `livehelp_config` ADD `everythingelse` text NOT NULL;
+       
+   ALTER TABLE `livehelp_transcripts` CHANGE `daytime` `endtime` BIGINT( 14 ) DEFAULT NULL 
+   ALTER TABLE `livehelp_transcripts` ADD `starttime` BIGINT( 14 ) NOT NULL;
+   ALTER TABLE `livehelp_transcripts` ADD `duration` INT( 11 ) UNSIGNED NOT NULL ;
+   ALTER TABLE `livehelp_transcripts` ADD `operators` VARCHAR( 255 ) NOT NULL ;
+   UPDATE `livehelp_transcripts` SET starttime=endtime
+   UPDATE `livehelp_transcripts` SET duration=0
+       
+   CREATE TABLE `livehelp_leavemessage` (
+  `id` int(11) unsigned NOT NULL auto_increment,
+  `email` varchar(255) NOT NULL default '',
+  `subject` varchar(200) NOT NULL default '',
+  `department` int(11) unsigned NOT NULL default '0',
+  `dateof` bigint(14) NOT NULL default '0',
+  `sessiondata` text NOT NULL,
+  `deliminated` text NOT NULL,  
+  PRIMARY KEY  (`id`),
+  KEY `department` (`department`)
+) TYPE=MyISAM;
+ 
+   CREATE TABLE `livehelp_keywords_daily` (
+  `recno` int(11) NOT NULL auto_increment,
+  `parentrec` int(11) unsigned NOT NULL default '0',
+  `referer` varchar(255) NOT NULL default '',
+  `pageurl` varchar(255) NOT NULL default '',
+  `keywords` varchar(255) NOT NULL default '',
+  `dateof` int(8) NOT NULL default '0',
+  `levelvisits` int(11) unsigned NOT NULL default '0',
+  `directvisits` int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`recno`),
+  KEY `levelvisits` (`levelvisits`),
+  KEY `dateof` (`dateof`),
+  KEY `referer` (`referer`)
+) TYPE=MyISAM;
+
+   CREATE TABLE `livehelp_keywords_monthly` (
+  `recno` int(11) NOT NULL auto_increment,
+  `parentrec` int(11) unsigned NOT NULL default '0',
+  `referer` varchar(255) NOT NULL default '',
+  `pageurl` varchar(255) NOT NULL default '',
+  `keywords` varchar(255) NOT NULL default '',
+  `dateof` int(8) NOT NULL default '0',
+  `levelvisits` int(11) unsigned NOT NULL default '0',
+  `directvisits` int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`recno`),
+  KEY `levelvisits` (`levelvisits`),
+  KEY `dateof` (`dateof`),
+  KEY `referer` (`referer`)
+) TYPE=MyISAM;
+    
+    
+    
+  Version 2.11.7:  (Released: May 20, 2005)
+============================================================================ 
+  CHANGE OVERVIEW:
+  --------------------------------------------------------------------------
+  - Fixed bug with Page Visits Domain Tree Graph showing
+    data for the referers domain ids rather then the visits ids.
+  - Fixed bug with operators not included in default department 
+    not being able to see chat requests. 
+  
+ FILES CHANGED: 
+ --------------------------------------------------------------------------
+    visitor_common.php , image.php , livehelp_js.php , 
+    data.php , data_functions.php , setup.php
+        
+ DATABASE ALTERATIONS:
+ --------------------------------------------------------------------------
+    None   
+
+
+  Version 2.11.6:  (Released: May 10, 2005)
+============================================================================ 
+  - Fixed Manual installation error with myhtmlspecialchars() error.
+  - IP ignore option now works with class C addresses such as
+    "60.25.12" 
+  - Auto invite was inviting people on the IP ignore list . This
+    is fixed.
+  - Fixed javascript error on layer invite with "whatissaid"
+  - Changed security to not report notice errors.   
+  - Fixed issue with not seeing "currently at" field in user
+    details pop-up.
+  - Added Swedish translation.
+
+  Version 2.11.5:  (Released: May 08, 2005)
+============================================================================  
+  - Fixed issue with not being able to update module information.
+  - Servers with readfile() function disabled for security reasons
+    could not see the online/offline images this is fixed. The 
+    program now checkes for what is allowed and uses alternate methods of
+    showing images..
+  - If the operator just closes the window and does not log off 
+    their status is changed to offline in 3 minutes rather then 
+    15 minutes and sessions are extended to 20 minutes. 
+  - Added ability to track users by username rather then combo
+    of ip address and username in user tracking stats. 
+  - Fixed a bug in user tracking which was causing users to be
+    counted multiple times for the same day rather then different days.
+  - Added time visitor has been online to details and user details layer.
+  - query string now updates in modules.
+  - fixed issue with duplicate usernames which caused some users to be seen
+    as "_1" rather then username_1 
+  - Fire fox does not seem to like cross-frame variable calls. This caused
+    the alert of new chat not to auto-focus the window in Fire Fox this is fixed.
+  - updated Português do Brasil translation file.
+
+  Version 2.11.4:  (Released: April 23, 2005)
+============================================================================  
+Fixes/Updates:
+  - Added easy to understand ON/Off links to smile feature for users 
+    side of the chat.
+  - added Exit button on users side of chat to end chat as an alternative to 
+    the DHTML (x) button.
+  - javascript error with non-supported cscontrol which sometimes occured 
+    is fixed.
+  - added clear button on operator chat to clear chat window. Also 
+    made it so that if there is no chats the window auto clears.  
+  - fixed refresh mode chat for operators side of chat.
+  
+      
+  Version 2.11.3:  (Released: April 21, 2005)
+============================================================================   
+Fixes/Updates:
+ 
+  - Paging on transcripts now exists.. 
+  - Paging on User Tracked sessions now works..
+  - Fixed navigation link to games on overview page.
+  - If a new chatter requests a chat the chat screen is not 
+    refreshed.. 
+    
+  Version 2.11.2:  (Released: April 19, 2005)
+============================================================================   
+Fixes/Updates:
+  - Reset button on admin side was clearing the users
+    without recording the page view and referer information.. 
+    this is fixed.  
+  - When a visitor session ends their page views were not cleared
+    right away . this is fixed. 
+  - color scheme of "data" tab has been changed so that the colors
+    alternate. The Referer and Page view data now indents too 
+    so it is easier to read.
+  - Added User Tracking feature to track named sessions. This feature
+    allows named users to be remembered and tracked for 30 days.
+  - Added Directions to Monitor PHPBB users by username to README_FILES/PHPBB2.txt
+    this allows you when user tracking is enabled to track users by username
+    on phpbb.
+  - Disabled install using txt-db-api due to cpu problems with txt-db-api
+    and selecting from multiple joined tables.. Will resolve issue in 
+    future release.
+
+  Version 2.11.1:  (Released: April 14, 2005)
+============================================================================  
+bug fixes from the 2.11.0 Released yesterday:
+  - missing SQL field lastaction for operator seconds online
+    this is fixed.
+  - missing color.php file to Q&A section for clients side of
+    chat which caused them to have a black screen. this is fixed.
+  - fixed  Undefined variable:  askquestions in livehelp.php 
+  - a few other small issues were fixed...
+   
+  Version 2.11.0:  (Released: 04-13-05)
+======================================  
+Fixes/Updates: 
+  - Did a LOT of Optimizing for the referer and page visit tracking
+    part of Crafty Syntax Live help. Issues with mysql slowness 
+    due to large stats tables should now be solved.
+  - Host Name Lookups from ip addresses are now an optional configuration 
+    setting. This allows hosts where name service is slow to disable 
+    host lookups and speed up Crafty Syntax.
+  - Matching the class C IP address with logged in sessions ip address is
+    now optional.. users with dynamic ip addresses can now disable this 
+    setting.
+  - Fixed color scheme issues with Q&A application.
+  - Fixed bug with Q&A adding questions and folders adding blank folders.
+  - Reversed color scheme between operators text and users text so that
+    operators now have the lighter text.    
+  - Ability to delete layers now exists simply remove the images
+    and then reload edit_layers.php 
+  - Fixed issue with long urls being counted multiple times in referer
+    and page visit pages.. also increased the size to 255 chars in database.
+    This also fixes issue with generating very large referer and page visit tables.
+  - Added scrollbars to canned messages windows to allow scrolling.         
+  - When new chat requests are answered the entire chat screen is no longer
+    refreshed.
+  - Fixed IE 5.5 bug with "data not yet available"
+  - If admin PHP sessions were enabled and two computers from the same
+    IP address accessed the admin they were both given the same sessionID
+    this is fixed...
+  - Attempted to Fix issue with javascript "permission denied" error.. 
+    It seems to have gone away.. but not sure how I fixed it.. javascript is
+    very tricky sometimes..   
+  - Bug with re-direct to offline when no one has answered the call in 
+    the specified time limit is fixed..  
+  - generated html for code to cut and paste is now XHTML verified..
+  - Added ability to delete child Referers and/or Page visit data that 
+    only contains a few Hits. Also option to clear ALL page visit and
+    or referer stats.
+  - Added Operating system, operating system version, Browser name, Browser version
+    to user details. 
+  - Added ability to control Data Referer and Page view Archive Settings. 
+  - Games link now is optional.
+  - added missing array indexes to language files.
+        
+
+  Version 2.10.5:  (Released: 03-16-05)
+======================================        
+Fixes/Updates:  
+  - Fixed bug with changing status of operator from online to offline 
+    sometimes logging the operator out.
+  - spaces are replaced with "+" in referer links from the data tab.
+  - Fixed bug which caused visitors to only see "..." on chat when 
+    both XML HTTP and flush failed. 
+  - Fixed refresh mode chat.
+  - Fixed bug with department information not being carried over when 
+    clicking on "change" for smilies in users chat or when posting
+    first message on users side of chat.
+  - Operators history page was always showing the username of the 
+    user logged in rather then the name of the operator being viewed 
+    this is fixed.
+  - Server sessions are default off (you can turn them on in admin)  
+  - removed a use of global vars in leaveamessage. Also the error 
+    messages from required fields were not being concatenated they are now.
+  - Email address was not being validated if entered on chat request.
+  - Fixed issue with extraction of arrays in teh $_REQUEST variable for
+    is_xmlhttp and is_flush pages which caused the warning messages. 
+  - layer invites images are now recorded in the 
+    database rather then read from the directory. updates to
+    the tables are done by reading the directory but the program
+    uses the database for the calls.  
+  - the limit on number of stored layer invites has been increased to 999 
+    rather then 25.
+  - Generated color for users chat was sometimes a bit too light.. changed
+    the array to use darker colors.
+
+  
+New Features:    
+  - Added option to gather page,title referer information from 
+    parent frames or not in Code Generation .    
+  - Ability to turn off page tracking and referer tracking.  
+  - Mass Delete feature for the past transcripts, and ability to clear data
+    for referers, page views, and transcripts by month separately.     
+  - Made "conferenced" chats more clear by making a "linked" icon for
+    the conferenced chats and making one big tab for them.    
+  - Added ability to require questions that are asked before begining chat.
+  - added the ability to change the color scheme of the admin from
+    blue , white, brown, or yellow.    
+  - ability to remember if you want to view visitors online or not.. 
+  
+  
+  version 2.10.4:  (Released: 02-22-05)
+====================================== 
+Fixes/Updates:
+  - Fixed PUSH URL feature Also made it so that you can push urls anywhere
+    in your message with the notation of [PUSH]http://webpage.com[/PUSH]
+    anything beween [PUSH] and [/PUSH] will be a pop up window
+    for the client and translate into a hyperlink in case the pop-up is blocked. 
+  - Fixed "null" javascript error on client side of chat which sometimes happened
+    when page loads too fast. 
+  - Install had the busy message for the offline message for the departments.
+    this is fixed.     
+  - alt text color fixed and colors now alternate on clients side of chat.  
+  - when a chatter closes the chat window using the  exit icon, 
+    the bottom frame refreshes to not show that chatters tab.
+  
+New Features:
+  - Changed color of admin from yellow to blue (I got lots of
+    e-mails like "It program works great but it is yellow?!?.. )
+    Keep in mind version 3.1.0 will use templates and you can make
+    your own design. :-)
+  - added color coded channel to list of users to keep better track 
+    of what color is who.
+
+ 
+  version 2.10.3:  (Released: 02-15-05)
+====================================== 
+fixes from yesterdays release:
+ - Fixed SQL bug with not being able to update departments.
+ - Fixed mail() function problem with including name.
+
+
+  version 2.10.2:  (Released: 02-14-05)
+====================================== 
+fixes/updates:
+ - Fixed issue with auto invite not respecting the page view minimums
+ - Fixed FireFox issue with not being able to close DHTML layer
+ - Removed checking xml http, checking flush messages at begining of chat.
+ - Fixed "Skip Name, intro message, and start questions for this user 
+   and start chat right away." option in pop-up window invite to force
+   begin chat session.
+ - Fixed scrolling on connection page.
+ - Fixed a few missed Global Usage vars for PHP_SELF on leavemessage and isnamed in invite.
+ - changed default to not show visitors in list of online users to save BW.
+ - Fixed issue with timeout for operator to answer chat not working. 
+   Also added additional message option for "BUSY" as opposed to 
+   support being offline. 
+ - Fixed javascript bug when clicking refresh when a tab is set to an external window.  
+ - escaped slashes and smilies are translated in user typing messages.
+ - fixed print function so that it actaully prints when you click on it :-) 
+ - smilies in transcripts are now included by full urls.
+ - Offical homepage has moved back to http://www.craftysyntax.com rather then 
+   http://cslh.com . After 9 months it seems that trying to remember 4 letters
+   is harder for people then remembering 2 words. go figure..     
+ - added additional language files.
+  
+minor new features:
+ - Hyperlinks are auto translated into links in the chat so anything
+   with www. or http:// is auto turned into a link.
+ - Added option to have different languages by department. 
+ - option to turn off smilies on user side.  
+ - Added option to hide selected ip addesses    
+ - Added Operator history to show the total time an operator was online
+  (I will expand on this in the next version for who/how many they helped)
+ 
+
+  version 2.10.1:  (Released: 02-05-05)
+====================================== 
+bug fixes from the 2.10.0 Release yesterday:
+ - Fixed issue with not being able to update canned responses.
+ - Fixed issue with not being able to assign canned responses to multiple departments.
+ - Fixed Mysql Error in leave message when no e-mail field is pre-defined.
+ - Fixed issue with jsrn not being unique for chating users.
+ - Fixed issue with not being abile to open multiple chats in separate windows.
+ - Fixed issue with operators not being notified of operator to operator chat.
+ - Fixed undefined errors upon hiding operator to operator chat.
+ - Fixed issue with Null strings in XML HTTP javascript values which somtimes caused
+   javascript errors. 
+ 
+  version 2.10.0:  (Released: 02-04-05)
+====================================== 
+SECURITY:
+ - Globals are now deleted rather then extracted. Although no security
+   holes have been found since version 2.7.3 due to globals extracted,
+   a lot of requests have been made to delete Globals for more safty.
+ - Re-wrote all SQL queries to not have integer values as strings. 
+   Security against sql interjection is now inforced by casting all expected integer
+   values as integers using intval(). As always quotes are also escaped
+   in varchar values before used in a query. However rather then using
+   magic quotes the sql strings are quoted at time of use to ensure
+   quotes are escaped.
+
+BUG FIXES:
+ - Txt-db-api was upgraded from 0.2.2-Beta-01 TO version 0.3.1 (also re-applied
+   my alterations to make class match PEAR functions ) This upgrade solves 
+   file lock error messages and speeds up api. 
+ - The Save button for auto-invite pop-up invites now works.. Accedently had
+   the closing form tag before the SAVE submit button.
+ - To avoid relaying denied messages from lost password page the messages 
+   are sent from the same domain.
+ - Re-programmed the way CSLH sends mail to overcome Carriage Return/Linefeed 
+   (CRLF) line breaks issue. 
+ - If a image was placed in the layer_invites directory that did not have
+   a corrisponding text file, a javascript error occured on the visitors side.
+ - mis-matched quote on content type meta tags is fixed.
+ - missing charset in leavemessage.php mail() command is fixed.
+ - Default selected layer invite image was not corrisponding to the 
+   layer invite sent when sending layer invite to users. This is fixed. 
+ - If autoinvite was on for a user in one department all the departments were
+   inviting even when no operators were in that department. this is fixed. 
+ - DHTML layer table with user information inside list of chatting users in
+   admin was having select options show through .. this is fixed.
+ - added noresize the frames to prevent re-sizing. 
+ - a bunch of other minor fixes and changes.. 
+
+FEATURES:
+ - Added xmlHTTP chat type as an alternative to using flush() Fixes
+   issue with "white screen" when loading multiple sessions at the same
+   time.. and speeded up the chat . 
+ - Added alternate text color option for user/operators . Users chat and 
+   operators chat in a single channel can now be different colors.
+ - Added ability to turn off smiley text translations for a single operator
+   message post.
+ - added option to toggle "auto focus" which focuses the chat upon chat
+   request or new message. 
+ - Converted a lot of queries to use ordered arrays rather the associative.
+ - Added optional ability for operators to open selected chats in separate 
+   windows outside the live help admin console.   
+ - Added ability to "conference" several exisiting chats to the same 
+   chat in the same "room". 
+
+
+  version 2.9.8:  (Released: 12-20-04)
+====================================== 
+BUG FIXES:
+ - Paging in the data tab was not carrying over the date, This is fixed.
+ - If a user is invited and already has a username, the name was
+   seen as a duplicate and had "_0" was added to it.. this is fixed.
+ - Set error checking to not show warning notices.. forgot to set this
+   in version 2.9.7 
+ - added additional clear write layer when messages are posted to prevent 
+   stuck messages in the "user is typing" window.
+ - prevented double messages by disabling the form submit when message
+   posts are sent.
+ - Fixed bug with undefined array in image.php which occurs with user tracking.
+ - Upgraded Globals extraction to use $Globals Array build into php and 
+   not cause warning errors for PHP 5 users.
+ - Due to lack of buffering some servers were not showing the chat messages
+   fast enough.. More buffering was added.
+ - Macintosh does not seem to like images loaded in cache and not 
+   actaully shown on the page.. So monitoring and refreshing was not working
+   correctly on the mac.. this is fixed by actually loading a blank image for
+   the mac to resize and look at.
+ - Fixed offset error in Txt-db-api databases caused by missing default value for some of the 
+   database tables.
+            
+FEATURES:
+ - Added ability to send different Layer Invites to visitors rather then 
+   just the one layer invite assigned to the department.
+ - Added more options to refresh rate also set default to 300 seconds.
+ - Updated the users talking tabs to look more like tabs.  
+ - Added ability to include a Customized logo graphic for each department.
+ - user's chat box focus when the operator sends a new message to them.
+ - Administrators can change color scheme to one of four colors : Yellow, blue, white, or brown 
+ - added e-mail address and session data to transcripts.
+ 
+ 
+  version 2.9.7:  (Released: 12-02-04)
+====================================== 
+BUG FIXES: 
+ - Fixed issue with passed username not always being set from advanced options.
+ - Fixed issue with trailing LF in leavemessage.php and lost passwrod page.
+ - Added option to set refresh time for servers with max execution limits
+   and problem with chat "freezing" after so many seconds loading. 
+ - Fixed issue with set $lang cookie from another program causing the "Q"'s to be 
+   shown rather then text.
+ - Removed trailing whitespace in mysql_db.php which caused cookies and headers
+   not to be set correctly on some servers.
+ - In refresh mode the department selected was not being carried to 
+   the chat session so the default department was always used.
+ - Transcript time was not correct on some servers due to timestamp not being YYYYMMDDHHMMSS
+   it is now changed to big int 14.
+ - The generated HTML code was not Valid XHTML due to unencoded ampersands. This is fixed.
+ - The Generate HTML code was not generating code for HTML relative path selections.
+ - Long text in the tabs/module names was wraping due to a set width in the td cells 
+   this is fixed. 
+ - Updated language in files to include charset-encoding. This solves issue with 
+   other languages not being shown correctly when typed..  
+ - If a user re-initiates a chat session their original question was being remembered.. 
+   this is now fixed.    
+ - If a chat session is closed by the visitor closing the window and not clicking 
+   the end chat and the operator does not click on stop next to that users name 
+   the chat session transcript was not being saved. This is fixed.
+ - javascript error which occured after a layer invite was closed and then the live help icon
+   was clicked is fixed.
+ 
+FEATURES:
+ - Updated the CSS style.css for global style sheet used. 
+ - added Italian language file.
+ - Operators can now default if they want their typing to show or not by default. 
+ - Updated formatting and margins on live help chat to try and make who said what
+   more clear.
+ - If no one is chatting and a chat request comes in the window now focuses.
+ 
+
+  version 2.9.6:  (Released: 11-14-04)
+====================================== 
+ BUG FIXES: 
+  - Focus on admin chat when messages were shown was causing the operators messages 
+     to be cut off or missing chacters as the operator was typing.. this is fixed.
+  - Session sharing between different computers on the same network should be 
+    fixed. Re-programmed the way host/ip sessions work to ONLY grab sessions where
+    the user has not been cookied.
+  - If required fields are left blank in the contact form all data was not lost
+    when the user was asked to fill in the missed field.. this is fixed.
+ UPDATES:
+  - Changed error reporting to error_reporting(E_ALL & ~E_NOTICE) for thoes
+    who get the warnings on ini_set() due to safe mode restrictions; 
+
+
+  version 2.9.5:  (Released: 11-12-04)
+====================================== 
+ BUG FIXES: 
+  - Fixed javascript errors that occur when mouseover chatters names in admin_users.php
+    when only one person is online.
+  - Fixed issue with multiple channels being created for a single user when auto
+    invite is on.
+  - count of online visitors was counting offline operators.. this is fixed.
+  - In some cases users requesting a chat at the same time will end up sharing 
+    the same sesssion. This is fixed. 
+  - user_chat.php line 282: remove extra $mydatabase->close_connection() 
+  - one too many parameters in identiy() function call which was causing Windows servers
+    to not know the function identity()
+  - repeating auto invite message fixed.  
+ UPDATES:
+  - auto-invite messages sent to the client are now cleared before chat session begins.
+  - Added resource limits for number of times to ping visitor to save resources.
+  - added options in code generation to control pinging, php sessions and using hostip sessions.
+  
+  
+  
+ version 2.9.4:  (Released: 11-08-04)
+====================================== 
+ BUG FIXES: 
+  - Undefined variable in operators.php when creating a new operator is fixed.
+  - If a chat session is stopped using the new checkbox method the channels were not
+    deleted.. this is fixed.
+  - fixed issue with refresh mode not showing the connecting page.
+  - If the department was set to not ask questions upon the chat request 
+    the user was just getting the connecting page. this is fixed.
+  - In the page visit foot prints the first page visited was being counted twice this is fixed.
+  - fixed bug with when creating a new department the module selections 
+    and ordering not getting saved.
+  
+ UPDATES:
+  - Changed the way the continous mode refreshes so that it does not refresh unless
+    it has been inactive for more then 300 seconds.
+  - Removed DHTML image height and width so that the DTHML invite image can be any size
+  - A bunch of minor changes were made such as ip address showing in the auto invite,
+    changing the html code generator to place the code in a textarea rather then html
+    box, too much buffering in the chat pages when nothing is being said, scroll up on
+    chat always scrolling when nothing is being said, etc...  
+            
+  FEATURES: 
+  - Added Javascript pinging to open chat to tell if the client closes the chat.
+    if a client closes the chat window the operator now knows within a minute
+    that the client has closed the chat box (will shorten the time in a later release) 
+  - added ability to add checkboxes to help request and leave a message. 
+  - Added German translation.
+  - Added ability to transfer a chat session to another department.
+
+
+ version 2.9.3:  (Released: 10-28-04)
+====================================== 
+  BUG FIXES: 
+  - Fixed javascript error which occured when layer invite was shown and closed and then the 
+    visitor clicked on the live help icon. 
+  - Separated out the code that displays the messages from the DHTML layer code this
+    helped fix the issue with messages disapearing if a writelayer is deleted at the 
+    same time a message is inserted..    
+  - Auto invite messages not marked as Active were being shown to the visitors. 
+    this has been fixed so that only active auto invite options are shown.
+  - There was a refresh issue with operators being able to talk to eachother.. This
+    is fixed.
+  - Operators who are not part of a department now no longer see chatters in 
+    that department unless they are transfered to their department. 
+  - User is Typing messages with the "<br />" string are now omited. Happens when 
+    javascript monitoring sends the text right before it is submitted.
+  - When offline is selected in the chat monitor, the auto invite is now turned off
+    for that user.
+  - Windows timestamp field is different then unix timestamp this caused some  installations
+    to have the session close for a chatting user right after it opened. This is fixed.
+  - Livehelp_channels table was not getting cleaned of old channels.. this is fixed..
+  - If no operator answers a call after the time limit for a call to be ansered is 
+    reached the client is not redirected to the offline tab.. this is fixed.
+  - Fixed bug with txt-db-api offset value due to missing default value field 9 in livehelp_questions.
+  
+ UPDATES:
+  - added a frame break on the live help box to avoid double frames..  
+  - the "user is typing" feature now does not show messages typed by self.
+    (the client does not see his/her own typing and you do not see your own typing)    
+  - If two operators answer the same call then the second operator gets a message
+    that the call has already been answered and if they would like to join the 
+    chat or not.  
+   
+  FEATURES:   
+  - added chat color to the grayed out tabs of the users who are not chatting. 
+  - add option to hide operator typing from clients 
+  - Changed "Entered Chat" to Operator greeting defined by operators.   
+  - Added ability to and a photo of the operator to the greeting. 
+  
+  
+ version 2.9.2:  (Released: 10-11-04)
+=================
+  BUG FIXES: 
+  - On the leave a message page the hidden input variable for department was missing 
+    this caused departments other then the default department not to work correctly.
+    This is fixed.
+  - Chat messages posted within a second of eachother sometimes were not shown becuase
+    the messages were being shown by timestamp. The messages are now shown by 
+    auto id and timestamp to fix this.
+  - sound for the alert of a visitor was not working in version 2.9.1 . it is fixed.
+          
+  FEATURES:
+  - Added Dutch translation.
+  - Fields can be marked as Required in the leave a message module and chat request.
+    
+  
+ version 2.9.1:  (Released: 10-06-04)
+=================
+  BUG FIXES: 
+  - On some servers SQL queries could not contain multiple queries in one sql 
+    command.. This prevented livehelp_questions from being created and some
+    people not able to install version 2.9.0. This is fixed in this version.
+  - javascript error with moving DHTML layer fixed.
+  - if an operator creates a new user and then logs in as that new user using the 
+    same session that they were using before both users used to share the same session.
+    this has been fixed as log as you log out.
+        
+  UPDATES:
+  - Changed default settings in install to include e-mail and message
+    as default for questions and Default to leavemessage.php for 
+    default to when offline setting. 
+  - Added ability to change the text shown at the top of leave a message
+    page under department settings.
+  - Added Spanish and Portuguese_Brazilian translations.
+  
+ 
+ version 2.9.0:  (Released: 10-02-04)
+=================
+  BUG FIXES: 
+  - Issue with visitors from same network sharing sessions is fixed.   
+  - Fixed bug with monthly totals for the previous month being added to 
+    current months total in the referers tables. Also fixed string 
+    issue with selecting months on the data pages.
+  - Special HTML characters are now escaped on the operators side unless 
+    checkbox to allow HTML is checked. Solves issue with some text "dissapearing"
+    if it happens to <look like a tag>
+  - Imagemap in departments settings page is now used. It was hardcoded to the 
+    default imagemap before so it did not matter what was entered.
+  - If two javascript live help icons are placed on the same HTML page 
+    they used to share the same department id. This is fixed.
+    
+  UPDATES:
+  - Changed connecting image to not look like the user is downloading 
+    something.  
+  - Solved issue with online/offline image being cached and incorrect status
+    icon to the cached user on some browsers.
+  - Added SessionID to user table to identify the user rather then just using
+    the ip address and hostname. 
+  - Code comments and format have been changed to use PHPDocumentor
+    please see:  http://www.phpdoc.org/
+  - converted short hand php tags to long hand.. (<?php rather then <?php)
+  - added more refresh rate options (10 seconds, 20 seconds, 30 seconds, automatic (recommended)
+  - Improved Language tanslations by adding language array and more
+    text conversions. The language files are located in the folder named
+    lang. E-mail livehelp@craftysyntax.com if you have a better translation or
+    an additional language to add. adding files to the lang directory automaticly 
+    adds that language as an option in "settings"      
+          
+  FEATURES:
+  - Added Smiley code to image conversion and admin screen to edit Smiley codes.  
+    For example :-) can be auto turned into a smile face.
+  - Added option to display a message for the visitor to read while they
+    are waiting for their call to be answered.      
+  - Added option to control the time operator has to answer a chat request before
+    visitor is re-directed to offline option.
+  - Added ability to ask additional questions other then name (such as e-mail
+    and question ) on chat request page. Answers to questions are shown in the
+    details page for the user.  
+  - Re-programmed the Contact module to allow additional questions to be asked.    
+  - Added ability for client to choose a department from live help request when
+    no department id is passed.. see the new wizard for more details.     
+  - Added ability to tag visitors from the javascript icon.. You can now give
+    the visitor a username based on another application.. see HTML wizard for 
+    more info.
+  - Added new Create HTML wizard to help generate the right HTML code for site
+    Wizard has options to create remote site HTML code, code for E-mail messages,
+    same site HTML Code, and simple link HTML CODE.
+  - When the session is closed the client now has the option to be e-mailed a 
+    copy of the transcript.  
+  - Added ability to hide visitors sessions and only view chatters in admin.
+ 
+  
+version 2.8.4:  (Released: 07-04-04)
+=================
+  BUG FIXES: 
+  - Fixed Refreshing Bug in refresh mode chat
+  - Fixed bug with multiple operators chatting at the same time cancelling 
+    out user chats.
+  - Fixed installation bug with extra comma in the setup SQL 
+   
+  FEATURES:
+  - Made users chat a textarea to allow the visitors to cut and paste 
+    text.
+   
+
+version 2.8.3:  (Released: 07-02-04)
+=================
+ BUG FIXES:
+  - Fixed bug with not being able to change dhtml image in chat.
+  - Fixed bug with Netscape closing the users chat session upon 
+    entering their name (issue with unfocus).
+  - Added option to change image map for DHTML Layer invite.
+  - Added  ob_flush(); function call after every flush() in 
+    admin chat screen
+    (needed for some servers in order to force flush the output)
+    Also added more Buffering to try to overcome some other servers 
+    cache.
+  - Fixed undefined variable in Q&A which caused javascript errors 
+    on that page.
+  - Fixed issue with not being able to turn off DHTML user is 
+    typing feature.
+  - Added paging to transcripts.
+  - Updated online and offline image code in department settings
+    and also added check to make sure online/offline image is valid..
+  - Added margins to chat session.
+  
+ FEATURES:
+  - Added ability to color the chat channels and color chat channel text.
+  - Improved the Data feature to collect monthly stats and to break down 
+    referers from domain to page level.
+  - added Monthly bar graphs to  "SHOW GRAPH" link in data tab.
+  - Added date drop menus in data section to select monthly stats.
+  - Added Layer invite as an option for the Auto invite feature.
+  - Added refresh options to admin_users to allow operator to choose refresh 
+    rate.        
+
+
+
+version 2.8.2: (Released: 06-20-04)
+=================
+  BUG FIXES:
+  - Fixed big issue with Operators not being able to talk to eachother.     
+  - Fixed javascript error on opening connection page. 
+  - Fixed issue with CR characters in some of the files causing them not to 
+    be read correctly. 
+  - Fixed issue with window always focusing while editing urls/notes/images
+  - Fixed Formatting on connecting page so that connection gif is
+    centered. Also fixed warped icon on the upper right side of the page.
+  - Fixed SQL error if user uses a quote for their name like "what's up"
+  - Fixed a few more Notice error messages with undefined vars.
+  - The Game Goopers was missing some very important files.. added the files
+    and the game now works... at least in IE and Netscape 4.x 
+    still have to program it for Netscape 6.0+ and Mozilla.
+  - Fixed issue with not being able to delete Transcripts.
+  - Fixed a few small items like time since last action in chat window 
+    being sometimes off, tabs not being refreshed when stopping the chat, etc..
+  - Fixed error with bad request to image.php from admin_users.php for 
+    checking the status of people online.
+  - Fixed Broken Notes drop menu in invite window.     
+  - Fixed issue with push URL not working and also changed it so that 
+    the url pushed is dosplayed as a target blank link in addition to 
+    opinging the page.
+  - Fixed Default install to have live help icon show when offline.      
+
+  FEATURES:
+  - Added USER Agent, Full Remote IP address, and hostname to the list 
+    of details of a user.
+  - Updated the log in page with a new look.  
+  - Added Chat Smiles / Emotion Icons. To change these icons simply add/remove
+    images from the chat_smilies directory. 
+  - Added Option to Ignore a chat user.     
+  
+  
+version 2.8.1: Bug fix release (Released: 06-16-04)
+=================
+  - Fixed Issue with Setup program not running on servers with 
+    Register Globals disabled .
+  - Fixed Issue with Broken SSL image on secure pages, added option to
+    specify secure SSL path in setup script.
+  - Fixed Issue with missing database field in setup.php upgrade (was missing 
+    typeof varchar(30) in database table livehelp_messages )
+  - Fixed Issue with non-admin users auto clearing referer and visit data just 
+    by visiting data page.
+
+version 2.8.0: (Released: 06-15-04)
+=================
+  - Added ability to place live help icon ANYWHERE. You can now cut and 
+    paste the "HTML CODE" generated into e-mails, eBay, ANY place you 
+    can place Javascript HTML you can now put Crafty Syntax.    
+  - Fixed memory allocation error caused with storing all of the
+    data from the database recordsets in associative arrays. 
+  - Fixed security issue with remote users being able to view 
+    referer, transcripts and page view information.
+  - Fixed All Notice errors caused when error reporting is set to 
+    report notices.. 
+  - Upgraded admin interface to be more organized and have the same
+    look as version 3.1.x 
+  - Fixed issue with anti Pop-up up software users not getting the pop-up
+    by adding new layer invite option. 
+  - Added some error checking to operators edit page so you can not add
+    two operators with the same username, or add one with no password, or delete 
+    yourself from the database.  
+  - Added Permissions to Operator Notes, Images and Urls so that they can be
+    owned by Everyone, a selected group of departments, or private.
+  - Updated how the program creates a users identity to account for dynamic ip
+    addreses.
+  - Fixed issue with SSL pages by added option for Secure Web address found 
+    under "Settings and Preferences".  
+  - Fixed issue with visitors being able to chat before chat request has been 
+    answered.
+  - Fixed issue with previous chat session being shown in chat window from 
+    the same user if the user closes the chat and then re-requests the chat.
+  - Added ability to see what the visitor is typing as they are typing it. 
+    Also added the ability for the visitor to see what the operator is 
+    typing as they type it. This replaces the "user is typing.." function and
+    uses a DHTML floating window to show the typed text.
+  - Upgraded the way the program identifies the user to try to deal with dynamic ip
+    addresses.
+  - Upgraded txt-db-api to version 0.2.2-01 and Added API to use
+    PEAR like queries.
+  - Added Scratch space to admin for operators to leave messages to eachother.
+  - Added Games section for board tech support people waiting for calls.
+  
+
+
+version 2.7.4: (Released: 05-28-04)
+=================
+  - Fixed Cross-Site scripting Security hole with Name field.
+  - Bug with ask for name on load not working while using txt-db-api has 
+    been fixed.
+  - Bug with site title not being updated or shown in the visitor chat 
+    has been fixed.
+  - Made image when "hide icons when not online" is selected and offline 
+    smaller so it is less noticeable.
+  - Fixed issue with graphics on the right hand side of 
+    the window actually hide the text if lots of text is typed at the 
+    beginning of chat session.
+  - Updated Logo to new cslh logo and credit link to new cslh.com website.
+  
+ 
+
+version 2.7.3: (Released: 05-14-04)
+=================
+  - Turned off max execution timeout if not refreshing to stop
+    max execution errors.
+  - Added unset values to config to dissallow sensitive variables from hackers.
+  - Separated out the CSLH configuration from the Database configuration 
+    to allow easy upgrades from this point on. Updates from this 
+    point on will be just placing files in directroy and opening a  
+    web browser.  
+
+version 2.7.2: (Released: 05-12-04)
+=================
+  - Added back in txt-db-api with security issue fixed.
+  - Added txt-db-api uninstaller
+  - Removed ability to talk to yourself 
+  - Added clear all data link to fix  memory allocation error. See in data tab.
+  - Fixed another Security hole with SQL interjection. 
+
+version 2.7.1: (Released: 05-03-04)
+=================
+  - Security Hole fixed by removing txt-db-api.
+
+version 2.7: (Released: 09-30-03)
+=================
+  - The javascript that controls the floating menus in the user
+    chats was missing some js files. The files have been added.
+  - auto invite based on visits was inviting reguardless of
+    how many pages the visitor visited. This has been corrected
+    so that it invites correctly.
+  - Added Refresh and Clear options to the floating navigation
+  - made chat frame bigger in the admin side and added no break 
+    for the usernames in the tabs.
+
+version 2.6: (Released: 09-29-03)
+=================
+  - Added Modules feature. Administrators can now add other programs
+    to work with CSLH such as their own contact form, support 
+    ticket program, etc.. Vars from Live Help are passed to the module
+    in the query string for the other program to use. I will post some
+    modules in the Updates page (http://www.craftysyntax.com/CSLH/updates.php)    
+  - Lowered Bandwidth Usage by NOT having the program refresh every 3 seconds
+    while No operators are online. This cut my bandwidth down by about 85%
+    but depends on how often you are online..     
+  - Added Auto invite feature to allow operators to have the system 
+    invite visiting users automatically. The system now allows operators 
+    to create monitors to auto invite visitors based on either what referer 
+    they came from, and/or how many pages they have viewed, and/or
+    what page they are looking at, and/or What department they are in.
+    A very big time saver.   
+  - Added javascript floating menu in users chat window that has options
+    to Maximize the window, Print the current chat session, or Exit.   
+  - fixed connection graphic to not have text on it (for multi-language)
+  - Added Referer, Department name, and identity to the leave a message
+    messages that are e-mailed to the operators when offline.      
+  - Fix bug with e-mails of departments always going to default department. 
+  - Fixed issue with visitor stat data not being recorded when no users online 
+    
+
+version 2.5: (Released: 08-03-03)
+=================
+  - Added better support for the continous mode of the program by
+    adding the functions "ob_flush()" 
+    Next to every instance of flush() this will support PHP 4.2.3+ and Windows users 
+    running php as a cgi so that you can run
+    the program in continous mode.    
+  - Added ability to see only one chat at a time while 
+    still having the ability to see any new messages  
+    from other active chats with the new "view" Icon in the chat tabs.
+  - Added ability for operator to quickly change alert settings 
+    from live help tab page.     
+  - Added onmouseover user detail javascript to quickly show the 
+    details of the visitors online. 
+  - Added the department information to details.  
+  - Added ability for Operators to talk to one another as now
+    the Operators appear as Chatters with the option to chat or not
+    to chat with another operator.  
+  - Added ability to Conference operators to one User so that multiple
+    operators can talk to one user or multiple operators can talk to eachother.
+  - Fixed BUG with when added an operator the operator is not added to 
+    any departments even though the departments are checked and 
+    when a operator was deleted there permissions were not removed.     
+  - Fixed BUG with operator not in default department having vistors not
+    able to see them as online. 
+  - Fixed BUG with negative visit count when clearing data from the data tab.
+  - Fixed BUG with details of the visitor it showing the server time rather then 
+    the server time + offset for correct time.           
+  - Added Manual Install directions for thoes who can not run the setup.php 
+    online installation.
+  
+  
+version 2.4: (Released: 07-20-03)
+=================
+  - Added more language files 
+  - Fixed issue with rining sound always playing when someone 
+    enters the site even if you have alert visitors turned off.
+    It will now only ring when you have "alert of visitors" set to Yes.
+  - Needed to change the way that the name of the program was
+    written. It is now shortened to CSLH or written all out
+    as Crafty Syntax Live Help. There is another program called
+    cs-live that exists on the internet and I want to have 
+    nothing to do with them and do not want to be confused 
+    with their company.. 
+    
+
+version 2.3: (Released: 07-18-03)
+=================
+ - Added a modified version of txt-db-api version 0.2.1-beta-01
+   for text based database support. This GPL api program is
+   detailed at : http://www.c-worker.ch/txtdbapi/index_eng.php
+   I modified database.php a bit to support alter quries and 
+   match mysql_options.php. It is recommended that you use
+   Mysql. I just added this for thoes who can not figure
+   out mysql and need this as a last resort.
+ 
+ - Fixed refresh bug issue with refresh mode and not having
+   enough time to enter in name.
+   
+ - Fixed Departments vanishing bug with operators not being 
+   able to be assigned to multiple different departments on 
+   some servers due to the departments array checkboxes not being seen
+   as an arrray. I changed it to a variable.. 
+ 
+ - Fixed issue with department e-mail being sent to the 
+   Default department when multiple departments are setup.
+   
+ - Fixed security hole with users being able to log into admin
+   by using their ip address as the log in. 
+ 
+ - Added number of users online message back in.   
+
+ * Added multi-language support files to allow program to be 
+   translated into multiple different languages. however..
+   neeed someone to translate it into other languages..
+ * = note you need to make the language file .. it is called
+     language-lang.php   
+
+version 2.2: (Released: 06-15-03)
+=================
+ - Added ablility to provide a simple link to the live help system
+   as an alternative to the javascript icon HTML code.
+ - Added ablility to track and monitor pages with a new 
+   INVISIBLE Tracking HTML: if you want to monitor and track 
+   a page but do not want to have an icon on that page or 
+   link to live help use this HTML. You can invite and monitor 
+   pages with this code but the visitors will not be able 
+   to see the live help icon.
+
+ - Added ability to track referers and also track traffic 
+   to the site in the data tab.. Bar graphs for visitors
+   and referers are now logged every 7 minutes.. 
+ - Added Q & A system to allow visitors to leave questions
+   or see a catigory tree of questions and answers.
+ - Made the refresh in the "refresh mode" twice as fast.. it now 
+    refreshes every 3 seconds rather then 6. 
+-  offline messages now must have a valid email address 
+- removed old javascript focus window input box (extra field at the 
+  very bottom left of the screen with a 1 in it) 
+
+
+version 2.1: (Released: 06-08-03)
+=================
+ - Fix issue with being logged out if visiting admin in multiple  
+   windows with same user. 
+ - Fix javascript error on bottom frame when answering call and 
+    comments is not defined yet. 
+ - invite message is now removed after being sent to the user.
+ - Added option to not have "User is typing..." 
+ - Fixed issue with not being able to talk to users with 
+    changing IP address. AOL users IP address change with
+    every GET.. WTF!?! 
+ - Fix issue with multiple users on same network with same
+    OS and browser not getting a unique ID.
+ - Added EMBED option to user sound options to allow sound for
+    thoes using a browser that does not support cross frame javascript.
+    (Like windows XP IE 6.0 ) 
+ - Fixed the style sheet and made the users chat a little easier to read.
+ - Fixed bug where if you open a live chat and then click contact
+   tab and then back to live help it shows no on online.. 
+ - Added Buffer overflow lines for Windows IE users where 
+   the browser locally saves the buffer before showing anything.. 
+
+version 2.0: (Released: 06-01-03)
+=================
+ - Added more details to the details link for incoming vistors.
+ - Fixed Issue with netscape refresh on user end of chat.
+ - Added a more advanced "Push URL" system to allow operator to 
+   have the window of the url actually pop-up on the users end.
+ - Added a more intuative interface for the quick messages.
+ - Added ability to Push Images.
+ - Visitors are now tracked by both session vars and host ip address
+ - Added ability to create multiple different departments and have
+   operators monitor the different departments. 
+ - Added settings screen for departments to allow users to 
+   set their own images for online and offline.
+ - Made all of the fields in the leave a messages section of the program 
+   required.
+ - new tab inerface to hop beteen users in the admin to avoid confusion
+   on who you are talking to.
+ - Added option for operator to be notified by a sound when a visitor 
+   visits website by Either Javascript or the plugin x-wav 
+ - Added transcripts and data recording.
+ - Added Help and index of site.
+  
+ 
+
+version 1.7: (Released: 05-10-03)
+=================
+ - In netscape on the client side the text box was refreshing because the 
+   onkeypress was not being recorded. Fixed this.
+ - Needed to add more close database connections thoughout the code to 
+   ensure that the connections is being closed some users were getting 
+   max connection errors.. 
+ - Added an "EXIT chat" link on the user end so that the user can close the 
+   chat session. 
+ - added a shorter timout for the admin user so that if the admin operator
+   closes their admin without logging out their status will turn to offline
+   2 minutes later.. 
+ - Added error codes to the log in screen so that if the wrong username 
+   or password is entered it tells you you entered the wrong username/password
+ - added a forgot your password screen for thoes who forget their password.
+ - added code that refreshes the admin chat after 30 seconds of inactivity
+   to avoid script timeout errors.. 
+ - Added a display so that the operators can tell is another operator
+   is online.
+ - reversed the way the messages are shown in the refresh mode to match
+   the way it is shown in continous mode.
+ 
+version 1.6: (Released: 05-02-03)
+=================
+ - Added some extra javascript code to the users list frame to make
+   sure that it keeps reloading.. for some reason it stops after
+   an hour or so. The javascript is a double check..
+ - Added the txt-db-api database option for the type of database.
+ - added a css style sheet and date and time to the user list frame.
+ - added close database connections in the image display script to 
+   try to avoid max connections errors..     $mydatabase->close_connect();
+
+version 1.5: (Released: 05-02-03)
+=================
+ - Added Manual installation directions and sql dump of initial 
+   database for users who have a hard time running the setup.
+ - changed livehelp.js to use a global webpath var that is easily changed at the 
+   top of the file.
+ - Fixed the issue with the text area not getting selected if 
+   the window focus is called. 
+ - Fixed issue with color staying Red for the users rather then 
+   alternating to a new color.
+ - Had to remove the txt-db-api database option until I have a chance
+   to fully de-bug it.
+ - did a little bit of general code cleaning    
+
+version 1.4: (Released: 05-01-03)
+=================
+ - Auto focus to textarea box after submitting message
+ - Auto select last person who was sent a message for send to:
+ - Auto Submit send when Return is pressed. 
+ - Auto focus chat window when they type something. This way you 
+   can minmize the window and so something else while they type.
+ - fixed issue with user end chat not scrolling to absolute bottom of page.
+ - Added a Clear button to clear out the chat screen.
+ - fixed version field type (should be float) in config also fixed upgrade script.
+ 
+
+version 1.3: (Released: 04-30-03)
+=================
+ - combined chatting users and current visitors frames into one frame.
+   Tried to use DHTML to now have to re-load the users frame but as it
+   turns out IE does not like to load two frames infinitly at the same
+   time.. WTF.. I have the code there but commented out.  
+ - added a field to `livehelp_config` ADD `use_flush ` VARCHAR( 10 ) DEFAULT 'YES' NOT NULL ;
+ - fixed upgrade in setup.php so that older version users can upgrade to new version.
+ - added support for non-flush() servers. Servers that insist on buffering the output
+   until the entire page is loaded...
+ - When you click on log out it marks your status now as offline.. 
+ - 
+
+================= ================= ================= =================  
+version 1.2: (Released: 04-28-03)
+=================
+ - As it turns out The HTTP Authentication hooks in PHP are only available 
+   when it is running as an Apache module and is hence not available in 
+   the CGI version which was causing internal server error on a few peoples
+   installations. I re-programmed user_access.php to use a cookie login. 
+ - get_magic_quotes_gpc is now used instead of get_ini to see if the user
+   has magic quotes on or off and a new extraction is used in config.php 
+   to extract the global vars and add slashes. (I like magic quotes) 
+ - Added a LOG OUT button to allow operators to close the admin.
+ - took out javascript alert for new user in chat and replaced with 
+   java sound wav.
+ - added referer to the details of the user.. I will make it look better in 
+   a later version...
+ - Fixed issue with leave a messsage window always poping up if the user 
+   was requested for a chat then went away and then came back again when 
+   the operator was not around.. 
+ - added additional check in setup to make sure users with txt-db-api can 
+   write to their text database.
+
+================= ================= ================= ================= 
+version 1.1: (Released: 04-27-03)
+=================
+ - Added installation directions and change log txt files.
+ - Added support for new $_POST $_GET and $_COOKIE that 
+   replace the $HTTP_*_VARS in newer versions of php.
+ - Created a new field in livehelp_operator_channels table
+   called "bgcolor" of type varchar (10). This field allows
+   me to color code the users to allow it to be easier to 
+   separate the chatting users.. 
+ - Fixed bug with the leave a message script where the 
+   e-mail from address was not being sent.
+ - Fixed bug with users entering in the same username or name as
+   an already exisiting user.
+ - Fixed issue with the "new user in chat"
+   prompt showing before the user enters their name if 
+   ask for name option is selected.
+ - magic quotes for words with apostrophes
+ - If user selects not to have the leave the message option on
+   and no one is online the credit line remained. Took that image
+   out if leave a message is not enabled.
+
+================= ================= ================= ================= 
+version 1.0: (Released: 04-21-03)
+================= 
+- This was the first release of the program everything was new :-) 

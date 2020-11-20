@@ -1,0 +1,50 @@
+<table width="100%" border="0" align="left" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><img src="../images/black_box1_01.jpg" width="15" height="39" alt="" /></td>
+    <td width="50%" background="../images/black_box1_02.jpg" class="heading"  align="left">Customer account</td>
+    <td width="50%" background="../images/black_box1_02.jpg" class="heading" align="right">&nbsp;</td>
+    <td><img src="../images/black_box1_03.jpg" width="14" height="39" alt="" /></td>
+  </tr>
+  <tr>
+    <td background="../images/black_box1_04.jpg">&nbsp;</td>
+    <td colspan="2" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td valign="top" bgcolor="#323232">
+		<table width="100%" cellpadding="2" cellspacing="1" border="0">
+         
+          <tr class="box_menu_title_text">
+            <td width="34%" class="cpanel_title2" align="left"><strong>Customer account details</strong></td>
+            <td width="31%" class="cpanel_title2" align="left"><strong>Customer Orders</strong></td>
+            <td width="35%" class="cpanel_title2" align="left">&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="left"><a href="index.php?action=customer_view&cid=<?php echo $_REQUEST["cid"];?>&tabm=" class="cpanel_link">Account Details </a></td>
+            <td align="left"><a href="index.php?action=customer_order_history&cid=<?php echo $_REQUEST["cid"];?>" class="cpanel_link">Order overview</a></td>
+            <td align="left">&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="left"><a href="index.php?action=address_book&cid=<?php echo $_REQUEST["cid"];?>" class="cpanel_link">Address book</a></td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><?php if($_SESSION['arival_date']!=""){?>
+                    <a href="index-action-current_reservetion" class="nav5" align="left">Current reservation</a>
+                    <?php }?>            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td height="10" colspan="3"></td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+    <td background="../images/black_box1_06.jpg">&nbsp;</td>
+  </tr>
+  <tr>
+    <td><img src="../images/black_box1_07.jpg" width="15" height="17" alt="" /></td>
+    <td colspan="2" background="../images/black_box1_08.jpg"></td>
+    <td><img src="../images/black_box1_09.jpg" width="14" height="17" alt="" /></td>
+  </tr>
+</table>

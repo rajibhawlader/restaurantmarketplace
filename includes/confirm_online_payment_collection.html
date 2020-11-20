@@ -1,0 +1,132 @@
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  
+  <tr>
+    <td align="center"><table width="99%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+		  <td><img src="images/red_box1_01.jpg" width="15" height="39" alt="" /></td>
+		  <td width="100%" background="images/red_box1_02.jpg" class="heading">Delivery Information</td>
+		  <td><img src="images/red_box1_03.jpg" width="14" height="39" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/red_box1_04.jpg">&nbsp;</td>
+        <td width="100%" valign="top" bgcolor="#9E0112"><table width="100%" border="0" align="center" cellpadding="2" cellspacing="1" class="bodytext">
+          
+          <tr>
+            <td align="center" class="message"><?PHP if($_SESSION['cart']=="")
+			{
+			echo "You have no item to place order";
+			}
+									  
+									  ?></td>
+          </tr>
+          <tr>
+            <td align="center" valign="top"><table width="100%" border="0" cellspacing="2" cellpadding="2">
+              <tr>
+                <td colspan="2" valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0" class="bodytext">
+
+                    <tr>
+                      <td width="3%" >&nbsp;</td>
+                      <td width="95%" valign="middle" align="center"><form action="index-action-insert_order" method="post" enctype="multipart/form-data" name="edit" id="edit" onsubmit="return validation(this)"><table width="100%" border="0" cellspacing="2" cellpadding="2">
+                        
+                        <tr>
+                          <td width="62%" align="center" valign="top"><table width="100%" border="0" cellpadding="1" cellspacing="1" class="normal_text">
+                            <tr>
+                              <td colspan="2" align="left"><strong>Customer Information </strong></td>
+                            </tr>
+							<?PHP 
+							$cusid=$_SESSION['customers_id'];
+							$querycus="Select * from customers where customers_id='$cusid'";
+							$resultcus=mysql_query($querycus);
+							$rowcus=mysql_fetch_array($resultcus);
+							?>
+                            <tr>
+                              <td width="16%" align="right"><strong>Name: </strong></td>
+                              <td width="84%" align="left"><?PHP echo $rowcus['customers_firstname']; ?> <?PHP echo $rowcus['customers_lastname']; ?></td>
+                            </tr>
+                            <tr>
+                              <td align="right"><strong>Address1: </strong></td>
+                              <td align="left"><?php echo $_SESSION['customers_address1']; ?></td>
+                            </tr>
+                            <tr>
+                              <td align="right"><strong> Address2: </strong></td>
+                              <td align="left"><?php echo $_SESSION['customers_address2']; ?></td>
+                            </tr>
+                            <tr>
+                              <td align="right"><strong>City/Town: </strong></td>
+                              <td align="left"><?php echo $_SESSION['customers_town']; ?></td>
+                            </tr>
+                            <tr>
+                              <td align="right"><strong>County: </strong></td>
+                              <td align="left"><?php echo $_SESSION['customers_state']; ?></td>
+                            </tr>
+                            <tr>
+                              <td align="right"><strong>Country: </strong></td>
+                              <td align="left"><?php echo $_SESSION['customers_country']; ?></td>
+                            </tr>
+                            <tr>
+                              <td align="right"><strong>Postcode: </strong></td>
+                              <td align="left"><?php echo $_SESSION['customers_postcode']; ?></td>
+                            </tr>
+                            
+                            
+                          </table></td>
+                        </tr>
+                        
+                        <tr>
+                          <td align="center" valign="middle"><table width="100%" border="0" cellpadding="1" cellspacing="1" class="normal_text">
+                            <tr>
+                              <td colspan="2" align="left"><div style="border-top:1px dashed #000000"> </div></td>
+                            </tr>
+                            <tr>
+                              <td colspan="2" align="left"><strong>Comments About Your Order </strong></td>
+                            </tr>
+                            <tr>
+                              <td colspan="2" align="left" valign="top"><? echo stripslashes($_SESSION['customer_comments']);?> [<a href="index-action-order_place" class="nav">Edit</a>] </td>
+                            </tr>
+
+                            <tr>
+                              <td colspan="2" align="center">&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td colspan="2" align="center"><div id="omorderList"><?php  require_once('omcart.php');?></div></td>
+                              </tr>
+                            <tr>
+                              <td align="right">&nbsp;</td>
+                              <td align="left">&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td width="28%" align="right">&nbsp;</td>
+                              <td width="72%" align="right" style="padding-right:33px;"><?php if($_SESSION[cart]!=""){  ?><!--<input type="image" src="images/continue2.jpg" width="90" height="27" border="0" name="submit" />--><input type="submit" name="submit" value="Confirm Order" /><?PHP }else{?>No Item To Order, you have to purchase at least one item to place order.<br />
+                                [<a href="index-action-<?php if($_SESSION['order_type']=="1")
+								{?>menu_list<?php }else{?>menu_list_collection<?php }?>-rid-<? echo $_SESSION['rids']; ?>" class="nav">Buy Now</a>]<?}?></td>
+                            </tr>
+                          </table></td>
+                        </tr>
+                      </table>
+                      </form></td>
+                      <td width="2%" >&nbsp;</td>
+                    </tr>
+                  
+                  
+                                </table></td>
+                </tr>
+              <tr>
+                <td width="51%">&nbsp;</td>
+                <td width="49%">&nbsp;</td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></td>
+        <td background="images/red_box1_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+		  <td><img src="images/red_box1_07.jpg" width="15" height="17" alt="" /></td>
+		  <td background="images/red_box1_08.jpg"></td>
+		  <td><img src="images/red_box1_09.jpg" width="14" height="17" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  
+  <iframe width=174 height=189 name="gToday:normal:agenda.js" id="gToday:normal:agenda.js" src="calander/ipopeng" scrolling="no" frameborder="0" style="visibility:visible; z-index:999; position:absolute; top:-500px; left:-500px;"></iframe>
+</table>

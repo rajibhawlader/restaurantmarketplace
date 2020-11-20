@@ -1,0 +1,58 @@
+----------------------------------
+HOW TO UPGRADE from version 2.10.0+ (really easy):
+----------------------------------
+1) DOWNLOAD from your existing installation the
+   file named "config.php" to overwrite the 
+   config.php file in the archive provided.
+   
+2) Rename your current livehelp folder
+   that contains all the php files for 
+   your current live help to something 
+   like livehelp_old on the server.
+
+3) Upload the new livehelp folder to 
+   the server and rename the newly uploaded
+   folder to livehelp or whatever you 
+   had named the old livehelp 
+   installation folder as.
+
+4) Open up setup.php the program should detect
+   and upgrade without you having to enter
+   in any addtional information.
+   
+----------------------------------
+HOW TO UPGRADE from before version 2.10.0:
+----------------------------------
+1) Rename your current livehelp folder
+   that contains all the php files for 
+   your current live help to something 
+   like livehelp_old on the server.
+
+2) Upload the new livehelp folder to 
+   the server and rename the newly uploaded
+   folder to livehelp or whatever you 
+   had named the old livehelp 
+   installation folder as.
+   
+3) Open up setup.php and select UPGRADE 
+   as the installation option. For the
+   Mysql database Be sure to 
+   use the same database name, user and 
+   password used in the first installation 
+   If you do not remember what this was
+   open up the old config.php file and 
+   look for the corrisponding lines.
+
+Example:
+---------
+In this upgrade example lets pretend your
+livehelp is in a folder called "livehelp"   
+This is what you would do in the Unix 
+prompt:
+
+mv livehelp livehelp_old
+tar xfz CSLHv26.tar.gz
+mv CSLHv26 livehelp
+
+Then open up setup.php in a web browser 
+and select Upgrade as the installation.

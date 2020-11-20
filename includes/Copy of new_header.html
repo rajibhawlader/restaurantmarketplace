@@ -1,0 +1,146 @@
+<script language="javascript"> 
+
+function searchvalidation()
+{
+  if (document.searchpost.PCD.value == "" )
+  {
+    alert("Post Code Needed.");
+    document.searchpost.PCD.focus();
+    return false;
+  }
+  
+  return true;
+  
+}
+</script>
+<div id="topcontent">
+          <div id="leftshade"></div>
+             <div id="rightshade"></div>
+             <div id="header"><img src="images/indianfoddsonlinelogo.jpg" alt="Indian foods online" title="indian foods online" /><img style="margin-left:62px" src="images/orderonline.jpg" alt="online order"  title="online order" /><img style="margin-left:49px" src="images/toplink.jpg" /></div>
+             <div id="banner"><img src="images/banner.jpg" style="float:left" alt="indian foods online banner"  title="indian foods online banner"/>
+
+              
+			   <table width="330" border="0" cellspacing="0" cellpadding="0">
+                 <tr>
+                   <td width="127" height="105">&nbsp;</td>
+                   <td width="203">&nbsp;</td>
+                 </tr>
+				  <form  method="POST" action="index-action-restaurant_list" name="searchpost" id="searchpost" onsubmit="return searchvalidation(this)">  
+                 <tr>
+                   <td height="31" align="right">Post Code:</td>
+                    
+                   <td align="right">  <input name="PCD" type="text" id="PCD" style="background-color:#8a1e29; border:1px solid #ffffff;" size="30"  /></td>
+				   
+                 </tr>
+                 <tr>
+                   <td>&nbsp;</td>
+                   <td align="right"><input type="image" src="images/search.jpg" width="86" height="42"  border="0"/></td>
+                 </tr>
+                 <tr>
+                   <td>&nbsp;</td>
+               <td align="right"><span class="join_btn"><a href="index-action-sign_up"> <img src="images/join_here.jpg" width="85" height="22" border="0" /></a></span></td>
+                 </tr>
+               </table>
+			   	  </form>
+             </div>
+             <div id="topmenu">
+                <ul class="menu1">
+                <li>
+                
+	                <?php if($tbv=="hm")
+					       {
+					?>
+	                			<a href="index-tbq-hm"><b>Home</b></a>
+	                
+	               <?php }
+	                  	 else
+					     {
+	                  ?>
+	                			<a href="index-tbq-hm"><b>Home</b></a>
+	               <?	 }	?>
+                </li>
+                <li>
+	                <?php if($tbv=="rst")
+	        			  {
+	        		?>
+	              				  <a href="index-action-restaurants-tbq-rs"><b>Restaurant</b></a>
+	                 <?php }
+	                  	 else
+					     {
+	                  ?>
+	                		     <a href="index-action-restaurants-tbq-rs"><b>Restaurant</b></a>
+	                  <? }	?> 		
+                </li>
+                <li>
+                
+	                <?php if($tbv=="jn")
+	        			  {
+	        		?>
+	                <a href="index-action-pages-pid-9-tbq-jn"><b>Join</b></a>
+	                
+	                <?php }
+	        			  else
+	        			  {
+	        				?>
+	        					<a href="index-action-pages-tbq-jn"><b>Join</b></a>
+	        		<?php }?>
+	                
+                </li>
+                <li>
+	                <?php if($tbv=="hl")
+	        			  {
+	        		?>
+	                		<a href="index-action-pages-pid-10-tbq-hl"><b>Help</b></a>
+	                <?php }
+	        			  else
+	        			  {
+	        		?>
+	        					<a href="index-action-pages-tbq-hl"><b>Help</b></a>
+	        		<?php }?>
+	        			
+        		</li>
+                <li>
+	                <?php if($tbv=="icc")
+	        			  {
+	        		?>
+	                
+	                <a href="index-action-pages-pid-11-tbq-icc"><b>Indian Curry Club</b></a>
+	                
+	                <?php }
+	        			  else
+	        			  {
+	        		?>
+	        				<a href="index-action-pages-tbq-icc"><b>Indian Curry Club</b></a>
+	                <?php }?>
+                </li>
+                <li>
+                <?php if($tbv=="cbl")
+        			  {
+        		?>
+                
+                <a href="index-action-pages-pid-12-tbq-cbl"><b>Curry Blog</b></a>
+                <?php }
+        			  else
+        			  {
+        		?>
+                <a href="index-action-pages-tbq-cbl"><b>Curry Blog</b></a>
+                <?php }?>
+                
+                </li>
+                 <li>
+                 <?php if($tbv=="rps")
+        			   {
+        				?>
+        					
+               			  <a href="index-action-pages-pid-13-tbq-rps"><b>Royalty Points</b></a>
+                 <?php }
+        					  else
+        					  {
+        				?>
+        				 <a href="index-action-pages-tbq-rps"><b>Royalty Points</b></a>
+        				<?php }?>
+                 
+                 </li>	  	    	  	  
+               </ul>
+          </div>
+        </div>

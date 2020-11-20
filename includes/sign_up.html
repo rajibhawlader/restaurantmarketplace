@@ -1,0 +1,209 @@
+<script language="javascript"> 
+function IsNumeric(sText)
+{
+   var ValidChars = "0123456789";
+   var IsNumber=true;
+   var Char;
+
+ 
+   for (i = 0; i < sText.length && IsNumber == true; i++) 
+      { 
+      Char = sText.charAt(i); 
+      if (ValidChars.indexOf(Char) == -1) 
+         {
+         IsNumber = false;
+         }
+      }
+   return IsNumber;
+   
+   }
+function validation()
+{
+
+  if (document.edit.first_name.value == "" )
+  {
+    alert("First Name is a required field.");
+    document.edit.first_name.focus();
+    return false;
+  }
+  
+   if (document.edit.last_name.value == "" )
+  {
+    alert("Last Name is a required field.");
+    document.edit.last_name.focus();
+    return false;
+  }
+  
+  if (document.edit.rname.value == "" )
+  {
+    alert("Restaurant Name is a required field.");
+    document.edit.rname.focus();
+    return false;
+  }
+  
+  if (document.edit.address1.value == "" )
+  {
+    alert("Address is a required field.");
+    document.edit.address1.focus();
+    return false;
+  }
+  
+  
+    if (document.edit.password.value == "" )
+  {
+    alert("Password is a required field!");
+    document.edit.password.focus();
+    return false;
+  }
+  
+   if (document.edit.c_password.value == "" )
+  {
+    alert("Confirm Password is a required field!");
+    document.edit.c_password.focus();
+    return false;
+  }
+  
+  if (document.edit.c_password.value!=document.edit.password.value)
+  {
+    alert("Passwords don't match. Please try again");
+	document.edit.c_password.value = "";
+    document.edit.c_password.focus();
+    return false;
+  }
+    if (document.edit.ecode.value == "" )
+  {
+    alert("You have to type code.");
+    document.edit.ecode.focus();
+    return false;
+  }
+ 
+  
+   
+
+ 
+  return true;
+  
+}
+</script>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><table width="96%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+        <td background="images/box_02.jpg"><span class="box_title_text">Restaurant registration information</span></td>
+        <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/box_04.jpg">&nbsp;</td>
+        <td width="100%"  valign="top"><form action="index-action-registration" method="post" enctype="multipart/form-data" name="edit" id="edit" onsubmit="return validation(this)"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="bodytext">
+            <tr>
+              <td align="center" > <div align="justify">Have you been thinking about offering an online ordering solution to your customers but didn’t know where to start?
+                
+                IindianfoodsOnline.co.uk is the first online ordering facility dedicated to the UK Indian / Bangladeshi restaurant trade. <br />
+                <br />
+                We have created an online solution that can be used by all restaurants and takeaways in Britain, serving the UK’s favourite food.
+                
+                To get your share of a massive – and growing – market of online food shoppers, all you need to do registered at IindianfoodsOnline.co.uk . <br />
+                <br />
+                Then log in on to your account set up your menu. Get online order on your account
+                in the system. It really is that simple. </div></td>
+            </tr>
+            <tr>
+              <td align="center" class="message">&nbsp;</td>
+            </tr>
+            <tr>
+              <td align="center" class="message"><?PHP echo $message;
+									  
+									  ?></td>
+            </tr>
+            <tr>
+              <td align="center" valign="top"><table width="90%" border="0" cellspacing="2" cellpadding="2" class="bodytext">
+                <tr>
+                  <td colspan="2" align="left">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td colspan="2" align="left" bgcolor="#F0F0F0">* indicates information is compulsory </td>
+                </tr>
+                <tr>
+                  <td width="43%" align="left">Account owner/holder first   Name: *</td>
+                  <td width="57%" align="left"><input name="first_name" type="text"  id="first_name" tabindex="1" value="<?PHP echo $first_name; ?>" size="35" /></td>
+                </tr>
+                <tr>
+                  <td align="left">Account owner/holder last Name : *</td>
+                  <td align="left"><input name="last_name" type="text"  id="last_name" tabindex="2" value="<?PHP echo $last_name; ?>" size="35" /></td>
+                </tr>
+                <tr>
+                  <td align="left">Restaurant  Name:* </td>
+                  <td align="left"><input name="rname" type="text"  id="rname" tabindex="3" value="<?PHP echo $rname; ?>" size="35"/></td>
+                </tr>
+                <tr>
+                  <td align="left" valign="top">Address: * </td>
+                  <td align="left" valign="top"><textarea name="address1"  id="address1" tabindex="4" ><?PHP echo strip_tags(html_entity_decode($address1)); ?></textarea></td>
+                </tr>
+                <tr>
+                  <td align="left">Phone: </td>
+                  <td align="left"><input name="phone" type="text"  id="phone" tabindex="5" value="<?PHP echo $phone; ?>" size="35" /></td>
+                </tr>
+                <tr>
+                  <td align="left">Mobile: </td>
+                  <td align="left"><input name="mobile" type="text"  id="mobile" tabindex="5" value="<?PHP echo $mobile; ?>" size="35" /></td>
+                </tr>
+                <tr>
+                  <td align="left">Fax: </td>
+                  <td align="left"><input name="fax" type="text"  id="fax" tabindex="6" value="<?PHP echo $fax; ?>" size="35" /></td>
+                </tr>
+                <tr>
+                  <td align="left">Email:</td>
+                  <td align="left"><input name="email" type="text"  id="email" tabindex="7" value="<?PHP echo $email; ?>" size="35" /></td>
+                </tr>
+                <tr>
+                  <td align="left">Password: * </td>
+                  <td align="left"><input name="password" type="password"  id="password" tabindex="8" size="35" /></td>
+                </tr>
+                <tr>
+                  <td align="left">Re Type Password : * </td>
+                  <td align="left"><input name="c_password" type="password"  id="c_password" tabindex="9" size="35" /></td>
+                </tr>
+              </table></td>
+              </tr>
+            <tr>
+              <td align="center" valign="top"><table width="90%" border="0" cellspacing="2" cellpadding="2" class="bodytext">
+                <tr>
+                  <td width="19%" height="28" align="left">Enter Code: *  <?php
+$encid= str_pad( base_convert( mt_rand(0, ( 255*255*255) ), 10, 16 ), 6, '0', Str_PAD_LEFT);
+
+
+?></td>
+                  <td width="24%" align="left"><img src="verificationimage.php?encid=<?php echo $encid;?>" width="65" height="24" align="absbottom"/></td>
+                  <td width="57%" align="left"><input name="ecode" type="text" tabindex="10" id="ecode" size="15"   /></td>
+                  <input type="hidden" id="intypecode" name="intypecode" value="<?php echo $encid; ?>" />
+                  </tr>
+              </table></td>
+              </tr>
+            <tr>
+              <td align="center" valign="top"><input type="image" src="images/submit.jpg" width="97" height="27" border="0" name="submit"/></td>
+              </tr>
+        </table>
+        </form></td>
+        <td background="images/box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+        <td background="images/box_08.jpg">&nbsp;</td>
+        <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>

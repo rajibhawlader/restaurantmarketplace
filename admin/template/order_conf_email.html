@@ -1,0 +1,122 @@
+<?php
+if($_REQUEST['Submit']=="Save Change")
+{
+	$query = "Update order_del_email set ode_email='".mysql_escape_string($_REQUEST["ode_email"])."' where ode_id='1'";
+	$result = $db->execQuery($query);
+	if ($result) 
+	{
+		$message="Change Saved Successfuly";
+	}else
+	{
+		$message="Change Saved Failed";
+	}
+}
+
+?>
+
+<script language="javascript">
+function validation()
+{
+  if (document.edit.ode_email.value.indexOf("@") == -1 || document.edit.ode_email.value.indexOf(".") == -1 || document.edit.ode_email.value 
+== "")
+  {
+    alert("Email Address is a required field!, like info@indianfoodsonline.co.uk use [@] [.]");
+    document.edit.ode_email.focus();
+    return false;
+  }
+		
+		
+	return true;
+}
+</script>
+<script type="text/JavaScript">
+<!--
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+//-->
+</script>
+
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="4%" height="400" valign="top">&nbsp;</td>
+    <td width="91%" align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td align="center" valign="top"><table width="99%" border="0" align="center" cellpadding="0" cellspacing="0">
+            <tr>
+              <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+              <td background="images/box_02.jpg"><span class="box_title_text">Order Confirmation Email Address Set Up</span></td>
+              <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+            </tr>
+            <tr>
+              <td background="images/box_04.jpg">&nbsp;</td>
+              <td width="100%" valign="top"><table width="100%" border="0">
+
+                <tr>
+                  <td height="164" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td align="center"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+                          <tr>
+                            <td class="fieldtext"> <?Php 
+									
+									$resquery="Select * from order_del_email where ode_id='1'";
+									$resultres=mysql_query($resquery);
+									$rowres=mysql_fetch_array($resultres);
+									?></td>
+                          </tr>
+                          <tr>
+                            <td height="144"><form action="index.php?action=order_conf_email&tabm=rcttb" method="post" enctype="multipart/form-data" name="edit" id="edit" onSubmit="return validation(this)">
+                      <table width="100%" border="0" cellspacing="2" cellpadding="2"  class="bodytext">
+                        <tr>
+                          <td colspan="4" align="center"><span class="message"><?php echo $message; ?></span></td>
+                          </tr>
+                        
+                        <tr>
+                          <td align="right">&nbsp;</td>
+                          <td colspan="3" align="left">&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td align="right"><strong>Order Confirmation Email Address : </strong></td>
+                          <td colspan="3" align="left"><input type="text" name="ode_email" id="ode_email" value="<?=$rowres[ode_email]?>" size="35"></td>
+                        </tr>
+                        <tr>
+                          <td width="42%" align="right" valign="top">&nbsp;</td>
+                          <td width="58%" colspan="3" align="left">&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td align="right" valign="top">&nbsp;</td>
+                          <td colspan="3" align="left"><input type="submit" name="Submit" value="Save Change" class="button_grn"/></td>
+                        </tr>
+                      </table>
+                  </form></td>
+                          </tr>
+                        </table></td>
+                        </tr>
+                  </table></td>
+                </tr>
+              </table></td>
+              <td background="images/box_06.jpg">&nbsp;</td>
+            </tr>
+            <tr>
+              <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+              <td background="images/box_08.jpg">&nbsp;</td>
+              <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+            </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+</table>

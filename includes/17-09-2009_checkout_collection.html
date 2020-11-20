@@ -1,0 +1,1033 @@
+<script src="js/ajax.js"></script>
+<script type="text/javascript">
+
+
+function changeaddress(value)
+{
+		var url = 'addressset.php?add_id='+value;
+		makeRequest(url,'test');
+}
+
+function ordercheck()
+{
+	if(document.getElementById('ordr').value==0)
+	{
+		alert("You have not yet ordered enough to be able to obtain.");
+		return false;
+	}
+return true;
+}
+
+function loadProduct(valu)
+{
+	var url = 'product_list.php?id='+valu;
+	makeRequest(url,'productList');
+return false;
+}
+
+var mint;
+function checkVerify(h,m)
+{
+	
+	mint=m;
+	if(document.edit.ortime.checked==true)
+	{
+	
+		document.getElementById('hrs').value=h;
+		document.getElementById('mints').value=mint;
+		//alert(mint);
+		//alert("checked");
+		document.edit.hrs.disabled="disabled";
+		document.edit.mints.disabled="disabled";
+	}
+	else
+	{
+		//alert("unchecked");
+		document.edit.hrs.disabled="";
+		document.edit.mints.disabled="";
+	}
+	
+}
+
+function timecheck()
+{
+	if(document.getElementById('hrs').value==document.getElementById('fasth').value)
+	{
+		if(document.getElementById('mints').value<document.getElementById('fastm').value)
+		alert("Collection time can't be less than "+document.getElementById('fasth').value+":"+document.getElementById('fastm').value);
+		document.getElementById('mints').value=document.getElementById('fastm').value;
+		document.getElementById('mints').focus();
+	}
+	if(document.getElementById('hrs').value==document.getElementById('lasth').value)
+	{
+		if(document.getElementById('mints').value>document.getElementById('lastm').value)
+		alert("Collection time can't be greater than "+document.getElementById('lhour').value+":"+document.getElementById('lastm').value);
+		document.getElementById('mints').value=document.getElementById('lastm').value;
+		document.getElementById('mints').focus();
+	}
+	
+}
+function addnewaddress()
+{
+	var url = 'addnewaddress.php';
+	makeRequest(url,'test');
+}
+
+function delivery_area(a) {
+	LeftPosition=(screen.width) ? (screen.width)/3.5 : 0;
+	TopPosition=(screen.height) ? (screen.height)/7 : 0;
+	id=window.open("delivery_area.php?id="+a+"",a,"scrollbars,height=600,width=615,top=" + TopPosition + ",left=" + LeftPosition);
+	if(id.window.focus){id.window.focus();}
+	}
+</script>
+<script type="text/javascript" src="images/jquery-1.js"></script>
+<script type="text/javascript" src="images/animatedcollapse.js">
+
+
+
+</script><script language="javascript"> 
+function IsNumeric(sText)
+{
+   var ValidChars = "0123456789";
+   var IsNumber=true;
+   var Char;
+
+ 
+   for (i = 0; i < sText.length && IsNumber == true; i++) 
+      { 
+      Char = sText.charAt(i); 
+      if (ValidChars.indexOf(Char) == -1) 
+         {
+         IsNumber = false;
+         }
+      }
+   return IsNumber;
+   
+   }
+function validation()
+{
+
+   if (document.edit.customers_address1.value == "" )
+  {
+    alert("Customer Address is a required field.");
+    document.edit.customers_address1.focus();
+    return false;
+  }
+  
+   if (document.edit.customers_town.value == "" )
+  {
+    alert("City is a required field.");
+    document.edit.customers_town.focus();
+    return false;
+  }
+    if (document.edit.customers_postcode.value == "" )
+  {
+    alert("Post Code is a required field.");
+    document.edit.customers_postcode.focus();
+    return false;
+  }
+    if (document.edit.customers_postcode2.value == "" )
+  {
+    alert("Post Code is a required field.");
+    document.edit.customers_postcode2.focus();
+    return false;
+  }
+    if (document.edit.customers_add_label.value == "" )
+  {
+    alert("Address Label is a required field.");
+    document.edit.customers_add_label.focus();
+    return false;
+  }
+
+var url = 'saveaddress.php?ad1='+document.edit.customers_address1.value+'&ad2='+document.edit.customers_address2.value+'&state='+document.edit.customers_state.value+'&town='+document.edit.customers_town.value+'&post='+document.edit.customers_postcode.value+' '+document.edit.customers_postcode2.value+'&country='+document.edit.customers_country.value+'&adlebel='+document.edit.customers_add_label.value;
+
+makeRequest(url,'test');
+setTimeout("window.location.reload()", 300);
+
+return true;
+ 
+}
+
+
+function chaeckvalidation()
+{
+	if(document.getElementById('customer_comments').value.length>160)
+	{
+		alert("Your comments must be in 160 characters or less");
+		document.getElementById('customer_comments').value=document.getElementById('customer_comments').value.substr(0,160);
+		document.getElementById('customer_comments').focus();
+		return false;
+	}
+return true;
+}
+
+</script>
+
+<?php
+$query = "SELECT * FROM resturant WHERE  rid='".$_SESSION['rids']."' AND aactive='1'";
+$result = $db->execQuery($query);
+$arinfoMain = $db->resultArray($result);
+?>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><form action="index-action-confirm_orders" method="post" enctype="multipart/form-data" name="edit" id="edit" onsubmit="return validation(this)">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="35%" align="left" valign="top"><table width="100%" border="0" align="left" cellpadding="0" cellspacing="0">
+            <tr>
+              <td><img src="images/black_box1_01.jpg" width="15" height="39" alt="" /></td>
+              <td width="50%" background="images/black_box1_02.jpg" class="heading">Your Order </td>
+              <td width="50%" background="images/black_box1_02.jpg" class="heading" align="right"></td>
+              <td><img src="images/black_box1_03.jpg" width="14" height="39" alt="" /></td>
+            </tr>
+            <tr>
+              <td background="images/black_box1_04.jpg">&nbsp;</td>
+              <td colspan="2" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td align="center" class="message" bgcolor="#323232"><?PHP if($_SESSION['cart']=="")
+			{
+			echo "You have no item to place order";
+			}
+									  
+									  ?></td>
+                </tr>
+                <? if($message!=""){?>
+                <tr>
+                  <td align="center" class="message" bgcolor="#323232"><?PHP echo $message;
+									  
+									  ?></td>
+                </tr>
+                <?}?>
+                <tr>
+                  <td valign="top" bgcolor="#323232"><table border="0" width="100%" cellspacing="3" cellpadding="0" bgcolor="#CCCCCC" class="bodytext">
+                    <tr align="center">
+                      <td bgcolor="#FFFFFF"><div id="orderList">
+                        <?php  require_once('cartonacount.php');?>
+                      </div></td>
+                    </tr>
+                    <tr>
+                      <td width="100%" bgcolor="#FFFFFF"><div align="center"><a href="index-action-menu_list-rid-<? echo $_SESSION['rids']; ?>" class="nav"><img src="images/button_continue_shooping.jpg" width="140" height="39" border="0" /></a></div></td>
+                    </tr>
+                  </table></td>
+                </tr>
+                <tr>
+                  <td valign="top" bgcolor="#323232">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td align="left" bgcolor="#323232" class="normal_text">Special comments to the order:</td>
+                </tr>
+                <tr>
+                  <td valign="top" bgcolor="#323232"><textarea name="customer_comments" style="width:100%" rows="3" class="textbox_wht" id="customer_comments"  onkeyup="return chaeckvalidation();"><? echo strip_tags(html_entity_decode($_SESSION['customer_comments']));?></textarea></td>
+                </tr>
+                <tr>
+                  <td valign="top" bgcolor="#323232">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td valign="top" bgcolor="#323232">&nbsp;</td>
+                </tr>
+              </table></td>
+              <td background="images/black_box1_06.jpg">&nbsp;</td>
+            </tr>
+            <tr>
+              <td><img src="images/black_box1_07.jpg" width="15" height="17" alt="" /></td>
+              <td colspan="2" background="images/black_box1_08.jpg"></td>
+              <td><img src="images/black_box1_09.jpg" width="14" height="17" alt="" /></td>
+            </tr>
+          </table></td>
+          <td width="1%">&nbsp;</td>
+          <td width="64%" align="right" valign="top"><table width="100%" border="0" align="left" cellpadding="0" cellspacing="0">
+            <tr>
+              <td><img src="images/red_box1_01.jpg" width="15" height="39" alt="" /></td>
+              <td width="100%" background="images/red_box1_02.jpg" class="heading">Name and Address </td>
+              <td><img src="images/red_box1_03.jpg" width="14" height="39" alt="" /></td>
+            </tr>
+            
+            <tr>
+              <td background="images/red_box1_04.jpg">&nbsp;</td>
+              <td valign="top" bgcolor="#9E0112"><table width="100%" border="0" cellpadding="1" cellspacing="1" class="normal_text">
+                <tr>
+            		<td valign="top" bgcolor="#9E0112" class="normal_text" align="left"><div style="float:right"><span style="font-size:14px; text-decoration:underline"><strong>Delivery Area</strong></span><br/>
+                   <a href="#" class="nav1" onclick="javascript:delivery_area(<?php echo $arinfoMain[0]['rid']; ?>); return false;" target="_blank" ><strong>Click here</strong></a> to view all delivery area</div>
+				   
+				   <strong style="font-size:14px; text-decoration:underline">Restaurant Name</strong>&nbsp;&nbsp;<b style="font-size:17px; color:#ff9933"><?php echo $arinfoMain[0]["rname"]; ?></b></td>
+                </tr>
+                <tr>
+                  <td align="left">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td width="72%" align="left"><strong style="font-size:14px; text-decoration:underline">Timing and Special Instructions</strong></td>
+                </tr>
+                <tr>
+                  <td align="left" valign="top"><table width="100%" style="border-collapse:collapse" border="1" bordercolor="#660000" cellspacing="0" cellpadding="0">
+                      <?php
+$rids=$_SESSION['rids'];     
+$dayt=date('Y-m-d');
+$dayt = strtotime($dayt);
+$daytr = date('l', $dayt);
+
+if($daytr=="Monday")
+{
+$dayconls="open_h_mon_start";
+$dayconle="open_h_mon_end";
+$dayconds="open_h_mon_start2";
+$dayconde="open_h_mon_end2";
+}
+else if($daytr=="Tuesday")
+{
+$dayconls="open_h_tue_start";
+$dayconle="open_h_tue_end";
+$dayconds="open_h_tue_start2";
+$dayconde="open_h_tue_end2";
+}
+else if($daytr=="Wednesday")
+{
+$dayconls="open_h_wed_start";
+$dayconle="open_h_wed_end";
+$dayconds="open_h_wed_start2";
+$dayconde="open_h_wed_end2";
+}
+else if($daytr=="Thursday")
+{
+$dayconls="open_h_thu_start";
+$dayconle="open_h_thu_end";
+$dayconds="open_h_thu_start2";
+$dayconde="open_h_thu_end2";
+}
+else if($daytr=="Friday")
+{
+$dayconls="open_h_fri_start";
+$dayconle="open_h_fri_end";
+$dayconds="open_h_fri_start2";
+$dayconde="open_h_fri_end2";
+}
+else if($daytr=="Saturday")
+{
+$dayconls="open_h_sat_start";
+$dayconle="open_h_sat_end";
+$dayconds="open_h_sat_start2";
+$dayconde="open_h_sat_end2";
+}
+else
+{
+$dayconls="open_h_sun_start";
+$dayconle="open_h_sun_end";
+$dayconds="open_h_sun_start2";
+$dayconde="open_h_sun_end2";
+}
+
+$sqlsed="Select $dayconls,$dayconle,$dayconds,$dayconde from timeschedule where rid='$rids'";
+$resultsed=mysql_query($sqlsed);
+$rowsed=mysql_fetch_array($resultsed);
+$queryd = "SELECT * FROM delevary_policy where  rid='$rids'";
+$resultd = $db->execQuery($queryd);
+$arinfod= $db->resultArray($resultd);
+                              ?>
+                      <tr>
+                        <td width="54%" align="center" valign="top"><table width="96%" border="0" cellspacing="2" cellpadding="0" class="normal_text">
+                          <tr class="timetitle">
+                            <td colspan="2" height="3"></td>
+                          </tr>
+                          <tr >
+                            <td colspan="2" valign="top" class="timetitle"><strong>Current Time:</strong>
+                                <?php 
+						  	putenv ('TZ=GMT'); 
+							$atimes= date('H:i');
+							
+							echo $atimes;
+						  ?>
+                                <?php 
+$ostatus=0;
+// putenv ('TZ=GMT');
+
+$order_date=date('Y-m-d');
+$order_datel=date('Y-m-d');
+$order_dateds=date('Y-m-d');
+$order_datede=date('Y-m-d');
+$rids=$_SESSION['rids'];
+
+
+// $atimes=date('H:i');
+$stime=strtotime("$order_date $atimes");
+$stime=date('H:i',$stime);
+$_SESSION['timeH']=$stime;
+
+$dayt=$order_date;
+$dayt = strtotime($dayt);
+$daytr = date('l', $dayt);
+
+if($daytr=="Monday")
+{
+$dayconls="open_h_mon_start";
+$dayconle="open_h_mon_end";
+$dayconds="open_h_mon_start2";
+$dayconde="open_h_mon_end2";
+}
+else if($daytr=="Tuesday")
+{
+$dayconls="open_h_tue_start";
+$dayconle="open_h_tue_end";
+$dayconds="open_h_tue_start2";
+$dayconde="open_h_tue_end2";
+}
+else if($daytr=="Wednesday")
+{
+$dayconls="open_h_wed_start";
+$dayconle="open_h_wed_end";
+$dayconds="open_h_wed_start2";
+$dayconde="open_h_wed_end2";
+}
+else if($daytr=="Thursday")
+{
+$dayconls="open_h_thu_start";
+$dayconle="open_h_thu_end";
+$dayconds="open_h_thu_start2";
+$dayconde="open_h_thu_end2";
+}
+else if($daytr=="Friday")
+{
+$dayconls="open_h_fri_start";
+$dayconle="open_h_fri_end";
+$dayconds="open_h_fri_start2";
+$dayconde="open_h_fri_end2";
+}
+else if($daytr=="Saturday")
+{
+$dayconls="open_h_sat_start";
+$dayconle="open_h_sat_end";
+$dayconds="open_h_sat_start2";
+$dayconde="open_h_sat_end2";
+}
+else
+{
+$dayconls="open_h_sun_start";
+$dayconle="open_h_sun_end";
+$dayconds="open_h_sun_start2";
+$dayconde="open_h_sun_end2";
+}
+
+$sqlsed="Select $dayconls,$dayconle,$dayconds,$dayconde from timeschedule where rid='$rids'";
+$resultsed=mysql_query($sqlsed);
+$rowsed=mysql_fetch_array($resultsed);
+
+if($rowsed[$dayconls]!="Closed For the day" or $rowsed[$dayconds]!="Closed For the day")
+{
+$lst= strtotime("$order_datel $rowsed[$dayconls]:00");
+$len=strtotime("$order_datel $rowsed[$dayconle]:00");
+
+$firststart1=$rowsed[$dayconls];
+$first=(explode(":",$firststart1));
+$firststhour=$first[0];
+$firststmin=$first[1];
+
+//echo $firststhour."  ";
+//echo $firststmin."  ";
+
+$firsten=$rowsed[$dayconle];
+$firstend=(explode(":",$firsten));
+$firsrendhour= $firstend[0];
+$firsrendmin= $firstend[1];
+
+if($firsrendhour!="" && $firsrendhour!=":00" && $firsrendmin!="" && $firsrendmin!=":00")
+{
+	$lhour=$firsrendhour;
+	$lasth=$firsrendhour;
+	$lastm=$firsrendmin;
+}
+
+//echo $firsrendhour."  ";
+//echo $firsrendmin."  ";
+
+$secondst= $rowsed[$dayconds];
+$secndst=(explode(":",$secondst));
+$secondstarthour= $secndst[0];
+$secondstartmin= $secndst[1];
+
+//echo $secondstarthour." SSH ";
+//echo $secondstartmin."  SSM";
+
+$seconden=$rowsed[$dayconde];
+$secnded=(explode(":",$seconden));
+$secondendhour= $secnded[0];
+$secondendtmin= $secnded[1];
+
+if($secondendhour!="" && $secondendhour!=":00"  && $secondendtmin!="" && $secondendtmin!=":00")
+{
+	$lhour=$secondendhour;
+	if($secondendhour=="00") { $lasth="24"; }
+	elseif($secondendhour=="01") { $lasth="25"; }
+	elseif($secondendhour=="02") { $lasth="26"; }
+	elseif($secondendhour=="03") { $lasth="27"; }
+	else { $lasth=$secondendhour; }
+	$lastm=$secondendtmin;
+	$secondendhour=$lasth;
+}
+
+$atm=$atimes;
+$atm= strtotime("$order_datede $atm");
+
+$chkd=strtotime("$rowsed[$dayconds]:00");
+$chkd1=strtotime("03:55:00"); 
+$chkd2=strtotime("00:00:00");
+if($chkd<=$chkd1 and $chkd>=$chkd2)
+{
+$order_dateds=date( "Y-m-d", strtotime( "$order_dateds +1 day" ) );
+
+}
+$dst= strtotime("$order_dateds $rowsed[$dayconds]:00");
+
+$chkde=strtotime("$rowsed[$dayconde]:00");
+$chkde1=strtotime("03:55:00");
+$chkde2=strtotime("00:00:00");
+if($chkde<=$chkde1 and $chkde>=$chkde2)
+{
+$order_datede=date( "Y-m-d", strtotime( "$order_datede +1 day" ) );
+}
+$den=strtotime("$order_datede $rowsed[$dayconde]:00");
+
+$ckdate=strtotime("$atimes");
+$ckdate1=strtotime("03:55:00");
+$ckdate2=strtotime("00:00:00");
+if($ckdate<=$ckdate1 and $chkde>=$ckdate2)
+{
+$order_dategt=date( "Y-m-d", strtotime( "$order_date +1 day" ) );
+}
+$atmd= strtotime("$order_dategt $atimes");
+
+if($atm>=$lst and $atm<=$len)
+{
+$ostatus=1;
+}else if($atmd>=$dst and $atmd<=$den)
+{
+
+$ostatus=1;
+}
+
+
+}else if($rowsed[$dayconls]=="Closed For the day" and $rowsed[$dayconds]!="Closed For the day")
+{
+
+$atm=$atimes;
+$atm= strtotime("$order_datede $atm");
+
+$chkd=strtotime("$rowsed[$dayconds]:00");
+$chkd1=strtotime("03:55:00"); 
+$chkd2=strtotime("00:00:00");
+if($chkd<=$chkd1 and $chkd>=$chkd2)
+{
+$order_dateds=date( "Y-m-d", strtotime( "$order_dateds +1 day" ) );
+
+}
+
+$dst= strtotime("$order_dateds $rowsed[$dayconds]:00");
+
+$chkde=strtotime("$rowsed[$dayconde]:00");
+$chkde1=strtotime("03:55:00");
+$chkde2=strtotime("00:00:00");
+if($chkde<=$chkde1 and $chkde>=$chkde2)
+{
+$order_datede=date( "Y-m-d", strtotime( "$order_datede +1 day" ) );
+}
+$den=strtotime("$order_datede $rowsed[$dayconde]:00");
+
+$ckdate=strtotime("$atimes");
+$ckdate1=strtotime("03:55:00");
+$ckdate2=strtotime("00:00:00");
+if($ckdate<=$ckdate1 and $chkde>=$ckdate2)
+{
+$order_dategt=date( "Y-m-d", strtotime( "$order_date +1 day" ) );
+}
+$atmd= strtotime("$order_dategt $atimes");
+
+if($atmd>=$dst and $atmd<=$den)
+{
+
+$ostatus=1;
+}
+
+}else if($rowsed[$dayconls]!="Closed For the day" and $rowsed[$dayconds]=="Closed For the day")
+{
+$lst= strtotime("$order_datel $rowsed[$dayconls]:00");
+$len=strtotime("$order_datel $rowsed[$dayconle]:00");
+$atm=$atimes;
+
+$atm= strtotime($atm);
+
+if($atm>=$lst and $atm<=$len)
+{
+$ostatus=1;
+}
+}
+if($ostatus==1)
+{
+$stms="Order Now, we will serve within ";
+}else
+{
+$stms="Restaurant is currently closed please select your collection time.";
+}												  ?></td>
+                          </tr>
+                          
+                          <?php if($stms!="")
+												  { ?>
+                          <tr>
+                            <td colspan="2" class="timetitle"><?php  echo $stms; if($ostatus==1)
+{ if($arinfod[0]['del_time']!="")
+												  {echo $arinfod[0]['take_time'];
+												  }else
+												  {
+												  echo "45";
+												  }
+												   echo " Minutes";
+												  }
+												 ?></td>
+                          </tr>
+                          <?php }?>
+                          <?php 
+						
+						$systime=(explode(":",$atimes));
+						//print_r($systime);						
+						$systime2=$systime[0];					
+						$systimestak=($systime2*60)+$systime[1];
+						
+						if($rowsed[$dayconls]!="Closed For the day" and $rowsed[$dayconls]!="")
+						{ $delat=$rowsed[$dayconls];
+						}elseif($rowsed[$dayconds]!="Closed For the day" and $rowsed[$dayconds]!="")
+						{ $delat=$rowsed[$dayconls];}
+						$timeat=(explode(":",$delat));						
+						$timestak=$timeat[0]*60+$timeat[1];
+						
+						if($systimestak>=$timestak)
+						{
+							$calculatetime=$systimestak;
+							//echo "System time BIG  ";
+						}
+						else if($systimestak<$timestak)
+						{
+							$calculatetime=$timestak;
+							//echo "User time BIG  ";
+						}
+						
+						if($arinfod[0]['take_time']!="")
+						{
+							$timestak1=$calculatetime+ $arinfod[0]['take_time'];
+						}
+						
+						$timhour1=$timestak1/60;
+						$timmin=$timestak1%60;
+						if($timmin<10) $timmin="0".$timmin;
+						$timhour1=(explode(".", $timhour1));
+						$timhour2=$timhour1[0];	
+						$timhour=$timhour2;
+						
+							
+												
+						/*
+						if($systimestak>=$timestak1)
+						{
+							$systimhour1=$systimestak/60;
+							$timmin=$systimestak%60;
+							if($timmin<10) $timmin="0".$timmin;
+							$timhour1=(explode(".", $systimhour1));
+							$timhour=$timhour1[0];
+							echo "System Time    Big   ";
+						}
+						else if($systimestak < $timestak1)
+						{
+							$timhour1=$timestak1/60;
+							$timmin=$timestak1%60;
+							if($timmin<10) $timmin="0".$timmin;
+							$timhour1=(explode(".", $timhour1));
+							$timhour=$timhour1[0];
+							echo "User Time    Big   ";
+						}
+						
+						//$timhour1=$timestak1/60;
+						//$timmin=$timestak1%60;
+						//$timhour=(explode(".", $timhour1));
+					*/	
+						//echo $timhour."  Hour ";
+						//echo $timmin."  Min ";
+					
+					?>
+                          <tr>
+                            <td width="42%" rowspan="2" valign="top"><strong> Collection Time:</strong></td>
+                            <td><input name="ortime" type="checkbox" id="ortime" value="asap" onclick="checkVerify(<?php echo $timhour;?>,<?php echo $timmin;?>);" checked="checked" />
+                                <strong>ASAP or Select Time </strong></td>
+                          </tr>
+                          <tr>
+                            <td width="58%"><input type="hidden" name="fasth" id="fasth" value="<?=$timhour?>" />
+                                <input type="hidden" name="fastm" id="fastm" value="<?=$timmin?>" />
+                                <input type="hidden" name="lasth" id="lasth" value="<?=$lasth?>" />
+                                <input type="hidden" name="lastm" id="lastm" value="<?=$lastm?>" />
+                                <input type="hidden" name="lhour" id="lhour" value="<?=$lhour?>" />
+                                <select name="hrs" id="hrs" disabled="disabled" onchange="timecheck();">
+                                  <!--/* <?php if($ostatus!=0){ ?>disabled="disabled"<?php }?> */  -->
+                                  <?php 
+						  	for($i=$timhour; $i<=$firsrendhour; $i++)
+							{
+								?>
+                                  <option value="<?php echo $i;?>"><?php echo $i;?></option>
+                                  <?php 
+							}
+							if($secondstarthour!="")
+							{
+								for($i=$secondstarthour; $i<=$secondendhour; $i++)
+								{
+									?>
+                                  <option value="<?php echo $i;?>">
+                                    <?php echo date("D")." - "; if($i=="24") echo "00"; elseif($i=="25") echo "01"; elseif($i=="26") echo "02"; elseif($i=="27") echo "03"; else echo $i;?>
+                                    </option>
+                                  <?php 
+								}
+							}
+						  ?>
+                                </select>
+                                <select name="mints" id="mints" disabled="disabled" onchange="timecheck();">
+                                  <!-- /* <?php if($ostatus!=0){ ?>disabled="disabled"<?php }?> */  -->
+                                  <option value="00">00</option>
+                                  <option value="01" <?php if($timmin==1){echo "selected='selected'";}?>>01</option>
+                                  <option value="02" <?php if($timmin==2){echo "selected='selected'";}?>>02</option>
+                                  <option value="03" <?php if($timmin==3){echo "selected='selected'";}?>>03</option>
+                                  <option value="04" <?php if($timmin==4){echo "selected='selected'";}?>>04</option>
+                                  <option value="05" <?php if($timmin==5){echo "selected='selected'";}?>>05</option>
+                                  <option value="06" <?php if($timmin==6){echo "selected='selected'";}?>>06</option>
+                                  <option value="07" <?php if($timmin==7){echo "selected='selected'";}?>>07</option>
+                                  <option value="08" <?php if($timmin==8){echo "selected='selected'";}?>>08</option>
+                                  <option value="09" <?php if($timmin==9){echo "selected='selected'";}?>>09</option>
+                                  <option value="10" <?php if($timmin==10){echo "selected='selected'";}?>>10</option>
+                                  <option value="11" <?php if($timmin==11){echo "selected='selected'";}?>>11</option>
+                                  <option value="12" <?php if($timmin==12){echo "selected='selected'";}?>>12</option>
+                                  <option value="13" <?php if($timmin==13){echo "selected='selected'";}?>>13</option>
+                                  <option value="14" <?php if($timmin==14){echo "selected='selected'";}?>>14</option>
+                                  <option value="15" <?php if($timmin==15){echo "selected='selected'";}?>>15</option>
+                                  <option value="16" <?php if($timmin==16){echo "selected='selected'";}?>>16</option>
+                                  <option value="17" <?php if($timmin==17){echo "selected='selected'";}?>>17</option>
+                                  <option value="18" <?php if($timmin==18){echo "selected='selected'";}?>>18</option>
+                                  <option value="19" <?php if($timmin==19){echo "selected='selected'";}?>>19</option>
+                                  <option value="20" <?php if($timmin==20){echo "selected='selected'";}?>>20</option>
+                                  <option value="21" <?php if($timmin==21){echo "selected='selected'";}?>>21</option>
+                                  <option value="22" <?php if($timmin==22){echo "selected='selected'";}?>>22</option>
+                                  <option value="23" <?php if($timmin==23){echo "selected='selected'";}?>>23</option>
+                                  <option value="24" <?php if($timmin==24){echo "selected='selected'";}?>>24</option>
+                                  <option value="25" <?php if($timmin==25){echo "selected='selected'";}?>>25</option>
+                                  <option value="26" <?php if($timmin==26){echo "selected='selected'";}?>>26</option>
+                                  <option value="27" <?php if($timmin==27){echo "selected='selected'";}?>>27</option>
+                                  <option value="28" <?php if($timmin==28){echo "selected='selected'";}?>>28</option>
+                                  <option value="29" <?php if($timmin==29){echo "selected='selected'";}?>>29</option>
+                                  <option value="30" <?php if($timmin==30){echo "selected='selected'";}?>>30</option>
+                                  <option value="31" <?php if($timmin==31){echo "selected='selected'";}?>>31</option>
+                                  <option value="32" <?php if($timmin==32){echo "selected='selected'";}?>>32</option>
+                                  <option value="33" <?php if($timmin==33){echo "selected='selected'";}?>>33</option>
+                                  <option value="34" <?php if($timmin==34){echo "selected='selected'";}?>>34</option>
+                                  <option value="35" <?php if($timmin==35){echo "selected='selected'";}?>>35</option>
+                                  <option value="36" <?php if($timmin==36){echo "selected='selected'";}?>>36</option>
+                                  <option value="37" <?php if($timmin==37){echo "selected='selected'";}?>>37</option>
+                                  <option value="38" <?php if($timmin==38){echo "selected='selected'";}?>>38</option>
+                                  <option value="39" <?php if($timmin==39){echo "selected='selected'";}?>>39</option>
+                                  <option value="40" <?php if($timmin==40){echo "selected='selected'";}?>>40</option>
+                                  <option value="41" <?php if($timmin==41){echo "selected='selected'";}?>>41</option>
+                                  <option value="42" <?php if($timmin==42){echo "selected='selected'";}?>>42</option>
+                                  <option value="43" <?php if($timmin==43){echo "selected='selected'";}?>>43</option>
+                                  <option value="44" <?php if($timmin==44){echo "selected='selected'";}?>>44</option>
+                                  <option value="45" <?php if($timmin==45){echo "selected='selected'";}?>>45</option>
+                                  <option value="46" <?php if($timmin==46){echo "selected='selected'";}?>>46</option>
+                                  <option value="47" <?php if($timmin==47){echo "selected='selected'";}?>>47</option>
+                                  <option value="48" <?php if($timmin==48){echo "selected='selected'";}?>>48</option>
+                                  <option value="49" <?php if($timmin==49){echo "selected='selected'";}?>>49</option>
+                                  <option value="50" <?php if($timmin==50){echo "selected='selected'";}?>>50</option>
+                                  <option value="51" <?php if($timmin==51){echo "selected='selected'";}?>>51</option>
+                                  <option value="52" <?php if($timmin==52){echo "selected='selected'";}?>>52</option>
+                                  <option value="53" <?php if($timmin==53){echo "selected='selected'";}?>>53</option>
+                                  <option value="54" <?php if($timmin==54){echo "selected='selected'";}?>>54</option>
+                                  <option value="55" <?php if($timmin==55){echo "selected='selected'";}?>>55</option>
+                                  <option value="56" <?php if($timmin==56){echo "selected='selected'";}?>>56</option>
+                                  <option value="57" <?php if($timmin==57){echo "selected='selected'";}?>>57</option>
+                                  <option value="58" <?php if($timmin==58){echo "selected='selected'";}?>>58</option>
+                                  <option value="59" <?php if($timmin==59){echo "selected='selected'";}?>>59</option>
+                              </select></td>
+                          </tr>
+						  <tr>
+						  	<td>
+								<?php 
+								
+								$timmin_ = ($timmin - ($timmin%5) + 5);
+								if($timhour >=24 ){
+									$time_ = strtotime(date("Y-m-d H:i", strtotime( ($timhour-24).":".$timmin_) )."+1 day");
+								}else{
+									$time_ =  strtotime($timhour.":".$timmin_);
+								}
+								
+								    for($i=$timhour; $i<=$firsrendhour; $i++){
+										$j = (!isset($j))?$timmin_:0;
+										for($j=$j; $j<60; $j+=5){
+											if($i >=24 ){
+												$time = strtotime(date("Y-m-d H:i", strtotime( ($i-24).":".$j) )."+1 day");
+												$date_arr[$time] = 	date("l H:i",  $time);
+											}else{
+												$time = strtotime($i.":".$j);
+												$date_arr[$time] = 	date("l H:i",  $time);
+											}
+										}
+									}	
+									for($i=$secondstarthour; $i<=$secondendhour; $i++){
+										$j = (!isset($j))?$timmin_:0;
+										for($j=$j; $j<60; $j+=5){
+											if($i >=24 ){
+												$time = strtotime(date("Y-m-d H:i", strtotime( ($i-24).":".$j) )."+1 day");
+												$date_arr[$time] = 	date("l H:i",  $time);
+											}else{
+												$time = strtotime($i.":".$j);
+												$date_arr[$time] = 	date("l H:i",  $time);
+											}
+										}
+									}
+								
+								?>
+							<select name="delivery_time">
+							<?php foreach($date_arr as $key=>$label){ ?>
+								<option value="<?php echo $key; ?>"><?php echo $label; ?></option>
+							<?php } ?>
+							</select>
+							</td>
+						  </tr>
+                        </table></td>
+                        <td width="46%" valign="top" align="center"><table width="95%" border="0" cellspacing="0" cellpadding="0" class="normal_text">
+                            <tr>
+                              <td width="45%" align="left">Delivery Radius:</td>
+                              <td width="55%" align="left"><?php echo $arinfod[0]['radious']; ?> Miles </td>
+                            </tr>
+                            <tr>
+                              <td align="left">Take away time:</td>
+                              <td align="left"><?php echo $arinfod[0]['take_time'];?> Minutes </td>
+                            </tr>
+                            <tr>
+                              <td align="left">Delivery time:</td>
+                              <td align="left"><?php echo $arinfod[0]['del_time'];?> Minutes </td>
+                            </tr>
+                            <tr>
+                              <td align="left">Lunch:</td>
+                              <td align="left" valign="top"><?php if($rowsed[$dayconls]!="Closed For the day")
+											{
+											$lst= strtotime("$rowsed[$dayconls]:00");
+                                          $dlst = date('H:i', $lst);
+                                       echo $dlst;
+                                       ?>
+                                &nbsp;-&nbsp;
+                                <?php
+                                       $len=strtotime("$rowsed[$dayconle]:00");
+                                       $dlen = date('H:i', $len);
+                                       echo $dlen;
+                                       }else
+                                       {
+                                       echo $rowsed[$dayconls];
+                                       }
+                                        ?></td>
+                            </tr>
+                            <tr>
+                              <td align="left">Dinner:</td>
+                              <td align="left" valign="top"><?php if($rowsed[$dayconds]!="Closed For the day")
+											{
+											$dst= strtotime("$rowsed[$dayconds]:00");
+                                          $ddst = date('H:i', $dst);
+                                       echo $ddst;
+                                       ?>
+                                &nbsp;-&nbsp;
+                                <?php
+                                       $den=strtotime("$rowsed[$dayconde]:00");
+                                       $ddlen = date('H:i', $den);
+                                       echo $ddlen;
+                                       }else
+                                       {
+                                       echo $rowsed[$dayconds];
+                                       }
+                                        ?></td>
+                            </tr>
+                        </table></td>
+                      </tr>
+                  </table></td>
+                </tr>
+                
+              </table></td>
+              <td background="images/red_box1_06.jpg">&nbsp;</td>
+            </tr>
+            <tr>
+              <td background="images/red_box1_04.jpg">&nbsp;</td>
+              <td valign="top" bgcolor="#9E0112"><table width="100%" border="0" cellpadding="1" cellspacing="1" class="normal_text">
+                <tr>
+                  <td colspan="2" align="left">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td colspan="2" align="left"><strong style="font-size:14px; text-decoration:underline">Customer Address</strong></td>
+                </tr>
+                <tr>
+                  <td height="15" colspan="2" align="right"></td>
+                </tr>
+                <tr>
+                  <td width="28%" align="right"><strong>Address Book :</strong></td>
+                  <td width="72%" align="left"><select name="address" id="address" onchange="changeaddress(this.value);">
+                    <?php
+				$sql="Select * from customers where customers_id='".$_SESSION['customers_id']."'";
+				$result = $db->execQuery($sql);
+				$row = $db->resultArray($result);
+				?>
+                    <option value="0"<?php if($row[0]['customers_address1']==$_SESSION['customers_address1']) echo "selected"; ?>>
+                      <?=$row[0]['customers_add_label']?>
+                      </option>
+                    <?php
+				$sql="Select * from customer_address where customers_id='".$_SESSION['customers_id']."'";
+				$result = $db->execQuery($sql);
+               	$row2 = $db->resultArray($result);
+				for($r=0; $r<sizeof($row2); $r++ )
+				{
+				?>
+                    <option value="<?=$row2[$r]['ca_id']?>"<?php if($row2[$r]['customers_address1']==$_SESSION['customers_address1']) echo "selected"; ?>>
+                      <?=$row2[$r]['customers_add_label']?>
+                      </option>
+                    <?php } ?>
+                  </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;				
+				<input type="button" name="newaddress" id="newaddress" value="Add New Address" onclick="addnewaddress();" />
+				</td>
+                </tr>
+                <tr>
+                  <td height="10" colspan="2" align="right"></td>
+                </tr>
+                <tr>
+                  <td height="10" colspan="2" align="right"><div style="border-top:1px dashed #000000"> </div></td>
+                </tr>
+                <tr>
+                  <td height="10" colspan="2" align="right"></td>
+                </tr>
+                <tr>
+                  <td colspan="2" align="center"><div id="test">
+                    <table width="90%" border="0" cellpadding="1" cellspacing="1" class="normal_text">
+                      <tr>
+                        <td width="28%" align="left"><strong>Address1 : </strong></td>
+                        <td width="72%" align="left"><?php echo $_SESSION['customers_address1']; ?></td>
+                      </tr>
+                      <tr>
+                        <td align="left"><strong> Address2 : </strong></td>
+                        <td align="left"><?php echo $_SESSION['customers_address2']; ?></td>
+                      </tr>
+                      <tr>
+                        <td align="left"><strong>State : </strong></td>
+                        <td align="left"><?php echo $_SESSION['customers_state']; ?></td>
+                      </tr>
+                      <tr>
+                        <td align="left"><strong>City : </strong></td>
+                        <td align="left"><?php echo $_SESSION['customers_town']; ?></td>
+                      </tr>
+                      <tr>
+                        <td align="left"><strong>Postcode : </strong></td>
+                        <td align="left"><?php echo $_SESSION['customers_postcode']; ?></td>
+                      </tr>
+                      <tr>
+                        <td align="left"><strong>Country : </strong></td>
+                        <td align="left"><?php echo $_SESSION['customers_country']; ?></td>
+                      </tr>
+                      <tr>
+                        <td align="right">&nbsp;</td>
+                        <td align="left"></td>
+                      </tr>
+                    </table>
+                  </div></td>
+                </tr>
+              </table></td>
+              <td background="images/red_box1_06.jpg">&nbsp;</td>
+            </tr>
+            <tr>
+              <td background="images/red_box1_04.jpg">&nbsp;</td>
+              <td valign="top" bgcolor="#9E0112"><div style="border-top:1px dashed #000000"> </div></td>
+              <td background="images/red_box1_06.jpg">&nbsp;</td>
+            </tr>
+            <tr>
+              <td background="images/red_box1_04.jpg">&nbsp;</td>
+              <td valign="top" bgcolor="#9E0112"><table width="100%" border="0" cellpadding="1" cellspacing="1" class="normal_text">
+                <tr>
+                  <td colspan="2" align="left"><strong style="font-size:14px; text-decoration:underline">Payment Method</strong></td>
+                </tr>
+                <tr>
+                  <td colspan="2" align="left">&nbsp;</td>
+                </tr>
+                <?php
+									$cids=$_SESSION['customers_id'];
+									$sqlrol="Select sum(earn_rpoint) as epoint, sum(buy_rpoint) as bpoint from customer_roylpoint where customers_id='$cids'";
+									$resultrol=mysql_query($sqlrol);
+									$rowrol=mysql_fetch_array($resultrol);
+									$prst=$rowrol["epoint"]-$rowrol["bpoint"];
+									$sqlbpc="Select * from res_royalty";
+									$resultbpc=mysql_query($sqlbpc);
+									$rowbpc=mysql_fetch_array($resultbpc);
+									$rcalrate=$rowbpc['pound']/$rowbpc['pointt'];
+									$prstc=$_SESSION['gtotal'];
+									$prstf=$prst*$rcalrate;
+									if($prstf>=$prstc)
+									{
+									?>
+                <tr>
+                  <td colspan="2" align="left">&nbsp;&nbsp;Please Select</td>
+                </tr>
+                <tr>
+                  <td align="right"><input name="pay_mathod" type="radio" value="Royalty Points" /></td>
+                  <td align="left">Royalty  Points</td>
+                </tr>
+                <?}else{?>
+                <tr>
+                  <td colspan="2" align="left" class="roilmsg">Your earned royalty point&rsquo;s value is<strong> &pound; <?php echo $prstf; ?></strong>. When you place order less than this value you will purchase by using royalty point&rsquo;s value. </td>
+                </tr>
+                <tr>
+                  <td colspan="2" align="left">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td colspan="2" align="left">&nbsp;&nbsp;Please Select</td>
+                </tr>
+                <?}?>
+                <tr>
+                  <td width="22%" align="right"><input name="pay_mathod" type="radio" value="Online" checked="checked" /></td>
+                  <td width="78%" align="left">Pay by Debit/Credit Card</td>
+                </tr>
+                <tr>
+                  <td align="right"><input name="pay_mathod" type="radio" value="On Delivery" /></td>
+                  <td align="left">Cash on Delivery/Collection</td>
+                </tr>
+                <tr>
+                  <td align="right">&nbsp;</td>
+                  <td align="left">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td align="right">&nbsp;</td>
+                  <td height="26" align="left"><a href="index-action-change_address"></a></td>
+                </tr>
+              </table></td>
+              <td background="images/red_box1_06.jpg">&nbsp;</td>
+            </tr>
+            <tr>
+              <td background="images/red_box1_04.jpg">&nbsp;</td>
+              <td valign="top" bgcolor="#9E0112">&nbsp;</td>
+              <td background="images/red_box1_06.jpg">&nbsp;</td>
+            </tr>
+            <tr>
+              <td background="images/red_box1_04.jpg">&nbsp;</td>
+              <td align="center" valign="top" bgcolor="#9E0112"><input type="image" src="images/continue2.jpg" width="76" height="23" border="0" name="submit" /></td>
+              <td background="images/red_box1_06.jpg">&nbsp;</td>
+            </tr>
+            <tr>
+              <td><img src="images/red_box1_07.jpg" width="15" height="17" alt="" /></td>
+              <td background="images/red_box1_08.jpg"></td>
+              <td><img src="images/red_box1_09.jpg" width="14" height="17" alt="" /></td>
+            </tr>
+          </table></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+    </form></td>
+  </tr>
+  <tr>
+    <td align="center"></td>
+  </tr>
+  <iframe width="174" height="189" name="gToday:normal:agenda.js" id="gToday:normal:agenda.js" src="calander/ipopeng" scrolling="No" frameborder="0" style="visibility:visible; z-index:999; position:absolute; top:-500px; left:-500px;"></iframe>
+</table>

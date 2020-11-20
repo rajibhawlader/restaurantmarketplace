@@ -1,0 +1,314 @@
+<script language="javascript">
+
+	
+function changeOrder(newNo,oldNo){
+	document.frmpos.oldOrderNo.value=oldNo;
+	document.frmpos.newOrderNo.value=newNo;
+	//alert(newNo);
+	document.frmpos.submit();
+}
+	
+</script>
+<script language="javascript"> 
+
+  
+function validation()
+{
+
+  if (document.edit.categories_name.value == "" )
+  {
+    alert("Category Title is a required field.");
+    document.edit.categories_name.focus();
+    return false;
+  }
+  
+ 
+  return true;
+  
+}
+</script>
+<script type="text/JavaScript">
+<!--
+
+
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+//-->
+</script>
+<script type="text/JavaScript">
+<!--
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+//-->
+</script>
+<body onLoad="MM_preloadImages('images/paging_over_01.gif','images/paging_over_03.gif')">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="8%" height="400" valign="top">&nbsp;</td>
+    <td width="92%" align="left" valign="top"><table width="96%" border="0" align="left" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+        <td background="images/box_02.jpg"><span class="box_title_text">&quot;<? echo $_SESSION[rname];?>&quot; Restaurant Management </span></td>
+        <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/box_04.jpg">&nbsp;</td>
+        <td width="100%" valign="top"><TABLE WIDTH=998 BORDER=0 align="center" CELLPADDING=0 CELLSPACING=0>
+	
+	<TR>
+		<TD colspan="3" background="images_menu/body_bg.jpg"><table width="94%" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr>
+<td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+  <td width="79%">&nbsp;</td>
+  <td width="21%" valign="top">&nbsp;</td>
+              </tr>
+</table></td>
+          </tr>
+<tr>
+<td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="197" valign="top"><table width="197" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td><img src="images_menu/red_box_01.jpg" width="15" height="39" alt="" /></td>
+                    <td width="100%" background="images_menu/red_box_02.jpg" class="message" abbr="left"><strong>CATETORIES</strong></td>
+                    <td><img src="images_menu/red_box_03.jpg" width="14" height="39" alt="" /></td>
+                  </tr>
+<tr>
+<td background="images_menu/red_box_04.jpg"></td>
+                    <td><table width="100%" border="0" cellpadding="0" cellspacing="0" class="bodytext">
+<tr>
+  <td><div align="justify">    Skip to your favourite section by clicking on a menu category:
+    <br>
+          <a href="#" class="nav3"></a>
+  </div></td>
+</tr>
+<tr>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="bdr1">&nbsp;</td>
+</tr>
+<tr>
+  <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><a href="#" class="nav3">Beverages
+      </a></td>
+    </tr>
+    
+    <tr>
+      <td><a href="#" class="nav3">Special Offer</a></td>
+    </tr>
+    <tr>
+      <td><a href="#" class="nav3">Pizzas</a></td>
+    </tr>
+    <tr>
+      <td><a href="#" class="nav3">Special Pizzas</a></td>
+    </tr>
+    <tr>
+      <td><a href="#" class="nav3">Burgers</a></td>
+    </tr>
+    <tr>
+      <td><a href="#" class="nav3">Pasta Dishes</a></td>
+    </tr>
+    <tr>
+      <td><a href="#" class="nav3">Salads</a></td>
+    </tr>
+    <tr>
+      <td><a href="#" class="nav3">Side Orders</a></td>
+    </tr>
+    <tr>
+      <td><a href="#" class="nav3">Desserts</a></td>
+    </tr>
+    
+  </table></td>
+</tr>
+  
+                      
+                    </table></td>
+                    <td background="images_menu/red_box_06.jpg"></td>
+                  </tr>
+                  <tr>
+                    <td><img src="images_menu/red_box_07.jpg" width="15" height="17" alt="" /></td>
+                    <td background="images_menu/red_box_08.jpg"></td>
+                    <td><img src="images_menu/red_box_09.jpg" width="14" height="17" alt="" /></td>
+                  </tr>
+                </table></td>
+                <td width="589" valign="top"><table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td><img src="images_menu/red_box_01.jpg" width="15" height="39" alt="" /></td>
+                    <td width="100%" background="images_menu/red_box_02.jpg" class="message"><strong>MENU</strong></td>
+                    <td><img src="images_menu/red_box_03.jpg" width="14" height="39" alt="" /></td>
+                  </tr>
+                  <tr>
+                    <td background="images_menu/red_box_04.jpg">&nbsp;</td>
+                    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td><table width="100%" border="0" cellpadding="0" cellspacing="0" class="bodytext">
+                          <tr>
+                            <td class="text_red" >BEVERAGES</td><td><div align="center"><img src="images_menu/plus1.png" alt="plus" width="15" height="17"></div></td>
+                          </tr>
+                          <tr>
+                            <td ><div>
+                                <div align="justify"><br>
+                                    <strong>Please note:</strong> Extras will become available upon adding an item to your order.</div>
+                            </div></td>
+                          </tr>
+                          <tr>
+                            <td><table width="100%" border="0" cellpadding="4" cellspacing="1" class="bodytext">
+                                <tr>
+                                  <td width="12%"><h6>&nbsp;</h6></td>
+                                  <td width="33%"><h6>&nbsp;</h6></td>
+                                  <td width="22%">&nbsp;</td>
+                                  <td width="19%" class="nrmlink_black"><strong>Price</strong></td>
+                                  <td width="11%">&nbsp;</td>
+                                </tr>
+                            </table></td>
+                          </tr>
+                          <tr>
+                            <td><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#F2F0F1" class="bdr2">
+                                <tr>
+                                  <td width="12%" rowspan="2" class="nrmlink_black">300.</td>
+                                  <td width="33%" rowspan="2" class="text_red_sml">Coca-Cola</td>
+                                  <td width="22%" class="bodytext"> 0.33L</td>
+                                  <td width="19%" class="bodytext">&pound;0.60 </td>
+                                  <td width="11%"><div align="center"><img src="images_menu/plus1.png" alt="plus" width="15" height="17"></div></td>
+                                </tr>
+                                <tr>
+                                  <td class="bodytext"> 1.5L</td>
+                                  <td class="bodytext">&pound;1.60 </td>
+                                  <td><div align="center"><img src="images_menu/plus1.png" alt="plus" width="15" height="17"></div></td>
+                                </tr>
+                            </table></td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                          </tr>
+                        </table></td>
+                      </tr>
+                      <tr>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td class="bdr1">&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td class="bdr1">&nbsp;</td>
+                      </tr>
+                      
+
+                    </table></td>
+                    <td background="images_menu/red_box_06.jpg">&nbsp;</td>
+                  </tr>
+                  
+                  <tr>
+                    <td><img src="images_menu/red_box_07.jpg" width="15" height="17" alt="" /></td>
+                    <td background="images_menu/red_box_08.jpg"></td>
+                    <td><img src="images_menu/red_box_09.jpg" width="14" height="17" alt="" /></td>
+                  </tr>
+                </table></td>
+                <td width="152" valign="top"><!--<table width="197" border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td><img src="images_menu/red_box_01.jpg" width="15" height="39" alt="" /></td>
+                    <td width="100%" background="images_menu/red_box_02.jpg" class="message"><strong>YOUR ORDER </strong></td>
+                    <td><img src="images_menu/red_box_03.jpg" width="14" height="39" alt="" /></td>
+                  </tr>
+                  <tr>
+                    <td background="images_menu/red_box_04.jpg">&nbsp;</td>
+                    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td><table width="100%" border="0" cellpadding="4" cellspacing="1" class="bodytext" >
+                          <tr >
+                            <td  colspan="3" class="nrmlink_black">Fanta 0.33L</td>
+                          </tr>
+                          <tr >
+                            <td width="65">4 x </td>
+                            <td width="60" >&pound;0.60</td>
+                            <td width="15"><img src="images_menu/minus.png" alt="plus" width="15" height="15"></td>
+                          </tr>
+
+                        </table></td>
+                      </tr>
+                      <tr>
+                        <td><table width="100%" border="0" cellpadding="4" cellspacing="1" class="bodytext" >
+                          <tr >
+                            <td  colspan="3" class="nrmlink_black">Fanta 0.33L</td>
+                          </tr>
+                          <tr >
+                            <td width="66">4 x </td>
+                            <td width="59" >&pound;0.60</td>
+                            <td width="15"><img src="images_menu/minus.png" alt="plus" width="15" height="15"></td>
+                          </tr>
+                        </table></td>
+                      </tr>
+                      
+                      <tr>
+                        <td class="bdr1"><table width="100%" border="0" cellpadding="4" cellspacing="1" class="bodytext" >
+
+                          <tr >
+                            <td width="66" class="text_red_sml" >Subtotal:</td>
+                            <td width="72" >&pound;4.80</td>
+                            <td width="2">&nbsp;</td>
+                          </tr>
+                        </table></td>
+                      </tr>
+
+                    </table></td>
+                    <td background="images_menu/red_box_06.jpg">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td><img src="images_menu/red_box_07.jpg" width="15" height="17" alt="" /></td>
+                    <td background="images_menu/red_box_08.jpg"></td>
+                    <td><img src="images_menu/red_box_09.jpg" width="14" height="17" alt="" /></td>
+                  </tr>
+                </table>--></td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></TD>
+	</TR>
+	
+	<TR>
+		<TD>&nbsp;</TD>
+		<TD>&nbsp;</TD>
+		<TD>&nbsp;</TD>
+	</TR>
+</TABLE></td>
+        <td background="images/box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+        <td background="images/box_08.jpg">&nbsp;</td>
+        <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>

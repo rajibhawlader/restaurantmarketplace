@@ -1,0 +1,180 @@
+@import url(style2.css);
+
+.text_red {
+font-family : arial, helvetica, sans-serif;
+font-size : 17px;
+color : #db0608;
+font-weight : bold;
+}
+body {
+	background-color: #9E9E9E;
+}
+.bodytext {
+	font-family: Arial, Helvetica, sans-serif;	font-size: 12px; color:#000000;
+}
+.bodytext1 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;	font-size: 11px; color:#cccccc
+}
+.text_oliv{
+	font-family: Arial, Helvetica, sans-serif;	font-size: 12px; color:#AF8E31
+}
+.title {
+	COLOR: E43B26; FONT-SIZE: 13px; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-WEIGHT: bold
+}
+.stitle {
+	COLOR: #CC0000; FONT-SIZE: 12px; FONT-FAMILY:Arial, Helvetica, sans-serif; FONT-WEIGHT: normal
+}
+.textbox{
+	font-family: Verdana; font-size: 10px; border: 1px solid #ffffff; background-color:#E91637
+}
+
+.textbox_wht{
+	font-family:Arial, Helvetica, sans-serif; font-size: 12px; border: 1px solid #B2B0B1; height:22px; margin-top:3px; margin:2px;
+}
+.button{
+	font-family: Verdana; font-size: 10px; color:#000000; border: 1px solid #ffffff; background-color:#ffffff
+}
+
+.button_grn{
+	font-family: Verdana; font-size: 10px; color:#000000; border: 1px solid #AB8F2B; background-color:#D9C89A
+}
+.message {
+	FONT-SIZE: 11px; FONT-FAMILY: Verdana, Helvetica, sans-serif; COLOR:#FF0000; FONT-WEIGHT: bold
+}
+.message1 {
+font-size : 13px;
+font-family : "Trebuchet MS" arial, helvetica, sans-serif;
+color : #ffffff;
+font-weight : normal;
+letter-spacing : 0.8px;
+}
+.subtitle {
+	COLOR: #6385A9; FONT-SIZE: 11px; FONT-FAMILY: verdana, Helvetica, sans-serif; FONT-WEIGHT: bold
+}
+.nrm01 {
+	FONT-SIZE: 11px; FONT-FAMILY: verdana, Helvetica, sans-serif; color: #9CA5B4
+}
+.nrm02 {
+	FONT-SIZE: 11px; FONT-FAMILY: Arial, Helvetica, sans-serif; color:#666666
+}
+.nrmlink {
+	FONT-WEIGHT: bold; FONT-SIZE: 13px; FONT-FAMILY: Arial, Helvetica, sans-serif; color:#333333
+}
+.nav:link {
+	COLOR:#003399; TEXT-DECORATION: none; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-SIZE: 12px; font-weight:bold;
+}
+.nav:visited {
+	COLOR:#003399; TEXT-DECORATION: none; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-SIZE: 12px; font-weight:bold;
+}
+.nav:hover {
+	COLOR:#006600; TEXT-DECORATION:underline; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-SIZE: 12px; font-weight:bold;
+}
+.nav1:link {
+	COLOR: #ffffff ; TEXT-DECORATION:none ; FONT-FAMILY: Arial, Helvetica, sans-serif;  FONT-SIZE: 11px
+}
+.nav1:visited {
+	COLOR: #ffffff; TEXT-DECORATION: none; FONT-FAMILY: Arial, Helvetica, sans-serif;  FONT-SIZE: 11px
+}
+.nav1:hover {
+	COLOR: #000000 ; TEXT-DECORATION:none; FONT-FAMILY: Arial, Helvetica, sans-serif;  FONT-SIZE: 11px
+}
+.nav2:link {
+	COLOR: #FFFFFF; TEXT-DECORATION: none; FONT-FAMILY: Verdana; FONT-SIZE: 11px
+}
+.nav2:visited {
+	COLOR: #FFFFFF; TEXT-DECORATION: none ; FONT-FAMILY: Verdana; FONT-SIZE: 11px
+}
+.nav2:hover {
+	COLOR: #000000; TEXT-DECORATION: underline; FONT-FAMILY: Verdana; FONT-SIZE: 11px
+}
+.nav3:link {
+	COLOR: #BC0702; TEXT-DECORATION: none; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-SIZE: 13px
+}
+.nav3:visited {
+	COLOR: #BC0702; TEXT-DECORATION: none; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-SIZE: 13px
+}
+.nav3:hover {
+	COLOR: #222222; TEXT-DECORATION:none ; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-SIZE: 13px
+}
+.nav4:link {
+	COLOR:#333333; TEXT-DECORATION: none; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-SIZE: 13px
+}
+.nav4:visited {
+	COLOR: #333333; TEXT-DECORATION: none; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-SIZE: 13px
+}
+.nav4:hover {
+	COLOR: #333333;  TEXT-DECORATION:underline ; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-SIZE: 13px
+}
+
+.nav5:link {
+	COLOR: #000000; TEXT-DECORATION: none; FONT-FAMILY: Verdana; FONT-SIZE: 10px
+}
+.nav5:visited {
+	COLOR: #000000; TEXT-DECORATION: none ; FONT-FAMILY: Verdana; FONT-SIZE: 10px
+}
+.nav5:hover {
+	COLOR: #445E7B; TEXT-DECORATION: none; FONT-FAMILY: Verdana; FONT-SIZE: 10px
+}
+.nav6:link {
+	COLOR:#0066CC; TEXT-DECORATION: none; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-SIZE: 12px
+}
+.nav6:visited {
+	COLOR:#0066CC; TEXT-DECORATION: none; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-SIZE: 12px
+}
+.nav6:hover {
+	COLOR:#006600; TEXT-DECORATION:underline; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-SIZE: 12px
+}
+.dotline {
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: dotted;
+	border-left-style: none;
+	border-top-color: #CCCCCC;
+	border-right-color: #CCCCCC;
+	border-bottom-color: #CCCCCC;
+	border-left-color: #CCCCCC;
+}
+
+.bdr {
+	border-top-width: 1px;
+	border-right-width: 4px;
+	border-bottom-width: 4px;
+	border-left-width: 4px;
+	border-top-style: none;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #DCDCDE;
+	border-right-color: #DCDCDE;
+	border-bottom-color: #DCDCDE;
+	border-left-color: #DCDCDE;
+}
+
+.box_title_text{
+	font-family: Arial, Helvetica, sans-serif;
+	font-style:italic;
+	font-size:15px; 
+	font-weight:bold; 
+	color:#cc3300; 
+	background-color:#ffffff;
+
+}
+
+/* added on 2009* 7 3*/
+.commonbox{background:#FFFFFF url(images/common_box_05.jpg) repeat-x; margin:0px 5px 5px 5px;}
+.cmnbx_title
+{
+    background-position: left top;
+    color: #FFFFFF;
+    background-image: url(images/common_box_03.jpg);
+    background-repeat:no-repeat;
+}
+.cmnbx_title h1{ display:block; font-size:17px; padding:0px; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; text-indent:20px; line-height:39px; height:39px; width:100%; font-weight:normal; margin:0px;  background: url(images/common_box_01.jpg) no-repeat top right}
+.cmnbx_box_body{ background:url(images/common_box_14.jpg) repeat-x; background-position:bottom; font-size:13px;  font-family:Arial, Helvetica, sans-serif;}
+.cmnbx_box_body span{ border-left:1px solid #9e0112; border-right:1px solid #9e0112; margin:0px 1px 0px 2px; display:block; padding:10px 12px 0px 12px;}
+.cmnbx_footer {background: url(images/common_box_12.jpg) no-repeat top left}
+.cmnbx_footer h1{ display:block; font-size:18px; padding:0px; height:17px; width:100%; margin:0px;  background: url(images/common_box_16.jpg) no-repeat top right}

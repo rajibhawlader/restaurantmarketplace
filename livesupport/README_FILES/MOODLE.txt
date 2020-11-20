@@ -1,0 +1,15 @@
+Directions on adding Crafty Syntax to monitoring users on MOODLE:
+================================================================
+http://moodle.org/mod/forum/discuss.php?d=21264
+
+
+open file : block_moodle_LiveHelp.php 
+which is found in the readme files.
+LOOK FOR LINE:
+$livehelpurl = "http://www.lezionionline.net/livehelp/livehelp_js.php?relative=Y&amp;department=1&amp;pingtimes=60";
+CHANGE line to be:
+$livehelpurl = "[PATH TO YOUR LIVE HELP]/livehelp_js.php?relative=Y&amp;department=1&amp;&amp;pingtimes=30&amp;";
+
+Note replace "[PATH TO YOUR LIVE HELP]/livehelp_js.php" with the path to Your 
+live help installation. 
+

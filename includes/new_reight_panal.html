@@ -1,0 +1,90 @@
+<script language="javascript">
+function checklogin()
+{
+	
+	
+	if (document.edit1.username.value.indexOf("@") == -1 || document.edit1.username.value == "")
+  {
+    alert("Email is a required field!, may be you have missd @ symbol");
+    document.edit1.username.focus();
+    return false;
+  }
+  
+  if (document.edit1.username.value.indexOf(".") == -1 || document.edit1.username.value == "")
+  {
+    alert("Email is a required field!, may be you have missd . symbol");
+    document.edit1.username.focus();
+    return false;
+  }
+    if (document.edit1.password.value == "" )
+  {
+    alert("Password is a required field!");
+    document.edit1.password.focus();
+    return false;
+  }
+		
+		
+	return true;
+}
+</script>
+<!--<div id="right_cont">-->
+        <div id="livechat">
+        <h1>LIVE CHAT</h1>
+        <p>
+        Mon to Fri: 5pm - 11pm<br/>
+        Sat & Sun: 11am - 11pm<br />
+                <a onclick="window.open('./livesupport/livehelp.php','_blank','width=500,height=500,resizable=0')" href="#"><img alt="Live Chat" src="images/btn_startchat.gif" title="Live Chat" /></a>
+
+        </p>
+        </div>
+<form style="margin:0px; padding:0px" action="index-action-customer_login" method="post" enctype="multipart/form-data" name="edit1" id="edit1" onsubmit="return checklogin(this)" >
+        <div id="login">
+        <h1>LOGIN AREA</h1>
+
+		  <?php if($message!=""){ ?>
+		  	<font color="#FFFF33">&nbsp;<?php echo $message; ?></font>
+		  	<?php }?><?php if($_SESSION['customers_id']==""){?>
+        <p>
+        User: <br/>
+        <input id="username" type="text" name="username" />
+        <br/>
+        Password:<br/>
+        <input type="password" name="password" id="password" /><br/>
+        <a href="index-action-forget_password">Forgot Password?</a><br/>
+<!--		<img alt="login" src="images/login.gif" />-->
+		<input type="image" src="images/login.gif" title="Login"  name="submit" />
+		
+        
+        </p>
+		
+		<?php }else{?>
+			&nbsp;&nbsp;&nbsp;&nbsp;<a href="index-action-customeraccounthome" class="nav">My Account</a> | <a href="index-action-customerlogout" class="nav">Log Out</a>
+			<?php }
+			?>
+        </div></form>
+        <div id="testimonial2">
+		<div id="tsml_h12">
+        <h1>TESTIMONIAL</h1>
+		</div>
+        <p>
+        "First   time  I  have  used   the 
+         service & would like to say it's
+         great  and  very  easy  to  use"
+         <span class="aother">Jone, Cardiff</span>
+         <span class="testimo_div"></span>
+         "Fantastic service and food.
+          Love the idea!"
+          <span class="aother">Adams, Newcastle</span>
+         <span class="testimo_div"></span>
+         "Its been a great experience with indian foods online "
+          <span class="aother">Ahmed, Cardiff </span>
+         <span class="testimo_div"></span>
+         "Just love this indian foods  "
+          <span class="aother">Devi, Birmingham </span>
+         <span class="testimo_div"></span>
+         "Hot Curries in Indian foods, thanks again "
+          <span class="aother">Joe, Newport </span></p>
+		<div id="tsml_f12">
+		</div>
+        </div>
+      <!--  </div>-->

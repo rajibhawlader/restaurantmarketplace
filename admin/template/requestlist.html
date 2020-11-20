@@ -1,0 +1,246 @@
+<?php
+if($_SESSION["message"] != ""){$message = $_SESSION["message"]; unset($_SESSION["message"]);};
+?>
+<script type="text/JavaScript">
+<!--
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+//-->
+</script>
+<script type="text/JavaScript">
+<!--
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+//-->
+</script>
+<body onLoad="MM_preloadImages('images/paging_over_01.gif','images/paging_over_03.gif')">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="4%" height="400" valign="top">&nbsp;</td>
+    <td width="93%" align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td align="center"><table width="99%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+            <td background="images/box_02.jpg"><span class="box_title_text">Requested Restaurant list </span></td>
+            <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+          </tr>
+          <tr>
+            <td background="images/box_04.jpg">&nbsp;</td>
+            <td width="100%" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td align="center" class="bodytext"><form action="index.php?action=request_list&tabm=rcttb" method="post" name="frmsearchmenu"><table width="100%" border="0" cellpadding="2" cellspacing="2" bgcolor="#CCCCCC" class="bodytext">
+                          <tr>
+                                <td width="35%" align="right"><strong>Search By Name:</strong></td>
+                                <td width="35%"><input name="rname" type="text" id="rname" size="30"></td>
+                                <td width="30%"><input type="submit" name="button" id="button" value="Search" class="button_grn"></td>
+                              </tr>
+                            </table></form></td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td width="92%" height="400" align="left" valign="top"><table width="100%" border="0" align="left" cellpadding="0" cellspacing="0">
+
+                    <?php 
+										 if (isset($message) && !empty($message)) {
+										 ?>
+                    <tr>
+                      <td colspan="2" align="center" class="message"><?php echo $message; ?></td>
+                    </tr>
+                    <?php
+										 }
+										 ?>
+                    <tr>
+                      <td><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#D9DDE1" class="bodytext">
+                          <tr>
+					  	  <td width="10%" bgcolor="#EEF0F2" ><strong>Account Number</strong></td>
+                            <td width="20%" bgcolor="#EEF0F2" ><strong>Restaurant Name</strong></td>
+                            <td width="25%" bgcolor="#EEF0F2" ><strong>Contact Detail </strong></td>
+                            <td width="25%" bgcolor="#EEF0F2" ><strong> Account owner</strong></td>
+                            <td bgcolor="#EEF0F2"  width="26%" align="center"><strong>Action</strong></td>
+                          </tr>
+                          <?php
+                    if($_REQUEST[rname]!="")
+                    {
+	                    $rnam=$_REQUEST[rname];
+	                    $query = "select * from userregistration,resturant  where userregistration.id=resturant.userid and aactive='0' and rname like '%$rnam%' order by rid desc";
+						$total_query = "SELECT count(*) from userregistration,resturant  where userregistration.id=resturant.userid and aactive='0' and rname like '%$rnam%' order by rid desc";
+						
+	                }
+                    else
+                    {
+					    $query = "select * from userregistration,resturant  where userregistration.id=resturant.userid and aactive='0' order by rid desc";
+						
+						$total_query = "SELECT count(*) from userregistration,resturant  where userregistration.id=resturant.userid and aactive='0' order by rid desc";
+						
+					}
+					
+					$ref = $db->execQuery($total_query);
+				$total = $db->result($ref);
+				
+					$targetpage = "index.php?action=request_list&tabm=rcttb"; 	//your file name  (the name of this file)
+					$targetpage .= $query_string;
+					$limit = 50; 								//how many items to show per page
+					$page = $_REQUEST['page'];
+					if($page) 
+						$start = ($page - 1) * $limit; 			//first item to display on this page
+					else
+						$start = 0;								//if no page var is given, set start to 0
+						
+					
+				$pagination = pagination($targetpage, $total, $page, $limit);
+				// pagination end	
+					
+					
+                    //$result = $db->execQuery($query);
+                    //$arinfo = $db->resultArray();
+				    //for ($i = 0; $i < sizeof($arinfo); $i++) {
+					//*******************8
+					$success = $db->checkExists($query);
+					if ($success == true){
+						$qty=15;
+						$query.=" LIMIT $start, $limit";
+						$result = $db->execQuery($query);
+						$arinfo = $db->resultArray($result);
+						if ($_REQUEST["stq"]==""){
+							$stq=0;
+						}else{
+							$stq=$_REQUEST["stq"];
+						}
+						$v=($stq/$qty)+1;
+						if (sizeof($arinfo)>1)
+						{
+								$ste=$stq+$qty;
+								$st2=sizeof($arinfo) % $qty;
+								
+								if ($ste > sizeof($arinfo))
+								{
+									$ste=sizeof($arinfo);
+								}
+																
+								$st1=(sizeof($arinfo)-$st2)/$qty;
+								
+								for ($z=0; $z <= $st1 ; $z++)
+								{
+						
+									if ($v==($z+1)){
+										$pageIn.=$z+1;
+									}else{
+										$pageIn.="<a href=index.php?action=request_list&stq=".($z*$qty)."&h=".$h." class='nav1'>".($z+1)."</a>";
+									}
+								}
+						}else{
+								$ste=sizeof($arinfo);
+						}
+						for ($i = 0; $i < sizeof($arinfo); $i++)
+						{
+					
+			//**********************88
+					
+			    ?>
+                          <tr>
+						   <td valign="top" bgcolor="#FFFFFF" class="bodytext"><?php 
+						   
+						   
+						   if(strlen($arinfo[$i]["rid"])==1)
+													{
+														$mkzr='00000';
+													}
+													elseif(strlen($arinfo[$i]["rid"])==2)
+													{
+														$mkzr='0000';
+													}
+													elseif(strlen($arinfo[$i]["rid"])==3)
+													{
+														$mkzr='000';
+													}
+													elseif(strlen($arinfo[$i]["rid"])>=4)
+													{
+														$mkzr='00';
+													}
+													elseif(strlen($arinfo[$i]["rid"])>=5)
+													{
+														$mkzr='00';
+													}
+													elseif(strlen($arinfo[$i]["rid"])>=6)
+													{
+														$mkzr='';
+													}
+													
+													$acc_num =$mkzr.$arinfo[$i]["rid"];
+							 
+							 
+							 echo 'IFO-'.$acc_num ; 
+						   
+						    ?></td>
+                            <td valign="top" bgcolor="#FFFFFF" class="bodytext"><?php echo $arinfo[$i]["rname"]; ?></td>
+                            <td valign="top" bgcolor="#FFFFFF" class="bodytext"><?php if($arinfo[$i]["address1"]!=""){?>
+                              Address: <? echo $arinfo[$i]["address1"];} ?>
+                              <? if($arinfo[$i]["phone"]!=""){?>
+                              <br />
+                              Phone:<?php echo $arinfo[$i]["phone"]; }?>
+                              <? if($arinfo[$i]["email"]!=""){?>
+                              <br />
+                              Email:<?php echo $arinfo[$i]["email"]; }?></td>
+                            <td valign="top" bgcolor="#FFFFFF" class="bodytext"><?php echo $arinfo[$i]["first_name"]; ?> <?php echo $arinfo[$i]["last_name"]; ?></td>
+                            <td align="center" valign="top" bgcolor="#FFFFFF" class="bodytext"><a class="nav" href="index.php?action=add_resturant&amp;rid=<?php echo $arinfo[$i]['rid']; ?>&amp;tabm=rcttb">Restaurant Registration</a> <br /> <a class="nav" href="index.php?action=resturant_menu&amp;rid=<?php echo $arinfo[$i]['rid']; ?>&amp;tabm=rcttb">Restaurant Admin Panel</a> <br /><a class="nav" onclick="return confirm('All information ralated to this restaurant and order history will be removed permanently. Are you sure you want to delete this?');" href="index.php?action=resturant_del&amp;rid=<?php echo $arinfo[$i]['rid']; ?>&amp;tabm=rcttb&amp;ref=request_list">Restaurant Delete</a></td>
+                          </tr>
+                          <?php
+                    }
+					}
+				?>
+                      </table></td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                   
+                    <tr>
+                      <td align="center">
+					  
+					   <?php echo $pagination;?></td>
+                    </tr>
+                </table></td>
+              </tr>
+            </table></td>
+            <td background="images/box_06.jpg">&nbsp;</td>
+          </tr>
+          <tr>
+            <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+            <td background="images/box_08.jpg">&nbsp;</td>
+            <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+</table>

@@ -1,0 +1,140 @@
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="center"><table width="99%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+        <td background="images/box_02.jpg"><span class="box_title_text">Delivery Information </span></td>
+        <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/box_04.jpg">&nbsp;</td>
+        <td width="100%" valign="top"><table width="100%" border="0" align="center" cellpadding="2" cellspacing="1" class="bodytext">
+          
+          <tr>
+            <td align="right" ><?php  require_once('includes/customermenue.html');?></td>
+          </tr>
+          <tr>
+            <td align="center" class="message"><?PHP if($_SESSION['cart']=="")
+			{
+			echo "You have no item to place order";
+			}
+									  
+									  ?></td>
+          </tr>
+          <tr>
+            <td align="center" valign="top"><table width="100%" border="0" cellspacing="2" cellpadding="2">
+              <tr>
+                <td colspan="2" valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0" class="bodytext">
+
+                    <tr>
+                      <td width="3%" >&nbsp;</td>
+                      <td width="95%" valign="middle" align="center" bgcolor="#F0F0F0">
+                     <form action="index-action-insert_order_cashdelivery" method="post" enctype="multipart/form-data" name="edit" id="edit" onsubmit="return validation(this)"><table width="100%" border="0" cellspacing="2" cellpadding="2">
+                         
+                        <tr>
+                          <td width="62%" align="center" valign="top"><table width="100%" border="0" cellpadding="1" cellspacing="1" bgcolor="#FFFFFF" class="bodytext">
+                            <tr>
+                              <td colspan="2" align="left" bgcolor="#F0F0F0"><strong>Customer Information </strong></td>
+                            </tr>
+							<?PHP 
+							$cusid=$_SESSION['customers_id'];
+							$querycus="Select * from customers where customers_id='$cusid'";
+							$resultcus=mysql_query($querycus);
+							$rowcus=mysql_fetch_array($resultcus);
+							?>
+                            <tr>
+                              <td width="16%" align="right"><strong>Name: </strong></td>
+                              <td width="84%" align="left"><?PHP echo $rowcus['customers_firstname']; ?> <?PHP echo $rowcus['customers_lastname']; ?></td>
+                            </tr>
+                            <tr>
+                              <td align="right"><strong>Address1: </strong></td>
+                              <td align="left"><?php echo $_SESSION['customers_address1']; ?></td>
+                            </tr>
+                            <tr>
+                              <td align="right"><strong> Address2: </strong></td>
+                              <td align="left"><?php echo $_SESSION['customers_address2']; ?></td>
+                            </tr>
+                            <tr>
+                              <td align="right"><strong>Town: </strong></td>
+                              <td align="left"><?php echo $_SESSION['customers_town']; ?></td>
+                            </tr>
+                            <tr>
+                              <td align="right"><strong>State: </strong></td>
+                              <td align="left"><?php echo $_SESSION['customers_state']; ?></td>
+                            </tr>
+                            <tr>
+                              <td align="right"><strong>Country: </strong></td>
+                              <td align="left"><?php echo $_SESSION['customers_country']; ?></td>
+                            </tr>
+                            <tr>
+                              <td align="right"><strong>Postcode: </strong></td>
+                              <td align="left"><?php echo $_SESSION['customers_postcode']; ?></td>
+                            </tr>
+                            
+                            
+                          </table></td>
+                        </tr>
+                        
+                        <tr>
+                          <td align="center" valign="middle"><table width="100%" border="0" cellpadding="1" cellspacing="1" bgcolor="#FFFFFF" class="bodytext">
+                            <tr>
+                              <td colspan="2" align="left"><strong>Comments About Your Order </strong></td>
+                            </tr>
+                            <tr>
+                              <td colspan="2" align="left" valign="top"><? echo stripslashes($_SESSION['customer_comments']);?> [<a href="index-action-order_place" class="nav">Edit</a>]aaa </td>
+                            </tr>
+
+                            <tr>
+                              <td colspan="2" align="center">&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td colspan="2" align="center"><div id="omorderList"><?php  require_once('omcart.php');?></div></td>
+                              </tr>
+                            <tr>
+                              <td width="28%" align="right">&nbsp;</td>
+                              <td width="72%" align="left"><?php if($_SESSION[cart]!=""){  ?>
+			<input type="image" src="images/continue.jpg" width="79" height="39" border="0" name="submit" /><?PHP }else{?>No Item To Order, you have to purchase at least one item to place order.<br />
+                                [<a href="index-action-<?php if($_SESSION['order_type']=="1")
+								{?>menu_list<?php }else{?>menu_list_collection<?php }?>-rid-<? echo $_SESSION['rids']; ?>" class="nav">Buy Now</a>]<?}?></td>
+                            </tr>
+                          </table></td>
+                        </tr>
+                      </table>
+                      </form></td>
+                      <td width="2%" >&nbsp;</td>
+                    </tr>
+                  <tr>
+                    <td >&nbsp;</td>
+                      <td valign="top">&nbsp;</td>
+                      <td >&nbsp;</td>
+                    </tr>
+                  
+                                </table></td>
+                </tr>
+              <tr>
+                <td width="51%">&nbsp;</td>
+                <td width="49%">&nbsp;</td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></td>
+        <td background="images/box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+        <td background="images/box_08.jpg">&nbsp;</td>
+        <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <iframe width=174 height=189 name="gToday:normal:agenda.js" id="gToday:normal:agenda.js" src="calander/ipopeng" scrolling="no" frameborder="0" style="visibility:visible; z-index:999; position:absolute; top:-500px; left:-500px;">
+
+</iframe>
+</table>

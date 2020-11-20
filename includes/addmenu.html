@@ -1,0 +1,305 @@
+<script language="javascript"> 
+function IsNumeric(sText)
+{
+   var ValidChars = "0123456789";
+   var IsNumber=true;
+   var Char;
+
+ 
+   for (i = 0; i < sText.length && IsNumber == true; i++) 
+      { 
+      Char = sText.charAt(i); 
+      if (ValidChars.indexOf(Char) == -1) 
+         {
+         IsNumber = false;
+         }
+      }
+   return IsNumber;
+   
+   }
+function validation()
+{
+
+  if (document.edit.rname.value == "" )
+  {
+    alert("Resturant Name is a required field.");
+    document.edit.rname.focus();
+    return false;
+  }
+  
+ 
+  return true;
+  
+}
+</script>
+<script type="text/JavaScript">
+<!--
+
+
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+//-->
+</script>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="center"><table width="99%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+        <td background="images/box_02.jpg"><span class="box_title_text">Account owner/holder Inside </span></td>
+        <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/box_04.jpg">&nbsp;</td>
+        <td width="100%" valign="top"><table width="98%" border="0" align="center" cellpadding="2" cellspacing="1" class="bodytext">
+          <tr>
+            <td height="20" colspan="2">&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="2"><strong>Organise Resturant Menu  </strong></td>
+          </tr>
+          <tr>
+            <td colspan="2">[ <a href="index-action-addmenu" class="nav">Add Menu</a> ] [ <a href="index-action-additem" class="nav">Add Item </a> ]</td>
+          </tr>
+          <tr>
+            <td colspan="2" align="center" class="message"><?PHP echo $message;
+									  
+									  ?></td>
+          </tr>
+          <tr>
+            <td width="43%" align="center" valign="top"><table width="9996%" border="0" align="center" cellpadding="1" cellspacing="1" class="bodytext">
+              <?php
+		$rids=$_SESSION['resid'];
+			$queryli = "SELECT * FROM categories where parent_id='0' and rid='$rids'";
+	$resultli =@mysql_query($queryli);
+	while($arofferinfoli = @mysql_fetch_assoc($resultli)){
+				
+			
+			?>
+              <tr>
+                <td width="8%" align="right"><img src="images/arrow7.gif" width="10" height="10"></td>
+                <td width="56%"><a href="index-action-catalog-DPID-<?php echo $arofferinfoli["categories_id"]; ?>" class="nav"><strong><? echo $arofferinfoli["categories_name"]; ?></strong></a></td>
+                <td width="36%"><a href="index-action-edit_productcat-catid-<?php echo $arofferinfoli["categories_id"]; ?>" class="nav">Edit</a> | <a href="index-action-del_productcat-catid-<?php echo $arofferinfoli["categories_id"]; ?>" class="nav">Delete</a> </td>
+              </tr>
+              <? $sbID=$_REQUEST["DPID"]; 
+		  $queryc = "SELECT * FROM  categories where parent_id='".$sbID."'";
+			$successc = $db->checkExists($queryc);
+		    
+		  $querysbc = "SELECT * FROM  categories where parent_id='".$sbID."'";
+			$successcsbd = $db->execQuery($querysbc);
+	   $arsbc=$db->resultArray($successcsbd);
+	   $checkpid=$arsbc[0]["parent_id"];
+	   
+        	if ($successc) { if($_REQUEST["DPID"]==$arofferinfoli["categories_id"]){?>
+              <tr>
+                <td colspan="3" valign="top"><table width="100%" border="0" cellspacing="1" cellpadding="1" class="bodytext">
+                    <?php
+		
+			$querysli = "SELECT * FROM categories where parent_id='$sbID'";
+	$resultsli =@mysql_query($querysli);
+	while($arofferinfosli = @mysql_fetch_assoc($resultsli)){
+				
+			
+			?>
+                    <tr>
+                      <td width="19%" align="right"><img src="images/arrow7.gif" width="10" height="10"></td>
+                      <td width="45%" align="left"><? echo $arofferinfosli["categories_name"]; ?></td>
+                      <td width="36%" class="bodytext"><a href="index-action-edit_productcat-catid-<?php echo $arofferinfosli["categories_id"]; ?>" class="nav">Edit</a> | <a href="index-action-del_productcat-catid-<?php echo $arofferinfosli["categories_id"]; ?>" class="nav">Delete</a> </td>
+                    </tr>
+                    <?}?>
+                </table></td>
+              </tr>
+              <? }} else if($checkpid==$arofferinfoli["categories_id"]){?>
+              <tr>
+                <td colspan="3"><table width="100%" border="0" cellspacing="1" cellpadding="1" class="bodytext">
+                    <?php
+		  $sidssd=$arofferinfoli["categories_id"];
+			$querysli = "SELECT * FROM categories where parent_id='$sidssd' ";
+	$resultsli =@mysql_query($querysli);
+	while($arofferinfosli = @mysql_fetch_assoc($resultsli)){
+				
+			
+			?>
+                    <tr>
+                      <td width="19%" align="right"><img src="images/arrow7.gif" width="10" height="10"></td>
+                      <td width="45%" align="left"><? echo $arofferinfosli["categories_name"]; ?></td>
+                      <td width="36%" class="bodytext"><a href="index-action-edit_productcat-catid-<?php echo $arofferinfosli["categories_id"]; ?>" class="nav">Edit</a> | <a href="index-action-del_productcat-catid-<?php echo $arofferinfosli["categories_id"]; ?>" class="nav">Delete</a> </td>
+                    </tr>
+                    <?}?>
+                </table></td>
+              </tr>
+              <? } ?>
+              <? } ?>
+            </table></td>
+            <td width="57%" align="center" valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+              <tr>
+                <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+                <td background="images/box_02.jpg"><span class="box_title_text">Insert New Menu </span></td>
+                <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+              </tr>
+              <tr>
+                <td background="images/box_04.jpg">&nbsp;</td>
+                <td width="100%" valign="top"><form action="index-action-insert_new_menue" method="post" enctype="multipart/form-data" name="edit" id="edit" onSubmit="return validation(this)">
+                  <table width="96%" border="0" cellspacing="1" cellpadding="1" class="bodytext">
+                      <?PHP if($message!=""){?><tr>
+                        <td colspan="2" align="center"><span class="message"><?PHP echo $message;
+									  
+									  ?></span></td>
+                        </tr>
+						<?}?>
+                      <tr>
+                        <td width="51%" align="right"><strong>Parent Menu: </strong></td>
+                        <td width="49%"><select name="parent_id" class="textbox_wht" id="parent_id">
+                            <option value="0" selected="selected">Main </option>
+                            <?PHP
+				$rids=$_SESSION['resid'];
+				$querylic = "SELECT * FROM categories where parent_id='0' and rid='$rids'";
+	$resultlic =@mysql_query($querylic);
+	while($arofferinfolic = @mysql_fetch_assoc($resultlic)){
+	?>
+                            <option value="<?PHP echo $arofferinfolic["categories_id"]; ?>"><?PHP echo $arofferinfolic["categories_name"]; ?></option>
+                            <?}?>
+                          </select>                        </td>
+                      </tr>
+                      <tr>
+                        <td width="51%" align="right"><strong>Category Title : </strong></td>
+                        <td><input name="categories_name" type="text" class="textbox_wht" id="categories_name" size="15" /></td>
+                      </tr>
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td align="left"><input type="submit" name="Submit" value="Submit" class="button_grn" /></td>
+                      </tr>
+                    </table>
+                </form></td>
+                <td background="images/box_06.jpg">&nbsp;</td>
+              </tr>
+              <tr>
+                <td height="31"><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+                <td background="images/box_08.jpg">&nbsp;</td>
+                <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+              </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td colspan="2">&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#DFDFDF" class="bodytext">
+                <!--<tr border=0> 
+          <td colspan="10" ></td>
+        </tr> -->
+                <tr>
+                  <td colspan="4" bgcolor="#F2F2F2" ><strong>Food Items </strong></td>
+                  </tr>
+                <tr>
+                  <td width="99" bgcolor="#F2F2F2" ><strong>Item Name </strong></td>
+                  <td width="111" bgcolor="#F2F2F2" ><strong>Description</strong></td>
+                  <td width="64" bgcolor="#F2F2F2" ><strong>Price</strong></td>
+                  <td width="78" bgcolor="#F2F2F2" ><strong>Action</strong></td>
+                </tr>
+       <?php
+				if($_REQUEST["DPID"]!=""){
+	$pids=$_REQUEST["DPID"];
+	$query = "SELECT * FROM product where categories_id='$pids'";	
+			}else
+			{
+			$ridsp=$_SESSION['resid'];
+	$query = "SELECT product.* FROM product,categories where categories.categories_id=product.categories_id and categories.rid='$ridsp'";	
+			
+			
+			}
+			
+			
+			
+		//$result = $db->execQuery($query);
+		//$arinfo = $db->resultArray();
+		//for ($i = 0; $i < sizeof($arinfo); $i++) {
+		$success = $db->checkExists($query);
+		if ($success == true){
+			$qty=15;
+			$result = $db->execQuery($query);
+			$arinfo = $db->resultArray($result);
+			if ($_REQUEST["stq"]==""){
+			 $stq=0;
+			}else{
+			 $stq=$_REQUEST["stq"];
+			}
+			$v=($stq/$qty)+1;
+			if (sizeof($arinfo)>1){
+				$ste=$stq+$qty;
+				$st2=sizeof($arinfo) % $qty;
+				
+				if ($ste > sizeof($arinfo)){
+					$ste=sizeof($arinfo);
+				}
+				$st1=(sizeof($arinfo)-$st2)/$qty;
+				for ($z=0; $z <= $st1 ; $z++){
+				
+				if ($v==($z+1)){
+					$pageIn.=($z+1);
+				}else{
+				$pageIn.="<a href=index-action-catalog-stq-".($z*$qty)."-h-".$h.""." class=nav1>".($z+1)."</a>";
+				}
+				}
+			}else{
+				$ste=sizeof($arinfo);
+			}
+			for ($i = $stq; $i < $ste; $i++)
+			{
+					
+			
+		?>
+                <tr class="bodytext">
+                  <td width="99" valign="top" bgcolor="#FFFFFF"><?php echo stripslashes($arinfo[$i]["product_title"]); ?></td>
+                  <td width="111" valign="top" bgcolor="#FFFFFF"><?php echo substr($arinfo[$i]["product_desc"],0,200); echo "..."; ?></td>
+                  <td width="64" valign="top" bgcolor="#FFFFFF"><?php echo stripslashes($arinfo[$i]["price"]); ?> $ </td>
+                  <!--<td width="62"><?php //echo $arimageinfo[0]["ImgURL"]; ?></td>-->
+                  <td valign="top" bgcolor="#FFFFFF">&nbsp;<a href="index-action-pro_edit-product_id-<?php echo $arinfo[$i]['product_id'] ?>-pType-rent" class="nav"onclick="return confirm('Are you sure you want to delete this?');">Edit</a> | <a href="index-action-pro_del-product_id-<?php echo $arinfo[$i]['product_id'] ?>-pType-rent" class="nav"onclick="return confirm('Are you sure you want to delete this?');">Delete</a></td>
+                </tr>
+                <?php
+	   }
+	}
+	?>
+                <tr class="bodytext1">
+                  <td colspan="4" align="center" valign="top" bgcolor="#FFFFFF">&nbsp;</td>
+                </tr>
+                <tr class="bodytext1">
+                  <td colspan="4" align="center" valign="top" bgcolor="#FFFFFF">&nbsp;</td>
+                </tr>
+              </table>
+              </td>
+          </tr>
+          <tr>
+            <td colspan="2" valign="top">&nbsp;</td>
+          </tr>
+        </table></td>
+        <td background="images/box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+        <td background="images/box_08.jpg">&nbsp;</td>
+        <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+                                      <td align="center" bgcolor="#FFFFFF";><div class="pagination"><?php
+		if ($v>1){
+		?><a href="index-action-property_list-stq-<?php echo(($v-2)*$qty)?>-h-1">&laquo; Previous </a><?php }else{?><span class="disabled">&laquo; Previous </span><?php }?><?php echo $pageIn;?><?php
+		 if ($v <$z){
+		 ?><a href="index-action-property_list-stq-<?php echo(($v)*$qty)?>-h-1">Next 
+                                      &raquo;</a><?php }else{?> <span class=disabled>Next 
+                                      &raquo;<?php }?></span></div></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>

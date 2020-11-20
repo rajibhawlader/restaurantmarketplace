@@ -1,0 +1,309 @@
+
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td width="8%" height="400" valign="top">&nbsp;</td>
+    <td width="92%" align="left" valign="top"><table width="96%" border="0" align="left" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+        <td background="images/box_02.jpg"><span class="box_title_text">&quot;<? echo $_SESSION[rname];?>&quot; Restaurant Management </span></td>
+        <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/box_04.jpg">&nbsp;</td>
+        <td width="100%" valign="top"><table width="100%" border="0" cellspacing="1" cellpadding="1"  class="bodytext">
+            <tr>
+              <td><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#F0F0F0" class="bodytext" id="AutoNumber4">
+                <tr>
+                  <td width="74%">&nbsp;</td>
+                  <td width="2%"><img border="0" src="images/plus.gif" width="9" height="9" /></td>
+                  <td width="24%" align="left"><a class="nav" href="index.php?action=resturant_menu&amp;rid=<?php echo $_SESSION['resid']; ?>&tabm=rcttb">Restaurant Management Home </a></td>
+                </tr>
+              </table></td>
+            </tr>
+            <tr>
+              <td></td>
+            </tr>
+            <tr>
+              <td width="81%" valign="top" bgcolor="#F0F0F0">
+			  <form action="index.php?action=insert_timeschedule&tabm=rcttb" method="post" enctype="multipart/form-data" name="edit" id="edit" >
+			  <table width="100%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#FFFFFF" class="bodytext">
+                
+                <tr>
+                  <td><strong>Restaurant Time Schedule </strong></td>
+                </tr>
+                <tr>
+                  <td align="center" class="message"><?PHP echo $message;
+									  
+									  ?></td>
+                </tr>
+                <tr>
+                  <td align="center" bgcolor="#F0F0F0">
+                      <table width="100%" border="0" cellpadding="2" cellspacing="2" bgcolor="#FFFFFF"  class="bodytext">
+                        
+                        <tr>
+                          <td colspan="2" align="center"><strong>Lunch Time </strong></td>
+                          <td colspan="2" align="center"><strong>Dinner</strong></td>
+                        </tr>
+                        <tr>
+                          <td width="186" align="right" valign="top">Opening Time </td>
+                          <td width="302" align="left" valign="top"><select name="sttimeh1" class="textbox_wht" id="sttimeh1">
+                            
+                              <option value="06">06</option>
+                              <option value="07">07</option>
+                              <option value="08">08</option>
+                              <option value="09">09</option>
+                              <option value="10">10</option>
+                              <option value="11">11</option>
+                              <option value="12">12</option>
+							  <option value="13">13</option>
+							  <option value="14">14</option>
+							  <option value="15">15</option>
+							  <option value="16">16</option>
+							  <option value="17">17</option>
+							 
+                            </select>
+                              <select name="sttimem1" class="textbox_wht" id="sttimem1">
+                                <option value="00">00</option>
+                                <option value="05">05</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="25">25</option>
+                                <option value="30">30</option>
+                                <option value="35">35</option>
+                                <option value="40">40</option>
+                                <option value="45">45</option>
+                                <option value="50">50</option>
+                                <option value="55">55</option>
+                              </select></td>
+                          <td width="215" align="right" valign="top">Opening Time </td>
+                          <td width="288" align="left" valign="top"><select name="sttimeh2" class="textbox_wht" id="sttimeh2">
+                              <option value="17">17</option>                        
+							  <option value="18">18</option>
+							  <option value="19">19</option>
+							  <option value="20">20</option>
+							  <option value="21">21</option>
+							  <option value="22">22</option>
+							  <option value="23">23</option>
+							  <option value="00">24</option>
+							  <option value="01">01</option>
+							  <option value="02">02</option>
+							  <option value="03">03</option>
+                            </select>
+                              <select name="sttimem2" class="textbox_wht" id="sttimem2">
+                                <option value="00">00</option>
+                                <option value="05">05</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="25">25</option>
+                                <option value="30">30</option>
+                                <option value="35">35</option>
+                                <option value="40">40</option>
+                                <option value="45">45</option>
+                                <option value="50">50</option>
+                                <option value="55">55</option>
+                              </select></td>
+                        </tr>
+                        <tr>
+                          <td align="right" valign="top">Closing Time </td>
+                          <td align="left" valign="top"><select name="entimeh1" class="textbox_wht" id="entimeh1">
+                          
+                              <option value="06">06</option>
+                              <option value="07">07</option>
+                              <option value="08">08</option>
+                              <option value="09">09</option>
+                              <option value="10">10</option>
+                              <option value="11">11</option>
+                              <option value="12">12</option>
+							  <option value="13">13</option>
+							  <option value="14">14</option>
+							  <option value="15">15</option>
+							  <option value="16">16</option>
+							  <option value="17">17</option>
+							  
+							
+                            </select>
+                              <select name="entimem1" class="textbox_wht" id="entimem1">
+                                <option value="00">00</option>
+                                <option value="05">05</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="25">25</option>
+                                <option value="30">30</option>
+                                <option value="35">35</option>
+                                <option value="40">40</option>
+                                <option value="45">45</option>
+                                <option value="50">50</option>
+                                <option value="55">55</option>
+                              </select></td>
+                          <td align="right" valign="top">Closing Time </td>
+                          <td align="left" valign="top"><select name="entimeh2" class="textbox_wht" id="entimeh2">
+                          
+                              <option value="18">18</option>
+							  <option value="19">19</option>
+							  <option value="20">20</option>
+							  <option value="21">21</option>
+							  <option value="22">22</option>
+							  <option value="23">23</option>
+							 	<option value="00">24</option>
+							  <option value="01">01</option>
+							  <option value="02">02</option>
+							  <option value="03">03</option>
+                            </select>
+                              <select name="entimem2" class="textbox_wht" id="entimem2">
+                                <option value="00">00</option>
+                                <option value="05">05</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="25">25</option>
+                                <option value="30">30</option>
+                                <option value="35">35</option>
+                                <option value="40">40</option>
+                                <option value="45">45</option>
+                                <option value="50">50</option>
+                                <option value="55">55</option>
+                              </select></td>
+                        </tr>
+                        <tr>
+                          <td align="right" valign="top">&nbsp;</td>
+                          <td align="left" valign="top"><strong>
+                            <input name="lunchc" type="checkbox" id="lunchc" value="Closed For the day" />
+                            Closed For the day </strong></td>
+                          <td align="right" valign="top">&nbsp;</td>
+                          <td align="left" valign="top"><strong>
+                            <input name="dinerc" type="checkbox" id="dinerc" value="Closed For the day" />
+                            Closed For the day </strong></td>
+                        </tr>
+                        <tr>
+                          <td colspan="4" align="center" height="10"></td>
+                        </tr>
+                      </table>                  </td>
+                </tr>
+                <tr>
+                  <td height="10"></td>
+                </tr>
+                <tr>
+                  <td><?php
+										$rids=$_SESSION['resid'];
+										$db = new Db(hostname, username, password, databasename);
+                                      	$query = "SELECT * FROM timeschedule WHERE rid='$rids'";
+     					               	$result = $db->execQuery($query);
+                    					$arinfo = $db->resultArray();                    					
+                                      ?>
+                     
+                      <table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#C4C4C4" class="bodytext">
+                        <tbody>
+                          <tr>
+                            <td colspan="2" bgcolor="#DFDFDF" class="nrmlink">Opening Hours</td>
+                            <td width="33%" bgcolor="#DFDFDF" class="nrmlink">Lunch</td>
+                            <td width="34%" bgcolor="#DFDFDF" class="nrmlink">Dinner</td>
+                          </tr>
+                          <tr>
+                            <td width="4%" align="center" bgcolor="#F5F5F5"><input type="checkbox" name="wday[]" value="Monday"></td>
+                            <td width="29%" bgcolor="#F5F5F5">Monday</td>
+                            <td bgcolor="#F5F5F5" ><?php echo $arinfo[0]['open_h_mon_start'];
+													if($arinfo[0]['open_h_mon_end']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_mon_end'];  ?> &nbsp;&nbsp;</td>
+                            <td bgcolor="#F5F5F5" ><?php echo $arinfo[0]['open_h_mon_start2'];
+													if($arinfo[0]['open_h_mon_end2']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_mon_end2'];  ?></td>
+                          </tr>
+                          <tr>
+                            <td align="center" bgcolor="#F5F5F5"><input type="checkbox" name="wday[]" value="Tuesday"></td>
+                            <td bgcolor="#F5F5F5">Tuesday</td>
+                            <td bgcolor="#F5F5F5" ><?php echo $arinfo[0]['open_h_tue_start'];
+													if($arinfo[0]['open_h_tue_end']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_tue_end'];  ?> &nbsp;&nbsp;</td>
+                            <td bgcolor="#F5F5F5" ><?php echo $arinfo[0]['open_h_tue_start2'];
+													if($arinfo[0]['open_h_tue_end2']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_tue_end2'];  ?></td>
+                          </tr>
+                          <tr>
+                            <td align="center" bgcolor="#F5F5F5"><input type="checkbox" name="wday[]" value="Wednesday"></td>
+                            <td bgcolor="#F5F5F5">Wednesday</td>
+                            <td bgcolor="#F5F5F5" ><?php echo $arinfo[0]['open_h_wed_start'];
+													if($arinfo[0]['open_h_wed_end']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_wed_end'];  ?> &nbsp;&nbsp;</td>
+                            <td bgcolor="#F5F5F5" ><?php echo $arinfo[0]['open_h_wed_start2'];
+													if($arinfo[0]['open_h_wed_end2']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_wed_end2'];  ?></td>
+                          </tr>
+                          <tr>
+                            <td align="center" bgcolor="#F5F5F5"><input type="checkbox" name="wday[]" value="Thursday"></td>
+                            <td bgcolor="#F5F5F5">Thursday</td>
+                            <td bgcolor="#F5F5F5" ><?php echo $arinfo[0]['open_h_thu_start'];
+													if($arinfo[0]['open_h_thu_end']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_thu_end'];  ?> &nbsp;&nbsp;</td>
+                            <td bgcolor="#F5F5F5" ><?php echo $arinfo[0]['open_h_thu_start2'];
+													if($arinfo[0]['open_h_thu_end2']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_thu_end2'];  ?></td>
+                          </tr>
+                          <tr>
+                            <td align="center" bgcolor="#F5F5F5"><input type="checkbox" name="wday[]" value="Friday"></td>
+                            <td bgcolor="#F5F5F5">Friday</td>
+                            <td bgcolor="#F5F5F5" ><?php echo $arinfo[0]['open_h_fri_start'];
+													if($arinfo[0]['open_h_fri_end']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_fri_end'];  ?> &nbsp;&nbsp;</td>
+                            <td bgcolor="#F5F5F5" ><?php echo $arinfo[0]['open_h_fri_start2'];
+													if($arinfo[0]['open_h_fri_end2']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_fri_end2'];  ?></td>
+                          </tr>
+                          <tr>
+                            <td align="center" bgcolor="#F5F5F5"><input type="checkbox" name="wday[]" value="Saturday"></td>
+                            <td bgcolor="#F5F5F5">Saturday</td>
+                            <td bgcolor="#F5F5F5" ><?php echo $arinfo[0]['open_h_sat_start'];
+													if($arinfo[0]['open_h_sat_end']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_sat_end'];  ?> &nbsp;&nbsp;</td>
+                            <td bgcolor="#F5F5F5" ><?php echo $arinfo[0]['open_h_sat_start2'];
+													if($arinfo[0]['open_h_sat_end2']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_sat_end2'];  ?></td>
+                          </tr>
+                          <tr>
+                            <td align="center" bgcolor="#F5F5F5"><input type="checkbox" name="wday[]" value="Sunday"></td>
+                            <td bgcolor="#F5F5F5"> Sunday</td>
+                            <td bgcolor="#F5F5F5" ><?php echo $arinfo[0]['open_h_sun_start'];
+													if($arinfo[0]['open_h_sun_end']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_sun_end'];  ?> &nbsp;&nbsp;</td>
+                            <td bgcolor="#F5F5F5" ><?php echo $arinfo[0]['open_h_sun_start2'];
+													if($arinfo[0]['open_h_sun_end2']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_sun_end2'];  ?></td>
+                          </tr>
+                        </tbody>
+                    </table></td>
+                </tr>
+                <tr>
+                  <td align="center" valign="top" height="10"></td>
+                </tr>
+                <tr>
+                  <td align="center" valign="top"><input type="submit" name="Submit" value="Submit" class="button_grn" /></td>
+                </tr>
+                <tr>
+                  <td align="center" valign="top" height="10"></td>
+                </tr>
+              </table>
+			  </form>
+			  </td>
+            </tr>
+            
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+        </table></td>
+        <td background="images/box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+        <td background="images/box_08.jpg">&nbsp;</td>
+        <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>

@@ -1,0 +1,219 @@
+  <script language="javascript"> 
+
+function searchvalidation()
+{
+  if (document.searchpost.PCD.value == "" ||document.searchpost.PCD.value == "Enter Post Code" )
+  {
+    alert("Post Code Needed.");
+    document.searchpost.PCD.focus();
+    return false;
+  }
+  
+  return true;
+  
+}
+
+
+
+function clearField(fId, sMatch, sChange)
+{
+	if(sChange == null) sChange = '';
+	if(fId.value == sMatch)
+	{ fId.value = sChange; }
+}
+</script>  
+<div id="header"><a href="/"><img src="images/indianfoddsonlinelogo.jpg" style="margin-left:10px" alt="Indian foods online" title="indian foods online" border="none" /></a><img style="margin-left:5px" src="images/orderonline.jpg" alt="online order" title="online order" /><img style="margin-left:15px" src="images/toplink.jpg" /></div>	
+	<!--<div id="header"><img src="images/indianfoddsonlinelogo.jpg" alt="Indian foods online" title="indian foods online" /><img style="margin-left:62px" src="images/orderonline.jpg" alt="online order"  title="online order" /><img style="margin-left:49px" src="images/toplink.jpg" /></div>-->
+  <?
+
+  if($body=='customer_registration.html')
+  {
+  	$bradcump='&raquo;Customer Sign Up';
+  }
+   elseif($body=='sign_up.html')
+   {
+  	$bradcump='&raquo;Restaurant Sign Up';
+   }
+   elseif($body=='contact.html')
+   {
+  	$bradcump='&raquo;Contact information';
+   }
+   elseif($body=='restaurants.html')
+   {
+  	$bradcump='&raquo;Restaurant List';
+   }
+   elseif($body=='order_menu.html')
+   {
+  	$bradcump='&raquo;Order Menu';
+   }
+   elseif($body=='pages.html')
+   {
+   		if($get_pid==10)
+		{
+  			$bradcump='&raquo;Help';
+		}
+		elseif($get_pid==11)
+		{
+  			$bradcump='&raquo;Indian Curry Club';
+		}
+		elseif($get_pid==13)
+		{
+  			$bradcump='&raquo;Royalty Points';
+		}
+		elseif($get_pid==2)
+		{
+  			$bradcump='&raquo;Faq';
+		}
+		elseif($get_pid==3)
+		{
+  			$bradcump='&raquo;Site map';
+		}
+		elseif($get_pid==4)
+		{
+  			$bradcump='&raquo;Privacy policy';
+		}
+		elseif($get_pid==5)
+		{
+  			$bradcump='&raquo;Terms of use';
+		}
+
+		elseif($get_pid==6)
+		{
+  			$bradcump='&raquo;About us';
+		}
+		elseif($get_pid==7)
+		{
+  			$bradcump='&raquo;Restaurant info';
+		}
+		
+   }
+    
+   
+  
+  ?>
+  <div class="activepage"> &raquo; Home<?=$bradcump?> <span style=" padding-left:385px; color:#990000; font-size:13px;"><blink>Now Open !!
+</blink></span>
+</div>
+            <!--<div id="topmenu">
+                <ul class="menu2">
+                <li class="top"><div id="menu_left_img"></div></li>
+                <li class="top"><a href="#"  class="top_link"><span>Home</span></a></li>
+                <li class="top"><a href="#"  class="top_link"><span>Sign Up</span></a></li>
+                <li class="top"><a href="#"  class="top_link"><span>Help</span></a></li>
+                <li class="top"><a href="#"  class="top_link"><span>Indian Curry Club</span></a></li>
+                <li class="top"><a href="#"  class="top_link"><span>Curry Blog</span></a></li>
+                <li class="top"><a href="#"  class="top_link1"><span>Royalty Points</span></a></li>
+               </ul>
+          </div>-->
+		  <div id="topmenu">
+                <ul class="menu2">
+				<li class="top"><div id="menu_left_img"></div></li>
+                <li class="top">
+                
+	                <?php if($tbv=="hm")
+					       {
+					?>
+	                			<a href="/" class="top_link"><span>Home</span></a>
+	                
+	               <?php }
+	                  	 else
+					     {
+	                  ?>
+	                			<a href="/" class="top_link"><span>Home</span></a>
+	               <?	 }	?>
+                </li>
+               
+                <li class="top">
+                
+	                <?php 
+					if(!empty($_SESSION['customers_id']))
+					{
+						if($tbv=="jn")
+	        			  {
+	        		?>
+	                <a href="index-action-customeraccounthome" class="top_link"><span>My Account</span></a>
+	                
+	                <?php }
+	        			  else
+	        			  {
+	        				?>
+	        		<a href="index-action-customeraccounthome" class="top_link"><span>My Account</span></a>
+	        		<?php }
+					
+					}
+					else{
+					
+					if($tbv=="jn")
+	        			  {
+	        		?>
+	                <a href="customer-registration" class="top_link"><span>Sign Up</span></a>
+	                
+	                <?php }
+	        			  else
+	        			  {
+	        				?>
+	        		<a href="customer-registration" class="top_link"><span>Sign Up</span></a>
+	        		<?php }
+					
+					}
+					?>
+	                
+                </li>
+                <li class="top">
+	                <?php if($tbv=="hl")
+	        			  {
+	        		?>
+	                		<a href="help" class="top_link"><span>Help</span></a>
+	                <?php }
+	        			  else
+	        			  {
+	        		?>
+	        					<a href="help" class="top_link"><span>Help</span></a>
+	        		<?php }?>
+	        			
+        		</li>
+                <li class="top">
+	                <?php if($tbv=="icc")
+	        			  {
+	        		?>
+	                
+	                <a href="indian-curry-club" class="top_link"><span>Indian Curry Club</span></a>
+	                
+	                <?php }
+	        			  else
+	        			  {
+	        		?>
+	        				<a href="indian-curry-club" class="top_link"><span>Indian Curry Club</span></a>
+	                <?php }?>
+                </li>
+                <li class="top">
+                <?php if($tbv=="cbl")
+        			  {
+        		?>
+                
+                <a href="curry-blog" class="top_link"><span>Curry Blog</span></a>
+                <?php }
+        			  else
+        			  {
+        		?>
+                <a href="curry-blog" class="top_link"><span>Curry Blog</span></a>
+                <?php }?>
+                
+                </li>
+                 <li class="top">
+                 <?php if($tbv=="rps")
+        			   {
+        				?>
+        					
+               			  <a href="royalty-points" class="top_link"><span>Royalty Points</span></a>
+                 <?php }
+        					  else
+        					  {
+        				?>
+        				 <a href="royalty-points" class="top_link1"><span>Royalty Points</span></a>
+        				<?php }?>
+                 
+                 </li>	  	    	  	  
+               </ul>
+          </div>
+         

@@ -1,0 +1,200 @@
+<script language="javascript"> 
+function IsNumeric(sText)
+{
+   var ValidChars = "0123456789";
+   var IsNumber=true;
+   var Char;
+
+ 
+   for (i = 0; i < sText.length && IsNumber == true; i++) 
+      { 
+      Char = sText.charAt(i); 
+      if (ValidChars.indexOf(Char) == -1) 
+         {
+         IsNumber = false;
+         }
+      }
+   return IsNumber;
+   
+   }
+function validation()
+{
+
+  if (document.edit.rname.value == "" )
+  {
+    alert("Resturant Name is a required field.");
+    document.edit.rname.focus();
+    return false;
+  }
+  
+   if (document.edit.street.value == "" )
+  {
+    alert("Street Name is a required field.");
+    document.edit.street.focus();
+    return false;
+  }
+  
+ 
+  
+  if (document.edit.zipcode.value == "" )
+  {
+    alert("ZIP Code is a required field.");
+    document.edit.zipcode.focus();
+    return false;
+  }
+  
+  
+  
+  
+
+ 
+  return true;
+  
+}
+</script>
+<script type="text/JavaScript">
+<!--
+
+
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+//-->
+</script>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td width="8%" height="400" valign="top">&nbsp;</td>
+    <td width="92%" align="left" valign="top"><table width="96%" border="0" align="left" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+        <td background="images/box_02.jpg"><span class="box_title_text">&quot;<? echo $_SESSION[rname];?>&quot; Restaurant Management </span></td>
+        <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/box_04.jpg">&nbsp;</td>
+        <td width="100%" valign="top"><table width="100%" border="0" cellspacing="1" cellpadding="1"  class="bodytext">
+            <tr>
+              <td><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#F0F0F0" class="bodytext" id="AutoNumber4">
+                <tr>
+                  <td width="29%">&nbsp;</td>
+                  <td width="2%"><img border="0" src="images/plus.gif" width="9" height="9" /></td>
+                  <td width="26%" align="left"><a class="nav" href="index.php?action=resturant_menu&amp;rid=<?php echo $_SESSION['resid']; ?>&tabm=rcttb">Restaurant Management Home </a></td>
+                  <td width="2%"><img border="0" src="images/plus.gif" width="9" height="9" /></td>
+                  <td width="17%" align="left"><a class="nav" href="index.php?action=my_resturant&tabm=rcttb">Restaurant Profile </a></td>
+                  <td width="2%"><img border="0" src="images/plus.gif" width="9" height="9" /></td>
+                  <td width="22%" align="left"><a class="nav" href="index.php?action=resturant_owner&tabm=rcttb">Restaurant Owner Profile </a></td>
+                </tr>
+              </table></td>
+            </tr>
+            <tr>
+              <td></td>
+            </tr>
+            <tr>
+              <td width="81%" valign="top" bgcolor="#F0F0F0"><table width="100%" border="0" align="left" cellpadding="2" cellspacing="1" bgcolor="#FFFFFF" class="bodytext">
+                <tr>
+                  <td><strong>Update  Restaurant Owner Profile </strong></td>
+                </tr>
+                <?Php 
+									$rids=$_SESSION['resid'];
+		
+									$resquery="Select * from resturant where rid='$rids'";
+									
+									$resultres=mysql_query($resquery);
+									$res=mysql_fetch_array($resultres);
+
+									$resquery="Select * from userregistration where id='".$res['userid']."'";
+									
+									$resultres=mysql_query($resquery);
+									$rowres=mysql_fetch_array($resultres);
+
+									?>
+                <tr>
+                  <td align="center" class="message"><?php echo $message; ?></td>
+                </tr>
+                <tr>
+                  <td align="center"><form action="index.php?action=update_resturant_owner&amp;id=<?php echo $rowres["rid"]; ?>&tabm=rcttb" method="post" enctype="multipart/form-data" name="edit" id="edit" onSubmit="return validation(this)">
+				  <input type="hidden" name="userid" id="userid" value="<?=$res['userid']?>" >
+                      <table width="90%" border="0" cellspacing="2" cellpadding="2"  class="bodytext">
+                        <tr>
+                          <td width="31%" align="right"><strong>First  Name: </strong></td>
+                          <td width="69%" colspan="2" align="left"><input name="first_name" type="text" class="textbox_wht" id="first_name" value="<?php echo $rowres["first_name"]; ?>" size="35" /></td>
+                        </tr>
+                        <tr>
+                          <td align="right"><strong>Last  Name: </strong></td>
+                          <td colspan="2" align="left"><input name="last_name" type="text" class="textbox_wht" id="last_name" value="<?php echo $rowres["last_name"]; ?>" size="35" /></td>
+                        </tr>
+                        <tr>
+                          <td align="right" valign="top"><strong>Address: </strong></td>
+                          <td colspan="2" align="left"><textarea name="address1" rows="3" cols="23" id="address1"><?php echo $rowres["address1"]; ?></textarea></td>
+                        </tr>
+                        
+                        <tr>
+                          <td align="right"><strong>Phone: </strong></td>
+                          <td colspan="2" align="left"><input name="phone" type="text" class="textbox_wht" id="phone" tabindex="15" value="<? echo $rowres["phone"]; ?>" /></td>
+                        </tr>
+                        <tr>
+                          <td align="right"><strong>Mobile: </strong></td>
+                          <td colspan="2" align="left"><input name="mobile" type="text" class="textbox_wht" id="mobile" tabindex="15" value="<? echo $rowres["mobile"]; ?>" /></td>
+                        </tr>
+                        <tr>
+                          <td align="right"><strong>Fax: </strong></td>
+                          <td colspan="2" align="left"><input name="fax" type="text" class="textbox_wht" id="fax" tabindex="15" value="<? echo $rowres["fax"]; ?>" /></td>
+                        </tr>
+                        <tr>
+                          <td align="right"><strong>Email: </strong></td>
+                          <td colspan="2" align="left"><input name="email" type="text" class="textbox_wht" id="email" value="<?php echo $rowres["email"]; ?>" size="35" /></td>
+                        </tr>
+                        
+                        <tr>
+                          <td align="right"><strong>Password: </strong></td>
+                          <td colspan="2" align="left"><input name="password" type="password" class="textbox_wht" id="password" value="<?php echo $rowres["password"]; ?>" size="35" /></td>
+                        </tr>
+                        
+                        <tr>
+                          <td align="right" valign="top"><strong>Status: </strong></td>
+                          <td colspan="2" align="left">
+						  <select name="status" id="status">
+						  <option value="1"<?php if($rowres["status"]=="1") echo "selected"; ?>>Active</option>
+						  <option value="0"<?php if($rowres["status"]=="0") echo "selected"; ?>>Inactive</option>
+						  </select>						  </td>
+                        </tr>
+                        <tr>
+                          <td align="right" valign="top">&nbsp;</td>
+                          <td colspan="2" align="left">&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td align="right" valign="top">&nbsp;</td>
+                          <td colspan="2" align="left"><input type="submit" name="Submit" value="Update" /></td>
+                        </tr>
+                      </table>
+                  </form></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+                
+              </table></td>
+            </tr>
+            
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+        </table></td>
+        <td background="images/box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+        <td background="images/box_08.jpg">&nbsp;</td>
+        <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>

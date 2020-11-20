@@ -1,0 +1,178 @@
+<script type="text/JavaScript">
+<!--
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+//-->
+</script>
+<body onLoad="MM_preloadImages('images/paging_over_01.gif','images/paging_over_03.gif')"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="4%" height="400" valign="top">&nbsp;</td>
+    <td width="86%" align="left" valign="top"><table width="95%" border="0" align="left" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/title_existing_admin_list.jpg" width="219" height="47" /></td>
+      </tr>
+      <?php 
+										 if (isset($message) && !empty($message)) {
+										 ?>
+      <tr>
+        <td colspan="2" align="center" class="message"><?php echo $message; ?></td>
+      </tr>
+      <?php
+										 }
+										 ?>
+      <tr>
+        <td><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#D9DDE1" class="bodytext">
+            <tr>
+              <td bgcolor="#EEF0F2" ><strong>Admin Name</strong></td>
+              <td bgcolor="#EEF0F2" ><strong>Email Address</strong></td>
+              <td bgcolor="#EEF0F2"  width="20%" align="center"><strong>Action</strong></td>
+            </tr>
+            <?php
+				    $query = "SELECT * FROM tbladmininfo WHERE usertype = 0 ORDER BY ID ASC";
+					$total_query = "SELECT count(*) FROM tbladmininfo WHERE usertype = 0 ORDER BY ID ASC";
+					
+					 $ref = $db->execQuery($total_query);
+				$total = $db->result($ref);
+				
+					$targetpage = "index.php?action=existing_users&tabm=admu"; 	//your file name  (the name of this file)
+					$targetpage .= $query_string;
+					$limit = 20; 								//how many items to show per page
+					$page = $_REQUEST['page'];
+					if($page) 
+						$start = ($page - 1) * $limit; 			//first item to display on this page
+					else
+						$start = 0;								//if no page var is given, set start to 0
+						
+					
+				$pagination = pagination($targetpage, $total, $page, $limit);
+				// pagination end	
+					
+					
+                    //$result = $db->execQuery($query);
+                    //$arinfo = $db->resultArray();
+				    //for ($i = 0; $i < sizeof($arinfo); $i++) {
+					//*******************8
+					$success = $db->checkExists($query);
+					if ($success == true){
+						$qty=15;
+						
+						$query.=" LIMIT $start, $limit";
+						$result = $db->execQuery($query);
+						$arinfo = $db->resultArray($result);
+						if ($_REQUEST["stq"]==""){
+							$stq=0;
+						}else{
+							$stq=$_REQUEST["stq"];
+						}
+						$v=($stq/$qty)+1;
+						if (sizeof($arinfo)>1)
+						{
+								$ste=$stq+$qty;
+								$st2=sizeof($arinfo) % $qty;
+								
+								if ($ste > sizeof($arinfo))
+								{
+									$ste=sizeof($arinfo);
+								}
+																
+								$st1=(sizeof($arinfo)-$st2)/$qty;
+								
+								for ($z=0; $z <= $st1 ; $z++)
+								{
+						
+									if ($v==($z+1)){
+										$pageIn.=$z+1;
+									}else{
+										$pageIn.="<a href=index.php?action=existing_users&stq=".($z*$qty)."&h=".$h." class=nav1>".($z+1)."</a>";
+									}
+								}
+						}else{
+								$ste=sizeof($arinfo);
+						}
+						for ($i = 0; $i < sizeof($arinfo); $i++)
+						{
+					
+			//**********************88
+					
+			    ?>
+            <tr>
+              <td bgcolor="#FFFFFF" class="bodytext"><?php echo $arinfo[$i]["UserName"]; ?></td>
+              <td bgcolor="#FFFFFF" class="bodytext"><?php echo strtolower($arinfo[$i]["UserID"]); ?></td>
+              <td align="center" bgcolor="#FFFFFF" class="bodytext"><a class="nav" href="index.php?action=edit_user_profile&ID=<?php echo $arinfo[$i]['ID']; ?>&tabm=admu">Edit</a> | <a class="nav" href="index.php?action=delete_user&ID=<?php echo $arinfo[$i]['ID']; ?>&tabm=admu" onClick="return confirm('Are you sure you want to delete this?');">Delete</a> </td>
+            </tr>
+            <?php
+                    }
+					}
+				?>
+        </table></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td align="center" ><?
+	/*if ($v > 0){
+		echo ("<samp  class=bodytext>Page ".$v." Of ".$z."</samp>");
+	}*/
+	?>        </td>
+      </tr>
+      <tr>
+        <td align="center">
+		
+		 <?php echo $pagination;?>
+		
+		<!--<table width="60%" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+              <td><?php
+		if ($v>1){
+		?>
+                  <a class="nav1" href="index.php?action=existing_users&amp;stq=<?php echo(($v-2)*$qty)?>&amp;h=1" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('a1','','images/paging_over_01.gif',1)"><img src="images/paging_01.gif" name="a1" width="30" height="32" border="0" id="a1" /></a>
+                  <?php
+		}else{ ?>
+                  <img src="images/paging_01.gif" name="a" width="30" height="32" border="0" id="a" />
+                  <?}
+		?>              </td>
+              <td width="100%" background="images/paging_body.gif" align="center" ><span class="bodytext"><? echo ("Pages- ".$pageIn);?></span></td>
+              <td><?php
+		 if ($v <$z){
+		 ?>
+                  <a class="nav1" href="index.php?action=existing_users&amp;stq=<?php echo(($v)*$qty)?>&amp;h=1" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('b1','','images/paging_over_03.gif',1)"><img src="images/paging_03.gif" name="b1" width="30" height="32" border="0" id="b1" /></a>
+                  <?php
+		 }else{ ?>
+                  <img src="images/paging_03.gif" name="b" width="30" height="32" border="0" id="b" />
+                  <?}
+		 ?>              </td>
+            </tr>
+        </table>-->
+		
+		</td>
+      </tr>
+    </table></td>
+    <td width="4%">&nbsp;</td>
+  </tr>
+</table>

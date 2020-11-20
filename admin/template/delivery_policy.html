@@ -1,0 +1,225 @@
+<script language="javascript"> 
+function IsNumeric(sText)
+{
+   var ValidChars = "0123456789.:";
+   var IsNumber=true;
+   var Char;
+
+ 
+   for (i = 0; i < sText.length && IsNumber == true; i++) 
+      { 
+      Char = sText.charAt(i); 
+      if (ValidChars.indexOf(Char) == -1) 
+         {
+         IsNumber = false;
+         }
+      }
+   return IsNumber;
+   
+   }
+function validation()
+{
+
+  if (document.edit.radious.value == "" )
+  {
+    alert("Delivery Radius is a required field.");
+    document.edit.radious.focus();
+    return false;
+  }
+  if (IsNumeric(document.edit.radious.value) == false )
+  {
+    alert("Please insert only numeric value.");
+    document.edit.radious.focus();
+    return false;
+  }
+  
+   if (document.edit.take_time.value == "" )
+  {
+    alert("Take away time is a required field.");
+    document.edit.take_time.focus();
+    return false;
+  }
+  if (IsNumeric(document.edit.take_time.value) == false )
+  {
+    alert("Please insert only numeric value.");
+    document.edit.take_time.focus();
+    return false;
+  }
+  
+  if (document.edit.del_time.value == "" )
+  {
+    alert("Delivery Time is a required field.");
+    document.edit.del_time.focus();
+    return false;
+  }
+  if (IsNumeric(document.edit.del_time.value) == false )
+  {
+    alert("Please insert only numeric value.");
+    document.edit.del_time.focus();
+    return false;
+  }
+  
+  if (document.edit.min_order.value == "" )
+  {
+    alert("Min Delivery Order is a required field.");
+    document.edit.min_order.focus();
+    return false;
+  }
+  if (IsNumeric(document.edit.min_order.value) == false )
+  {
+    alert("Please insert only numeric value.");
+    document.edit.min_order.focus();
+    return false;
+  }
+  if (document.edit.del_cost.value == "" )
+  {
+    alert("Delivery Cost is a required field.");
+    document.edit.del_cost.focus();
+    return false;
+  }
+  if (IsNumeric(document.edit.del_cost.value) == false )
+  {
+    alert("Please insert only numeric value.");
+    document.edit.del_cost.focus();
+    return false;
+  }
+  if (document.edit.del_start_at.value == "" )
+  {
+    alert("Delivery Start At is a required field.");
+    document.edit.del_start_at.focus();
+    return false;
+  }
+  if (IsNumeric(document.edit.del_start_at.value) == false )
+  {
+    alert("Please insert only numeric value.");
+    document.edit.del_start_at.focus();
+    return false;
+  }
+  return true;
+}
+</script>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td width="8%" height="400" valign="top">&nbsp;</td>
+    <td width="92%" align="left" valign="top"><table width="96%" border="0" align="left" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+        <td background="images/box_02.jpg"><span class="box_title_text">&quot;<? echo $_SESSION[rname];?>&quot; Restaurant Management </span></td>
+        <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/box_04.jpg">&nbsp;</td>
+        <td width="100%" valign="top"><table width="100%" border="0" cellspacing="1" cellpadding="1"  class="bodytext">
+            <tr>
+              <td><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#F0F0F0" class="bodytext" id="AutoNumber4">
+                <tr>
+                  <td width="8%">&nbsp;</td>
+                  <td width="2%"><img border="0" src="images/plus.gif" width="9" height="9" /></td>
+                  <td width="25%" align="left"><a class="nav" href="index.php?action=resturant_menu&amp;rid=<?php echo $_SESSION['resid']; ?>&tabm=rcttb">Restaurant Management Home </a></td>
+                  <td width="2%"><img border="0" src="images/plus.gif" width="9" height="9" /></td>
+                  <td width="13%"><a class="nav" href="index.php?action=service_set&amp;tabm=rcttb">Service Setting </a></td>
+                  <td width="2%"><img border="0" src="images/plus.gif" width="9" height="9" /></td>
+                  <td width="13%"><a class="nav" href="index.php?action=resturantpolicy_policy&tabm=rcttb">Order Policy </a></td>
+                  <td width="2%"><img border="0" src="images/plus.gif" width="9" height="9" /></td>
+                  <td width="14%"><a class="nav" href="index.php?action=delivery_policy&amp;tabm=rcttb">Delivery Info </a></td>
+                  <td width="2%"><img border="0" src="images/plus.gif" width="9" height="9" /></td>
+                  <td width="17%"><a class="nav" href="index.php?action=delivery_area&amp;tabm=rcttb">Delivery Area </a></td>
+                </tr>
+              </table></td>
+            </tr>
+            <tr>
+              <td></td>
+            </tr>
+            <tr>
+              <td width="81%" valign="top" bgcolor="#F0F0F0"><table width="100%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#FFFFFF" class="bodytext">
+                
+                <tr>
+                  <td><strong> Restaurant Delivery Policy </strong></td>
+                </tr>
+                <?Php 
+									$rids=$_SESSION['resid'];
+		
+									$resquery="Select * from delevary_policy where rid='$rids'";
+									
+									$resultres=mysql_query($resquery);
+									$rowres=mysql_fetch_array($resultres);
+									?>
+                <tr>
+                  <td align="center" class="message"><?PHP echo $message;
+									  
+									  ?></td>
+                </tr>
+                <tr>
+                  <td align="center"><form action="index.php?action=insert_deliver_policy&tabm=rcttb" method="post" enctype="multipart/form-data" name="edit" id="edit" onSubmit="return validation(this)">
+                      <table width="90%" border="0" cellspacing="2" cellpadding="2"  class="bodytext">
+                        <tr>
+                          <td width="31%" align="right"><strong>Delivery Radius: </strong></td>
+                          <td width="69%" align="left"><input name="radious" type="text" class="textbox_wht" id="radious" value="<?php echo $rowres["radious"]; ?>" /> Miles</td>
+                        </tr>
+                        <tr>
+                          <td align="right"><strong>Take away time: </strong></td>
+                          <td align="left"><input name="take_time" type="text" class="textbox_wht" id="take_time" value="<?php echo $rowres["take_time"]; ?>" /> Minutes</td>
+                        </tr>
+                        <tr>
+                          <td align="right"><strong>Delivery Time: </strong></td>
+                          <td align="left"><input name="del_time" type="text" class="textbox_wht" id="del_time" value="<?php echo $rowres["del_time"]; ?>" /> Minutes</td>
+                        </tr>
+                        <tr>
+                          <td align="right"><strong>Min Delivery Order: </strong></td>
+                          <td align="left"><input name="min_order" type="text" class="textbox_wht" id="min_order" value="<?php echo $rowres["min_order"]; ?>" />&nbsp;&pound;
+                              <input name="dpid" type="hidden" id="dpid" value="<?php echo $rowres["dpid"]; ?>" /></td>
+                        </tr>
+                        <tr>
+                          <td align="right" valign="middle"><strong>Delivery Cost:</strong></td>
+                          <td align="left"><input name="del_cost" type="text" class="textbox_wht" id="del_cost" value="<?php echo $rowres["del_cost"]; ?>" />&nbsp;&pound;</td>
+                        </tr>
+                        <tr>
+                          <td align="right" valign="middle"><strong>Delivery Starts At:</strong></td>
+                          <td align="left"><input name="del_start_at" type="text" class="textbox_wht" id="del_start_at" value="<?php echo $rowres["del_start_at"]; ?>" />
+                            i,e (Hour : Min) You must put in this Format eg.(10:20) </td>
+                        </tr>
+                        <tr>
+                          <td align="right"><strong>Note: </strong></td>
+                          <td align="left"><input name="note" type="text" class="textbox_wht" id="note" value="<?php echo $rowres["note"]; ?>" size="40" /></td>
+                        </tr>
+                        <tr>
+                          <td align="right" valign="top">&nbsp;</td>
+                          <td align="left"><input type="submit" name="Submit" value="Submit" class="button_grn"/></td>
+                        </tr>
+                      </table>
+                  </form></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td valign="top">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td height="250" valign="top">&nbsp;</td>
+                </tr>
+              </table></td>
+            </tr>
+            
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+        </table></td>
+        <td background="images/box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+        <td background="images/box_08.jpg">&nbsp;</td>
+        <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>

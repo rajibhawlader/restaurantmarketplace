@@ -1,0 +1,931 @@
+<?php
+	
+	$rsid=$_REQUEST['rid'];
+	$query = "SELECT * FROM resturant WHERE  rid=$rsid AND aactive='1' order by rname asc";
+	   $success = $db->checkExists($query);
+					if ($success == true)
+					{
+						$qty=5;
+						$result = $db->execQuery($query);
+						$arinfoMain = $db->resultArray($result);
+				?>
+	
+	<?php
+	$markeradd=$arinfoMain[0]['street'].' '.$arinfoMain[0]['city'].' '.$arinfoMain[0]['zipcode'];
+	$rnamegm=$arinfoMain[0]['rname'];
+require('GoogleMapAPI.class.php');
+$map = new GoogleMapAPI('map');
+$map->setAPIKey(GOOGLE_MAP_API_KEY);
+$map->setWidth('300px');
+$map->setHeight('200px');
+$map->enableTypeControls();
+$map->disableSidebar();
+$map->disableOverviewControl();
+$map->addMarkerByAddress($markeradd,$rnamegm);
+//$address=$property_details['pr_street_no'].', '.$property_details['pr_street_type'].', '.$property_details['pr_sb_name'];
+//$address=$property_details['pr_street_no'].', '.$property_details['pr_sb_name'];
+
+$property_details['pr_street_no']=$arinfoMain[0]['street'];
+//$property_details['pr_street_name']=$arinfoMain[0]['street'];
+//$property_details['pr_sb_name']='lantwint major';
+$property_details['pr_postcode']=$arinfoMain[0]['zipcode'];
+
+$address=$property_details['pr_street_no'];
+$pstcode=$property_details['pr_postcode'];
+//echo $address.'=>'.$pstcode; exit;
+
+$map->addMarkerByAddress($address,$pstcode);
+$geocode = $map->getGeocode($address.','.$pstcode);
+
+//print_r ($geocode); exit;
+
+?>
+<script type="text/javascript" src="http://www.google.com/jsapi?key=<?php echo GOOGLE_MAP_API_KEY;?>"></script>
+<script type="text/javascript">
+google.load("maps", "2");
+function initialize() {
+if (GBrowserIsCompatible()) {
+var map = new google.maps.Map2(document.getElementById("lmap"));
+map.addControl(new GSmallMapControl());
+//alert(window.parent.lat);
+var mapTypeControl = new GMapTypeControl();
+var topRight = new GControlPosition(G_ANCHOR_TOP_RIGHT, new GSize(10,10));
+var bottomRight = new GControlPosition(G_ANCHOR_BOTTOM_RIGHT, new GSize(10,10));
+map.addControl(mapTypeControl, topRight);
+GEvent.addListener(map, "dblclick", function() {
+map.removeControl(mapTypeControl);
+map.addControl(new GMapTypeControl(), bottomRight);
+});
+map.addControl(new GSmallMapControl());
+
+var lat=<?php echo $geocode['lat'];?>;
+var long=<?php echo $geocode['lon']; ?>;
+map.setCenter(new google.maps.LatLng(<?php echo $geocode['lat'];?>, <? echo $geocode['lon']; ?>), 17);
+var point = new GLatLng(lat,long);
+map.addOverlay(new GMarker(point));
+}
+
+initialize2();
+}
+google.setOnLoadCallback(initialize);
+//208
+</script>
+
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=<?php echo GOOGLE_MAP_API_KEY;?>"  type="text/javascript"></script><script type="text/javascript">
+var myPano;
+var lat=<?php echo $geocode['lat'];?>;
+var long=<?php echo $geocode['lon']; ?>;
+function initialize2() {
+var lat=<?php echo $geocode['lat'];?>;
+var long=<?php echo $geocode['lon']; ?>;
+var fenwayPark = new GLatLng(lat,long);
+panoramaOptions = { latlng:fenwayPark };
+myPano = new GStreetviewPanorama(document.getElementById('pano'), panoramaOptions);
+GEvent.addListener(myPano, 'error', handleNoFlash);
+}
+function handleNoFlash(errorCode) {
+if (errorCode == 'FLASH_UNAVAILABLE') {
+alert("Error: Flash doesn't appear to be supported by your browser");
+return;
+}
+}  
+</script>
+
+
+
+
+<style type="text/css">
+.fh_left{background-image:url(images/prof_header_left_bg.jpg); background-repeat:no-repeat; }
+.fh_right{background-image:url(images/prof_header_right_bg.jpg); background-repeat:no-repeat; }
+.fh_midd{background-image:url(images/prof_header_common_bg.jpg); background-repeat:repeat-x; font-family:Arial, Helvetica, sans-serif; }
+.fh_midd h1{ padding:0px; margin:0; font-size:17px; color:#FF9900;}
+.fh_midd h2{ padding:0px; margin:0; font-size:14px; font-weight:bold; color:#ffffff;}
+.fh_midd a{ color:#FF9900; padding:5px; text-decoration:none; font-size:12px;}
+.fh_midd a:hover{ color:#ffffff; padding:5px; text-decoration:underline;}
+
+
+.fr_commonbox{background:#FFFFFF url(images/fr_common_box_02.jpg) repeat-x; margin:15px 0px 0px 0px; width:959px;}
+.fr_cmnbx_title
+{
+    background-position: left top;
+    color:#232d37;
+    background-image: url(images/fr_common_box_01.jpg);
+    background-repeat:no-repeat;
+}
+.fr_cmnbx_title h1{ display:block; font-size:20px; padding:10px 0 0 0; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; text-indent:32px; line-height:39px; height:29px; width:100%; font-weight:normal; margin:0px;  background: url(images/fr_common_box_03.jpg) no-repeat top right;}
+.fr_cmnbx_box_body{ background:url(images/fr_common_box_05.jpg) repeat-x; background-position:bottom; font-size:13px;  font-family:Arial, Helvetica, sans-serif;}
+.fr_cmnbx_box_body span.span{ border-left:1px solid #9e0112; border-right:1px solid #9e0112; margin:0px 0px 0px 0px; display:block; padding:10px 12px 0px 12px; background-color:#f2f0f1;}
+.fr_cmnbx_box_body span.span h2{ margin:0 0 10px 0; padding:10px 0 5px 0; font-size:15px; font-family: "Trebuchet MS", Arial, Helvetica, sans-serif; color:#232d37; border-bottom:1px solid #9e0112; font-variant:normal; font-weight:bold;}
+.fr_cmnbx_footer {background: url(images/fr_common_box_04.jpg) no-repeat top left;}
+.fr_cmnbx_footer h1{ display:block; font-size:18px; padding:0px; height:17px; width:100%; margin:0px;  background: url(images/fr_common_box_06.jpg) no-repeat top right}
+
+#openinghrs{  font-size:11px;}
+#openinghrs td{ }
+#openinghrs th{ text-align:left; font-weight:600;}
+.restaurant_profile p{color:#000000;}
+</style>
+
+
+
+<script type="text/javascript" src="lib/jquery-1.2.3.pack.js"></script>
+<!--
+  jCarousel library
+-->
+<script type="text/javascript" src="lib/jquery.jcarousel.pack.js"></script>
+<!--
+  Thickbox 3 library
+-->
+<script type="text/javascript" src="lib/thickbox/thickbox.js"></script>
+<!--
+  jCarousel core stylesheet
+-->
+<link rel="stylesheet" type="text/css" href="lib/jquery.jcarousel.css" />
+<!--
+  Thickbox stylesheet
+-->
+<link rel="stylesheet" type="text/css" href="lib/thickbox/thickbox.css" />
+<!--
+  jCarousel skin stylesheet
+-->
+<link rel="stylesheet" type="text/css" href="skins/ie7/skin.css" />
+
+
+<?php
+
+$sql="select * from resturant where rid=$rsid";
+$r=mysql_query($sql);
+while($row=mysql_fetch_array($r))
+{
+ $image1=$row['image1'];
+ if(!file_exists("restaurant_image/".$image1=="") ) $image1="noimage.jpg";
+ $image2=$row['image2'];
+ if(!file_exists("restaurant_image/".$image2=="")) $image2="noimage.jpg";
+ $image3=$row['image3'];
+ if(!file_exists("restaurant_image/".$image3=="")) $image3="noimage.jpg";
+ $image4=$row['image4'];
+ if(!file_exists("restaurant_image/".$image4=="")) $image4="noimage.jpg";
+ $image5=$row['image5'];
+ if(!file_exists("restaurant_image/".$image5=="")) $image5="noimage.jpg";
+ $image6=$row['image6'];
+ if(!file_exists("restaurant_image/".$image6=="")) $image6="noimage.jpg";
+ $image7=$row['image7'];
+ if(!file_exists("restaurant_image/".$image7=="")) $image7="noimage.jpg";
+ $image8=$row['image8'];
+ if(!file_exists("restaurant_image/".$image8=="")) $image8="noimage.jpg";
+
+}
+ 
+?>
+ 
+ 
+
+<script type="text/javascript">
+// Set thickbox loading image
+tb_pathToImage = "images/loading-thickbox.gif";
+
+var mycarousel_itemList = [
+ {url: "restaurant_image/<?php echo $image1;?>", title: "<?php echo $image1;?>"},
+  {url: "restaurant_image/<?php echo $image2;?>", title: "<?php echo $image2;?>"},
+   {url: "restaurant_image/<?php echo $image3;?>", title: "<?php echo $image3;?>"},
+    {url: "restaurant_image/<?php echo $image4;?>", title: "<?php echo $image4;?>"},
+	 {url: "restaurant_image/<?php echo $image5;?>", title: "<?php echo $image5;?>"},
+	  {url: "restaurant_image/<?php echo $image6;?>", title: "<?php echo $image6;?>"},
+	   {url: "restaurant_image/<?php echo $image7;?>", title: "<?php echo $image7;?>"},
+	    {url: "restaurant_image/<?php echo $image8;?>", title: "<?php echo $image8;?>"}
+	
+
+    
+
+];
+
+function mycarousel_itemLoadCallback(carousel, state)
+{
+    for (var i = carousel.first; i <= carousel.last; i++) {
+        if (carousel.has(i)) {
+            continue;
+        }
+
+        if (i > mycarousel_itemList.length) {
+            break;
+        }
+
+        // Create an object from HTML
+        var item = jQuery(mycarousel_getItemHTML(mycarousel_itemList[i-1])).get(0);
+
+        // Apply thickbox
+        tb_init(item);
+
+        carousel.add(i, item);
+    }
+};
+
+/**
+ * Item html creation helper.
+ */
+function mycarousel_getItemHTML(item)
+{
+    var url_m = item.url.replace(/_s.jpg/g, '_m.jpg');
+    return '<a href="' + url_m + '" title="' + item.title + '"><img src="' + item.url + '" width="75" height="75" border="0" alt="' + item.title + '" /></a>';
+};
+
+jQuery(document).ready(function() {
+    jQuery('#mycarousel').jcarousel({
+        size: mycarousel_itemList.length,
+        itemLoadCallback: {onBeforeAnimation: mycarousel_itemLoadCallback}
+    });
+});
+
+</script>
+
+
+
+
+
+
+	
+
+<table height="130" width="959" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="8" class="fh_left">&nbsp;</td>
+    <td width="943" class="fh_midd" align="center"><table width="98%" height="100" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td valign="middle"><? if($arinfoMain[0]['logo']!=''){?>
+            <img src="<?php echo $arinfoMain[0]['logo'];?>" name="imgMainPic" id="imgMainPic" width="120" height="90" />
+          <?php } else {?>
+		  <img src="companylogo/default_logo.jpg" name="imgMainPic" id="imgMainPic"  width="120" height="90" />
+		  <?php } ?>
+		  </td>
+        <td valign="middle"><p class="textwhite"><span class="txtread"><?php echo $arinfoMain[0]["rname"]; ?></span><br /><?php echo $arinfoMain[0]["street"].", ".$arinfoMain[0]["zipcode"].", ".$arinfoMain[0]["city"]; ?>
+        </p></td>
+        <td valign="middle" class="textwhite"><br />
+            <br />
+            <table width="150" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td align="center"><img src="images/ordernow.png" width="88" height="23" /></td>
+              </tr>
+              <tr>
+                <td align="center"><?php 
+														$ridsf=$arinfoMain[0]['rid'];
+														$sqlpol="SELECT * FROM policy,resturant_policy WHERE policy.id=resturant_policy.policy_id and policy.status=1 and policy.id='1' and rid ='$ridsf'";
+														$resultpol=mysql_query($sqlpol);
+														$rowpol=mysql_fetch_array($resultpol);
+														if($rowpol["name"]!=""){
+														$dv=1;
+														 ?>
+                    <a href="<?php 
+												  $trimname=trim($arinfoMain[0]['rname']);
+												  $replacedname = str_replace(" ", "-",$trimname);
+												  echo $replacedname;?>-menu-<?php echo $arinfoMain[0]['rid'];?>">Delivery</a>
+                  <?php }else{?>
+                    <?}?>                <?php 
+														$sqlpol="SELECT * FROM policy,resturant_policy WHERE policy.id=resturant_policy.policy_id and policy.status=1 and policy.id='2' and rid ='$ridsf'";
+	 
+	
+														$resultpol=mysql_query($sqlpol);
+														$rowpol=mysql_fetch_array($resultpol);
+														if($rowpol["name"]!=""){
+														 ?>
+&nbsp;<?php if($dv==1) echo "|"; ?>&nbsp;<a href="<?php 
+												  $trimname=trim($arinfoMain[0]['rname']);
+												  $replacedname = str_replace(" ", "-",$trimname);
+												  echo $replacedname;?>-menu-<?php echo $arinfoMain[0]['rid'];?>">Collection</a>
+                  <?}else{?>
+                    <?}?>
+                  <?php 
+														$sqlpol="SELECT * FROM policy,resturant_policy WHERE policy.id=resturant_policy.policy_id and policy.status=1 and policy.id='3' and rid ='$ridsf'";
+														$resultpol=mysql_query($sqlpol);
+														$rowpol=mysql_fetch_array($resultpol);
+														if($rowpol["name"]!=""){
+														 ?>
+                  <!--                    &nbsp;|&nbsp;<a href="index-action-reservetion_order-rid-<?php echo $arinfoMain[0]['rid'];?>">Reservation</a>
+-->
+                  <?}else{?>                  <?}?></td>
+              </tr>
+          </table></td>
+      </tr>
+    </table></td>
+    <td width="8" class="fh_right">&nbsp;</td>
+  </tr>
+</table>
+
+
+
+<div class="fr_commonbox">
+<div class="fr_cmnbx_title">
+  <h1 style="color:#000000">More about <?php echo $arinfoMain[0]["rname"]; ?></h1>
+  
+</div>
+<div class="fr_cmnbx_box_body">
+ <span class="span">	
+<table width="100%" align="center" border="0" cellspacing="0" cellpadding="5">
+    <tr>
+      <td valign="top" class="restaurant_profile" style="padding-right:10px; color:#000000">
+
+<?php  
+
+
+  echo $arinfoMain[0]["profile"]; ?>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="45%" valign="top" style="padding-right:5px"><h2>Sreet View</h2>
+    
+  <div id="pano" style="width:100%; height: 275px;" name="pano"></div>
+
+	
+    </td>
+    <td width="55%" valign="top" style="padding-left:5px"><h2>Opening Hours</h2>
+    <table id="openinghrs" width="98%" border="0" cellspacing="1" cellpadding="2">
+  <tr>
+    <th width="26%" align="left" valign="top">Opening Hours</th>
+    <th width="20%" align="left" valign="top">Delivery Start </th>
+    <th width="29%" align="left" valign="top">Lunch </th>
+    <th width="25%" align="left" valign="top">Dinner</th>
+  </tr>
+  <tr>
+    <td align="left" valign="top">Monday</td>
+    <td align="left" valign="top"><?php
+				
+				$query = "SELECT * FROM timeschedule   WHERE rid=$rsid";
+     					               	$result = $db->execQuery($query);
+                    					$arinfo = $db->resultArray();                    					
+                ?>
+				<?=$arinfo[0]['open_h_mon_del']?>				</td>
+    <td align="left" valign="top"><?php if($arinfo[0]['open_h_mon_start']!="Closed For the day")
+											{ 
+											$mlst=strtotime($arinfo[0]['open_h_mon_start']);
+											
+											echo date('H:i', $mlst);
+													if($arinfo[0]['open_h_mon_end']!=""){ echo "-";}
+											$mlen=strtotime($arinfo[0]['open_h_mon_end']);
+													 echo date('H:i', $mlen);
+											}else
+											{
+											echo  $arinfo[0]['open_h_mon_start'];
+													if($arinfo[0]['open_h_mon_end']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_mon_end'];
+											
+											}  ?>	</td>
+    <td align="left" valign="top"><?php 
+												  
+												if($arinfo[0]['open_h_mon_start2']!="Closed For the day")
+												{
+												$mdst=strtotime($arinfo[0]['open_h_mon_start2']);
+												echo date('H:i', $mdst);
+													if($arinfo[0]['open_h_mon_end2']!=""){ echo "-";}
+												 $mden=strtotime($arinfo[0]['open_h_mon_end2']);
+												echo date('H:i', $mden);
+												}else
+											{echo $arinfo[0]['open_h_mon_start2'];
+													if($arinfo[0]['open_h_mon_end2']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_mon_end2']; 
+													 }
+											 ?></td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">Tuesday</td>
+    <td align="left" valign="top"><?=$arinfo[0]['open_h_tue_del']?></td>
+    <td align="left" valign="top"><?php if($arinfo[0]['open_h_tue_start']!="Closed For the day")
+											{ echo date('H:i', strtotime($arinfo[0]['open_h_tue_start']));
+													if($arinfo[0]['open_h_tue_end']!=""){ echo "-";}
+													 echo date('H:i', strtotime($arinfo[0]['open_h_tue_end']));
+													 }else
+											{echo $arinfo[0]['open_h_tue_start'];
+													if($arinfo[0]['open_h_tue_end']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_tue_end']; } ?></td>
+    <td align="left" valign="top"><?php if($arinfo[0]['open_h_tue_start2']!="Closed For the day")
+											{echo date('H:i', strtotime($arinfo[0]['open_h_tue_start2']));
+													if($arinfo[0]['open_h_tue_end2']!=""){ echo "-";}
+													 echo date('H:i', strtotime($arinfo[0]['open_h_tue_end2'])); }else
+											{echo $arinfo[0]['open_h_tue_start2'];
+													if($arinfo[0]['open_h_tue_end2']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_tue_end2']; 
+													 } ?></td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">Wednessday</td>
+    <td align="left" valign="top"><?=$arinfo[0]['open_h_wed_del']?></td>
+    <td align="left" valign="top"><?php if($arinfo[0]['open_h_wed_start']!="Closed For the day")
+											{
+											echo date('H:i', strtotime($arinfo[0]['open_h_wed_start']));
+													if($arinfo[0]['open_h_wed_end']!=""){ echo "-";}
+													 echo date('H:i', strtotime($arinfo[0]['open_h_wed_end'])); 
+											}else
+											{echo $arinfo[0]['open_h_wed_start'];
+													if($arinfo[0]['open_h_wed_end']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_wed_end']; 
+													 } ?></td>
+    <td align="left" valign="top"><?php if($arinfo[0]['open_h_wed_start2']!="Closed For the day")
+											{
+											echo date('H:i', strtotime($arinfo[0]['open_h_wed_start2']));
+													if($arinfo[0]['open_h_wed_end2']!=""){ echo "-";}
+													 echo date('H:i', strtotime($arinfo[0]['open_h_wed_end2']));
+											}else{echo $arinfo[0]['open_h_wed_start2'];
+													if($arinfo[0]['open_h_wed_end2']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_wed_end2']; } ?></td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">Thursday</td>
+    <td align="left" valign="top"><?=$arinfo[0]['open_h_thu_del']?></td>
+    <td align="left" valign="top"><?php if($arinfo[0]['open_h_thu_start']!="Closed For the day")
+											{
+											echo date('H:i', strtotime($arinfo[0]['open_h_thu_start']));
+													if($arinfo[0]['open_h_thu_end']!=""){ echo "-";}
+													 echo date('H:i', strtotime($arinfo[0]['open_h_thu_end']));
+											}else{echo $arinfo[0]['open_h_thu_start'];
+													if($arinfo[0]['open_h_thu_end']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_thu_end']; } ?></td>
+    <td align="left" valign="top"><?php if($arinfo[0]['open_h_thu_start2']!="Closed For the day")
+											{
+											echo date('H:i', strtotime($arinfo[0]['open_h_thu_start2']));
+													if($arinfo[0]['open_h_thu_end2']!=""){ echo "-";}
+													 echo date('H:i', strtotime($arinfo[0]['open_h_thu_end2'])); 
+											}else{echo $arinfo[0]['open_h_thu_start2'];
+													if($arinfo[0]['open_h_thu_end2']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_thu_end2']; 
+													 } ?></td>
+  </tr>
+  
+  <tr>
+      <td align="left" valign="top">Friday</td>
+      <td align="left" valign="top"><?=$arinfo[0]['open_h_fri_del']?></td>
+      <td align="left" valign="top"><?php if($arinfo[0]['open_h_fri_start']!="Closed For the day")
+											{
+											echo date('H:i', strtotime($arinfo[0]['open_h_fri_start']));
+													if($arinfo[0]['open_h_fri_end']!=""){ echo "-";}
+													 echo date('H:i', strtotime($arinfo[0]['open_h_fri_end'])); 
+											}else
+											{
+											echo $arinfo[0]['open_h_fri_start'];
+													if($arinfo[0]['open_h_fri_end']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_fri_end']; 
+													 } ?>      </td>
+      <td align="left" valign="top" ><?php if($arinfo[0]['open_h_fri_start2']!="Closed For the day")
+											{
+											echo date('H:i', strtotime($arinfo[0]['open_h_fri_start2']));
+													if($arinfo[0]['open_h_fri_end2']!=""){ echo "-";}
+													 echo date('H:i', strtotime($arinfo[0]['open_h_fri_end2']));
+											}else
+											{echo $arinfo[0]['open_h_fri_start2'];
+													if($arinfo[0]['open_h_fri_end2']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_fri_end2'];
+													 }  ?></td>
+    </tr>
+    <tr>
+      <td align="left" valign="top">Saturday</td>
+      <td align="left" valign="top"><?=$arinfo[0]['open_h_sat_del']?></td>
+      <td align="left" valign="top"><?php if($arinfo[0]['open_h_sat_start']!="Closed For the day")
+											{
+											echo date('H:i', strtotime($arinfo[0]['open_h_sat_start']));
+													if($arinfo[0]['open_h_sat_end']!=""){ echo "-";}
+													 echo date('H:i', strtotime($arinfo[0]['open_h_sat_end']));
+											}else
+											{
+											echo $arinfo[0]['open_h_sat_start'];
+													if($arinfo[0]['open_h_sat_end']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_sat_end'];
+													 }  ?>        </td>
+      <td align="left" valign="top"><?php if($arinfo[0]['open_h_sat_start2']!="Closed For the day")
+											{
+											echo date('H:i', strtotime($arinfo[0]['open_h_sat_start2']));
+													if($arinfo[0]['open_h_sat_end2']!=""){ echo "-";}
+													 echo date('H:i', strtotime($arinfo[0]['open_h_sat_end2'])); 
+											}else
+											{echo $arinfo[0]['open_h_sat_start2'];
+													if($arinfo[0]['open_h_sat_end2']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_sat_end2']; 
+													 } ?></td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"> Sunday</td>
+      <td align="left" valign="top"><?=$arinfo[0]['open_h_sun_del']?></td>
+      <td align="left" valign="top">
+	  <?php if($arinfo[0]['open_h_sun_start']!="Closed For the day")
+											{
+											echo date('H:i', strtotime($arinfo[0]['open_h_sun_start']));
+													if($arinfo[0]['open_h_sun_end']!=""){ echo "-";}
+													 echo date('H:i', strtotime($arinfo[0]['open_h_sun_end']));
+											}else
+											{
+											echo $arinfo[0]['open_h_sun_start'];
+													if($arinfo[0]['open_h_sun_end']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_sun_end'];}  ?>       </td>
+      <td align="left" valign="top"><?php if($arinfo[0]['open_h_sun_start2']!="Closed For the day")
+											{
+											echo date('H:i', strtotime($arinfo[0]['open_h_sun_start2']));
+													if($arinfo[0]['open_h_sun_end2']!=""){ echo "-";}
+													 echo date('H:i', strtotime($arinfo[0]['open_h_sun_end2']));
+											}else
+											{echo $arinfo[0]['open_h_sun_start2'];
+													if($arinfo[0]['open_h_sun_end2']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_sun_end2'];
+													 }  ?></td>
+    </tr>
+</table>
+</td>
+  </tr>
+</table>
+
+<h2>Delivery Postcode</h2>
+ <?php		
+		$sqladrs="SELECT * FROM delivery_area WHERE  rid ='$rsid'";
+			
+			$resultadr = $db->execQuery($sqladrs);
+			$rowadr = $db->resultArray($resultadr);
+			
+				
+			 
+			  	for($ij=0;$ij<count($rowadr);$ij++)
+				{
+
+				echo $rowadr[$ij]['post_code'];
+				if($ij<count($rowadr)-1)
+				{
+					echo ",&nbsp;";
+				}
+				}
+                      ?>
+
+</td>
+      <td width="330" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><h2>Restaurant Pictures</h2></td>
+  </tr>
+  <tr>
+    <td>
+	
+	
+	<ul id="mycarousel" class="jcarousel-skin-ie7">
+    <!-- The content will be dynamically loaded in here -->
+  </ul>
+  
+  <br  />
+
+  </td>
+  </tr>
+  
+  <tr>
+    <td><h2>Location:</h2></td>
+  </tr>
+  <tr>
+  <tr>
+  <td></td>
+  </tr>
+    
+      
+</table>
+<div id="lmap" style="width:350px; height:250px;"> </div>
+</td>
+    </tr>
+  </table>
+	
+</span>
+  
+  <div class="fr_cmnbx_footer"><h1>&nbsp;</h1></div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+<div style="display:none;">
+<table width="900" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td class="bleft">&nbsp;</td>
+        <td valign="middle" class="bmid"><table width="98%" height="100" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td valign="middle"><? if($arinfoMain[0]['logo']!=''){?><img src="<?php echo $arinfoMain[0]['logo'];?>" name="imgMainPic" id="imgMainPic" /><?} ?></td>
+            <td valign="middle"><p class="textwhite"><span class="txtread"><?php echo $arinfoMain[0]["rname"]; ?></span><br />
+              <?php 				    
+                    $query1 = "SELECT * FROM area where id=".$arinfoMain[0]["area_id"];
+                    $result1 = $db->execQuery($query1);
+                    $arinfo1= $db->resultArray();
+                    echo $arinfo1[0]['name'];
+                    ?></td>
+            <td valign="middle" class="textwhite"><br />
+                <br />
+                <table width="150" border="0" cellspacing="0" cellpadding="0">
+                 <tr>
+                    <td colspan="3" align="center"><img src="images/ordernow.png" width="114" height="27" /></td>
+					</tr>
+                  <tr>
+                    <td><?php 
+														$ridsf=$arinfoMain[0]['rid'];
+														$sqlpol="SELECT * FROM policy,resturant_policy WHERE policy.id=resturant_policy.policy_id and policy.status=1 and policy.id='1' and rid ='$ridsf'";
+														$resultpol=mysql_query($sqlpol);
+														$rowpol=mysql_fetch_array($resultpol);
+														if($rowpol["name"]!=""){
+														 ?>
+					<a href="index-action-menu_list-rid-<?php echo $arinfoMain[0]['rid'];?>">Delivery</a><?php }else{?> <?}?> </td>
+ 
+ <td> <?php 
+														$sqlpol="SELECT * FROM policy,resturant_policy WHERE policy.id=resturant_policy.policy_id and policy.status=1 and policy.id='2' and rid ='$ridsf'";
+	 
+	
+														$resultpol=mysql_query($sqlpol);
+														$rowpol=mysql_fetch_array($resultpol);
+														if($rowpol["name"]!=""){
+														 ?><a href="index-action-menu_list_collection-rid-<?php echo $arinfoMain[0]['rid'];?>">&nbsp;|&nbsp;Collection</a><?}else{?>
+                                                                       <?}?></td>
+<td><?php 
+														$sqlpol="SELECT * FROM policy,resturant_policy WHERE policy.id=resturant_policy.policy_id and policy.status=1 and policy.id='3' and rid ='$ridsf'";
+														$resultpol=mysql_query($sqlpol);
+														$rowpol=mysql_fetch_array($resultpol);
+														if($rowpol["name"]!=""){
+														 ?><a href="index-action-reservetion_order-rid-<?php echo $arinfoMain[0]['rid'];?>">&nbsp;|&nbsp;Reservation</a><?}else{?>
+                                                           <?}?></td>
+                  </tr>
+                </table></td>
+          </tr>
+        </table></td>
+        <td class="bright">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellpadding="0" cellspacing="0" class="txtread">
+      <tr>
+        <td class="sleft">&nbsp;</td>
+        <td valign="middle" class="smid">More about <?php echo $arinfoMain[0]["rname"]; ?></td>
+        <td class="sright">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="888" border="0" align="center" cellpadding="0" cellspacing="0" class="border">
+      <tr>
+        <td><table width="98%" border="10" align="center" cellpadding="8" cellspacing="0">
+          <tr>
+            <td width="3%">&nbsp;</td>
+            <td width="55%" class="text"><strong>Takeaway description</strong><br />
+              <?php echo $arinfoMain[0]["profile"]; ?></td>
+            <td width="42%" align="right" valign="top" >
+			<br />
+	
+
+			</td>
+          </tr>
+          <tr>
+            <td height="2" colspan="3"><hr class="hrclass"/></td>
+            </tr>
+            
+           
+          <tr>
+	
+            <td>&nbsp;</td>
+            <td><h3><span id="ctl00_ContentPlaceHolder1_lblOpeninghours">Opening Hours:</span></h3>
+              <div><span id="ctl00_ContentPlaceHolder1_lblSeeRestOpeningHours"></span> </div>
+              <div>
+                <?php
+				
+				$query = "SELECT * FROM timeschedule   WHERE rid=$rsid";
+     					               	$result = $db->execQuery($query);
+                    					$arinfo = $db->resultArray();                    					
+                ?>
+				<table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#C4C4C4" class="bodytext">
+  <tbody>
+    <tr>
+      <td width="30%" bgcolor="#DFDFDF" class="nrmlink">Opening Hours</td>
+      <td width="35%" bgcolor="#DFDFDF" class="nrmlink">Lunch</td>
+      <td width="35%" bgcolor="#DFDFDF" class="nrmlink">Dinner</td>
+    </tr>
+    <tr>
+      <td bgcolor="#F5F5F5">Monday</td>
+      <td bgcolor="#F5F5F5" ><?php if($arinfo[0]['open_h_mon_start']!="Closed For the day")
+											{ 
+											$mlst=strtotime($arinfo[0]['open_h_mon_start']);
+											
+											echo date('H:i', $mlst);
+													if($arinfo[0]['open_h_mon_end']!=""){ echo "-";}
+											$mlen=strtotime($arinfo[0]['open_h_mon_end']);
+													 echo date('H:i', $mlen);
+											}else
+											{
+											echo  $arinfo[0]['open_h_mon_start'];
+													if($arinfo[0]['open_h_mon_end']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_mon_end'];
+											
+											}  ?>
+        &nbsp;&nbsp;</td>
+      <td bgcolor="#F5F5F5" ><?php 
+												  
+												if($arinfo[0]['open_h_mon_start2']!="Closed For the day")
+												{
+												$mdst=strtotime($arinfo[0]['open_h_mon_start2']);
+												echo date('H:i', $mdst);
+													if($arinfo[0]['open_h_mon_end2']!=""){ echo "-";}
+												 $mden=strtotime($arinfo[0]['open_h_mon_end2']);
+												echo date('H:i', $mden);
+												}else
+											{echo $arinfo[0]['open_h_mon_start2'];
+													if($arinfo[0]['open_h_mon_end2']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_mon_end2']; 
+													 }
+											 ?></td>
+    </tr>
+    <tr>
+      <td bgcolor="#F5F5F5">Tuesday</td>
+      <td bgcolor="#F5F5F5" ><?php if($arinfo[0]['open_h_tue_start']!="Closed For the day")
+											{ echo date('H:i', strtotime($arinfo[0]['open_h_tue_start']));
+													if($arinfo[0]['open_h_tue_end']!=""){ echo "-";}
+													 echo date('H:i', strtotime($arinfo[0]['open_h_tue_end']));
+													 }else
+											{echo $arinfo[0]['open_h_tue_start'];
+													if($arinfo[0]['open_h_tue_end']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_tue_end']; } ?>
+        &nbsp;&nbsp;</td>
+      <td bgcolor="#F5F5F5" ><?php if($arinfo[0]['open_h_tue_start2']!="Closed For the day")
+											{echo date('H:i', strtotime($arinfo[0]['open_h_tue_start2']));
+													if($arinfo[0]['open_h_tue_end2']!=""){ echo "-";}
+													 echo date('H:i', strtotime($arinfo[0]['open_h_tue_end2'])); }else
+											{echo $arinfo[0]['open_h_tue_start2'];
+													if($arinfo[0]['open_h_tue_end2']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_tue_end2']; 
+													 } ?></td>
+    </tr>
+    <tr>
+      <td bgcolor="#F5F5F5">Wednesday</td>
+      <td bgcolor="#F5F5F5" ><?php if($arinfo[0]['open_h_wed_start']!="Closed For the day")
+											{
+											echo date('H:i', strtotime($arinfo[0]['open_h_wed_start']));
+													if($arinfo[0]['open_h_wed_end']!=""){ echo "-";}
+													 echo date('H:i', strtotime($arinfo[0]['open_h_wed_end'])); 
+											}else
+											{echo $arinfo[0]['open_h_wed_start'];
+													if($arinfo[0]['open_h_wed_end']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_wed_end']; 
+													 } ?>
+        &nbsp;&nbsp;</td>
+      <td bgcolor="#F5F5F5" ><?php if($arinfo[0]['open_h_wed_start2']!="Closed For the day")
+											{
+											echo date('H:i', strtotime($arinfo[0]['open_h_wed_start2']));
+													if($arinfo[0]['open_h_wed_end2']!=""){ echo "-";}
+													 echo date('H:i', strtotime($arinfo[0]['open_h_wed_end2']));
+											}else{echo $arinfo[0]['open_h_wed_start2'];
+													if($arinfo[0]['open_h_wed_end2']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_wed_end2']; } ?></td>
+    </tr>
+    <tr>
+      <td bgcolor="#F5F5F5">Thursday</td>
+      <td bgcolor="#F5F5F5" ><?php if($arinfo[0]['open_h_thu_start']!="Closed For the day")
+											{
+											echo date('H:i', strtotime($arinfo[0]['open_h_thu_start']));
+													if($arinfo[0]['open_h_thu_end']!=""){ echo "-";}
+													 echo date('H:i', strtotime($arinfo[0]['open_h_thu_end']));
+											}else{echo $arinfo[0]['open_h_thu_start'];
+													if($arinfo[0]['open_h_thu_end']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_thu_end']; } ?>
+        &nbsp;&nbsp;</td>
+      <td bgcolor="#F5F5F5" ><?php if($arinfo[0]['open_h_thu_start2']!="Closed For the day")
+											{
+											echo date('H:i', strtotime($arinfo[0]['open_h_thu_start2']));
+													if($arinfo[0]['open_h_thu_end2']!=""){ echo "-";}
+													 echo date('H:i', strtotime($arinfo[0]['open_h_thu_end2'])); 
+											}else{echo $arinfo[0]['open_h_thu_start2'];
+													if($arinfo[0]['open_h_thu_end2']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_thu_end2']; 
+													 } ?></td>
+    </tr>
+    <tr>
+      <td bgcolor="#F5F5F5">Friday</td>
+      <td bgcolor="#F5F5F5" ><?php if($arinfo[0]['open_h_fri_start']!="Closed For the day")
+											{
+											echo date('H:i', strtotime($arinfo[0]['open_h_fri_start']));
+													if($arinfo[0]['open_h_fri_end']!=""){ echo "-";}
+													 echo date('H:i', strtotime($arinfo[0]['open_h_fri_end'])); 
+											}else
+											{
+											echo $arinfo[0]['open_h_fri_start'];
+													if($arinfo[0]['open_h_fri_end']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_fri_end']; 
+													 } ?>
+        &nbsp;&nbsp;</td>
+      <td bgcolor="#F5F5F5" ><?php if($arinfo[0]['open_h_fri_start2']!="Closed For the day")
+											{
+											echo date('H:i', strtotime($arinfo[0]['open_h_fri_start2']));
+													if($arinfo[0]['open_h_fri_end2']!=""){ echo "-";}
+													 echo date('H:i', strtotime($arinfo[0]['open_h_fri_end2']));
+											}else
+											{echo $arinfo[0]['open_h_fri_start2'];
+													if($arinfo[0]['open_h_fri_end2']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_fri_end2'];
+													 }  ?></td>
+    </tr>
+    <tr>
+      <td bgcolor="#F5F5F5">Saturday</td>
+      <td bgcolor="#F5F5F5" ><?php if($arinfo[0]['open_h_sat_start']!="Closed For the day")
+											{
+											echo date('H:i', strtotime($arinfo[0]['open_h_sat_start']));
+													if($arinfo[0]['open_h_sat_end']!=""){ echo "-";}
+													 echo date('H:i', strtotime($arinfo[0]['open_h_sat_end']));
+											}else
+											{
+											echo $arinfo[0]['open_h_sat_start'];
+													if($arinfo[0]['open_h_sat_end']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_sat_end'];
+													 }  ?>
+        &nbsp;&nbsp;</td>
+      <td bgcolor="#F5F5F5" ><?php if($arinfo[0]['open_h_sat_start2']!="Closed For the day")
+											{
+											echo date('H:i', strtotime($arinfo[0]['open_h_sat_start2']));
+													if($arinfo[0]['open_h_sat_end2']!=""){ echo "-";}
+													 echo date('H:i', strtotime($arinfo[0]['open_h_sat_end2'])); 
+											}else
+											{echo $arinfo[0]['open_h_sat_start2'];
+													if($arinfo[0]['open_h_sat_end2']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_sat_end2']; 
+													 } ?></td>
+    </tr>
+    <tr>
+      <td bgcolor="#F5F5F5"> Sunday</td>
+      <td bgcolor="#F5F5F5" ><?php if($arinfo[0]['open_h_sun_start']!="Closed For the day")
+											{
+											echo date('H:i', strtotime($arinfo[0]['open_h_sun_start']));
+													if($arinfo[0]['open_h_sun_end']!=""){ echo "-";}
+													 echo date('H:i', strtotime($arinfo[0]['open_h_sun_end']));
+											}else
+											{
+											echo $arinfo[0]['open_h_sun_start'];
+													if($arinfo[0]['open_h_sun_end']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_sun_end'];}  ?>
+        &nbsp;&nbsp;</td>
+      <td bgcolor="#F5F5F5" ><?php if($arinfo[0]['open_h_sun_start2']!="Closed For the day")
+											{
+											echo date('H:i', strtotime($arinfo[0]['open_h_sun_start2']));
+													if($arinfo[0]['open_h_sun_end2']!=""){ echo "-";}
+													 echo date('H:i', strtotime($arinfo[0]['open_h_sun_end2']));
+											}else
+											{echo $arinfo[0]['open_h_sun_start2'];
+													if($arinfo[0]['open_h_sun_end2']!=""){ echo "-";}
+													 echo $arinfo[0]['open_h_sun_end2'];
+													 }  ?></td>
+    </tr>
+  </tbody>
+</table>
+
+				
+		</div>	<br />	
+			<?		
+				$sqladrs="SELECT * FROM delivery_area WHERE  rid ='$rsid'";
+			
+			$resultadr = $db->execQuery($sqladrs);
+			$rowadr = $db->resultArray($resultadr);
+			
+				
+			?>
+              <table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#C4C4C4" class="bodytext">
+	<tr>
+    <td bgcolor="#F5F5F5"><h3>Delivery postcode</h3></td>
+  </tr>
+  		  <? 
+			  	for($ij=0;$ij<count($rowadr);$ij++)
+				{
+			  
+			  ?>
+  
+  <tr>
+    <td bgcolor="#F5F5F5"><?=$rowadr[$ij]['post_code'];?></td>
+  </tr>
+ <?
+ 
+ }
+ 
+ ?>
+</table>
+</td>
+	<td>
+		<div id="pano" style="width:400px; height: 375px;" name="pano"></div>
+	</td>
+   </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td height="60" colspan="2"></td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="images/btmline.jpg" width="894" height="16" /></td>
+  </tr>
+</table>
+</div>
+	
+
+<?
+}
+else
+{
+
+	header("Location: http://www.indianfoodsonline.co.uk/");
+
+}
+?>

@@ -1,0 +1,181 @@
+<script language="javascript"> 
+function IsNumeric(sText)
+{
+   var ValidChars = "0123456789";
+   var IsNumber=true;
+   var Char;
+
+ 
+   for (i = 0; i < sText.length && IsNumber == true; i++) 
+      { 
+      Char = sText.charAt(i); 
+      if (ValidChars.indexOf(Char) == -1) 
+         {
+         IsNumber = false;
+         }
+      }
+   return IsNumber;
+   
+   }
+function validation()
+{
+
+ if (document.edit.username.value.indexOf("@") == -1 || document.edit.username.value == "")
+  {
+    alert("Email is a required field!, may be you have missd @ symbol");
+    document.edit.username.focus();
+    return false;
+  }
+  
+  if (document.edit.username.value.indexOf(".") == -1 || document.edit.username.value == "")
+  {
+    alert("Email is a required field!, may be you have missd . symbol");
+    document.edit.username.focus();
+    return false;
+  }
+    if (document.edit.password.value == "" )
+  {
+    alert("Password is a required field!");
+    document.edit.password.focus();
+    return false;
+  }
+		
+  return true;
+  
+}
+</script>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="center"><table width="99%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+        <td background="images/box_02.jpg"><span class="box_title_text">Welcome, Please Sign In </span></td>
+        <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/box_04.jpg">&nbsp;</td>
+        <td width="100%" valign="top"><table width="100%" border="0" align="center" cellpadding="2" cellspacing="1" class="bodytext">
+          <tr>
+            <td align="center" class="message"><?PHP echo $message;
+									  
+									  ?></td>
+          </tr>
+          <tr>
+            <td align="center" class="message">&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="center" valign="top"><table width="100%" border="0" cellspacing="2" cellpadding="2">
+              <tr>
+                <td width="51%" valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#F0F0F0" class="bodytext">
+                  <tr>
+                    <td width="3%">&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td width="2%">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td><strong>New Customer</strong></td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td width="95%" height="120" valign="top" bgcolor="#FFFFFF" align="center">
+                        <table width="96%" height="120" border="0" cellpadding="1" cellspacing="1" class="bodytext">
+                       
+                          <tr>
+                            <td colspan="2" align="justify">&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td colspan="2" align="justify">I am a new customer.
+
+                              <br />
+                              <br />
+                              By creating an account at Indian food online you will be able to order faster, be up to date on an orders status, and keep track of the orders you have previously made.</td>
+                            </tr>
+                          
+                          <tr>
+                            <td width="76%">&nbsp;</td>
+                            <td width="24%" align="left"><a href="index-action-customer_registration-tp-reserve"><img src="images/continue.jpg" width="79" height="39" border="0" /></a></td>
+                          </tr>
+                        </table>                    </td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td valign="top">&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  
+                </table></td>
+                <td width="49%" valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#F0F0F0" class="bodytext">
+                  <tr>
+                    <td width="3%">&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td width="2%">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td><strong>I am a existing customer.</strong></td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td >&nbsp;</td>
+                    <td width="95%" valign="top" bgcolor="#FFFFFF"><form action="index-action-customer_login" method="post" enctype="multipart/form-data" name="edit" id="edit" onsubmit="return validation(this)">
+                        <table width="100%" border="0" cellspacing="1" cellpadding="1" class="bodytext">
+                        
+                          <tr>
+                            <td align="right" bgcolor="#FFFFFF">&nbsp;</td>
+                            <td bgcolor="#FFFFFF">&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td width="42%" align="right" bgcolor="#FFFFFF"><strong>E-mail Address: </strong></td>
+                            <td width="58%" bgcolor="#FFFFFF"><input name="username" type="text" class="textbox_wht" id="username" size="15"/>
+                              <input type="hidden" name="otp" id="otp" value="resv" /></td>
+                          </tr>
+                          <tr>
+                            <td width="42%" align="right" bgcolor="#FFFFFF"><strong>Psssword: </strong></td>
+                            <td bgcolor="#FFFFFF"><input name="password" type="password" class="textbox_wht" id="password" size="15" /></td>
+                          </tr>
+                          <tr>
+                            <td colspan="2" align="center" bgcolor="#FFFFFF"><a href="#" class="nav">Password forgotten? Click here.</a></td>
+                            </tr>
+                          <tr>
+                            <td bgcolor="#FFFFFF">&nbsp;</td>
+                            <td align="left" bgcolor="#FFFFFF"><input type="image" src="images/login.jpg" alt="login" width="69" height="39" border="0" name="submit" /></td>
+                          </tr>
+                        </table>
+                    </form></td>
+                    <td >&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td >&nbsp;</td>
+                    <td valign="top">&nbsp;</td>
+                    <td >&nbsp;</td>
+                  </tr>
+                  
+                </table></td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></td>
+        <td background="images/box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+        <td background="images/box_08.jpg">&nbsp;</td>
+        <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>

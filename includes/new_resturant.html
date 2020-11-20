@@ -1,0 +1,199 @@
+<script language="javascript"> 
+function IsNumeric(sText)
+{
+   var ValidChars = "0123456789";
+   var IsNumber=true;
+   var Char;
+
+ 
+   for (i = 0; i < sText.length && IsNumber == true; i++) 
+      { 
+      Char = sText.charAt(i); 
+      if (ValidChars.indexOf(Char) == -1) 
+         {
+         IsNumber = false;
+         }
+      }
+   return IsNumber;
+   
+   }
+function validation()
+{
+
+  if (document.edit.rname.value == "" )
+  {
+    alert("Resturant Name is a required field.");
+    document.edit.rname.focus();
+    return false;
+  }
+  
+   if (document.edit.street.value == "" )
+  {
+    alert("Street Name is a required field.");
+    document.edit.street.focus();
+    return false;
+  }
+  
+ 
+  
+  if (document.edit.zipcode.value == "" )
+  {
+    alert("ZIP Code is a required field.");
+    document.edit.zipcode.focus();
+    return false;
+  }
+  
+  
+  
+  
+
+ 
+  return true;
+  
+}
+</script>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="center"><table width="99%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+        <td background="images/box_02.jpg"><span class="box_title_text">Account owner/holder Inside </span></td>
+        <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/box_04.jpg">&nbsp;</td>
+        <td width="100%" valign="top"><table width="90%" border="0" align="center" cellpadding="2" cellspacing="1" class="bodytext">
+          <tr>
+            <td height="20">&nbsp;</td>
+          </tr>
+          <tr>
+            <td><strong>Resturant Set UP </strong></td>
+          </tr>
+          <tr>
+            <td align="center" class="message"><?PHP echo $message;
+									  
+									  ?></td>
+          </tr>
+		  <?
+		  $sqlrreq="select * from ";
+		  ?>
+          <tr>
+            <td align="center"><form action="index-action-insert_new_resturant" method="post" enctype="multipart/form-data" name="edit" id="edit" onsubmit="return validation(this)">
+              <table width="90%" border="0" cellspacing="2" cellpadding="2"  class="bodytext">
+                <tr>
+                  <td width="31%" align="right"><strong>Resturant  Name: </strong></td>
+                  <td width="69%" align="left"><input name="rname" type="text" class="textbox_wht" id="rname" size="35" /></td>
+                </tr>
+                <tr>
+                  <td align="right"><strong>Area: </strong></td>
+                  <td align="left"><select name="area_id" id="area_id" class="textbox_wht">
+                      <?php
+		
+			$queryar = "SELECT * FROM area where status='1'";
+	$resultar =mysql_query($queryar);
+	while($arofferinfoar = mysql_fetch_assoc($resultar)){
+		
+		?>
+                      <option value="<? echo $arofferinfoar["id"]; ?>" ><? echo $arofferinfoar["name"]; ?></option>
+                      <?
+						}
+						?>
+                  </select></td>
+                </tr>
+                <tr>
+                  <td align="right"><strong>Chinise: </strong></td>
+                  <td align="left"><select name="chinise_id" id="chinise_id" class="textbox_wht">
+                    <?php
+		
+			$querych = "SELECT * FROM cusin where status='1'";
+	$resultch =mysql_query($querych);
+	while($arofferinfoch = mysql_fetch_assoc($resultch)){
+		
+		?>
+                    <option value="<? echo $arofferinfoch["id"]; ?>" ><? echo $arofferinfoch["name"]; ?></option>
+                    <?
+						}
+						?>
+                  </select></td>
+                </tr>
+                <tr>
+                  <td align="right"><strong>Street: </strong></td>
+                  <td align="left"><input name="street" type="text" class="textbox_wht" id="street" /></td>
+                </tr>
+                <tr>
+                  <td align="right"><strong>Town: </strong></td>
+                  <td align="left"><input name="city" type="text" class="textbox_wht" id="city" /></td>
+                </tr>
+                <tr>
+                  <td align="right"><strong>Post Code: </strong></td>
+                  <td align="left"><input name="zipcode" type="text" class="textbox_wht" id="zipcode" /></td>
+                </tr>
+                <tr>
+                  <td align="right"><strong>Country: </strong></td>
+                  <td align="left"><select name="country_id" id="country_id" class="textbox_wht">
+                    <?php
+		
+			$queryril = "SELECT * FROM countries";
+	$resultril =mysql_query($queryril);
+	while($arofferinforil = mysql_fetch_assoc($resultril)){
+		
+		?>
+                    <option value="<? echo $arofferinforil["countryName"]; ?>" ><? echo $arofferinforil["countryName"]; ?></option>
+                    <?
+						}
+						?>
+                  </select></td>
+                </tr>
+                <tr>
+                  <td align="right"><strong>Contact No: </strong></td>
+                  <td align="left"><input name="contact" type="text" class="textbox_wht" id="contact" size="35" /></td>
+                </tr>
+                <tr>
+                  <td align="right"><strong>Web: </strong>http://</td>
+                  <td align="left"><input name="web" type="text" class="textbox_wht" id="web" /></td>
+                </tr>
+                <tr>
+                  <td align="right"><strong>Logo upload : </strong></td>
+                  <td align="left"><input name="c_img" type="file" class="textbox" id="c_img"/></td>
+                </tr>
+                <tr>
+                  <td align="right" valign="top"><strong>Company Description : </strong></td>
+                  <td align="left"><textarea name="rdesc" cols="35" rows="5" class="textbox_wht" id="rdesc"></textarea></td>
+                </tr>
+                <tr>
+                  <td align="right" valign="top"><strong>Mission/Slogan/Short view : </strong></td>
+                  <td align="left"><textarea name="keytitle" cols="35" rows="3" class="textbox_wht" id="keytitle"></textarea></td>
+                </tr>
+                <tr>
+                  <td align="right" valign="top">&nbsp;</td>
+                  <td align="left"><input type="submit" name="Submit" value="Submit" /></td>
+                </tr>
+              </table>
+            </form></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td valign="top">&nbsp;</td>
+          </tr>
+        </table></td>
+        <td background="images/box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+        <td background="images/box_08.jpg">&nbsp;</td>
+        <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>

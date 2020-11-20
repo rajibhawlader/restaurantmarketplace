@@ -1,0 +1,59 @@
+/* changes the navigation tabs: 
+   
+   left-tab.gif  - the left part of the non-active tab with the background of 
+                   the tab repeated for 200 pixels                   
+   right-tab.gif - the very right top part of the non-active tab.   
+   left-tab-on.gif - the left part of the active tab with the background of 
+                   the tab repeated for 200 pixels      
+   right-tab-on.gif - the very right top part of the non-active tab.                       
+    \*/
+#navigation span
+{
+background: url(left-tab.gif) left top no-repeat;
+padding-left: 10px;
+}
+
+#navigation span a
+{
+color: #000;
+background: url(right-tab.gif) right top no-repeat;
+padding-right: 10px;
+text-decoration: none;
+padding-top: 2px;
+}
+
+#navigation span, #navigation span a
+{
+display: block;
+height: 33px;
+float: left;
+}
+ 
+/* Hide from IE5-Mac \*/
+#navigation span, #navigation span a
+{
+float: none
+} 
+/* End hide */
+
+#navigation span.ontab
+{
+background: url(left-tab-on.gif) left top no-repeat;
+padding-left: 10px
+padding-top: 2px;
+}
+
+#navigation span.ontab a
+{
+color: #000;
+background: url(right-tab-on.gif) right top no-repeat;
+padding-right: 10px;
+padding-top: 2px;
+text-align: center;
+}
+ 
+#navigation td
+{
+float: left;
+margin: 0;
+}

@@ -1,0 +1,195 @@
+<script type="text/javascript"> 
+function validation()
+{
+  if (document.edit.email_msg.value == "" )
+  {
+    alert("Mail's Message is a required field.");
+    document.edit.email_msg.focus();
+    return false;
+  }
+  if(document.edit.email.value=="" && document.edit.email2.value=="" && document.edit.email3.value=="" && document.edit.email3.value=="")
+  {
+    alert("At least one E-mail address is required.");
+    document.edit.email.focus();
+    return false;
+  }
+  if(document.edit.email.value!="")
+  {
+   if (document.edit.email.value.indexOf("@") == -1 || document.edit.email.value.indexOf(".") == -1)
+  {
+    alert("Email address format is not correct, may be you have missd @ or . symbol");
+    document.edit.email.focus();
+    return false;
+  }
+  }
+  if(document.edit.email2.value!="")
+  {
+   if (document.edit.email2.value.indexOf("@") == -1 || document.edit.email2.value.indexOf(".") == -1)
+  {
+    alert("Email address format is not correct, may be you have missd @ or . symbol");
+    document.edit.email2.focus();
+    return false;
+  }
+  }
+  if(document.edit.email3.value!="")
+  {
+   if (document.edit.email3.value.indexOf("@") == -1 || document.edit.email3.value.indexOf(".") == -1)
+  {
+    alert("Email address format is not correct, may be you have missd @ or . symbol");
+    document.edit.email3.focus();
+    return false;
+  }
+  }
+  if(document.edit.email4.value!="")
+  {
+   if (document.edit.email4.value.indexOf("@") == -1 || document.edit.email4.value.indexOf(".") == -1)
+  {
+    alert("Email address format is not correct, may be you have missd @ or . symbol");
+    document.edit.email4.focus();
+    return false;
+  }
+  }
+
+  
+  return true;
+  
+}
+</script>
+<table width="710" border="0" align="right" cellpadding="0" cellspacing="0">
+  
+  <tr>
+    <td align="center"><?php  require_once('includes/account_home.html');?></td>
+  </tr>
+  <tr>
+    <td height="10"></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" align="left" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/red_box1_01.jpg" width="15" height="39" alt="" /></td>
+        <td width="100%" background="images/red_box1_02.jpg" class="heading">Indian Foods Referral</td>
+        <td><img src="images/red_box1_03.jpg" width="14" height="39" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/red_box1_04.jpg">&nbsp;</td>
+        <td valign="top" bgcolor="#9E0112"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td><table width="100%" border="0" cellpadding="0" cellspacing="0" class="stitle">
+                  <tr>
+                    <td valign="top" bgcolor="#9E0112"><table width="100%" border="0" cellpadding="4" cellspacing="1" >
+                        <tbody>
+                          <tr>
+                            <td valign="top" class="normal_text"><strong>Hi <?php echo $_SESSION['customers_firstname'];?>&nbsp;<?php echo $_SESSION['customers_lastname'];?></strong></td>
+                          </tr>
+                          <tr>
+                            <td align="left" valign="top" class="normal_text">Your Reference ID is : <strong><?=$_SESSION['customers_id']?></strong></td>
+                          </tr>
+                        </tbody>
+                    </table></td>
+                  </tr>
+                  <tr>
+                    <td valign="top" bgcolor="#9E0112"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="bodytext">
+                      <?php
+				
+				$sql="Select * from customers where customers_id='".$_SESSION['customers_id']."'";
+				$result=mysql_query($sql);
+				$row=mysql_fetch_array($result);
+				?>
+                      <tr>
+                        <td width="95%" valign="middle" align="center">
+						<form action="index-action-send_email" method="post" enctype="multipart/form-data" name="edit" id="edit" onsubmit="return validation()">
+                          <table width="100%" border="0" cellspacing="2" cellpadding="2" class="normal_text">
+                              
+                              <tr>
+                                <td align="center" valign="middle"><div style="border-top:1px dashed #000000"> </div></td>
+                              </tr>
+                              <tr>
+                                <td align="left" valign="middle">E-mail example:</td>
+                              </tr>
+                              <tr>
+                                <td align="left" valign="middle">
+								<?php
+								include("2100021/spaw/spaw.inc.php");
+								$bodytext="<p>Hi XXXXXXX</p>
+
+<p>Have you ever taken service from <a href='http://indianfoodsonline.co.uk/'>www.indianfoodsonline.co.uk</a> ? If NO, then you are missing something special. My first choice is Indian foods when I need any takeaway or Delivery. Very easily you can order for foods and it gives you the full menus of all the takeaways in your area. Moreover you can pay online or on delivery. Every time I order food on there, I earn points which I can reuse on further ordering. Besides, you can get your money back in case of any inconvenience.</p>
+
+<p>You can register yourself from here <a href='http://indianfoodsonline.co.uk/index-action-customer_registration-cid-".$_SESSION['customers_id']."'>http://indianfoodsonline.co.uk/customer-registration-cid-".$_SESSION['customers_id']."</a></p>
+
+<p>Don’t miss it!!! Just try once!!</p>
+
+<p>".$_SESSION['customers_firstname']."&nbsp;".$_SESSION['customers_lastname']."</p> ";
+$contents = new SpawEditor("email_msg",$bodytext);
+$contents->show();
+?>
+							</td>
+                             </tr>
+                              <tr>
+                                <td align="left" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="normal_text">
+                                  <tr>
+                                    <td width="50%">E-mail address:</td>
+                                    <td width="50%">E-mail address:</td>
+                                  </tr>
+                                  <tr>
+                                    <td><input type="text" name="email" id="email" value="" size="40" /></td>
+                                    <td><input type="text" name="email2" id="email2" value="" size="40" /></td>
+                                  </tr>
+                                  <tr>
+                                    <td>E-mail address:</td>
+                                    <td>E-mail address:</td>
+                                  </tr>
+                                  <tr>
+                                    <td><input type="text" name="email3" id="email3" value="" size="40" /></td>
+                                    <td><input type="text" name="email4" id="email4" value="" size="40" /></td>
+                                  </tr>
+                                </table></td>
+                              </tr>
+                              <tr>
+                                <td align="left" valign="middle">&nbsp;</td>
+                              </tr>
+                              <tr>
+                                <td align="center" valign="middle"><div style="border-top:1px dashed #000000"> </div></td>
+                              </tr>
+                              
+                              <tr>
+                                <td align="center" valign="middle"><table width="100%" border="0" cellpadding="1" cellspacing="1" class="normal_text">
+                                    
+                                    <tr>
+                                      <td colspan="2" align="center"><?php echo $message; ?></td>
+                                      </tr>
+                                    <tr>
+                                      <td width="70%" align="left">Your e-mail will be sent to the address you given.</td>
+                                      <td width="30%" align="right"><input type="image" src="images/send-e-mail.png" width="125" height="25" border="0" name="submit" /></td>
+                                    </tr>
+                                </table></td>
+                              </tr>
+                            </table>
+                        </form></td>
+                      </tr>
+                      
+                    </table></td>
+                  </tr>
+                  
+                  
+                  
+                  
+              </table></td>
+            </tr>
+            
+            
+        </table></td>
+        <td background="images/red_box1_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/red_box1_07.jpg" width="15" height="17" alt="" /></td>
+        <td background="images/red_box1_08.jpg"></td>
+        <td><img src="images/red_box1_09.jpg" width="14" height="17" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <iframe width=174 height=189 name="gToday:normal:agenda.js" id="gToday:normal:agenda.js" src="calander/ipopeng" scrolling="no" frameborder="0" style="visibility:visible; z-index:999; position:absolute; top:-500px; left:-500px;"></iframe>
+</table>

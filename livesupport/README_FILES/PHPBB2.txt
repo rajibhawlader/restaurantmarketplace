@@ -1,0 +1,28 @@
+Directions on adding Crafty Syntax to monitoring users on PHPBB2:
+================================================================
+
+Open file: includes/page_tail.php :
+------------------------------------
+LOOK FOR LINE:
+$admin_link = ( $userdata['user_level'] == ADMIN ) ? '<a href="admin/index.' . $phpEx . '?sid=' . $userdata['session_id'] . '">' . $lang['Admin_panel'] . '</a><br /><br />' : '';
+ADD DIRECTLY UNDER IT: 
+$username = ($userdata['session_logged_in']) ? $userdata['username'] : '';
+
+LOOK FOR LINE: 
+$template->assign_vars(array(
+ADD DIRECTLY UNDER IT:  
+'USERNAME' => $userdata['username'],
+
+Open file: templates/subSilver.overall_footer.tpl
+-------------------------------------------------
+ADD at the very top of the page:
+<script type="text/javascript" src="[PATH TO YOUR LIVE HELP]/livehelp_js.php?relative=Y&amp;department=1&amp;what=hidden&amp;pingtimes=30&amp;username={USERNAME}"></script>
+
+Note replace "[PATH TO YOUR LIVE HELP]/livehelp_js.php" with the path to Your 
+live help installation. 
+If you want the live help icon visible then change the code to be:
+<script type="text/javascript" src="[PATH TO YOUR LIVE HELP]/livehelp_js.php?relative=Y&amp;department=1&amp;pingtimes=30&amp;username={USERNAME}"></script>
+
+
+For example:
+<script type="text/javascript" src="/livehelp/livehelp_js.php?relative=Y&amp;department=1&amp;pingtimes=30&amp;username={USERNAME}"></script>

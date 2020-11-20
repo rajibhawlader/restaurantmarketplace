@@ -1,0 +1,622 @@
+<?php if($_SESSION["message"] !=""){$message = $_SESSION["message"]; unset($_SESSION["message"]); }?>
+<script type="text/JavaScript">
+<!--
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+//-->
+</script>
+<script type="text/JavaScript">
+<!--
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+
+function noocheck()
+{
+var today = new Date;
+var year = today.getYear();
+var month = today.getMonth()+1;
+var day = today.getDate();
+if(day<10) day = "0" + day
+if(month<10) month= "0" + month 
+if(year<1000) year+=1900
+var curdate=year+"-"+month+"-"+day;
+	
+	if(document.getElementById('noo').value==0)
+	{
+		alert("There has no order in this time period");
+		document.getElementById('sdate').focus();
+		return false;
+	}
+	if(document.getElementById('sdate').value=="")
+	{
+		alert("Order filter from date is a require field");
+		document.getElementById('sdate').focus();
+		return false;
+	}
+	if(document.getElementById('edate').value=="")
+	{
+		alert("Order filter to date is a require field");
+		document.getElementById('edate').focus();
+		return false;
+	}
+	if(document.getElementById('sdate').value==document.getElementById('edate').value)
+	{
+		alert("Order filter from date and to date can't be same");
+		document.getElementById('sdate').focus();
+		return false;
+	}
+	if(document.getElementById('sdate').value>document.getElementById('edate').value)
+	{
+		alert("Order filter to date can't be smaller than from date");
+		document.getElementById('edate').focus();
+		return false;
+	}
+	
+}
+
+function checkList(){
+	if(document.orderlist.boxchecked.value > 0){
+		return true;
+	}else{
+		alert('Please select orders.');
+		return false;
+	}
+}
+
+function isChecked(isitchecked){
+	if (isitchecked == true){
+		document.orderlist.boxchecked.value++;
+	}
+	else {
+		document.orderlist.boxchecked.value--;
+	}
+}
+
+/**
+* Toggles the check state of a group of boxes
+*
+* Checkboxes must have an id attribute in the form cb0, cb1...
+* @param The number of box to 'check'
+* @param An alternative field name
+*/
+function checkAll( n, fldName ) {
+  if (!fldName) {
+     fldName = 'cb';
+  }
+	var f = document.orderlist;
+	var c = f.toggle.checked;
+	var n2 = 0;
+	for (i=0; i < n; i++) {
+		cb = document.getElementById(fldName + '' + i); 
+		if (cb) { 
+			if(cb.disabled == false){
+			cb.checked = c;
+			n2++;
+			}
+		}
+	}
+	if (c) {
+		document.orderlist.boxchecked.value = n2;
+	} else {
+		document.orderlist.boxchecked.value = 0;
+	}
+}
+
+//-->
+</script>
+
+<?php 
+$rids=$_SESSION['resid'];
+$query = "SELECT * FROM resturant WHERE rid='".$rids."'";	
+$result = $db->execQuery($query);
+$rst_info = $db->row($result);
+
+$query = "SELECT * FROM resturant_service WHERE rid='".$rids."'";	
+$result = $db->execQuery($query);
+$rst_service = $db->row($result);
+
+if ($_REQUEST["sdate"]!="" and $_REQUEST["edate"]!="" )
+{
+	if($_REQUEST["Submit"]=="Create Invoice"){	
+		
+		$orids = (is_array($_REQUEST['orids']))?"|".implode("|", $_REQUEST['orids'])."|":"";
+		
+	 if($orids != ""){
+	
+			$query = "INSERT INTO accounts_invoice( `invoice_id` , `rid` , `orders` , `cdate`, `invoice_status` ) VALUES ('','".$_SESSION['resid']."',
+								'".$orids."',								
+								'".date('Y-m-d H:i:s')."',
+								'Not Sent')";
+			$result = $db->execQuery($query);
+			$invoice_id = $db->lastInsert($result);
+			
+			$_SESSION['message'] ="From ".show_date($_REQUEST["sdate"])."  to ".show_date($_REQUEST["edate"])." order's statement created successfully";
+			$url = "index.php?action=restaurant_invoice&tabm=rcttb";
+			header("location: $url"); exit;
+		}else{
+			$message="Please select order.";
+		}		
+		
+		
+		
+		
+	}
+
+	$query = "SELECT ord.*, (select sum(dtls.uprice * dtls.qantity) as tprice from order_detail as dtls where ord.orid=dtls.orid) as tprice FROM customer_order as ord WHERE ord.ordate  between '".$_REQUEST["sdate"]."' and  '".$_REQUEST["edate"]."' and ord.rid='$rids'";	
+	
+	$total_query = "SELECT count(orid) FROM customer_order  WHERE ordate  between '".$_REQUEST["sdate"]."' and  '".$_REQUEST["edate"]."' and rid='$rids'";	
+	
+	$query_string = "&sdate=".$_REQUEST["sdate"]."&edate=".$_REQUEST["edate"];
+	
+	$search_query = " and ord.ordate  between '".$_REQUEST["sdate"]."' and  '".$_REQUEST["edate"]."' ";
+}else{
+	$query = "SELECT ord.*, (select sum(dtls.uprice * dtls.qantity) as tprice from order_detail as dtls where ord.orid=dtls.orid) as tprice FROM customer_order as ord WHERE ord.rid='$rids'";	
+	
+	$total_query = "SELECT count(orid) FROM customer_order  WHERE rid='$rids'";	
+}
+
+$ref = $db->execQuery($total_query);
+$total = $db->result($ref);
+
+	$targetpage = "index.php?action=restaurant_account&tabm=rcttb"; 	//your file name  (the name of this file)
+	$targetpage .= $query_string;
+	$limit = 50; 								//how many items to show per page
+	$page = $_REQUEST['page'];
+	if($page) 
+		$start = ($page - 1) * $limit; 			//first item to display on this page
+	else
+		$start = 0;								//if no page var is given, set start to 0
+		
+	
+$pagination = pagination($targetpage, $total, $page, $limit);
+// pagination end	
+
+$report_query = "SELECT COUNT(ord.orid) as total_orders, SUM(ord.hnd_fee) as total_handling_fee, SUM(ord.ccfee) as total_CC_charge, SUM((select sum(dtls.uprice * dtls.qantity) as tprice from order_detail as dtls where dtls.orid=ord.orid)) as total_price, sum((select sum(dtls1.uprice * dtls1.qantity) as onlineprice from order_detail as dtls1 where dtls1.orid=ord.orid and ord.pay_mathod='Online')) as online_payment, sum((select sum(dtls2.uprice * dtls2.qantity) as COD from order_detail as dtls2 where dtls2.orid=ord.orid and ord.pay_mathod='On Delivery' and ord.order_type=1)) as COD, sum((select sum(dtls3.uprice * dtls3.qantity) as COC from order_detail as dtls3 where dtls3.orid=ord.orid and ord.pay_mathod='On Delivery' and ord.order_type=2)) as COC FROM customer_order as ord where ord.rid=$rids $search_query";
+
+$ref = $db->execQuery($report_query);	
+$record1 = $db->row(); 
+
+$total_cutomer_query = "SELECT ord.customers_id FROM customer_order as ord  WHERE ord.rid='$rids' $search_query group by ord.customers_id";	
+$ref = $db->execQuery($total_cutomer_query);	
+$record2 = $db->resultArray(); 	
+$report = array('total_customers'=>sizeof($record2));
+
+
+$total_delivery_query = "SELECT count(ord.orid) as total_delivery FROM customer_order as ord  WHERE ord.rid='$rids' and ord.order_type=1 $search_query";	
+$ref = $db->execQuery($total_delivery_query);	
+$record3 = $db->row(); 
+
+$report = (array_merge($report, $record1, $record3) ); 
+
+
+$query.=" order by ord.orid desc LIMIT $start, $limit";	
+$result = $db->execQuery($query);
+$arinfo = $db->resultArray($result);
+$noo = sizeof($arinfo);
+?>
+<table width="97%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td></td>
+  </tr>
+  <tr>
+    <td align="right" valign="top">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="92%" height="400" align="right" valign="top"><table width="100%" border="0" align="left" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+        <td background="images/box_02.jpg"><span class="box_title_text">&quot;<? echo $_SESSION[rname];?>&quot; Restaurant Management </span></td>
+        <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/box_04.jpg">&nbsp;</td>
+        <td width="100%" valign="top">   <table width="100%" border="0" cellspacing="1" cellpadding="1"  class="bodytext">
+            <tr>
+              <td>
+<?php require_once("restaurant_top_nav.html");?>
+			  </td>
+            </tr>
+            <tr>
+              <td></td>
+            </tr>
+            <tr>
+              <td width="81%" valign="top" bgcolor="#F0F0F0"><form action="index.php?action=restaurant_account&tabm=rcttb" method="post" name="orderlist" id="orderlist"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+                <tr>
+                  <td height="10"></td>
+                </tr>
+                <tr>
+                  <td><span class="box_title_text">View Orders</span></td>
+                </tr>
+                <tr>
+                  <td height="10"></td>
+                </tr>
+                <tr>
+                  <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td width="25%" align="center" valign="top">
+					  <div style=" width:94%; border:1px dashed #c0c0c0">
+					    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="bodytext" bgcolor="#f8f8f8">
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left">&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td width="6%">&nbsp;</td>
+                            <td width="94%" align="left"><strong>ACCOUNT : </strong>
+                                <?php 
+								$racno=$_SESSION['resid'];
+							 	if(strlen($racno)==1)
+								{
+									$mkzr='00000';
+								}
+								elseif(strlen($racno)==2)
+								{
+									$mkzr='0000';
+								}
+								elseif(strlen($racno)==3)
+								{
+									$mkzr='000';
+								}
+								elseif(strlen($racno)>=4)
+								{
+									$mkzr='00';
+								}
+								elseif(strlen($racno)>=5)
+								{
+									$mkzr='00';
+								}
+								elseif(strlen($racno)>=6)
+								{
+									$mkzr='';
+								}
+								
+								$acc_num =$mkzr.$racno;
+		 
+								echo 'IFO-'.$acc_num ; ?>                            </td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left">&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left"><strong>
+                              <?=$rst_info['rname']?>
+                            </strong></td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left"><?=$rst_info['street']?>
+                              ,
+                              <?=$rst_info['city']?></td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left"><?=$rst_info['zipcode']?></td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left">Tel :
+                              <?=$rst_info['contact']?></td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left">&nbsp;</td>
+                          </tr>
+                        </table>
+					  </div>					  </td>
+                      <td width="22%" align="center" valign="top">
+					  <div style=" width:94%; border:1px dashed #c0c0c0">
+					  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="bodytext" bgcolor="#f8f8f8">
+                        <tr>
+                          <td>&nbsp;</td>
+                          <td align="left">&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td width="5%">&nbsp;</td>
+                          <td width="79%" align="left"><strong>Orders and Customers</strong></td>
+                          <td width="11%" align="right">&nbsp;</td>
+                          <td width="5%" align="right">&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                          <td align="left">&nbsp;</td>
+                          <td align="right">&nbsp;</td>
+                          <td align="right">&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                          <td align="left">Total Orders</td>
+                          <td align="right"><?php echo $report["total_orders"]; ?></td>
+                          <td align="right">&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                          <td align="left">Total Customers</td>
+                          <td align="right"><?php echo $report["total_customers"]; ?></td>
+                          <td align="right">&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                          <td align="left">Total Deliveries</td>
+                          <td align="right"><?php echo $report["total_delivery"]; ?></td>
+                          <td align="right">&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                          <td align="left">Total Collections</td>
+                          <td align="right"><?php echo ($report["total_orders"] - $report["total_delivery"]); ?></td>
+                          <td align="right">&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                          <td align="left">&nbsp;</td>
+                          <td align="right">&nbsp;</td>
+                          <td align="right">&nbsp;</td>
+                        </tr>
+                      </table>
+					  </div>					  
+					  </td>
+					  <td width="30%" align="center" valign="top">
+					  	<div style=" width:94%; border:1px dashed #c0c0c0">
+							<table width="100%" border="0" cellspacing="0" cellpadding="0" class="bodytext" bgcolor="#f8f8f8">
+							  <tr>
+								<td>&nbsp;</td>
+								<td align="left">&nbsp;</td>
+								<td>&nbsp;</td>
+								<td>&nbsp;</td>
+							  </tr>
+							  <tr>
+								<td width="5%">&nbsp;</td>
+								<td width="79%" align="left"><strong>Revenue and Commission</strong></td>
+								<td width="11%" align="right">&nbsp;</td>
+								<td width="5%" align="right">&nbsp;</td>
+							  </tr>
+							  <tr>
+								<td>&nbsp;</td>
+								<td align="left">&nbsp;</td>
+								<td align="right">&nbsp;</td>
+								<td align="right">&nbsp;</td>
+							  </tr>
+							  <tr>
+								<td>&nbsp;</td>
+								<td align="left">Order Total </td>
+								<td align="right">&pound;&nbsp;<?php echo number_format($report["total_price"], 2, '.', ''); ?></td>
+								<td align="right">&nbsp;</td>
+							  </tr>
+							  <tr>
+								<td>&nbsp;</td>
+								<td align="left">Total Com + Vat</td>
+								<td align="right">&pound;&nbsp;<?php $commission = ( ($report["total_price"] * $rst_service["commission"] /100) ); 
+									$vat = ( ($commission * $rst_service["vat"] /100) ); 
+								echo number_format( ($commission + $vat), 2, '.', ''); ?></td>
+								<td align="right">&nbsp;</td>
+							  </tr>
+							  <tr>
+								<td>&nbsp;</td>
+								<td align="left">Total Hand. Fee</td>
+								<td align="right">&pound;&nbsp;<?php echo number_format($report["total_handling_fee"], 2, '.', ''); ?></td>
+								<td align="right">&nbsp;</td>
+							  </tr>
+							  <tr>
+								<td>&nbsp;</td>
+								<td align="left">Total CC Charge</td>
+								<td align="right">&pound;&nbsp;<?php echo number_format($report["total_CC_charge"], 2, '.', ''); ?></td>
+								<td align="right">&nbsp;</td>
+							  </tr>
+							  <tr>
+								<td>&nbsp;</td>
+								<td align="left">&nbsp;</td>
+								<td align="right">&nbsp;</td>
+								<td align="right">&nbsp;</td>
+							  </tr>
+							</table>
+                      </div>
+					  </td>
+                      <td width="23%" align="center" valign="top">
+					  <div style=" width:94%; border:1px dashed #c0c0c0">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="bodytext" bgcolor="#f8f8f8">
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left">&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td width="5%">&nbsp;</td>
+                            <td width="79%" align="left"><strong>Payment Breakdown</strong></td>
+                            <td width="11%" align="right">&nbsp;</td>
+                            <td width="5%" align="right">&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left">&nbsp;</td>
+                            <td align="right">&nbsp;</td>
+                            <td align="right">&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left">Online Payment</td>
+                            <td align="right">&pound;&nbsp;<?php echo number_format($report["online_payment"], 2, '.', ''); ?></td>
+                            <td align="right">&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left">C.O.D</td>
+                            <td align="right">&pound;&nbsp;<?php echo number_format($report["COD"], 2, '.', ''); ?></td>
+                            <td align="right">&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left">C.O.C</td>
+                            <td align="right">&pound;&nbsp;<?php echo number_format($report["COC"], 2, '.', ''); ?></td>
+                            <td align="right">&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left">Order Total</td>
+                            <td align="right">&pound;&nbsp;<?php echo number_format($report["total_price"], 2, '.', ''); ?></td>
+                            <td align="right">&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left">&nbsp;</td>
+                            <td align="right">&nbsp;</td>
+                            <td align="right">&nbsp;</td>
+                          </tr>
+                        </table>
+                      </div></td>
+                    </tr>
+                  </table></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td align="left">
+                      <table width="100%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#f0f0f0" class="bodytext">
+                        <tr>
+                          <td width="1%" class="bodytext">&nbsp;</td>
+                          <?php $d=($_REQUEST["sdate"] !="")?$_REQUEST["sdate"]:date('Y-m-d'); $ed=($_REQUEST["edate"] !="")?$_REQUEST["edate"]:date('Y-m-d'); ?>
+                          <td width="14%" class="bodytext"><strong>Order Filter From:</strong> </td>
+                          <td width="17%"><input name="sdate"  id="sdate" value="<? echo $d ?>" size="12" />
+                            <a href="javascript:void(0)" onClick="if(self.gfPop)gfPop.fPopCalendar(document.orderlist.sdate);return false;" ><img class="PopcalTrigger" align="top" src="calander/calbtn.gif" width="34" height="22" border="0" alt=""  /></a>				 
+							  </td>
+                          <td width="3%"><strong>To</strong></td>
+                          <td width="18%"><input name="edate"  id="edate" value="<? echo $ed ?>" size="12"/>
+                              <a href="javascript:void(0)" onClick="if(self.gfPop)gfPop.fPopCalendar(document.orderlist.edate);return false;" ><img class="PopcalTrigger" align="absmiddle" src="calander/calbtn.gif" width="34" height="22" border="0" alt="" /></td>
+                          <td width="10%"><input type="submit" name="Submit"  class="button_grn"  value="Search" /></td>
+						  <td width="37%">
+						  <input type="hidden" name="noo" id="noo" value="<?=$noo?>">
+						  <input type="submit" name="Submit"  class="button_grn"  value="Create Invoice" onclick="javascript: return checkList();" /></td>                          
+                        </tr>
+                      </table>
+                  </td>
+                </tr>
+                
+                <?php if($message!=""){?>
+                <tr>
+                  <td align="center" class="message"><?php echo $message;?></td>
+                </tr>
+                <?php }?>
+                <tr>
+                  <td><a href="index.php?action=restaurant_account&amp;tabm=rcttb" class="nav"><strong>Show All</strong></a></td>
+                </tr>
+                
+                <tr>
+                  <td><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#DFDFDF" class="bodytext">
+                      
+                      <tr>
+					  	<td width="10" valign="top" bgcolor="#F0F0F0" class="fieldtext" ><input type="checkbox" name="toggle" onclick="javascript: checkAll(<?php echo sizeof($arinfo);?>, 'orids');" value="1" id="toggle"/> </td>
+                        <td width="43" valign="top" bgcolor="#F0F0F0" class="fieldtext" ><strong>SLNo </strong></td>
+                        <td width="50" valign="top" bgcolor="#F0F0F0" class="fieldtext" ><strong>Order No </strong></td>
+                        <td width="45" align="left" valign="top" bgcolor="#F0F0F0" class="fieldtext" ><strong>Date </strong></td>
+                        <td width="54" align="left" valign="top" bgcolor="#F0F0F0" class="fieldtext" ><strong>Time </strong></td>
+                        <td width="112" valign="top" bgcolor="#F0F0F0" class="fieldtext" ><strong>Name </strong></td>
+                        <td width="83" align="left" valign="top" bgcolor="#F0F0F0" class="fieldtext"><strong>Order Type</strong></td>
+                        <td width="94" align="left" valign="top" bgcolor="#F0F0F0" class="fieldtext"><strong>Payment Menthod</strong></td>
+						<td width="86" align="left" valign="top" bgcolor="#F0F0F0" class="fieldtext"><strong>Auth. Code</strong></td>
+                        <td width="72" align="left" valign="top" bgcolor="#F0F0F0" class="fieldtext"><strong>Hand.Fee</strong></td>
+                        <td width="82" align="left" valign="top" bgcolor="#F0F0F0" class="fieldtext"><strong>CC Charges</strong></td>
+                        <td width="86" align="left" valign="top" bgcolor="#F0F0F0" class="fieldtext"><strong>Order Total</strong></td>
+						<td width="86" align="left" valign="top" bgcolor="#F0F0F0" class="fieldtext"><strong>Comission</strong></td>
+						<td width="86" align="left" valign="top" bgcolor="#F0F0F0" class="fieldtext"><strong>VAT On Comm.</strong></td>
+                     </tr>
+            <?php		
+			$thf = 0; $tcc = 0; $tot=0; $total_commission = 0; $total_vat = 0;
+			for ($i = 0; $i < sizeof($arinfo); $i++)
+			{
+			
+				$cuid=$arinfo[$i]['customers_id'];	
+				$sqlc="Select * from customers where customers_id=$cuid";
+				$resultc=mysql_query($sqlc);
+				$rowc=mysql_fetch_array($resultc);
+				
+				$tot +=$arinfo[$i]["tprice"];
+				$tcc +=$arinfo[$i]["ccfee"]; 
+				$thf +=$arinfo[$i]["hnd_fee"]; 
+				$commission = ($arinfo[$i]["tprice"] * ($rst_service["commission"]/100) );
+				$total_commission += $commission; 
+				
+				$vat = ($commission * ($rst_service["vat"]/100) );
+				$total_vat += $vat; 
+				
+				$invoice_qurey = "SELECT * FROM accounts_invoice WHERE orders LIKE '%%".$arinfo[$i]["orid"]."%'";
+				
+				$check_invoice = $db->checkExists($invoice_qurey); 
+				
+		?>
+                      <tr <?php if($check_invoice){ $bgcolor="#FFFFCC"; ?>bgcolor="#FFFFCC" <?php }else{$bgcolor="#FFFFFF";} ?> >
+					  	<td><input type="checkbox" <?php if($check_invoice){ ?> disabled="disabled" <?php } ?> onclick="javascript: isChecked(this.checked);" name="orids[<?php echo $i;?>]" value="<?php echo $arinfo[$i]["orid"];?>" id="orids<?php echo $i;?>"/></td>
+                        <td width="43" align="right" valign="top" bgcolor="<?php echo $bgcolor;?>"><?php $sln=10000; echo $sln+$i+1; ?></td>
+                        <td width="50" align="right" valign="top" bgcolor="<?php echo $bgcolor;?>"><a href="index.php?action=orderdetails&tabm=rcttb&orid=<? echo $arinfo[$i]["orid"]; ?>" class="nav6"><?php $ono=$arinfo[$i]["orid"]; $len=strlen($ono); if($len==1) echo "00000".$ono; elseif($len==2) echo "0000".$ono;elseif($len==3) echo "000".$ono; elseif($len==4) echo "00".$ono; elseif($len==5) echo "0".$ono; ?></a></td>
+                        <td width="45" align="right" valign="top" bgcolor="<?php echo $bgcolor;?>"><?php list($date, $time) = split('[ ]',$arinfo[$i]["ordate"]); list($year, $month, $day) = split('[-]',$date); echo $day."/".$month."/".$year; ?></td>
+                        <td width="54" align="right" valign="top" bgcolor="<?php echo $bgcolor;?>"><?php echo $time; ?></td>
+                        <td width="112" valign="top" bgcolor="<?php echo $bgcolor;?>"><a href="index.php?action=orderdetails&tabm=rcttb&orid=<? echo $arinfo[$i]["orid"]; ?>" class="nav6"><?php echo $rowc["customers_firstname"]; ?> <?php echo $rowc["customers_lastname"]; ?></a></td>
+                        <td align="left" valign="top" bgcolor="<?php echo $bgcolor;?>"><?php if($arinfo[$i]["order_type"]==1) echo "Delivery"; else echo "Collection"; ?></td>
+                        <td align="left" valign="top" bgcolor="<?php echo $bgcolor;?>"><?php if($arinfo[$i]["pay_mathod"] == "On Delivery"){echo "C.O.D";}elseif($arinfo[$i]["pay_mathod"] == "Online"){ echo "Online";}else{echo "C.O.C";} ?></td>
+						<td align="left" valign="top" bgcolor="#FFFFFF"><?php echo ($arinfo[$i]["author_code"] !="")?$arinfo[$i]["author_code"]:( ($arinfo[$i]["pay_mathod"] == "Online")?"Pending":"Manual" ); ?></td>
+                       
+                        <td align="right" valign="top" bgcolor="<?php echo $bgcolor;?>">&pound;&nbsp;<?php echo number_format($arinfo[$i]["hnd_fee"], 2, '.', '');?></td>
+                        <td align="right" valign="top" bgcolor="<?php echo $bgcolor;?>">&pound;&nbsp;<?php echo number_format($arinfo[$i]["ccfee"], 2, '.', '');?></td>
+						<td align="right" valign="top" bgcolor="<?php echo $bgcolor;?>">&pound;&nbsp;<?php echo number_format($arinfo[$i]["tprice"], 2, '.', '');?></td>
+						<td align="right" valign="top" bgcolor="<?php echo $bgcolor;?>">&pound;&nbsp;<?php echo number_format( $commission, 2, '.', '');?></td>
+						<td align="right" valign="top" bgcolor="<?php echo $bgcolor;?>">&pound;&nbsp;<?php echo number_format( $vat, 2, '.', '');?></td>
+                      </tr>
+                  <?php } ?>
+                      <tr >
+                        <td colspan="8" align="right" valign="top" bgcolor="#FFFFFF">&nbsp;</td>
+                        <td align="right" valign="top" bgcolor="#F0F0F0"><strong>G.Total : </strong></td>
+                        <td align="right" valign="top" bgcolor="#F0F0F0"><strong>&pound;&nbsp;<?php echo number_format($thf, 2, '.', '');?></strong></td>
+                        <td align="right" valign="top" bgcolor="#F0F0F0"><strong>&pound;&nbsp;<?php echo number_format($tcc, 2, '.', '');?></strong></td>
+                        <td align="right" valign="top" bgcolor="#F0F0F0"><strong>&pound;&nbsp;<?php echo number_format($tot, 2, '.', '');?></strong></td>
+                        <td align="right" valign="top" bgcolor="#F0F0F0"><strong>&pound;&nbsp;<?php echo number_format( $total_commission, 2, '.', '');?></strong></td>
+						<td align="right" valign="top" bgcolor="#F0F0F0"><strong>&pound;&nbsp;<?php echo number_format( $total_vat, 2, '.', '');?></strong></td>
+                      </tr>
+	
+                  </table></td>
+                </tr>
+                                        
+                <tr>
+                  <td align="right">&nbsp;<input type="hidden" name="boxchecked" id="boxchecked" /><input type="hidden" name="" value="" /><?php echo $pagination;?> </td>
+                </tr>
+  				<tr>
+                  <td>&nbsp;</td>
+                </tr>       
+              </table>    </form>            
+			  </td>
+            </tr>
+            
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+        </table></td>
+        <td background="images/box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+        <td background="images/box_08.jpg">&nbsp;</td>
+        <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+      </tr><iframe width=174 height=189 name="gToday:normal:agenda.js" id="gToday:normal:agenda.js" src="calander/ipopeng.htm" scrolling="no" frameborder="0" style="visibility:visible; z-index:999; position:absolute; top:-500px; left:-500px;"></iframe>
+    </table></td>
+  </tr>
+</table>

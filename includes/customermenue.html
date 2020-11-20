@@ -1,0 +1,21 @@
+
+<table width="100%" border="0" cellspacing="2" cellpadding="2" class="bodytext">
+  <tr>
+    <td align="left" colspan="3" class="timetitle"><strong>Welcome <?php echo $_SESSION['customers_firstname'];?>&nbsp;<?php echo $_SESSION['customers_lastname'];?></strong></td>
+   
+    <td width="21%" align="right" class="timetitle">&nbsp;</td>
+    <td width="15%" align="right" class="timetitle">&nbsp;</td>
+    <td width="11%" align="right" class="timetitle">&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="center"><a href="index-action-customeraccounthome" class="nav"><strong> Account Home </strong></a></td>
+    <td align="center"><a href="index-action-customer_edit" class="nav"><strong>My Account</strong></a></td>
+    <td align="center"><a href="index-action-my_orderlist" class="nav"><strong>My Order </strong></a> </td>
+    <td align="center"><?PHP if($_SESSION['arival_date']!=""){?>
+    <a href="index-action-current_reservetion" class="nav"><strong>Current Reservation </strong></a> </td>
+    <td align="center"><?php }?>
+    <a href="index-action-mycart" class="nav"><strong>Cart Contents</strong></a></td>
+    <td align="center">&nbsp;<a href="index-action-customerlogout" class="nav"><strong>Log Out</strong></a></td>
+  </tr>
+</table>
+

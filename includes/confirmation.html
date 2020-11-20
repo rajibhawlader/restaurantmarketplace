@@ -1,0 +1,158 @@
+<table align="center" width="90%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="center"><table width="99%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+        <td background="images/box_02.jpg"><span class="box_title_text">Payment Information </span></td>
+        <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/box_04.jpg">&nbsp;</td>
+        <td width="100%" valign="top"><table width="100%" border="0" align="center" cellpadding="2" cellspacing="1" class="bodytext">
+          
+          <tr>
+            <td align="right" >&nbsp;</td>
+          </tr>
+          
+          <tr>
+            <td align="center" valign="top"><table width="100%" border="0" cellspacing="2" cellpadding="2">
+              <tr>
+                <td colspan="2" valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0" class="bodytext">
+
+                    <tr>
+                      <td width="3%" >&nbsp;</td>
+                      <td width="95%" valign="top" align="center" bgcolor="#F0F0F0"><table width="100%" border="0" cellpadding="1" cellspacing="1" bgcolor="#FFFFFF" class="bodytext">
+                        <tr>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                          <td colspan="2" align="center">
+						  <div style="font-size:15; font-weight:bold; text-align:center;"><div style=" margin:0px auto; color:#aa0f0f;width:32px; height:20px; padding:6px 0px; background-image: url(images/bigrotation2.gif);" id="timer"></div></div>
+						  <b style="color:#000000">Wait until it will take you on pay pal payment mode. <br /> 
+						  	
+                                  <br />
+                              </b></td>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                          <td colspan="2">
+						  <form action="https://www.paypal.com/cgi-bin/webscr" method="post" name="psubmit"> 
+							<!-- Identify your business so that you can collect the payments. --> 
+				<input type="hidden" name="business" value="paypal@indianfoodsonline.co.uk"> 
+<!-- Specify a Buy Now button. --> 
+<input type="hidden" name="cmd" value="_cart"> 
+<input type="hidden" name="upload" value="1">
+<?php
+ $query = "SELECT * FROM customer_order where orid='$mlord'";
+											
+						$result = $db->execQuery($query);
+						$arinfo = $db->resultArray($result);
+							$cuid=$arinfo[0]["customers_id"];	
+				$sqlc="Select * from customers where customers_id ='$cuid'";
+				$resultc=mysql_query($sqlc);
+				$rowc=mysql_fetch_array($resultc);
+				
+$sqlproduc="select * from order_detail where orid='$mlord'";
+		$resultod = $db->execQuery($sqlproduc);
+						$arinfood = $db->resultArray($resultod);
+						$ste=sizeof($arinfood);
+for ($i = 0; $i < $ste; $i++)
+						{
+$pids=$arinfood[$i]["product_id"];
+						$sqlpn="Select * from product where product_id ='$pids'";
+						$resultpn=mysql_query($sqlpn);
+						$rowpn=mysql_fetch_array($resultpn);
+						
+?>
+
+<input type="hidden" name="item_name_<?php echo $i+1;?>" value="<?php echo $rowpn["product_title"]; ?>"> 
+<input type="hidden" name="amount_<?php echo $i+1;?>" value="<?php echo number_format( $arinfood[$i]["uprice"], 2, '.', '');?>"> 
+<input type="hidden" name="quantity_<?php echo $i+1;?>" value="<?php echo $arinfood[$i]["qantity"];?>"> 
+
+<?}?>
+
+<input type="hidden" name="item_name_<?php echo $i+1;?>" value="Credit Card Fee"> 
+<input type="hidden" name="amount_<?php echo $i+1;?>" value="<?php echo number_format( $arinfo[0]["ccfee"], 2, '.', '');?>"> 
+<input type="hidden" name="quantity_<?php echo $i+1;?>" value="1"> 
+
+<?php
+if ($arinfo[0]["order_type"]=="1")
+{ 
+?>
+<input type="hidden" name="item_name_<?php echo $i+2;?>" value="Delivery Cost"> 
+<input type="hidden" name="amount_<?php echo $i+2;?>" value="<?php echo number_format( $arinfo[0]["del_cost"], 2, '.', '');?>"> 
+<input type="hidden" name="quantity_<?php echo $i+2;?>" value="1"> 
+<?php } ?>
+
+<input type="hidden" name="custom" value="<?php echo $mlord;?>"> 
+<!--<input type="hidden" name="tax_cart" value="<?php echo $arinfo[0]["vat"]; ?>"> -->
+<input type="hidden" name="handling_cart" value="<?php echo $arinfo[0]["hnd_fee"]; ?>"> 
+
+<input type="hidden" name="email" value="<?php echo $rowc["customers_email_address"]; ?>"> 
+<input type="hidden" name="first_name" value="<?php echo $rowc["customers_firstname"]; ?>"> 
+<input type="hidden" name="last_name" value="<?php echo $rowc["customers_lastname"]; ?>"> 
+<input type="hidden" name="address1" value="<?php echo $rowc["customers_address1"]; ?>"> 
+<input type="hidden" name="city" value="<?php echo $rowc["customers_town"]; ?>"> 
+<input type="hidden" name="state" value="<?php echo $rowc["customers_state"]; ?>"> 
+<input type="hidden" name="zip" value="<?php echo $rowc["customers_postcode"]; ?>"> 
+<input type="hidden" name="country" value="GB"> 
+<input type="hidden" name="currency_code" value="GBP"> 
+<!--<input type="hidden" name="notify_url" value="http://www.indianfoodsonline.co.uk/thank_you.php" /> -->
+
+ <input type="hidden" name="image_url" value="http://www.indianfoodsonline.co.uk/images/paypal_title.jpg"> 
+					  <input type="hidden" name="no_shipping" value="1" />
+					  <input type="hidden" name="return" value="http://www.indianfoodsonline.co.uk/thank_you.php" />
+				<input type="hidden" name="cancel_return" value="http://www.indianfoodsonline.co.uk/index-action-cancel_paypal" />
+						  </form></td>
+                          <td>&nbsp;</td>
+                        </tr>
+                      </table></td>
+                      <td width="2%" >&nbsp;</td>
+                    </tr>
+                  <tr>
+                    <td >&nbsp;</td>
+                      <td valign="top">&nbsp;</td>
+                      <td >&nbsp;</td>
+                    </tr>
+                  
+                                </table></td>
+                </tr>
+              <tr>
+                <td width="51%">&nbsp;</td>
+                <td width="49%">&nbsp;</td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></td>
+        <td background="images/box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+        <td background="images/box_08.jpg">&nbsp;</td>
+        <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+ 
+</table>
+<script language="javascript">
+var i=1;
+function writeTime(){
+	document.getElementById("timer").innerHTML = i;
+	i++;
+	setTimeout('writeTime();', 1000);
+}
+writeTime();	
+setTimeout('document.psubmit.submit();', 1000);
+</script>

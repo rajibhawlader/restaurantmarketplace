@@ -1,0 +1,54 @@
+<table width="100%" border="0" align="left" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><img src="images/black_box1_01.jpg" width="15" height="39" alt="" /></td>
+    <td width="50%" background="images/black_box1_02.jpg" class="heading"  align="left">Account Home </td>
+    <td width="50%" background="images/black_box1_02.jpg" class="heading" align="right"><a href="index-action-customerlogout" class="nav5"><strong>Log out</strong></a></td>
+    <td><img src="images/black_box1_03.jpg" width="14" height="39" alt="" /></td>
+  </tr>
+  <tr>
+    <td background="images/black_box1_04.jpg">&nbsp;</td>
+    <td colspan="2" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td valign="top" bgcolor="#323232">
+		<table width="100%" cellpadding="2" cellspacing="1" border="0">
+          <tr>
+            <td class="box_sub_title_text"  align="left">Welcome, <?php echo $_SESSION['customers_firstname'];?>&nbsp;<?php echo $_SESSION['customers_lastname'];?></td>
+            <td class="box_sub_title_text" align="left">&nbsp;</td>
+            <td align="right" class="box_sub_title_text" align="left">&nbsp;</td>
+          </tr>
+          <tr class="box_menu_title_text">
+            <td width="34%" class="message" align="left"><strong>My account</strong></td>
+            <td width="31%" class="message" align="left"><strong>Orders information</strong></td>
+            <td width="35%" class="message" align="left"><strong>Useful links</strong></td>
+          </tr>
+          <tr>
+            <td align="left"><a href="index-action-customer_edit" class="nav5">Edit account details</a></td>
+            <td align="left"><a href="index-action-my_orderlist" class="nav5">Orders</a></td>
+            <td align="left"><a href="index-action-tell_your_friends" class="nav5">Tell a friend about indian foods </a></td>
+          </tr>
+          <tr>
+            <td align="left"><a href="index-action-address_book" class="nav5">My address book</a></td>
+            <td align="left"><a href="index-action-mycart" class="nav5">Saved cart</a></td>
+            <td align="left"><a href="#" class="nav5">My Favourites</a></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><?PHP if($_SESSION['arival_date']!=""){?>
+                    <a href="index-action-current_reservetion" class="nav5" align="left">Current reservation</a>
+                    <?php }?>            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td height="10" colspan="3"></td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+    <td background="images/black_box1_06.jpg">&nbsp;</td>
+  </tr>
+  <tr>
+    <td><img src="images/black_box1_07.jpg" width="15" height="17" alt="" /></td>
+    <td colspan="2" background="images/black_box1_08.jpg"></td>
+    <td><img src="images/black_box1_09.jpg" width="14" height="17" alt="" /></td>
+  </tr>
+</table>

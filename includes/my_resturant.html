@@ -1,0 +1,217 @@
+<script language="javascript"> 
+function IsNumeric(sText)
+{
+   var ValidChars = "0123456789";
+   var IsNumber=true;
+   var Char;
+
+ 
+   for (i = 0; i < sText.length && IsNumber == true; i++) 
+      { 
+      Char = sText.charAt(i); 
+      if (ValidChars.indexOf(Char) == -1) 
+         {
+         IsNumber = false;
+         }
+      }
+   return IsNumber;
+   
+   }
+function validation()
+{
+
+  if (document.edit.rname.value == "" )
+  {
+    alert("Resturant Name is a required field.");
+    document.edit.rname.focus();
+    return false;
+  }
+  
+   if (document.edit.street.value == "" )
+  {
+    alert("Street Name is a required field.");
+    document.edit.street.focus();
+    return false;
+  }
+  
+ 
+  
+  if (document.edit.zipcode.value == "" )
+  {
+    alert("ZIP Code is a required field.");
+    document.edit.zipcode.focus();
+    return false;
+  }
+  
+  
+  
+  
+
+ 
+  return true;
+  
+}
+</script>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="center"><table width="99%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+        <td background="images/box_02.jpg"><span class="box_title_text">Account owner/holder Inside </span></td>
+        <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/box_04.jpg">&nbsp;</td>
+        <td width="100%" valign="top"><table width="90%" border="0" align="center" cellpadding="2" cellspacing="1" class="bodytext">
+          <tr>
+            <td height="20">&nbsp;</td>
+          </tr>
+          <tr>
+            <td><strong>My  Resturant </strong></td>
+          </tr>
+          <?Php 
+									$uids=$_SESSION['userid'];
+		
+									$resquery="Select * from resturant where userid='$uids'";
+									
+									$resultres=mysql_query($resquery);
+									$rowres=mysql_fetch_array($resultres);
+									?>
+          <tr>
+            <td align="center" class="message"><?PHP echo $message;
+									  
+									  ?></td>
+          </tr>
+          <tr>
+            <td align="center"><form action="index-action-update_my_resturant-id-<?php echo $rowres["rid"]; ?>" method="post" enctype="multipart/form-data" name="edit" id="edit" onsubmit="return validation(this)">
+              <table width="90%" border="0" cellspacing="2" cellpadding="2"  class="bodytext">
+                <tr>
+                  <td width="31%" align="right"><strong>Resturant  Name: </strong></td>
+                  <td colspan="2" align="left"><input name="rname" type="text" class="textbox_wht" id="rname" value="<?php echo $rowres["rname"]; ?>" size="35" /></td>
+                </tr>
+                <tr>
+                  <td align="right"><strong>Area: </strong></td>
+                  <td colspan="2" align="left"><select name="area_id" id="area_id" class="textbox_wht">
+                    <?php
+		
+			$queryar = "SELECT * FROM area where status='1'";
+	$resultar =mysql_query($queryar);
+	while($arofferinfoar = mysql_fetch_assoc($resultar)){
+		
+		?>
+                    <option value="<? echo $arofferinfoar["id"]; ?>" <? if($rowres["area_id"]==$arofferinfoar["id"]){?>selected="selected"<?}?> ><? echo $arofferinfoar["name"]; ?></option>
+                    <?
+						}
+						?>
+                  </select></td>
+                </tr>
+                <tr>
+                  <td align="right"><strong>Restaurant Type: </strong></td>
+                  <td colspan="2" align="left"><select name="chinise_id" id="chinise_id" class="textbox_wht">
+                    <?php
+		
+			$querych = "SELECT * FROM cusin where status='1'";
+	$resultch =mysql_query($querych);
+	while($arofferinfoch = mysql_fetch_assoc($resultch)){
+		
+		?>
+                    <option value="<? echo $arofferinfoch["id"]; ?>" <? if($rowres["chinise_id"]==$arofferinfoch["id"]){?>selected="selected"<?}?> ><? echo $arofferinfoch["name"]; ?></option>
+                    <?
+						}
+						?>
+                  </select></td>
+                </tr>
+                <tr>
+                  <td align="right"><strong>Street: </strong></td>
+                  <td colspan="2" align="left"><input name="street" type="text" class="textbox_wht" id="street" value="<?php echo $rowres["street"]; ?>" /></td>
+                </tr>
+                <tr>
+                  <td align="right"><strong>Town: </strong></td>
+                  <td colspan="2" align="left"><input name="city" type="text" class="textbox_wht" id="city" value="<?php echo $rowres["city"]; ?>" /></td>
+                </tr>
+                <tr>
+                  <td align="right"><strong>Post Code: </strong></td>
+                  <td colspan="2" align="left"><input name="zipcode" type="text" class="textbox_wht" id="zipcode" value="<?php echo $rowres["zipcode"]; ?>" /></td>
+                </tr>
+                <tr>
+                  <td align="right"><strong>Country: </strong></td>
+                  <td colspan="2" align="left"><select name="country_id" id="country_id" class="textbox_wht">
+                    <?php
+		
+			$queryril = "SELECT * FROM countries";
+	$resultril =mysql_query($queryril);
+	while($arofferinforil = mysql_fetch_assoc($resultril)){
+		
+		?>
+                    <option value="<? echo $arofferinforil["countryName"]; ?>" <? if ($rowres["country_id"]==$arofferinforil["countryName"]){?> selected="selected"<? }?> ><? echo $arofferinforil["countryName"]; ?></option>
+                    <?
+						}
+						?>
+                  </select></td>
+                </tr>
+                <tr>
+                  <td align="right"><strong>Main Telephone no: </strong></td>
+                  <td colspan="2" align="left"><input name="contact" type="text" class="textbox_wht" id="contact" value="<?php echo $rowres["contact"]; ?>" size="35" /></td>
+                </tr>
+                <tr>
+                  <td align="right"><strong>Telephone no 2: </strong></td>
+                  <td colspan="2" align="left"><input name="contact2" type="text" class="textbox_wht" id="contact2" tabindex="15" value="<? echo $rowres["contact2"]; ?>" /></td>
+                </tr>
+                <tr>
+                  <td align="right"><strong>Telephone no 3: </strong></td>
+                  <td colspan="2" align="left"><input name="contact3" type="text" class="textbox_wht" id="contact3" tabindex="15" value="<? echo $rowres["contact3"]; ?>" /></td>
+                </tr>
+                <tr>
+                  <td align="right"><strong>Telephone no no 4: </strong></td>
+                  <td colspan="2" align="left"><input name="contact4" type="text" class="textbox_wht" id="contact4" tabindex="15" value="<? echo $rowres["contact4"]; ?>" /></td>
+                </tr>
+                <tr>
+                  <td align="right"><strong>Web: </strong>http://</td>
+                  <td colspan="2" align="left"><input name="web" type="text" class="textbox_wht" id="web" value="<?php echo $rowres["web"]; ?>" /></td>
+                </tr>
+                <tr>
+                  <td align="right" valign="top"><strong>Logo upload : </strong></td>
+                  <td width="31%" align="left" valign="top"><input name="c_img" type="file" class="textbox" id="c_img"/>            </td>
+                  <td width="38%" align="left" valign="top"><img src="<?php echo $rowres["logo"]; ?>"/></td>
+                </tr>
+                <tr>
+                  <td align="right" valign="top"><strong>Company Description : </strong></td>
+                  <td colspan="2" align="left"><textarea name="rdesc" cols="35" rows="5" class="textbox_wht" id="rdesc"><?php echo strip_tags(html_entity_decode($rowres["rdesc"])); ?></textarea></td>
+                </tr>
+                <tr>
+                  <td align="right" valign="top"><strong>Mission/Slogan/Short view : </strong></td>
+                  <td colspan="2" align="left"><textarea name="keytitle" cols="35" rows="3" class="textbox_wht" id="keytitle"><?php echo strip_tags(html_entity_decode($rowres["keytitle"])); ?></textarea></td>
+                </tr>
+                <tr>
+                  <td align="right" valign="top">&nbsp;</td>
+                  <td colspan="2" align="left"><input type="submit" name="Submit" value="Update" /></td>
+                </tr>
+              </table>
+            </form></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td valign="top">&nbsp;</td>
+          </tr>
+        </table></td>
+        <td background="images/box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+        <td background="images/box_08.jpg">&nbsp;</td>
+        <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>

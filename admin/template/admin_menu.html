@@ -1,0 +1,392 @@
+<?
+$_SESSION['adminmenupath']="http://" . $_SERVER['HTTP_HOST']  . $_SERVER['REQUEST_URI'];
+
+?>
+<script language="javascript" type="text/javascript">
+
+
+function changeOrder(newNo,oldNo)
+{
+
+	document.frmpos.oldOrderNo.value=oldNo;
+	document.frmpos.newOrderNo.value=newNo;
+	
+	document.frmpos.submit();
+}
+	
+</script>
+<script language="javascript"> 
+
+  
+function validation()
+{
+
+  if (document.edit.categories_name.value == "" )
+  {
+    alert("Category Title is a required field.");
+    document.edit.categories_name.focus();
+    return false;
+  }
+  
+ 
+  return true;
+  
+}
+</script>
+<script type="text/JavaScript">
+<!--
+
+
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+//-->
+</script>
+<script type="text/JavaScript">
+<!--
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+//-->
+</script>
+<body onLoad="MM_preloadImages('images/paging_over_01.gif','images/paging_over_03.gif')">
+
+  
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="8%" height="400" valign="top">&nbsp;</td>
+    <td width="92%" align="left" valign="top"><table width="96%" border="0" align="left" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+        <td background="images/box_02.jpg"><span class="box_title_text">&quot;<? echo $_SESSION[rname];?>&quot; Restaurant Management </span></td>
+        <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/box_04.jpg">&nbsp;</td>
+        <td width="100%" valign="top">
+		<table width="100%" border="0" cellspacing="1" cellpadding="1"  class="bodytext">
+	
+	<TR>
+		<TD colspan="3"><table width="94%" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr>
+<td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+  <td>&nbsp;</td>
+  <td width="30%" valign="top"><strong><< <a class="nav4" href="index.php?action=resturant_menu&rid=<?php echo $_SESSION[resid];?>&tabm=rcttb">Restaurant Management Home</a></strong>&nbsp;</td>
+              </tr>
+</table></td>
+          </tr>
+<tr>
+<td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="197" valign="top"><table width="197" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td><img src="images_menu/red_box_01.jpg" width="15" height="39" alt="" /></td>
+  <td width="100%" background="images_menu/red_box_02.jpg" class="message1" abbr="left"><strong>CATEGORIES</strong></td>
+                    <td><img src="images_menu/red_box_03.jpg" width="14" height="39" alt="" /></td>
+                  </tr>
+<tr>
+<td background="images_menu/red_box_04.jpg"></td>
+                    <td><table width="100%" border="0" cellpadding="0" cellspacing="0" class="bodytext">
+<tr>
+  <td><div align="justify">    Skip to your favourite section by clicking on a menu category:
+    <br>
+          <a href="#" class="nav3"></a>
+  </div></td>
+</tr>
+<tr>
+  <td><div align="right"><img src="images_menu/plus1.png" alt="plus" width="15" height="17" onClick="window.open('index.php?action=add_cetegory&tabm=rcttb','popup','width=500,height=210,left=350,top=200')"></div></td>
+
+</tr>
+<tr>
+  <td class="bdr1">&nbsp;</td>
+</tr>
+ <?php
+
+				$rids=$_SESSION['resid'];
+	  //$query = "SELECT * FROM categories where rid='$rids' order by sort_order asc";
+	 
+	 //$result = $db->execQuery($query);
+    //$arinfo = $db->resultArray($result);
+	
+	 $querylic = "SELECT * FROM categories where parent_id='0' and rid='$rids' order by sort_order";
+	//$resultlic =@mysql_query($querylic);
+	$result = $db->execQuery($querylic);
+	 //$result = $db->execQuery($query);
+    $arofferinfolic = $db->resultArray($result);
+	
+	?>
+                      
+
+<tr>
+  <td>
+  
+  <form action="index.php?action=change_menu_order&tabm=rcttb" method="post" name="frmpos" >
+	<input type="hidden" name="oldOrderNo" value="" />
+	<input type="hidden" name="newOrderNo" value="" />
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <?php 
+  //$r=mysql_fetch_assoc($resultlic);
+  //echo count($r);
+  //while($arofferinfolic = @mysql_fetch_assoc($resultlic)){
+	
+for ($i = 0; $i < count($arofferinfolic); $i++)
+		{
+	 
+	
+	
+	?>
+    <tr>
+      <td><a href="#" class="nav3"><?=$arofferinfolic[$i]['categories_name'];?>
+      </a></td>
+	  
+	   <td align="left" valign="top" bgcolor="#FFFFFF">
+<span class="bodytext">
+	   <?
+	    
+		//for ($i = 0; $i < $ste; $i++)
+		//{
+	   ?>
+	  <select  name="selectpos" id="selectpos" onChange="changeOrder(this.value,<?php echo $arofferinfolic[$i]['sort_order']; ?>);" >
+          <?php
+			for ($j = 0; $j < sizeof($arofferinfolic); $j++) 
+			{?>
+	          <option value="<?php echo $j+1;?>" <?php if($arofferinfolic[$i]["sort_order"]==$j+1) echo 'selected';?>><?php echo $j+1;?></option>
+      <?php } ?>
+     </select>
+        </span>
+		</td>
+		
+		                          <td bgcolor="#FFFFFF">
+<a style="text-decoration:none;" href="index.php?action=menu_cetegory&tabm=rcttb&catid=<?php echo $arofferinfolic[$i]["categories_id"]; ?>&tabm=rcttb" class="nav">
+</a> 
+
+<img src="images/b_edit.png" width="15" height="17" onClick="window.open('index.php?action=edit_cetegory&catid=<?php echo $arofferinfolic[$i]["categories_id"]; ?>&tabm=rcttb','popup','width=500,height=210,left=350,top=200')">
+
+
+
+<a href="index.php?action=cat_del&catid=<?php echo $arofferinfolic[$i]["categories_id"];?>&tabm=rcttb" class="nav"onclick="return confirm('Are you sure you want to delete this?');"><img src="images/b_drop.png" width="15" height="17" border="0"></a> 
+	                        </td>
+  
+		
+		</form>
+    </tr>
+      
+                            <?
+  
+                            }
+  			//}
+			
+							
+							?>
+    
+  </table></td>
+</tr>
+  
+                      
+                    </table></td>
+                    <td background="images_menu/red_box_06.jpg"></td>
+                  </tr>
+                  <tr>
+                    <td><img src="images_menu/red_box_07.jpg" width="15" height="17" alt="" /></td>
+                    <td background="images_menu/red_box_08.jpg"></td>
+                    <td><img src="images_menu/red_box_09.jpg" width="14" height="17" alt="" /></td>
+                  </tr>
+                </table></td>
+                <td width="589" valign="top"><table width="700" border="0" align="center" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td><img src="images_menu/red_box_01.jpg" width="15" height="39" alt="" /></td>
+                    <td width="100%" background="images_menu/red_box_02.jpg" class="message1"><strong>MENU</strong></td>
+                    <td><img src="images_menu/red_box_03.jpg" width="14" height="39" alt="" /></td>
+                  </tr>
+                  <tr>
+                    <td background="images_menu/red_box_04.jpg">&nbsp;</td>
+                    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td><table width="100%" border="0" cellpadding="0" cellspacing="0" class="bodytext">
+							<?php 
+							
+				$result_detail =@mysql_query($querylic);
+
+					 while($row = @mysql_fetch_assoc($result_detail)){
+
+						?>
+                          <tr>
+                            <td class="text_red" ><?=$row['categories_name'];?>&nbsp;&nbsp;
+							<img src="images_menu/plus1.png" alt="plus" width="15" height="17" onClick="window.open('index.php?action=addfooditem&tabm=rcttb&cid=<?=$row['categories_id'];?>','popup','width=500,height=350,left=350,top=200')"></td>
+                          </tr>
+                          <tr>
+                            <td ><div>
+                                <div align="justify"><br>
+                                    <strong>Description:</strong><?=$row['short_desc'];?>.</div>
+                            </div></td>
+                          </tr>
+						  					  
+                          <tr>
+                            <td><table width="100%" border="0" cellpadding="4" cellspacing="1" class="bodytext">
+                                <tr>
+                                  <td width="12%"><h6>&nbsp;</h6></td>
+                                  <td width="34%"><h6>&nbsp;</h6></td>
+                                  <td width="30%" class="nrmlink_black">&nbsp;</td>
+
+                                </tr>
+                            </table></td>
+                          </tr>
+                          <tr>
+                            <td>
+							<?php 
+						$catidget=$row['categories_id'];
+						
+					
+	$query_prod = "SELECT product.*, if(product.product_number<=0, 9999, product.product_number) AS ord	FROM `product`
+						Inner Join `categories` ON `product`.`categories_id` = `categories`.`categories_id`
+						WHERE
+						`product`.`categories_id`=$catidget AND
+						`categories`.`rid` =  $rids AND `product`.`parent_id` =0  ORDER BY ord ASC";
+						
+							$resultl_prod =@mysql_query($query_prod);
+							 while($arofprodinfo = @mysql_fetch_assoc($resultl_prod)){
+				// print_r($arofprodinfo);
+
+							$selprodid=$arofprodinfo['product_id'];
+					     	$query_select_prod = "SELECT `product`.* FROM `product`	WHERE `product`.`parent_id` =$selprodid";
+														
+							$resultl_select_prod =@mysql_query($query_select_prod);
+							// while($arofprodselectinfo = @mysql_fetch_assoc($resultl_select_prod))
+							// {
+							 	//print_r($arofprodselectinfo);
+							 //}	 
+							?>
+							<table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#F2F0F1" class="bdr2">
+                                <tr>
+                              <td width="20$" rowspan="2" class="nrmlink_black"><?=$arofprodinfo['product_number'];?>.</td>
+                              <td width="40%" rowspan="2" class="text_red_sml"><?=$arofprodinfo['product_title'];?><font size="-1.5" ></br> <?=$arofprodinfo['product_desc'];?></font>	</td><td width="100"> <img src="images_menu/plus1.png" alt="plus" width="15" height="17" onClick="window.open('index.php?action=addselectionfooditem&tabm=rcttb&cid=<?=$row['categories_id'];?>&prodid=<?=$arofprodinfo['product_id'];?>','popup','width=500,height=320,left=350,top=200')">
+							  <!-- New Start -->
+
+						
+<img src="images/b_edit.png" width="15" height="17" onClick="window.open('index.php?action=food_item_edit&amp;product_id=<?php echo $arofprodinfo['product_id'] ?>&tabm=rcttb','popup','width=500,height=480,left=350,top=200')">
+
+ <a href="index.php?action=product_remove&amp;product_id=<?php echo $arofprodinfo['product_id'] ?>&tabm=rcttb" class="nav"onclick="return confirm('Are you sure you want to delete this?');"><img src="images/b_drop.png" width="15" height="17" border="0"></a></td>
+							  <td width="40%" align="center">
+						  <!-- New End -->
+							<? 
+							while($arofprodselectinfo = @mysql_fetch_assoc($resultl_select_prod))
+							{
+								if(!empty($arofprodselectinfo))
+								{
+							?>
+								<table  border="0" width="100%"><tr>	
+						 		 <td width="1%"><img src="../images/arrow-point.png">
+								 <td width="35%"><?=$arofprodselectinfo['product_title'];?><font size="-1"></br> <?=$arofprodselectinfo['product_desc'];?></font>	</td>
+                           		<td width="40%"  align="justify">&nbsp;&nbsp;&nbsp;&nbsp;&pound;<?=number_format($arofprodselectinfo['price'], 2, '.', '');?> </td>
+								<td width="20%"><img src="images/b_edit.png" width="15" height="17" onClick="window.open('index.php?action=selection_food_item_edit&amp;product_id=<?php echo $arofprodselectinfo['product_id']?>&parent_product_id=<?php echo $arofprodinfo['product_id'] ?>&cid=<?=$row['categories_id'];?>&tabm=rcttb','popup','width=600,height=480,left=350,top=200')">
+						
+						 <a href="index.php?action=product_remove&amp;product_id=<?php echo $arofprodselectinfo['product_id'] ?>&tabm=rcttb" class="nav"onclick="return confirm('Are you sure you want to delete this?');"><img src="images/b_drop.png" width="15" height="17" border="0"></a></td>
+							  </tr></table>
+                               	
+                             <? }
+								 }
+                             	//else
+                             //	{
+                             ?>
+							 <? if($arofprodinfo['price']!=0) echo '&pound;'.number_format($arofprodinfo['price'], 2, '.', '');?>
+                             </td>
+
+      
+      						<?  
+      						//	}
+      						?>
+                                </tr>
+              <!--<tr>
+                                  <td class="bodytext"> 1.5L</td>
+                                  <td class="bodytext">&pound;1.60 </td>
+                                  <td><div align="center"><img src="images_menu/plus1.png" alt="plus" width="15" height="17"></div></td>
+                                </tr>-->
+                            </table>
+							<?
+							//}
+									}
+							//	} 
+							?>
+							</td>
+                          </tr>
+                           
+                          <tr>
+                            <td>&nbsp;</td>
+                          </tr>
+                        <?}?>  
+                        </table></td>
+                        
+                      </tr>
+                      
+                      <tr>
+                        <td>&nbsp;</td>
+                      </tr>
+
+                      <tr>
+                        <td class="bdr1">&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td class="bdr1">&nbsp;</td>
+                      </tr>
+                      
+
+                    </table></td>
+                    <td background="images_menu/red_box_06.jpg">&nbsp;</td>
+                  </tr>
+                  
+                  <tr>
+                    <td><img src="images_menu/red_box_07.jpg" width="15" height="17" alt="" /></td>
+                    <td background="images_menu/red_box_08.jpg"></td>
+                    <td><img src="images_menu/red_box_09.jpg" width="14" height="17" alt="" /></td>
+                  </tr>
+                </table></td>
+                <td width="152" valign="top"></td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></TD>
+	</TR>
+	
+	<TR>
+		<TD>&nbsp;</TD>
+		<TD>&nbsp;</TD>
+		<TD>&nbsp;</TD>
+	</TR>
+</TABLE></td>
+        <td background="images/box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+        <td background="images/box_08.jpg">&nbsp;</td>
+        <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>

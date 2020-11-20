@@ -1,0 +1,136 @@
+<?php
+if ((!isset($_SESSION['adminuserid'])) && ($_SESSION['adminuserid'] == "")) {
+	header("Location: http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/");
+}
+?>
+<SCRIPT language=JavaScript>
+function validation()
+{
+  if (document.edit.UserName.value == "" )
+  {
+    alert("User Name is a required field!");
+    document.edit.UserName.focus();
+    return false;
+  }
+  
+  if (document.edit.BranchName.value == "" )
+  {
+    alert("Branch Name is a required field!");
+    document.edit.BranchName.focus();
+    return false;
+  }
+
+if (document.edit.BranchAdd.value == "" )
+  {
+    alert("BranchAdd is a required field!");
+    document.edit.BranchAdd.focus();
+    return false;
+  }
+
+if (document.edit.Telephone.value == "" )
+  {
+    alert("BranchAdd is a required field!");
+    document.edit.Telephone.focus();
+    return false;
+  }
+
+if (document.edit.Fax.value == "" )
+  {
+    alert("BranchAdd is a required field!");
+    document.edit.Fax.focus();
+    return false;
+  }
+
+  if (document.edit.UserID.value.indexOf("@") == -1 || document.edit.UserID.value 
+== "")
+  {
+    alert("Admin Email is a required field!. info@ibacs.co.uk");
+    document.edit.UserID.focus();
+    return false;
+  }
+
+  if (document.edit.UserID.value.indexOf(".") == -1 || document.edit.UserID.value 
+== "")
+  {
+    alert("Admin Email is a required field!. info@ibacs.co.uk  with [use .]");
+    document.edit.UserID.focus();
+    return false;
+  }
+    
+  if (document.edit.UserPassword.value == "" )
+  {
+    alert("Password is a required field!");
+    document.edit.UserPassword.focus();
+    return false;
+  }
+  
+}
+</script>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="21%" height="400" valign="top">&nbsp;</td>
+    <td width="72%" align="center" valign="top"><table width="70%" border="0" align="left" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="9" colspan="4">&nbsp;</td>
+      </tr>
+
+      <tr>
+        <td width="9" colspan="4">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9"><img src="images/box_01.gif" width="9" height="9" alt="" /></td>
+        <td background="images/top_line.gif"><img border="0" src="images/top_line.gif" width="1" height="9" /></td>
+        <td width="12"><img src="images/box_03.gif" width="12" height="9" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/left_line.gif" width="9">&nbsp;</td>
+        <td><div align="center">
+            <table width="98%" border="0" cellpadding="4" cellspacing="1" class="bodytext">
+              <form action="<?php echo $PHP_SELF; ?>" method="post" name="edit" id="edit" onsubmit="return validation(this)">
+                <tr>
+                  <td colspan="2" class="admintexttitle"><div align="left"><img src="images/title_create_admin.jpg" width="219" height="46" /></div></td>
+                </tr>
+                <?php 
+										 if (isset($message)) {
+										 ?>
+                <tr>
+                  <td colspan="2" align="center" class="message"><?php echo $message; ?></td>
+                </tr>
+                <?php
+										 }
+										 ?>
+                <tr>
+                  <td width="37%" class="input"><div align="right"><font color="#FF0000" size="2">* </font><strong>Admin Name:</strong></div></td>
+                  <td width="63%" class="input"><input type="text" name="UserName" size="28" style="font-family: Verdana; font-size: 8pt; border: 1px solid #006699" value="" /></td>
+                </tr>
+                <tr>
+                  <td width="37%" class="input"><div align="right" ><font color="#FF0000" size="2">* </font><strong> Email:</strong></div></td>
+                  <td width="63%" class="input" ><input name="UserID" size="28" style="font-family: Verdana; font-size: 8pt; border: 1px solid #006699"  value="" />
+                    [ <span class="message">user name </span>]</td>
+                </tr>
+                <tr>
+                  <td width="37%" class="input"><div align="right"><font color="#FF0000" size="2">* </font><strong>Password:</strong></div></td>
+                  <td width="63%" class="input"><input type="password" name="UserPassword" size="28" style="font-family: Verdana; font-size: 8pt; border: 1px solid #006699"  value="" /></td>
+                </tr>
+                <tr>
+                  <td width="37%" class="input">&nbsp;</td>
+                  <td width="63%" class="input"><input type="hidden" name="action" value="insert_user" />
+                      <input type="submit" value="Create" name="submit" class= "button_grn" /></td>
+                </tr>
+              </form>
+            </table>
+        </div></td>
+        <td background="images/right_line.gif" width="12">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9"><img src="images/box_07.gif" width="9" height="11" alt="" /></td>
+        <td background="images/bottom_line.gif"><img border="0" src="images/bottom_line.gif" width="2" height="11" /></td>
+        <td width="12"><img src="images/box_09.gif" width="12" height="11" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>

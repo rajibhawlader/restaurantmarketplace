@@ -1,0 +1,179 @@
+<script language="javascript"> 
+function IsNumeric(sText)
+{
+   var ValidChars = "0123456789.";
+   var IsNumber=true;
+   var Char;
+
+ 
+   for (i = 0; i < sText.length && IsNumber == true; i++) 
+      { 
+      Char = sText.charAt(i); 
+      if (ValidChars.indexOf(Char) == -1) 
+         {
+         IsNumber = false;
+         }
+      }
+   return IsNumber;
+   
+   }
+function validation()
+{
+
+  if (document.edit.product_title.value == "" )
+  {
+    alert("Menu Title is a required field.");
+    document.edit.product_title.focus();
+    return false;
+  }if (document.edit.food_code.value == "" )
+  {
+    alert("Food Item Code is a required field.");
+    document.edit.food_code.focus();
+    return false;
+  }
+  if (document.edit.price.value == "" )
+  {
+    alert("Price is a required field!");
+    document.edit.price.focus();
+    return false;
+  }
+  
+   if(!IsNumeric(document.edit.price.value))
+{
+	alert("Enter  Money value at Price.");
+	document.edit.price.value=="";
+	document.edit.price.focus();
+	return false;
+}
+ 
+  return true;
+  
+}
+</script>
+<script type="text/JavaScript">
+<!--
+
+
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+//-->
+</script><body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0"  bgcolor="#FFFFFF">
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="1%" height="400" valign="top">&nbsp;</td>
+    <td width="99%" align="left" valign="top"><table width="99%" border="0" align="left" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+        <td background="images/box_02.jpg"><span class="box_title_text">&quot;<? echo $_SESSION[rname];?>&quot; Restaurant Management </span></td>
+        <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/box_04.jpg">&nbsp;</td>
+        <td width="100%" valign="top"><table width="100%" border="0" cellspacing="1" cellpadding="1"  class="bodytext">
+            <tr>
+              <td width="81%">&nbsp;</td>
+            </tr>
+            <tr>
+              <td></td>
+            </tr>
+              <?
+					  $sqlpr="Select * from product where product_id='".$_REQUEST['product_id']."'";
+					  $resultpr=mysql_query($sqlpr);
+					  $rowpr=mysql_fetch_array($resultpr);
+					  ?>
+            <tr>
+              <td valign="top"><table width="100%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#F2F2F2" class="bodytext">
+
+                <tr bordercolor="#F0F0F0">
+                  <td align="center" valign="top"><form action="index.php?action=update_food_item&product_id=<?php echo $rowpr['product_id']; ?>&tabm=rcttb" method="post" enctype="multipart/form-data" name="edit" id="edit" onSubmit="return validation(this)">
+                            <table width="100%" border="0" cellpadding="2" cellspacing="2" bgcolor="#FFFFFF" class="bodytext">
+                           
+                              <tr>
+                                <td colspan="3" align="left"><strong>Update Base Food Item</strong></td>
+                              </tr>
+                            
+                                 <?PHP if($message!=""){?>
+                              <tr>
+                                <td colspan="3" align="center"><span class="message"><?PHP echo $message;
+									  
+									  ?></span></td>
+                              </tr>
+                              <?}?>
+                              <tr>
+                                <td width="39%" align="right"><strong> Category : </strong></td>
+                                <td colspan="2" align="left" valign="top"><select name="categories_id" class="textbox_wht" id="categories_id">
+                                    <?PHP
+				$rids=$_SESSION['resid'];
+				$querylic = "SELECT * FROM categories where rid='$rids'";
+	$resultlic =@mysql_query($querylic);
+	while($arofferinfolic = @mysql_fetch_assoc($resultlic)){
+	?>
+                                    <option value="<?PHP echo $arofferinfolic["categories_id"]; ?>" <?php if($rowpr['categories_id']==$arofferinfolic["categories_id"]){ ?>selected="selected"  <?php }?>><?PHP echo $arofferinfolic["categories_name"]; ?></option>
+                                    <?}?>
+                                  </select>                                </td>
+                              </tr>
+                              <tr>
+                                <td width="39%" align="right"><strong>Item Name : </strong></td>
+                                <td colspan="2" align="left" valign="top"><input name="product_title" type="text" class="textbox_wht" id="product_title" value="<?php echo $rowpr['product_title']; ?>" size="45" /></td>
+                              </tr>
+							  <tr>
+                                <td width="39%" align="right"><strong>Item Number : </strong></td>
+                                <td colspan="2" align="left" valign="top"><input name="product_number" type="text" class="textbox_wht" id="product_title" value="<?php echo $rowpr['product_number']; ?>" size="45" /></td>
+                              </tr>
+                              <tr>
+                                <td align="right"><strong>Item Short Name : </strong></td>
+                                <td colspan="2" align="left" valign="top"><input name="food_code" type="text" class="textbox_wht" id="food_code" size="25" value="<?php echo $rowpr['food_code']; ?>" /></td>
+                              </tr>
+                              <tr>
+                                <td align="right" valign="top"><strong>Upload Image  :</strong></td>
+                                <td width="29%" align="left" valign="top"><input type="file" name="file" /></td>
+                                <td width="32%" rowspan="2" align="left" valign="top"><? if($rowpr["thumb_image"]!=""){ ?><img src="../<?PHP echo $rowpr["thumb_image"]; ?>" ><?}?></td>
+                              </tr>
+                              <tr>
+                                <td align="right"><strong>Price : </strong></td>
+                                <td align="left" valign="top"><input name="price" type="text" class="textbox_wht" id="price" value="<?php echo $rowpr['price']; ?>" size="25" /></td>
+                              </tr>
+                              <tr>
+                                <td align="right" valign="top"><strong>Item Description : </strong></td>
+                                <td colspan="2" align="left" valign="top"><textarea name="product_desc" cols="25" rows="3" id="product_desc" ><?php echo $rowpr['product_desc']; ?></textarea></td>
+                              </tr>
+                              <tr>
+                                <td>&nbsp;</td>
+                                <td colspan="2" align="left"><input type="submit" name="Submit" value="Update" class="button_grn" /></td>
+                              </tr>
+                              <tr>
+                                <td>&nbsp;</td>
+                                <td colspan="2" align="left">&nbsp;</td>
+                              </tr>
+                            </table>
+                        </form></td>
+                </tr>
+                
+                
+                <tr>
+                  <td valign="top">&nbsp;</td>
+                </tr>
+              </table></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+        </table></td>
+        <td background="images/box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+        <td background="images/box_08.jpg">&nbsp;</td>
+        <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>

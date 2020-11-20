@@ -1,0 +1,318 @@
+<script language="javascript">
+
+	
+function changeOrder(newNo,oldNo){
+	document.frmpos.oldOrderNo.value=oldNo;
+	document.frmpos.newOrderNo.value=newNo;
+	//alert(newNo);
+	document.frmpos.submit();
+}
+	
+</script>
+<script language="javascript"> 
+
+  
+function validation()
+{
+
+  if (document.edit.categories_name.value == "" )
+  {
+    alert("Category Title is a required field.");
+    document.edit.categories_name.focus();
+    return false;
+  }
+  
+ 
+  return true;
+  
+}
+</script>
+<script type="text/JavaScript">
+<!--
+
+
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+//-->
+</script>
+<script type="text/JavaScript">
+<!--
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+//-->
+</script>
+<body onLoad="MM_preloadImages('images/paging_over_01.gif','images/paging_over_03.gif')">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="8%" height="400" valign="top">&nbsp;</td>
+    <td width="92%" align="left" valign="top"><table width="96%" border="0" align="left" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+        <td background="images/box_02.jpg"><span class="box_title_text">&quot;<? echo $_SESSION[rname];?>&quot; Restaurant Management </span></td>
+        <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/box_04.jpg">&nbsp;</td>
+        <td width="100%" valign="top"><table width="100%" border="0" cellspacing="1" cellpadding="1"  class="bodytext">
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td></td>
+            </tr>
+            <tr>
+              <td width="81%" valign="top"><?
+				$catidsf=$_REQUEST[catid];
+				$sqlcf="Select * from categories where categories_id='$catidsf'";
+				$resultcf=mysql_query($sqlcf);
+				$rowcf=mysql_fetch_array($resultcf);
+				?>
+                  <table width="100%" border="0" cellpadding="2" cellspacing="2" bgcolor="#F0F0F0" class="bodytext">
+                    <form action="index.php?action=insert_new_menue&tabm=rcttb" method="post" enctype="multipart/form-data" name="edit" id="edit" onSubmit="return validation(this)">
+                      <tr>
+                        <td colspan="2" align="left" bgcolor="#FFFFFF"><strong><img src="images/icon_management_25.gif" width="42" height="36" align="absmiddle" />New Item Category </strong></td>
+                      </tr>
+                   
+                      <tr>
+                        <td colspan="2" align="center" bgcolor="#FFFFFF"><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#F0F0F0" class="bodytext" id="AutoNumber4">
+                          <tr>
+                            <td width="27%">&nbsp;</td>
+                            <td width="2%">&nbsp;</td>
+                            <td width="10%" align="left">&nbsp;</td>
+                            <td width="2%"><img border="0" src="images/plus.gif" width="9" height="9" /></td>
+                            <td width="24%" align="left"><a class="nav" href="index.php?action=resturant_menu&amp;rid=<?php echo $_SESSION['resid']; ?>&tabm=rcttb">Restaurant Management Home </a></td>
+                            <td width="2%"><img border="0" src="images/plus.gif" width="9" height="9" /></td>
+                            <td width="16%"><a class="nav" href="index.php?action=menu_cetegory&tabm=rcttb">Manage Category </a></td>
+                            <td width="2%"><img border="0" src="images/plus.gif" width="9" height="9" /></td>
+                            <td width="15%"><a class="nav" href="index.php?action=additem&tabm=rcttb">Manage Food Item </a></td>
+                          </tr>
+                        </table></td>
+                      </tr>
+                         <?PHP if($message!=""){?>
+                      <tr>
+                        <td colspan="2" align="center" bgcolor="#FFFFFF"><span class="message"><?PHP echo $message;
+									  
+									  ?></span></td>
+                      </tr>
+                      <?}?>
+                      <tr>
+                        <td width="47%" align="right" bgcolor="#FFFFFF"><strong> Type / Category Name: </strong></td>
+                        <td width="53%" bgcolor="#FFFFFF"><input type="hidden" name="catid" id="catid" value="<? echo $rowcf['categories_id']; ?>" />
+                            <input name="categories_name" type="text" class="textbox_wht" id="categories_name" size="15" value="<? echo $rowcf['categories_name']; ?>" /></td>
+                      </tr>
+                      <tr>
+                        <td align="right" bgcolor="#FFFFFF"><strong>Select Type </strong></td>
+                        <td align="left" bgcolor="#FFFFFF"><select name="parent_id" class="textbox_wht" id="parent_id">
+                            <option value="0" selected="selected">Select Type</option>
+                            <?PHP
+				$rids=$_SESSION['resid'];
+				$querylic = "SELECT * FROM categories where parent_id='0' and rid='$rids'";
+	$resultlic =@mysql_query($querylic);
+	while($arofferinfolic = @mysql_fetch_assoc($resultlic)){
+	?>
+                            <option value="<?PHP echo $arofferinfolic["categories_id"]; ?>" <? if($rowcf['parent_id']==$arofferinfolic["categories_id"]){ ?>selected="selected" <?}?> ><?PHP echo $arofferinfolic["categories_name"]; ?></option>
+                            <?}?>
+                        </select></td>
+                      </tr>
+                      <tr>
+                        <td bgcolor="#FFFFFF">&nbsp;</td>
+                        <td align="left" bgcolor="#FFFFFF"><? if($rowcf['categories_id']==""){?>
+                            <input type="submit" name="Submit" value="Add Category" class="button_grn" />
+                          <?}else{?>
+                          <input type="submit" name="Submit" value="Update Category" class="button_grn" />
+                            <a href="index.php?action=menu_cetegory&tabm=rcttb" class="button_grn">Add New Category</a>
+                            <?}?></td>
+                      </tr>
+                      <tr>
+                        <td bgcolor="#FFFFFF">&nbsp;</td>
+                        <td align="left" bgcolor="#FFFFFF">&nbsp;</td>
+                      </tr>
+                    </form>
+                    <tr>
+                      <td colspan="2" valign="top"><table width="100%" border="0" cellspacing="1" cellpadding="1" class="bodytext">
+                          <tr>
+                            <td colspan="5" align="center" bgcolor="#FFFFFF"><form action="index.php?action=search_menu&srv=yes&tabm=rcttb" method="post" name="frmsearchmenu"><table width="60%" border="0" cellpadding="2" cellspacing="2" bgcolor="#CCCCCC" class="bodytext">
+                              <tr>
+                                <td width="35%" align="right"><strong>Search Type / Category:</strong></td>
+                                <td width="35%"><input name="categories_name" type="text" id="categories_name" size="30"></td>
+                                <td width="30%"><input type="submit" name="button" id="button" value="Search" class="button_grn"></td>
+                              </tr>
+                            </table></form></td>
+                          </tr>
+                          <tr height="25" valign="top">
+                            <td colspan="5" align="left" bgcolor="#FFFFFF"><strong>&nbsp;Category List</strong>&nbsp;&nbsp; &nbsp;[<a href="index.php?action=search_menu&tabm=rcttb" class="nav">Show All</a>]</td>
+                          </tr>
+                          <form action="index.php?action=change_menu_order&tabm=rcttb" method="post" name="frmpos" >
+	<input type="hidden" name="oldOrderNo" value="" />
+	<input type="hidden" name="newOrderNo" value="" />
+                          <tr>
+                            <td width="8%" align="center" bgcolor="#FFFFFF"><strong>SL No </strong></td>
+                            <td width="29%" align="left" bgcolor="#FFFFFF"><strong>Displayed As </strong></td>
+                            <td width="23%" align="left" bgcolor="#FFFFFF"><strong>Type / Category Title </strong></td>
+                            <td width="24%" align="left" bgcolor="#FFFFFF">&nbsp;</td>
+                            <td width="16%" align="center" bgcolor="#FFFFFF"><strong>Action</strong></td>
+                          </tr>
+                          <?php
+                          
+                          if($_REQUEST['srv']!="")
+                          {
+                            $query = "SELECT * FROM categories where rid='$rids' and categories_name='".$_REQUEST['categories_name']."' order by sort_order asc";
+                          }else
+                          {
+				    $query = "SELECT * FROM categories where rid='$rids' order by sort_order asc";
+                    }
+                    
+                    //$result = $db->execQuery($query);
+                    //$arinfo = $db->resultArray();
+				    //for ($i = 0; $i < sizeof($arinfo); $i++) {
+					//*******************8
+					$success = $db->checkExists($query);
+					if ($success == true){
+						$qty=20;
+						$result = $db->execQuery($query);
+						$arinfo = $db->resultArray($result);
+						if ($_REQUEST["stq"]==""){
+							$stq=0;
+						}else{
+							$stq=$_REQUEST["stq"];
+						}
+						$v=($stq/$qty)+1;
+						if (sizeof($arinfo)>1)
+						{
+								$ste=$stq+$qty;
+								$st2=sizeof($arinfo) % $qty;
+								
+								if ($ste > sizeof($arinfo))
+								{
+									$ste=sizeof($arinfo);
+								}
+																
+								$st1=(sizeof($arinfo)-$st2)/$qty;
+								
+								for ($z=0; $z <= $st1 ; $z++)
+								{
+						
+									if ($v==($z+1)){
+										$pageIn.=$z+1;
+									}else{
+										$pageIn.="<a href=index.php?action=menu_cetegory&tabm=rcttb&stq=".($z*$qty)."&h=".$h." class=nav1>".($z+1)."</a>";
+									}
+								}
+						}else{
+								$ste=sizeof($arinfo);
+						}
+						for ($i = $stq; $i < $ste; $i++)
+						{
+					
+			//**********************88
+					
+			    ?>
+                          <tr>
+                            <td align="center" valign="top" bgcolor="#FFFFFF"><? echo $i+1; ?></td>
+                            <td align="left" valign="top" bgcolor="#FFFFFF"><?php $pids=$arinfo[$i]["parent_id"];
+							if($pids==0)
+							{
+							echo "Type";
+							}else
+							{
+							$sqlp="Select * from categories where categories_id='$pids'";
+							$resultp=mysql_query($sqlp);
+							$rowp=mysql_fetch_array($resultp);
+							echo $rowp['categories_name'];
+							echo "->";
+							echo $arinfo[$i]["categories_name"];
+							} ?></td>
+                            <td align="left" valign="top" bgcolor="#FFFFFF"><?php echo $arinfo[$i]["categories_name"]; ?></td>
+                            <td align="left" valign="top" bgcolor="#FFFFFF"><div align="center"><span class="bodytext">
+            <select  name="selectpos" id="selectpos" onChange="changeOrder(this.value,<?php echo $arinfo[$i]['sort_order']; ?>);" >
+              <?php
+	for ($j = 0; $j < sizeof($arinfo); $j++) {?>
+              <option value="<?php echo $j+1;?>" <?php if($arinfo[$i]["sort_order"]==$j+1) echo 'selected';?>><?php echo $j+1;?></option>
+              <?php } ?>
+            </select>
+        </span></div></td>
+                            <td width="16%" align="center" bgcolor="#FFFFFF"><a href="index.php?action=menu_cetegory&tabm=rcttb&catid=<?php echo $arinfo[$i]["categories_id"]; ?>&tabm=rcttb" class="nav">Edit</a> | <a href="index.php?action=cat_del&catid=<?php echo $arinfo[$i]["categories_id"];?>&tabm=rcttb" class="nav"onclick="return confirm('Are you sure you want to delete this?');">Delete</a> </td>
+                          </tr>
+                          <?php
+                    }
+					}
+				?>
+                          <tr>
+                            <td colspan="5" align="center" bgcolor="#FFFFFF">&nbsp;</td>
+                          </tr>
+                          </form>
+                          <tr>
+                            <td colspan="5" align="center" bgcolor="#FFFFFF"><?
+	if ($v > 0){
+		echo ("<samp  class=bodytext>Page ".$v." Of ".$z."</samp>");
+	}
+	?></td>
+                          </tr>
+                          <tr>
+                            <td colspan="5" align="center" bgcolor="#FFFFFF"><table width="60%" border="0" cellpadding="0" cellspacing="0" class="bodytext">
+                                <tr>
+                                  <td><?php
+		if ($v>1){
+		?>
+                                      <a class="nav1" href="index.php?action=menu_cetegory&tabm=rcttb&amp;stq=<?php echo(($v-2)*$qty)?>&amp;h=1" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('a1','','images/paging_over_01.gif',1)"><img src="images/paging_01.gif" name="a1" width="30" height="32" border="0" id="a1" /></a>
+                                      <?php
+		}else{ ?>
+                                      <img src="images/paging_01.gif" name="a" width="30" height="32" border="0" id="a" />
+                                      <?}
+		?>                                  </td>
+                                  <td width="100%" background="images/paging_body.gif" align="center" ><? echo ("Pages- ".$pageIn);?></td>
+                                  <td><?php
+		 if ($v <$z){
+		 ?>
+                                      <a class="nav1" href="index.php?action=menu_cetegory&amp;stq=<?php echo(($v)*$qty)?>&amp;h=1" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('b1','','images/paging_over_03.gif',1)"><img src="images/paging_03.gif" name="b1" width="30" height="32" border="0" id="b1" /></a>
+                                      <?php
+		 }else{ ?>
+                                      <img src="images/paging_03.gif" name="b" width="30" height="32" border="0" id="b" />
+                                      <?}
+		 ?>                                  </td>
+                                </tr>
+                            </table></td>
+                          </tr>
+                      </table></td>
+                    </tr>
+                </table></td>
+            </tr>
+            <tr>
+              <td valign="top">&nbsp;</td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+        </table></td>
+        <td background="images/box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+        <td background="images/box_08.jpg">&nbsp;</td>
+        <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>

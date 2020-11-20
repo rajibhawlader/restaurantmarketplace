@@ -1,0 +1,163 @@
+<script language="javascript"> 
+function IsNumeric(sText)
+{
+   var ValidChars = "0123456789";
+   var IsNumber=true;
+   var Char;
+
+ 
+   for (i = 0; i < sText.length && IsNumber == true; i++) 
+      { 
+      Char = sText.charAt(i); 
+      if (ValidChars.indexOf(Char) == -1) 
+         {
+         IsNumber = false;
+         }
+      }
+   return IsNumber;
+   
+   }
+function validation()
+{
+
+ 
+   if (document.edit.customers_address1.value == "" )
+  {
+    alert("Shipping  Address is a required field.");
+    document.edit.customers_address1.focus();
+    return false;
+  }
+  
+   if (document.edit.customers_town.value == "" )
+  {
+    alert("Town is a required field.");
+    document.edit.customers_town.focus();
+    return false;
+  }
+    if (document.edit.customers_postcode.value == "" )
+  {
+    alert("Post Code is a required field.");
+    document.edit.customers_postcode.focus();
+    return false;
+  }
+  
+ 
+  return true;
+  
+}
+</script>
+<table width="70%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="center"><table width="99%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+        <td background="images/box_02.jpg"><span class="box_title_text">Delivery Information </span></td>
+        <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/box_04.jpg">&nbsp;</td>
+        <td width="100%" valign="top"><table width="100%" border="0" align="center" cellpadding="2" cellspacing="1" class="bodytext">
+          
+          <tr>
+            <td align="right" ><?php  require_once('includes/customermenue.html');?></td>
+          </tr>
+          <tr>
+            <td align="center" class="message"><?PHP if($_SESSION['cart']=="")
+			{
+			echo "You have no item to place order";
+			}
+									  
+									  ?></td>
+          </tr>
+          <tr>
+            <td align="center" valign="top"><table width="100%" border="0" cellspacing="2" cellpadding="2">
+              <tr>
+                <td colspan="2" valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0" class="bodytext">
+
+                    <tr>
+                      <td width="3%" >&nbsp;</td>
+                      <td width="95%" valign="middle" align="center" bgcolor="#F0F0F0"><form action="index-action-insert_shipping_address" method="post" enctype="multipart/form-data" name="edit" id="edit" onsubmit="return validation(this)"><table width="100%" border="0" cellspacing="2" cellpadding="2">
+                        
+                        <tr>
+                          <td align="center" valign="middle"><table width="100%" border="0" cellpadding="1" cellspacing="1" bgcolor="#FFFFFF" class="bodytext">
+                            <tr>
+                              <td colspan="2" align="left"><strong>Shipping Address </strong></td>
+                            </tr>
+                            <tr>
+                              <td width="28%" align="right"><strong>Address1: </strong></td>
+                              <td width="72%" align="left">
+                                <input name="customers_address1" type="text" class="textbox_wht" id="customers_address1" value="<?php echo $_SESSION['customers_address1']; ?>"/>
+*</td>
+                            </tr>
+                            <tr>
+                              <td align="right"><strong> Address2: </strong></td>
+                              <td align="left">
+                                <input name="customers_address2" type="text" class="textbox_wht" id="customers_address2" value="<?php echo $_SESSION['customers_address2']; ?>"/></td>
+                            </tr>
+                            <tr>
+                              <td align="right"><strong>City/Town: </strong></td>
+                              <td align="left">
+                                <input name="customers_town" type="text" class="textbox_wht" id="customers_town" value="<?php echo $_SESSION['customers_town']; ?>"/>
+*</td>
+                            </tr>
+
+                            <tr>
+                              <td align="right"><strong>County: </strong></td>
+                              <td align="left">
+                                <input name="customers_state" type="text" class="textbox_wht" id="customers_state" value="<?php echo $_SESSION['customers_state']; ?>"/></td>
+                            </tr>
+                            <tr>
+                              <td align="right"><strong>Country: </strong></td>
+                              <td align="left">
+                                <select name="customers_country" id="customers_country" class="textbox_wht">
+                                 <option value="United Kingdom">United Kingdom</option>
+                                </select></td>
+                            </tr>
+                            <tr>
+                              <td align="right"><strong>Postcode: </strong></td> <?php $customer_postcode = explode(" ", $_SESSION['customers_postcode']);?>
+                              <td align="left">
+                                <input name="customers_postcode" type="text" class="textbox_wht" id="customers_postcode" value="<?php echo $customer_postcode[0]; ?>" size="6" maxlength="4"/>  <input name="customers_postcode2" type="text" class="textbox_wht" id="customers_postcode2" value="<?php echo $customer_postcode[1]; ?>" size="6" maxlength="4"/>
+*</td>
+                            </tr>
+                            <tr>
+                              <td align="right">&nbsp;</td>
+                              <td align="left"><input type="image" src="images/continue.jpg" width="79" height="39" border="0" name="submit" /></td>
+                            </tr>
+
+                          </table></td>
+                        </tr>
+                        
+                      </table>
+                      </form></td>
+                      <td width="2%" >&nbsp;</td>
+                    </tr>
+                 
+                  
+                                </table></td>
+                </tr>
+              <tr>
+                <td width="51%">&nbsp;</td>
+                <td width="49%">&nbsp;</td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></td>
+        <td background="images/box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+        <td background="images/box_08.jpg">&nbsp;</td>
+        <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <iframe width=174 height=189 name="gToday:normal:agenda.js" id="gToday:normal:agenda.js" src="calander/ipopeng" scrolling="no" frameborder="0" style="visibility:visible; z-index:999; position:absolute; top:-500px; left:-500px;">
+
+</iframe>
+</table>

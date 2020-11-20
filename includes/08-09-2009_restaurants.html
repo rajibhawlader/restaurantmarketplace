@@ -1,0 +1,433 @@
+<?
+//print_r($_REQUEST);
+
+unset($_SESSION['cart']);
+	unset($_SESSION['qty']);
+	unset($_SESSION['rids']);
+	unset($_SESSION['order_type']);
+	$d=date('l');
+	
+  if($_REQUEST['PCD']!="")
+  {
+  	$rnames=$_REQUEST['PCD'];
+	
+	$lat_match=substr($rnames, 0, 3);
+	//$query = "SELECT * FROM resturant   WHERE (zipcode like '%$rnames%' or rname like '%$rnames%') and aactive='1' ORDER BY rname asc";
+	$query = "SELECT * FROM resturant INNER JOIN delivery_area ON resturant.rid=delivery_area.rid WHERE (delivery_area.post_code like '%$rnames%' or delivery_area.post_code like '%$lat_match%' or resturant.zipcode like '%$rnames%' or resturant.zipcode like '%$lat_match%' or resturant.rname like '%$rnames%' or resturant.rname like '%$lat_match%') and resturant.aactive='1' GROUP BY resturant.rid";
+			
+  }else 
+  {
+	$query = "SELECT * FROM resturant WHERE aactive='1' order by rname asc";
+  }
+   $success = $db->checkExists($query);
+
+   if(empty($success))
+   {
+  
+   	   $query = "SELECT * FROM delivery_area   WHERE post_code LIKE  '%$rnames%' ";
+   		   $success1 = $db->checkExists($query);
+   		   if ($success1 == true)
+   		   {
+				$result = $db->execQuery($query);
+				$arinfoMain1 = $db->resultArray($result);
+				
+				$arr_rid=array();
+				$arr_rid_temp=array();
+				for($i=0;$i<count($arinfoMain1);$i++)
+				{
+				
+					array_push($arr_rid_temp,$arinfoMain1[$i]['rid']);
+					
+				}
+				$arr_rid=implode(",",$arr_rid_temp);
+				
+				
+				$query = "SELECT * FROM resturant WHERE rid IN ($arr_rid) and aactive='1' ";
+				
+				$result = $db->execQuery($query);
+				$arinfoMain = $db->resultArray($result);
+				
+		   }
+		   else{
+			   	   $query = "SELECT * FROM resturant   WHERE zipcode like '%$lat_match%' and aactive='1' ORDER BY rname asc";
+				   $alr_msg="There are no restaurants found as exact match for $rnames. But we found the nearest possible restaurants for your convenience";
+		   		}
+
+   }
+   $success1 = $db->checkExists($query);
+
+   
+if ($success1 == true){
+$result = $db->execQuery($query);
+$arinfoMain = $db->resultArray($result);
+}                 					
+  
+?>
+
+<script language=javascript>
+	function wol(a) {
+	LeftPosition=(screen.width) ? (screen.width)/3.5 : 0;
+	TopPosition=(screen.height) ? (screen.height)/7 : 0;
+	id=window.open("rest_open_Time.php?id="+a+"",a,"scrollbars,height=250,width=550,top=" + TopPosition + ",left=" + LeftPosition);
+	if(id.window.focus){id.window.focus();}
+	}
+function delivery_area(a) {
+	LeftPosition=(screen.width) ? (screen.width)/3.5 : 0;
+	TopPosition=(screen.height) ? (screen.height)/7 : 0;
+	id=window.open("delivery_area.php?id="+a+"",a,"scrollbars,height=250,width=300,top=" + TopPosition + ",left=" + LeftPosition);
+	if(id.window.focus){id.window.focus();}
+	}	
+	
+</script>
+
+<script language="javascript">
+function godetails()
+{
+	if(document.getElementById('rid').value!="")
+	{
+		document.goform.submit();
+	}
+}
+</script>
+<?php
+if(!empty($arinfoMain))
+{
+
+?>
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+      
+      
+      <tr>
+        <td><img src="images/red_box_01.jpg" width="15" height="39" alt="" /></td>
+	<form name="goform" id="goform" method="post" action="index-action-restaurant_details_view">
+    <td width="100%" background="images/red_box_02.jpg" class="stitle" valign="middle"><strong style="color:#FFFFFF">Go directly to takeaway :<strong style="color:#FFFFFF"><span style="width: 265px;">
+      <select name="rid" id="rid" class="textbox_grey" onchange=" godetails();">
+        <option selected="selected" value="0">---Choose takeaway---</option>
+        <?php
+		for($op=0; $op<sizeof($arinfoMain); $op++)
+		{
+		?>
+        <option value="<?php echo $arinfoMain[$op]['rid'];?>"><?php echo $arinfoMain[$op]["rname"]; ?></option>
+        <?php } ?>
+      </select>
+    </span></strong></strong></td>
+	  </form>
+        <td><img src="images/red_box_03.jpg" width="14" height="39" alt="" /></td>
+        <td width="1%" rowspan="3">&nbsp;&nbsp;</td>
+        <td width="200" rowspan="3" valign="top">
+			<div id="livechat">
+			<h1>LIVE CHAT</h1>
+			<p>
+			Mon to Fri: 5pm - 11pm<br/>
+			Sat & Sun: 11am - 11pm<br />
+			<a href="#"><img alt="login" border="0" src="images/btn_startchat.gif" /></a>			</p>
+			</div>		</td>
+      </tr>
+      <tr>
+        <td background="images/red_box_04.jpg">&nbsp;</td>
+        <td width="100%"  valign="top"><table width="100%" border="0" cellpadding="4" cellspacing="1" class="bodytext">
+                            <tbody>
+                              <tr>
+                                <td valign="top"><font color="#FF0000"><b><?=$alr_msg?></b></font><table width="100%" border="0" align="center" cellpadding="4" cellspacing="1" bgcolor="#DFDFDF" class="bodytext" id="ResultsList">
+                                  <tbody>
+                                  
+                                    <?php
+				    					for ($i = 0; $i < sizeof($arinfoMain); $i++)
+										{
+										  $today = strtolower(date("D"));
+										  $query = "SELECT * FROM timeschedule   WHERE rid='".$arinfoMain[$i]['rid']."'";
+										  $result = $db->execQuery($query);
+										  $opentimes = $db->resultArray();
+										  
+											$query6 = "SELECT * FROM delevary_policy WHERE rid='".$arinfoMain[$i]["rid"]."'";
+											$result6 = $db->execQuery($query6);
+											$dev_pol = $db->resultArray($result6);
+										
+			    					?>
+                                    <tr>
+                                      <td width="50%" valign="top" bgcolor="<?php if($i%4==0 || $i%4==3)echo '#F5F5F5'; else echo '#ffffff'; ?>";><table width="100%" cellpadding="0" cellspacing="0">
+                                        <tbody>
+                                          <tr>
+                                            <td width="167" height="178" valign="top" style="width: 110px;"><table width="99" border="0" cellspacing="1" cellpadding="4">
+                                                <tr>
+                                                  <td class="bdr2"><?php if($arinfoMain[$i]['logo']!=''){?><img src="<?php echo $arinfoMain[$i]['logo'];?>" name="imgMainPic" id="imgMainPic" width="99" height="100" border="0"/><?php } else {?> <img src="companylogo/default_logo.jpg" name="imgMainPic" id="imgMainPic" width="99" height="100" border="0"/><?php }?></td>
+                                                </tr>
+                                                <tr>
+                                                  <td class="nrmlink" align="center"><?php
+												  $lstart = explode(':',$opentimes[0]["open_h_".$today."_start"]);
+												  $lend = explode(':',$opentimes[0]["open_h_".$today."_end"]);
+												  $dstart = explode(':',$opentimes[0]["open_h_".$today."_start2"]);
+												  $dend = explode(':',$opentimes[0]["open_h_".$today."_end2"]);
+
+												  $resopen=0;
+												  $ctime=date('H:i');
+												  $ctime=mktime($ctime);
+												  if(mktime($lstart[0],$lstart[1],0) < $ctime && mktime($lend[0],$lend[1],0) >$ctime)
+												  {
+												  	$resopen=1;
+												  	echo "<b style='color:#009900'>Open</b>";
+												  }elseif(mktime($dstart[0],$dstart[1],0) < $ctime && mktime($dend[0],$dend[1],0) >$ctime)
+												  {
+												  	$resopen=1;
+												  	echo "<b style='color:#009900'>Open</b>";
+												  }else
+												  {
+												  	$resopen=0;
+												  	echo "<b style='color:#FF0000'>Closed</b>";
+												  } echo restaurant_status($arinfoMain[$i]['rid']);
+												  ?></td>
+                                                </tr>
+                                                <tr>
+                                                  <td class="nrmlink"><div align="center"><a href="<?php 
+												  $trimname=trim($arinfoMain[$i]['rname']);
+												  $replacedname = str_replace(" ", "-",$trimname);
+												  echo $replacedname;?>-menu-<?php echo $arinfoMain[$i]['rid'];?>"><img src="images/order_now<?=$resopen;?>.png" border="0" width="83" height="25" /></a></div></td>
+                                                </tr>
+                                                <tr>
+                                                  <td class="nrmlink"><div align="center"><a href="<?php 
+												  $trimname=trim($arinfoMain[$i]['rname']);
+												  $replacedname = str_replace(" ", "-",$trimname);
+												  echo $replacedname;?>--<?php echo $arinfoMain[$i]['rid'];?>"><img src="images/details1.png" width="83" height="25" border="0" /></a></div></td>
+                                                </tr>
+                                            </table></td>
+                                            <td width="224" valign="top"><table width="98%" border="0" align="right" cellpadding="0" cellspacing="0" class="bodytext1">
+                                                <tr>
+                                                  <td colspan="2"><span class="text_red_sml"><?php echo $arinfoMain[$i]["rname"]; ?> </span></td>
+                                                </tr>
+                                                <tr>
+                                                  <td colspan="2"><?php echo $arinfoMain[$i]["street"]; ?></td>
+                                                </tr>
+                                                <tr>
+                                                  <td colspan="2"><?php echo $arinfoMain[$i]["zipcode"]; ?> <?php echo $arinfoMain[$i]["city"]; ?></td>
+                                                </tr>
+                   								<?php
+												$dt=explode(':',$opentimes[0]["open_h_".$today."_del"]);
+												$de_start =mktime($dt[0],$dt[1],0);
+												if($resopen==1 && $ctime>$de_start)
+												{
+												?>
+                                                <tr>
+                                                  <td>Delivery Time : <?=$dev_pol[0]['del_time']?> Min.</td>
+                                                  <td align="left"><a href="#" target="_blank" onclick="javascript:delivery_area(<?php echo $arinfoMain[$i]['rid'];?>); return false;" class="nav1">Delivery Area</a></td>
+                                                </tr>
+												<?php }else { ?>
+                                                <tr>
+                                                  <td>Delivery Start At : <?=$dev_pol[0]['del_start_at']?></td>
+                                                  <td align="left"><a href="#" target="_blank" onclick="javascript:delivery_area(<?php echo $arinfoMain[$i]['rid'];?>); return false;" class="nav1">Delivery Area</a></td>
+                                                </tr>
+												<?php } ?>
+                                                <tr>
+                                                  <td width="63%">Delivery Cost : <?php if($dev_pol[0]['del_cost']!="" && $dev_pol[0]['del_cost']!=0) echo "&pound; ".number_format($dev_pol[0]['del_cost'], 2, '.', ''); else echo "Free";?></td>
+                                                  <td width="37%" align="left"><a href="#" target="_blank" onclick="javascript:wol(<?php echo $arinfoMain[$i]['rid'];?>); return false;" class="nav1">Opening Time</a></td>
+                                                </tr>
+                                                <tr>
+                                                  <td height="10" colspan="2"></td>
+                                                </tr>
+                                                <tr>
+                                                  <td colspan="2"><table width="100%" border="0" cellpadding="0" cellspacing="0" class="nrm02">
+                                                    <tr>
+                                                      <td colspan="3" class="nrmlink_black">Customer's Reviews : </td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td colspan="3" >Rating System coming soon.</td>
+                                                    </tr>
+													
+<!--                                                    <tr>
+                                                      <td width="21%">Service: </td>
+                                                      <td width="35%"><img src="images/star_01.png" width="71" height="9" /></td>
+                                                      <td width="44%">&nbsp;</td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>Quality: </td>
+                                                      <td><img src="images/star_02.png" width="71" height="10" /></td>
+                                                      <td rowspan="3">&nbsp;</td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>Cost:</td>
+                                                      <td><img src="images/star_04.png" width="71" height="10" /></td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>Delivery:</td>
+                                                      <td><img src="images/star_03.png" width="71" height="10" /></td>
+                                                    </tr>
+-->                                                  </table></td>
+                                                </tr>
+                                            </table></td>
+                                          </tr>
+                                        </tbody>
+                                      </table></td>
+									  <?php if($i < sizeof($arinfoMain)-1) { $i++; 
+										  $today = strtolower(date("D"));
+										  $query = "SELECT * FROM timeschedule   WHERE rid='".$arinfoMain[$i]['rid']."'";
+										  $result = $db->execQuery($query);
+										  $opentimes = $db->resultArray();
+											$query7 = "SELECT * FROM delevary_policy WHERE rid='".$arinfoMain[$i]["rid"]."'";
+											$result7 = $db->execQuery($query7);
+											$dev_pol7 = $db->resultArray($result7);
+									  
+									  ?>
+                                      <td width="50%"  valign="top" bgcolor="<?php if($i%4==0 || $i%4==3)echo '#F5F5F5'; else echo '#ffffff'; ?>";><table width="100%" cellpadding="0" cellspacing="0">
+                                        <tbody>
+                                          <tr>
+                                            <td width="124" valign="top" style="width: 110px;"><table width="99" border="0" cellspacing="1" cellpadding="4">
+                                              <tr>
+                                                <td class="bdr2"><? if($arinfoMain[$i]['logo']!=''){?><img src="<?php echo $arinfoMain[$i]['logo'];?>" name="imgMainPic" id="imgMainPic" width="99" height="100" border="0"/><?php } else {?> <img src="companylogo/default_logo.jpg" name="imgMainPic" id="imgMainPic" width="99" height="100" border="0"/><?php }?>
+                                                  </td>
+                                              </tr>
+                                              <tr>
+                                                <td class="nrmlink" align="center"><?php
+												  $lstart = explode(':',$opentimes[0]["open_h_".$today."_start"]);
+												  $lend = explode(':',$opentimes[0]["open_h_".$today."_end"]);
+												  $dstart = explode(':',$opentimes[0]["open_h_".$today."_start2"]);
+												  $dend = explode(':',$opentimes[0]["open_h_".$today."_end2"]);
+
+												  $resopen2=0;
+												  $ctime=date('H:i');
+												  $ctime=mktime($ctime);
+												  if(mktime($lstart[0],$lstart[1],0) < $ctime && mktime($lend[0],$lend[1],0) >$ctime)
+												  {
+												  	$resopen2=1;
+												  	echo "<b style='color:#009900'>Open</b>";
+												  }elseif(mktime($dstart[0],$dstart[1],0) < $ctime && mktime($dend[0],$dend[1],0) >$ctime)
+												  {
+												  	$resopen2=1;
+												  	echo "<b style='color:#009900'>Open</b>";
+												  }else
+												  {
+												  	$resopen2=0;
+												  	echo "<b style='color:#FF0000'>Closed</b>";
+												  } 
+												  ?></td>
+                                              </tr>
+                                              <tr>
+                                                <td class="nrmlink"><div align="center"><a href="index-action-menu_list-rid-<?php echo $arinfoMain[$i]['rid'];?>"><img src="images/order_now<?=$resopen2;?>.png" border="0" width="83" height="25" /></a></div></td>
+                                              </tr>
+                                              <tr>
+                                                <td class="nrmlink"><div align="center"><a href="<?php 
+												$trimname1=trim($arinfoMain[$i]['rname']);
+												$replacedname1 = str_replace(" ", "-",$trimname1);
+												 echo $replacedname1;?>--<?php echo $arinfoMain[$i]['rid'];?>"><img src="images/details1.png" width="83" height="25" border="0" /></a></div></td>
+                                              </tr>
+                                            </table></td>
+                                            <td width="224" valign="top"><table width="98%" border="0" align="right" cellpadding="0" cellspacing="0" class="bodytext1">
+                                              <tr>
+                                                <td colspan="2"><span class="text_red_sml"><?php echo $arinfoMain[$i]["rname"]; ?> </span></td>
+                                              </tr>
+                                              <tr>
+                                                <td colspan="2"><?php echo $arinfoMain[$i]["street"]; ?></td>
+                                              </tr>
+                                              <tr>
+                                                <td colspan="2"><?php echo $arinfoMain[$i]["zipcode"]; ?> <?php echo $arinfoMain[$i]["city"]; ?></td>
+                                              </tr>
+        												<?php
+												$dt=explode(':',$opentimes[0]["open_h_".$today."_del"]);
+												$de_start =mktime($dt[0],$dt[1],0);
+												if($resopen2==1 && $ctime>$de_start)
+												{
+												?>
+                                                <tr>
+                                                  <td width="67%">Delivery Time : <?=$dev_pol7[0]['del_time']?> Min.</td>
+                                                  <td width="33%" align="left"><a href="#" target="_blank" onclick="javascript:delivery_area(<?php echo $arinfoMain[$i]['rid'];?>); return false;" class="nav1">Delivery Area</a></td>
+                                                </tr>
+												<?php }else { ?>
+                                                <tr>
+                                                  <td>Delivery Start At : <?=$dev_pol7[0]['del_start_at']?></td>
+                                                  <td align="left"><a href="#" target="_blank" onclick="javascript:delivery_area(<?php echo $arinfoMain[$i]['rid'];?>); return false;" class="nav1">Delivery Area</a></td>
+                                                </tr>
+												<?php } ?>
+                                              <tr>
+                                                <td>Delivery Cost : <?php if($dev_pol7[0]['del_cost']!="" && $dev_pol7[0]['del_cost']!=0) echo "&pound; ".number_format($dev_pol7[0]['del_cost'], 2, '.', ''); else echo "Free";?></td>
+                                                <td align="left"><a href="#" target="_blank" onclick="javascript:wol(<?php echo $arinfoMain[$i]['rid'];?>); return false;" class="nav1">Opening Time</a></td>
+                                              </tr>
+                                              <tr>
+                                                <td height="10" colspan="2"></td>
+                                              </tr>
+                                              <tr>
+                                                <td colspan="2"><table width="100%" border="0" cellpadding="0" cellspacing="0" class="nrm02">
+                                                  <tr>
+                                                    <td colspan="3" class="nrmlink_black">Customer's Reviews : </td>
+                                                  </tr>
+                                                    <tr>
+                                                      <td colspan="3" >Rating System coming soon.</td>
+                                                    </tr>
+												  
+<!--                                                  <tr>
+                                                    <td width="21%">Service: </td>
+                                                    <td width="35%"><img src="images/star_01.png" width="71" height="9" /></td>
+                                                    <td width="44%">&nbsp;</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>Quality: </td>
+                                                    <td><img src="images/star_02.png" width="71" height="10" /></td>
+                                                    <td rowspan="3">&nbsp;</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>Cost:</td>
+                                                    <td><img src="images/star_04.png" width="71" height="10" /></td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>Delivery:</td>
+                                                    <td><img src="images/star_03.png" width="71" height="10" /></td>
+                                                  </tr>
+-->                                                </table></td>
+                                              </tr>
+                                            </table></td>
+                                          </tr>
+                                        </tbody>
+                                      </table>									  </td>
+                                    </tr>
+                                    <tr>
+                                      <td align="center" colspan="2" valign="top" bgcolor="#ffffff";>Advertisement</td>
+                                    </tr>
+									  <?php }else {?>
+									  <td width="50%"  valign="top" bgcolor="<?php if(($i+1)%4==0 || ($i+1)%4==3)echo '#F5F5F5'; else echo '#ffffff'; ?>";>									  </td>
+									<?php } } ?>
+                                  </tbody>
+                                </table></td>
+                              </tr>
+                            </tbody>
+                        </table></td>
+       <td background="images/red_box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/red_box_07.jpg" width="15" height="17" alt="" /></td>
+    	<td background="images/red_box_08.jpg"></td>
+    	<td><img src="images/red_box_09.jpg" width="14" height="17" alt="" /></td>
+      </tr>
+</table>
+<?
+}
+else
+{
+?>
+
+
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+      
+      
+      <tr>
+        <td><img src="images/red_box_01.jpg" width="15" height="39" alt="" /></td>
+	<form name="goform" id="goform" method="post" action="index-action-restaurant_details_view">
+    <td width="100%" background="images/red_box_02.jpg" class="stitle"><strong style="color:#FFFFFF">Sorry ! No Restaurant found <strong style="color:#FFFFFF"><span style="width: 265px;">
+      &nbsp;
+    </span></strong></strong></td>
+	  </form>
+        <td><img src="images/red_box_03.jpg" width="14" height="39" alt="" /></td>
+        <td width="1%" rowspan="3">&nbsp;&nbsp;</td>
+        <td width="200" rowspan="3" valign="top">&nbsp;
+				</td>
+      </tr>
+      <tr>
+        <td background="images/red_box_04.jpg">&nbsp;</td>
+        <td width="100%"  valign="top" align="center">We are sorry, but we couldn't find any results from your search.Please search again !</td>
+       <td background="images/red_box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/red_box_07.jpg" width="15" height="17" alt="" /></td>
+    	<td background="images/red_box_08.jpg"></td>
+    	<td><img src="images/red_box_09.jpg" width="14" height="17" alt="" /></td>
+      </tr>
+</table>
+<?
+}
+?>

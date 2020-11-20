@@ -1,0 +1,398 @@
+<script language="javascript"> 
+function IsNumeric(sText)
+{
+   var ValidChars = "0123456789";
+   var IsNumber=true;
+   var Char;
+
+ 
+   for (i = 0; i < sText.length && IsNumber == true; i++) 
+      { 
+      Char = sText.charAt(i); 
+      if (ValidChars.indexOf(Char) == -1) 
+         {
+         IsNumber = false;
+         }
+      }
+   return IsNumber;
+   
+   }
+function loginvalidation()
+{
+
+ if (document.signin.username.value.indexOf("@") == -1 || document.signin.username.value == "")
+  {
+    alert("Email is a required field!, may be you have missd @ symbol");
+    document.signin.username.focus();
+    return false;
+  }
+  
+  if (document.signin.username.value.indexOf(".") == -1 || document.signin.username.value == "")
+  {
+    alert("Email is a required field!, may be you have missd . symbol");
+    document.signin.username.focus();
+    return false;
+  }
+    if (document.signin.password.value == "" )
+  {
+    alert("Password is a required field!");
+    document.signin.password.focus();
+    return false;
+  }
+		
+  return true;
+  
+}
+
+
+function validation()
+{
+
+  if (document.edit.customers_firstname.value == "" )
+  {
+    alert("First Name is a required field.");
+    document.edit.customers_firstname.focus();
+    return false;
+  }
+  
+   if (document.edit.customers_lastname.value == "" )
+  {
+    alert("Last Name is a required field.");
+    document.edit.customers_lastname.focus();
+    return false;
+  }
+  
+
+   if (document.edit.customers_email_address.value.indexOf("@") == -1 || document.edit.customers_email_address.value == "")
+  {
+    alert("Email is a required field!, may be you have missd @ symbol");
+    document.edit.customers_email_address.focus();
+    return false;
+  }
+  
+  if (document.edit.customers_email_address.value.indexOf(".") == -1 || document.edit.customers_email_address.value == "")
+  {
+    alert("Email is a required field!, may be you have missd . symbol");
+    document.edit.customers_email_address.focus();
+    return false;
+  }
+  if (document.edit.customers_password.value == "" )
+  {
+    alert("Password is a required field!");
+    document.edit.customers_password.focus();
+    return false;
+  }
+  
+   if (document.edit.recustomers_password.value == "" )
+  {
+    alert("Re-Type Password is a required field!");
+    document.edit.recustomers_password.focus();
+    return false;
+  }
+  
+  if (document.edit.recustomers_password.value!=document.edit.customers_password.value)
+  {
+    alert("Passwords don't match. Please try again");
+	//document.edit.c_password.value = "";
+    document.edit.recustomers_password.focus();
+    return false;
+  }
+   if (document.edit.customers_telephone.value == "" )
+  {
+    alert("Phone No is a required field.");
+    document.edit.customers_telephone.focus();
+    return false;
+  }
+   if (document.edit.customers_address1.value == "" )
+  {
+    alert("Customer Address is a required field.");
+    document.edit.customers_address1.focus();
+    return false;
+  }
+  
+   if (document.edit.customers_town.value == "" )
+  {
+    alert("City is a required field.");
+    document.edit.customers_town.focus();
+    return false;
+  }
+    if (document.edit.customers_postcode.value == "" )
+  {
+    alert("Post Code is a required field.");
+    document.edit.customers_postcode.focus();
+    return false;
+  }
+    if (document.edit.customers_postcode2.value == "" )
+  {
+    alert("Post Code is a required field.");
+    document.edit.customers_postcode2.focus();
+    return false;
+  }
+
+ 
+  return true;
+  
+}
+</script>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="32%" align="left" valign="top"><table width="100%" border="0" align="left" cellpadding="0" cellspacing="0">
+            <tr>
+              <td><img src="images/black_box1_01.jpg" width="15" height="39" alt="" /></td>
+              <td width="50%" background="images/black_box1_02.jpg" class="heading">Your Order </td>
+              <td width="50%" background="images/black_box1_02.jpg" class="heading" align="right"></td>
+              <td><img src="images/black_box1_03.jpg" width="14" height="39" alt="" /></td>
+            </tr>
+            <tr>
+              <td background="images/black_box1_04.jpg">&nbsp;</td>
+              <td colspan="2" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td align="center" class="message" bgcolor="#323232"><?php if($_SESSION['cart']=="")
+			{
+			echo "You have no item to place order";
+			}
+									  
+									  ?></td>
+                </tr>
+
+                <tr>
+                  <td align="center" class="message" bgcolor="#323232">&nbsp;</td>
+                </tr>
+
+                <tr>
+                  <td valign="top" bgcolor="#323232"><table border="0" width="100%" cellspacing="3" cellpadding="0" bgcolor="#CCCCCC" class="bodytext">
+                    <tr align="center">
+                      <td bgcolor="#FFFFFF"><div id="orderList">
+                        <?php  require_once('cartonacount.php');?>
+                      </div></td>
+                    </tr>
+                    <tr>
+                      <td width="100%" bgcolor="#FFFFFF"><div align="center"><a href="index-action-menu_list-rid-<? echo $_SESSION['rids']; ?>" class="nav"><img src="images/button_continue_shooping.jpg" width="140" height="39" border="0" /></a></div></td>
+                    </tr>
+                  </table></td>
+                </tr>
+                
+                
+                <tr>
+                  <td valign="top" bgcolor="#323232">&nbsp;</td>
+                </tr>
+                
+                <tr>
+                  <td valign="top" bgcolor="#323232">&nbsp;</td>
+                </tr>
+              </table></td>
+              <td background="images/black_box1_06.jpg">&nbsp;</td>
+            </tr>
+            <tr>
+              <td><img src="images/black_box1_07.jpg" width="15" height="17" alt="" /></td>
+              <td colspan="2" background="images/black_box1_08.jpg"></td>
+              <td><img src="images/black_box1_09.jpg" width="14" height="17" alt="" /></td>
+            </tr>
+          </table></td>
+          <td width="1%">&nbsp;</td>
+          <td width="67%" align="right" valign="top"><table width="100%" border="0" align="left" cellpadding="0" cellspacing="0" class="normal_text">
+            <tr>
+              <td><img src="images/red_box1_01.jpg" width="15" height="39" alt="" /></td>
+              <td width="100%" background="images/red_box1_02.jpg" class="heading" align="left">Sign In / Sign Up </td>
+              <td><img src="images/red_box1_03.jpg" width="14" height="39" alt="" /></td>
+            </tr>
+            
+            
+            <tr>
+              <td background="images/red_box1_04.jpg">&nbsp;</td>
+              <td valign="top" bgcolor="#9E0112"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0" class="normal_text">
+                
+                <tr>
+                  <td align="left"><strong style="font-size:14px">I am an existing customer.</strong></td>
+                  </tr>
+                <tr>
+                  <td height="10" align="left"><?php echo $message; ?></td>
+                </tr>
+                <tr>
+                  <td><div style="border-top:1px dashed #000000"> </div></td>
+                  </tr>
+                <tr>
+                  <td width="95%" height="120" valign="top">
+				  <form action="index-action-customer_login" method="post" enctype="multipart/form-data" name="signin" id="signin" onsubmit="return loginvalidation();">
+				  <table width="100%" border="0" cellspacing="1" cellpadding="1" class="normal_text">
+                      
+                      <tr>
+                        <td height="10" colspan="2" align="right"></td>
+                        </tr>
+                      <tr>
+                        <td width="42%" align="right"><strong>E-mail Address: </strong></td>
+                        <td width="58%" align="left"><input name="username" type="text" class="textbox_wht" id="username" size="15"/>
+                            <input type="hidden" name="otp" id="otp" value="orp" /></td>
+                      </tr>
+                      <tr>
+                        <td width="42%" align="right"><strong>Psssword: </strong></td>
+                        <td align="left"><input name="password" type="password" class="textbox_wht" id="password" size="15" /></td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" align="center"><a href="index-action-forget_password" class="nav">Password forgotten? Click here.</a></td>
+                      </tr>
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td align="left"><input type="image" src="images/login2.jpg" alt="login" width="66" height="23" border="0" name="submit" /></td>
+                      </tr>
+                  </table>
+				  </form>				  </td>
+                  </tr>
+                <tr>
+                  <td height="10" valign="top"></td>
+                </tr>
+                <tr>
+                  <td valign="top"><div style="border-top:1px dashed #000000"> </div></td>
+                  </tr>
+              </table></td>
+              <td background="images/red_box1_06.jpg">&nbsp;</td>
+            </tr>
+            <tr>
+              <td background="images/red_box1_04.jpg">&nbsp;</td>
+              <td valign="top" bgcolor="#9E0112">&nbsp;</td>
+              <td background="images/red_box1_06.jpg">&nbsp;</td>
+            </tr>
+            <tr>
+              <td background="images/red_box1_04.jpg">&nbsp;</td>
+              <td valign="top" bgcolor="#9E0112" align="left"><strong>...Alternatively if you are not a member, please fill in the fields below:</strong></td>
+              <td background="images/red_box1_06.jpg">&nbsp;</td>
+            </tr>
+            <tr>
+              <td background="images/red_box1_04.jpg">&nbsp;</td>
+              <td valign="top" bgcolor="#9E0112">&nbsp;</td>
+              <td background="images/red_box1_06.jpg">&nbsp;</td>
+            </tr>
+			<form action="index-action-insert_customer" method="post" enctype="multipart/form-data" name="edit" id="edit" onsubmit="return validation();">
+            <tr>
+              <td background="images/red_box1_04.jpg">&nbsp;</td>
+              <td valign="top" bgcolor="#9E0112"><table width="100%" border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse; border-color:#660000">
+                <tr>
+                  <td width="53%" align="left" valign="top"><table width="100%" border="0" cellpadding="2" cellspacing="2" class="normal_text">
+                      <tr>
+                        <td colspan="2" align="left"  class="message"><strong>Your Personal Details </strong></td>
+                      </tr>
+                      <tr>
+                        <td width="40%" align="left">First Name: </td>
+                        <td width="60%" align="left"><input name="customers_firstname" type="text"  id="customers_firstname"/>                          
+                          * </td>
+                      </tr>
+                      <tr>
+                        <td align="left">Last Name : </td>
+                        <td align="left"><input name="customers_lastname" type="text"  id="customers_lastname"/>                          
+                          *</td>
+                      </tr>
+                      <tr>
+                        <td align="left">E-mail Address: </td>
+                        <td align="left"><input name="customers_email_address" type="text"  id="customers_email_address"/>
+                          *
+                          <input type="hidden" name="otp2" id="otp2" value="<?php echo $_SESSION['otp'];?>" /></td>
+                      </tr>
+                      <tr >
+                        <td align="left">Password: </td>
+                        <td align="left"><input name="customers_password" type="password"  id="customers_password"/>
+                          *</td>
+                      </tr>
+                      <tr >
+                        <td align="left">Re-Type Password: </td>
+                        <td align="left"><input name="recustomers_password" type="password"  id="recustomers_password"/>
+                          *</td>
+                      </tr>
+                      
+                      <tr>
+                        <td align="left">Phone: </td>
+                        <td align="left"><input name="customers_telephone" type="text"  id="customers_telephone"/>                          
+                          *</td>
+                      </tr>
+                      <tr>
+                        <td align="left">Mobile: </td>
+                        <td align="left"><input name="customers_fax" type="text"  id="customers_fax"/></td>
+                      </tr>
+                  </table></td>
+                  <td width="47%" align="right" valign="top"><table width="96%" border="0" cellpadding="2" cellspacing="2" class="normal_text">
+                      <tr>
+                        <td colspan="2" align="left" class="message"><strong>Your Address </strong></td>
+                      </tr>
+                      <tr>
+                        <td width="28%" align="left">Address1: </td>
+                        <td width="72%" align="left"><input name="customers_address1" type="text"  id="customers_address1"/>                          
+                          *</td>
+                      </tr>
+                      <tr>
+                        <td align="left"> Address2: </td>
+                        <td align="left"><input name="customers_address2" type="text"  id="customers_address2"/></td>
+                      </tr>
+                      <tr>
+                        <td align="left">County: </td>
+                        <td align="left"><input name="customers_state" type="text"  id="customers_state"/></td>
+                      </tr>
+                      <tr>
+                        <td align="left">City/Town: </td>
+                        <td align="left"><input name="customers_town" type="text"  id="customers_town"/>                          
+                          *</td>
+                      </tr>
+                      <tr>
+                        <td align="left">Postcode:</td>
+                        <td align="left"><input name="customers_postcode" type="text"  id="customers_postcode" size="4" maxlength="4"/>
+                            <input name="customers_postcode2" type="text"  id="customers_postcode2" size="4" maxlength="4"/>
+                          *</td>
+                      </tr>
+                      <tr>
+                        <td align="left">Country:</td>
+                        <td align="left"><select name="customers_country" id="customers_country" style="width:150px" >
+                          <?php
+		
+			$queryril = "SELECT * FROM countries";
+	$resultril =mysql_query($queryril);
+	while($arofferinforil = mysql_fetch_assoc($resultril)){
+		
+		?>
+                          <option value="<? echo $arofferinforil["countryName"]; ?>" ><? echo $arofferinforil["countryName"]; ?></option>
+                          <?
+						}
+						?>
+                        </select></td>
+                      </tr>
+                  </table></td>
+                </tr>
+              </table></td>
+              <td background="images/red_box1_06.jpg">&nbsp;</td>
+            </tr>
+            <tr>
+              <td background="images/red_box1_04.jpg">&nbsp;</td>
+              <td valign="top" bgcolor="#9E0112">&nbsp;</td>
+              <td background="images/red_box1_06.jpg">&nbsp;</td>
+            </tr>
+            <tr>
+              <td background="images/red_box1_04.jpg">&nbsp;</td>
+              <td align="center" valign="top" bgcolor="#9E0112"><input type="image" src="images/continue2.jpg" width="76" height="23" border="0" name="submit" /></td>
+              <td background="images/red_box1_06.jpg">&nbsp;</td>
+            </tr>
+            <tr>
+              <td background="images/red_box1_04.jpg">&nbsp;</td>
+              <td valign="top" bgcolor="#9E0112">&nbsp;</td>
+              <td background="images/red_box1_06.jpg">&nbsp;</td>
+            </tr>
+			</form>
+            <tr>
+              <td><img src="images/red_box1_07.jpg" width="15" height="17" alt="" /></td>
+              <td background="images/red_box1_08.jpg"></td>
+              <td><img src="images/red_box1_09.jpg" width="14" height="17" alt="" /></td>
+            </tr>
+          </table></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td align="center"></td>
+  </tr>
+  <iframe width="174" height="189" name="gToday:normal:agenda.js" id="gToday:normal:agenda.js" src="calander/ipopeng" scrolling="No" frameborder="0" style="visibility:visible; z-index:999; position:absolute; top:-500px; left:-500px;"></iframe>
+</table>

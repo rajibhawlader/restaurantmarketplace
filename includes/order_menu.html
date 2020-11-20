@@ -1,0 +1,932 @@
+<?php
+$otypevalue=0;
+$query="select * from resturant_policy where rid='".$_SESSION['rids']."'";
+$result = $db->execQuery($query);
+$otypeinfo = $db->resultArray($result);
+for($i=0;$i<sizeof($otypeinfo);$i++)
+{
+	$otypevalue+=$otypeinfo[$i]['policy_id'];
+}
+$_SESSION['otypevalue']=$otypevalue;
+
+if($_SESSION['order_type']=="")
+{
+	if($otypevalue==1 or $otypevalue>=3)
+	{
+		$_SESSION['order_type']=1;
+	}
+	elseif($otypevalue==2)
+	{
+		$_SESSION['order_type']=2;
+	}
+}
+else
+{
+	if($_SESSION['otypevalue']==1 or $_SESSION['otypevalue']==2)
+	{
+		$_SESSION['order_type']=$_SESSION['otypevalue'];
+	}
+}
+
+?>
+
+<script src="js/ajax.js"></script>
+
+<script type="text/javascript" src="images/animatedcollapse.js"></script>
+
+
+<script type="text/javascript">
+function wol(a) {
+	LeftPosition=(screen.width) ? (screen.width)/3.5 : 0;
+	TopPosition=(screen.height) ? (screen.height)/7 : 0;
+	id=window.open("rest_open_Time.php?id="+a+"",a,"scrollbars,height=250,width=550,top=" + TopPosition + ",left=" + LeftPosition);
+	if(id.window.focus){id.window.focus();}
+	}
+function delivery_area(a) {
+	LeftPosition=(screen.width) ? (screen.width)/3.5 : 0;
+	TopPosition=(screen.height) ? (screen.height)/7 : 0;
+	id=window.open("delivery_area.php?id="+a+"",a,"scrollbars,height=600,width=615,top=" + TopPosition + ",left=" + LeftPosition);
+	if(id.window.focus){id.window.focus();}
+	}
+function changemenucard(value)
+{
+	var rid=document.getElementById('rid').value;
+	if(value=="3")
+	{
+		window.open('index-action-reservetion_order-rid-'+rid,'_self');
+	}
+	else
+	{
+		var url = 'ordertypeset.php?ordertypeset='+value;
+		makeRequest(url,'ord');
+		setTimeout("window.location.reload()", 300);
+		
+	}
+}
+
+function addtocard(valu)
+{
+//alert(document.getElementById('orderList'));
+	var url = 'cart.php?idp='+valu;
+	makeRequest(url,'orderList');
+	
+//alert(document.getElementById('orderList'));	
+
+return false;
+}
+function addtocardminus(valu)
+{
+	var url = 'cart.php?qt=m&idp='+valu;
+	makeRequest(url,'orderList');
+
+return false;
+}
+function addtocarddel(valu)
+{
+
+	var url = 'cart.php?qt=y&idp='+valu;
+	makeRequest(url,'orderList');
+	
+
+return false;
+}
+function loadProduct(valu)
+{
+	
+	var url = 'product_list.php?id='+valu;
+	makeRequest(url,'productList');
+return false;
+}
+
+function loadProductNew(valu)
+{
+//alert(valu);
+	var url = 'product_list.php?id='+valu;
+	makeRequest(url,'productList');
+return false;
+}
+</script>
+<script type="text/javascript" src="images/jquery-1.js"></script>
+<script type="text/javascript" src="images/animatedcollapse.js">
+
+
+</script>
+
+
+<script type="text/javascript">
+
+animatedcollapse.addDiv('jason', 'fade=1,height=80px');
+animatedcollapse.addDiv('kelly', 'fade=1,height=100px');
+animatedcollapse.addDiv('michael', 'fade=1,height=120px');
+
+animatedcollapse.addDiv('cat', 'fade=0,speed=400,group=pets');
+animatedcollapse.addDiv('dog', 'fade=0,speed=400,group=pets,persist=1,hide=1');
+animatedcollapse.addDiv('rabbit', 'fade=0,speed=400,group=pets,hide=1');
+		
+animatedcollapse.init();
+
+</script>
+
+<style type="text/css">
+
+/*Credits: Dynamic Drive CSS Library */
+/*URL: http://www.dynamicdrive.com/style/ */
+
+
+.glossymenu{
+background: white url(images/glossybackMenu1.gif) repeat-x bottom left;
+font: bold 13px "Lucida Grande", "Trebuchet MS", Verdana, Helvetica, sans-serif;
+color: #666666;
+display: block;
+width: 100%;
+padding: 3px 0;
+text-decoration: none;
+list-style-type:none;
+
+}
+.topMenu{
+background: white url(images/glossyback1.gif) repeat-x bottom left;
+font: bold 13px "Lucida Grande", "Trebuchet MS", Verdana, Helvetica, sans-serif,;
+color: white;
+display: block;
+width: auto;
+padding: 1px 0;
+padding-3eft: 0px;
+text-decoration: none;
+
+}
+* html .glossymenu li a{ /*IE only. Actual menu width minus left padding of A element (10px) */
+width: 206px;
+}
+
+.glossymenu li a:visited, .glossymenu li a:active{
+color: #666666;
+}
+
+.glossymenu li a:hover{
+background-image: url(images/glossyback2.gif);
+}
+
+.topMenu1 {background: white url(images/glossyback1.gif) repeat-x bottom left;
+font: bold 13px "Lucida Grande", "Trebuchet MS", Verdana, Helvetica, sans-serif,;
+color: white;
+display: block;
+width: auto;
+padding: 1px 0;
+padding-3eft: 0px;
+text-decoration: none;
+}
+.topMenu11 {background: white url(images/glossyback1.gif) repeat-x bottom left;
+font: bold 13px "Lucida Grande", "Trebuchet MS", Verdana, Helvetica, sans-serif,;
+color: white;
+display: block;
+width: auto;
+padding: 1px 0;
+padding-3eft: 0px;
+text-decoration: none;
+}
+
+</style>
+
+
+<script type="text/javascript">
+
+	//loadProductNew('<?php echo $_REQUEST['rid']?>');
+</script>
+
+<script language="javascript" src="jquery/jquery-1.3.2.min.js"></script>
+<script language="javascript" src="jquery/jquery.dimensions.js"></script>
+<script language="javascript">
+
+if (parseInt(navigator.appVersion)>3) {
+ if (navigator.appName=="Netscape") {
+  winW2 = window.innerWidth;
+  winH2 = window.innerHeight;
+ }
+ if (navigator.appName.indexOf("Microsoft")!=-1) {
+  winW2 = document.body.offsetWidth;
+  winH2 = document.body.offsetHeight;
+  winW2=winW2+20;
+ }
+}
+
+var leftlimx=(winW2/2)-482;
+
+	var name = "#floatMenu";
+	var menuYloc = null;
+		$(document).ready(function(){
+			menuYloc = parseInt($(name).css("top").substring(0,$(name).css("top").indexOf("px")))
+			$(window).scroll(function () { 
+				if($(document).scrollTop()>400) 
+				{
+					offset = 12+$(document).scrollTop()+"px";
+				}else
+				{
+					offset = menuYloc+"px";
+				}
+				$(name).animate({top:offset,left:leftlimx},{duration:500,queue:false});
+			});
+		}); 
+</script>
+
+
+<?php
+if(isset($_REQUEST['rid']) && $_REQUEST['rid']!="")
+{
+	$rsid=$_REQUEST['rid'];
+	$query = "SELECT * FROM resturant WHERE  rid=$rsid AND aactive='1' order by rname asc";
+   	$success = $db->checkExists($query);
+	if ($success == true)
+	{
+		$result = $db->execQuery($query);
+		$arinfoMain = $db->resultArray($result);
+	}
+	
+}
+?>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr align="right">
+    <td colspan="2" align="right" valign="top"><table width="99%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td align="left" valign="top"><img src="images/res_box_01.jpg" width="18" height="18" alt="" /></td>
+        <td width="100%" background="images/res_box_02.jpg"></td>
+        <td align="left" valign="top"><img src="images/res_box_03.jpg" width="20" height="18" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/res_box_04.jpg">&nbsp;</td>
+        <td bgcolor="#F1EFF0" valign="top">
+		<div style="width:100%; height:150px">
+		<table width="100%" height="170" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="24%" valign="top" align="left">
+				<a href="<?php 
+						  $trimname=trim($arinfoMain[0]['rname']);
+						  $replacedname = str_replace(" ", "-",$trimname);
+						  echo $replacedname;?>--<?php echo $arinfoMain[0]['rid'];?>">
+              <? if($arinfoMain[0]['logo']!=''){?>
+              <img src="<?php echo $arinfoMain[0]['logo'];?>" name="imgMainPic" id="imgMainPic" width="144" height="144" class="bdr2" alt="Restaurant Details"/>
+              <?php } else {?>
+			  <img src="companylogo/default_logo.jpg" name="imgMainPic" id="imgMainPic" width="144" height="144" class="bdr2" alt="Restaurant Details"/>
+			  <?php } ?>
+            </a></td>
+            <td width="35%" valign="top" class="bdr"><table width="100%" border="0" align="right" cellpadding="2" cellspacing="1" class="nrm02">
+                <tr>
+                  <td align="left"><span class="text_red"><?php echo $arinfoMain[0]["rname"]; ?></span></td>
+                </tr>
+                <tr>
+                  <td align="left"><?php echo $arinfoMain[0]["street"]; ?>-<?php echo $arinfoMain[0]["zipcode"]; ?>-<?php echo $arinfoMain[0]["city"]; ?></td>
+                </tr>
+                <tr>
+                  <td align="left"><span class="text_red_sml"><strong>Opening Hours</strong></span><br />
+                    <a href="#" class="nav1" onclick="javascript:wol(<?php echo $arinfoMain[0]['rid']; ?>); return false;" target="_blank" ><strong>Click here</strong></a> to view all opening times</td>
+                </tr>
+				 <tr>
+                  <td align="left"><span class="text_red_sml"><strong>Delivery Area</strong></span><br />
+                    <a href="#" class="nav1" onclick="javascript:delivery_area(<?php echo $arinfoMain[0]['rid']; ?>); return false;" target="_blank" ><strong>Click here</strong></a> to view all delivery area</td>
+                </tr>
+            </table></td>
+            <td width="42%" valign="top"><table width="100%" border="0" align="right" cellpadding="2" cellspacing="0" class="nrm02">
+                <tr>
+                  <td align="left"><span class="nrmlink_black"><strong>Select Type</strong></span></td>
+                </tr>
+                <tr>
+                  <td align="left"><form method="post" name="menuForm" action="index-action-menu_list-rid-<?=$_REQUEST['rid']?>"><input type="hidden" name="rid" id="rid" value="<?=$_REQUEST['rid']?>" /><select name="policy_id" class="textbox_grey" id="policy_id" onchange="changemenucard(this.value);">
+					  <?php
+					  $query = "SELECT
+								resturant_policy.id,
+								resturant_policy.rid,
+								resturant_policy.policy_id,
+								policy.name,
+								policy.`status`
+								FROM
+								resturant_policy
+								Inner Join policy ON resturant_policy.policy_id = policy.id
+								WHERE
+								resturant_policy.rid =  '".$_SESSION['rids']."' AND
+								policy.`status` =  '1'
+								ORDER BY
+								policy.id ASC";
+						
+						$result = $db->execQuery($query);
+						$menuinfo = $db->resultArray($result);
+						for($m=0; $m<sizeof($menuinfo); $m++)
+						{$selected = ($menuinfo[$m]['policy_id'] == $_SESSION['order_type'])?'selected="selected"':'';
+					  ?>
+                      <option <?php echo $selected; ?> value="<?=$menuinfo[$m]['policy_id']?>"><?=$menuinfo[$m]['name']?></option>
+					  <?php } ?>
+                  </select><span id="ord"></span></form></td>
+                </tr>
+					<?  $queryd = "SELECT * FROM delevary_policy where  rid='$rsid'";
+																			$resultd = $db->execQuery($queryd);
+																			$arinfod= $db->resultArray($resultd);
+					?>
+
+                <tr>
+                  <td align="left" valign="top">
+					<table border="0" cellpadding="0" cellspacing="0" width="100%">
+					<?php
+					if($_SESSION['order_type']==1)
+					{
+					?>
+					<? if(!empty($arinfod[0]['radious']))
+					{
+					?>
+					                                                  <tr>
+					                                                        <td width="90" align="left" valign="top"><strong>Delivery Radius:</strong></td><td width="148" align="left" valign="top"><?php echo $arinfod[0]['radious'];?> Miles</td>
+					                                                      </tr>
+																<? }?>  
+					<? if(!empty($arinfod[0]['del_time']))
+					{
+					?>
+																	  <tr>
+																	
+					                                                        <td width="120" align="left" valign="top"><strong>Delivery Time:</strong></td><td align="left" valign="top"><?php echo $arinfod[0]['del_time'];?> Minutes</td>
+					                                                      </tr>
+																		  <? }?>  
+																		  <? if(!empty($arinfod[0]['min_order']))
+					{
+					?>
+					                                                      <tr>
+					                                                        <td align="left" valign="top"><strong>Delivery Cost:</strong></td>
+					                                                        <td align="left" valign="top">&pound;&nbsp;<?php echo number_format($arinfod[0]['del_cost'], 2, '.', '');?></td>
+                          </tr>
+					                                                      <tr>
+					                                                        <td width="120" align="left" valign="top"><strong>Min Delivery Order:</strong></td><td align="left" valign="top">&pound;&nbsp;<?php echo number_format($arinfod[0]['min_order'], 2, '.', '');?></td>
+					                                                      </tr>
+					                                                      <tr>
+					                                                        <td align="left" valign="top"><strong>Note:</strong></td>
+					                                                        <td align="left" valign="top"><?php echo $arinfod[0]['note'];?></td>
+                          </tr>
+					                                                 <? }?>  
+					<?php } elseif($_SESSION['order_type']==2) { ?>
+					<? if(!empty($arinfod[0]['take_time']))
+					{
+					?>
+																	  <tr>
+																	
+					                                                        <td width="120" align="left" valign="top"><strong>Take Away Time:</strong></td>
+					                                                        <td align="left" valign="top"><?php echo $arinfod[0]['take_time'];?> Minutes</td>
+                          </tr>
+					<? } }?>  
+					
+					  
+					                                                    </table></td>
+                </tr>
+            </table></td>
+          </tr>
+        </table>
+		</div>
+		</td>
+        <td background="images/res_box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/res_box_07.jpg" width="18" height="20" alt="" /></td>
+        <td width="100%" background="images/res_box_08.jpg"></td>
+        <td><img src="images/res_box_09.jpg" width="20" height="20" alt="" /></td>
+      </tr>
+    </table></td>
+    <td align="center" valign="top">
+		<div id="livechat">
+		<h1 align="left">LIVE CHAT</h1>
+		<p align="left">
+		Mon to Fri: 5pm - 11pm<br/>
+		Sat & Sun: 11am - 11pm<br />
+		<a href="#"><img alt="login" border="0" src="images/btn_startchat.gif" /></a>			</p>
+		</div>
+	</td>
+  </tr>
+  <tr>
+    <td width="253" align="right" valign="top">
+	<div id="floatMenu">
+	<table width="190" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/red_box_01.jpg" width="15" height="39" alt="" /></td>
+        <td width="100%" background="images/red_box_02.jpg" class="message" abbr="left" align="left"><strong style="color:#FFFFFF">CATEGORIES</strong></td>
+        <td><img src="images/red_box_03.jpg" width="14" height="39" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/red_box_04.jpg"></td>
+        <td><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+            <tr>
+              <td><div align="justify">Please select categories to jump in that section on the Menu Card
+:<br />
+                  <a href="#" class="nav3"></a> </div></td>
+            </tr>
+            <tr>
+              <td class="bdr1" height="5"></td>
+            </tr>
+            <?php 
+					$query1 = "SELECT * FROM categories  where parent_id='0' and rid=".$_REQUEST['rid']." ORDER BY sort_order asc";
+                    $result1 = $db->execQuery($query1);
+                    $arinfo1= $db->resultArray(result1);
+                    for ($i = 0; $i < sizeof($arinfo1); $i++)
+					{		  
+						if($arinfo1[$i]['parent_id']=='0')
+						{
+									?>
+					            <tr>
+									<td align="left"><a href="#<?=$i?>" class="nav4"><?php echo $arinfo1[$i]['categories_name']; ?></a></td>
+					            </tr>
+				   <?php } ?>
+				            <tr width="100%">
+				              <td><div speed="400"  id="<?php echo $arinfo1[$i]['categories_id']; ?>">
+				                  <div align="laft">
+				                    <?php
+												$querySub = "SELECT * FROM categories where parent_id=".$arinfo1[$i]['categories_id'];
+							                    $resultSub = $db->execQuery($querySub);
+							                    $arinfoSub= $db->resultArray(resultSub);
+					
+							                    for ($j = 0; $j <  sizeof($arinfoSub); $j++)
+												{		
+												  
+									  ?>
+				    		                <li style="display:block; text-align:left"><a href="#<?=$j?>" class="nav4"><?php echo $arinfoSub[$j]['categories_name']?></a></li>
+				                    	    <?php }?>
+				                  </div>
+				              </div></td>
+				            </tr>
+		<?php }?>
+            <tr>
+              <td height="2"></td>
+            </tr>
+        </table></td>
+        <td background="images/red_box_06.jpg"></td>
+      </tr>
+      <tr>
+        <td><img src="images/red_box_07.jpg" width="15" height="17" alt="" /></td>
+        <td background="images/red_box_08.jpg"></td>
+        <td><img src="images/red_box_09.jpg" width="14" height="17" alt="" /></td>
+      </tr>
+    </table>
+	</div>
+	</td>
+  <td width="644" align="right" valign="top">
+   <table width="500" border="0" cellpadding="0" cellspacing="0" align="right">
+    <tr>
+      <td><img src="images/red_box_01.jpg" width="15" height="39" alt="" /></td>
+      <td width="100%" background="images/red_box_02.jpg" class="message" align="left"><strong style="color:#FFFFFF">MENU</strong></td>
+      <td><img src="images/red_box_03.jpg" width="14" height="39" alt="" /></td>
+    </tr>
+    <tr>
+      <td background="images/red_box_04.jpg">&nbsp;</td>
+      <td><table width="100%" border="0" cellpadding="1" cellspacing="0" class="bodytext" align="center">
+        <?php
+
+
+					$catids=$_SESSION['rids'];
+					$query1 = "SELECT
+								`product`.*, if(product.product_number <= 0, 9999, product.product_number) AS ord,
+								`categories`.`categories_name`
+								FROM
+								`product`
+								Inner Join `categories` ON `product`.`categories_id` = `categories`.`categories_id`
+								Inner Join `resturant` ON `categories`.`rid` = `resturant`.`rid`
+								WHERE
+								`resturant`.`rid` = $catids AND `product`.`parent_id` =0 ORDER BY ord ASC, `sort_order` asc";
+                    $result1 = $db->execQuery($query1);
+                    $arinfo1= $db->resultArray(result1);
+
+					
+              $query2 = "SELECT DISTINCT
+					`categories`.`categories_name`,
+					`categories`.`short_desc`,
+					`product`.`categories_id`
+					FROM
+					`product`
+					Inner Join `categories` ON `product`.`categories_id` = `categories`.`categories_id`
+					Inner Join `resturant` ON `categories`.`rid` = `resturant`.`rid`
+					WHERE
+					`resturant`.`rid` =$catids ORDER BY `sort_order` asc";
+		
+                    $result2 = $db->execQuery($query2);
+                    $arinfo2= $db->resultArray(result2);
+
+
+				for ($j = 0; $j < sizeof($arinfo2); $j++)
+				{ 
+	$dquery = "SELECT * FROM discount_policy WHERE rid='".$_SESSION['rids']."' AND cat_id='".$arinfo2[$j]['categories_id']."' AND order_type='".$_SESSION['order_type']."' AND dicount_status ='1' AND '".date("Y-m-d")."' BETWEEN publish_date and expire_date";	
+					$ref = $db->execQuery($dquery);
+					$drow = $db->row($ref);
+					//print_r ($drow); exit;
+					
+				?>
+					<tr><td height="35" align="left" width="100%" style="color:#6B1C21;font-size:18px;font-weight:bold;" id="<?=$j?>"><?=$arinfo2[$j]['categories_name']?> <span class="product_title"><?php if($drow["amount"] > 0){ echo "(With ".$drow["amount"]."%  discount)";}?></span></td></tr> 
+					<?php
+					if(!empty($arinfo2[$j]['short_desc']))
+					{ ?>
+						<tr><td align="left" height="30" class="product_title"><?=$arinfo2[$j]['short_desc']?></td></tr><tr><td>
+					<?php
+					}
+					else{ ?>
+							<tr><td align="left" height="30">&nbsp;</td></tr><tr><td>
+						<?php }
+					
+				
+				    for ($i = 0; $i < sizeof($arinfo1); $i++)
+					{	
+						if($arinfo2[$j]['categories_id']==$arinfo1[$i]['categories_id'])	
+						{
+							if($class=='even')
+							{
+								$class="odd";
+							}
+							else
+							{
+								$class="even";
+							}
+							?>
+									<div class="<?=$class?>">
+									
+							<?	
+								$selprodid=$arinfo1[$i]['product_id'];
+						     	$query_select_prod = "SELECT `product`.* FROM `product`	WHERE `product`.`parent_id` =$selprodid";
+	
+						     	$result = $db->execQuery($query_select_prod);
+	 							$arofselprod = $db->resultArray($result);
+	 							
+							?>
+									<table width="100%" border="0" cellpadding="1" cellspacing="0" class="bodytext" align="center">
+									<tr>
+									<td height="5"></td>
+									</tr>
+									<? 
+									if($arinfo1[$i]['parent_id']==0)
+									{
+										if(!empty($arofselprod)) { ?>
+											<tr>
+											  <td align="left" width="10%" valign="top">&nbsp;<strong><?php echo $arinfo1[$i]['product_number']?></strong></td>
+											  <td align="left" width="30%"  class="product_title" valign="top"><strong><?php echo $arinfo1[$i]['product_title']?></strong><br /><?php echo $arinfo1[$i]['product_desc']?></td><td align="left" width="60%">
+									  
+								        	<?php for($sp=0;$sp<count($arofselprod);$sp++) { ?>
+
+									        <table border="0" width="100%">
+											
+											<tr>
+									          <td width="58%" class="product_title"><img src="images/arrow-point.png">&nbsp;<strong><?php echo $arofselprod[$sp]['product_title']?></strong></td>
+									          <td width="30%">
+										<?php   $number =$arofselprod[$sp]['price'];
+												
+												$discount_price = discount_price($rsid, $arinfo1[$i]['categories_id'], $_SESSION['order_type'], $number);
+												show_item_price($number, $discount_price);
+												/*$english_format_number = number_format($number, 2, '.', '');										
+											    echo $english_format_number;*/
+											
+											
+											?></td>
+									          <td valign="top" width="11%" align="left"><a href="#" onclick="javascript:return addtocard('<?php echo $arofselprod[$sp]['product_id']?>')"><img src="images/round_plus.png" width="15" height="17" border="0" /></a></td>
+									        </tr>
+											<?php } ?>
+											</table>
+							          </td>
+									<? } else { ?>
+									<tr>
+							          <td align="left" width="10%" valign="top">&nbsp;<strong><?php echo $arinfo1[$i]['product_number']?></strong></td>
+							          <td align="left" width="65%" class="product_title" valign="top"><strong><?php echo $arinfo1[$i]['product_title']?></strong><br /><?php echo $arinfo1[$i]['product_desc']?></td>
+							          
+							          <td align="left" width="18%">
+							          <?if($arinfo1[$i]['price']!=0){?>							        
+										<?php   
+										$number = $arinfo1[$i]['price'];
+										$discount_price = discount_price($rsid, $arinfo1[$i]['categories_id'], $_SESSION['order_type'], $number);
+										show_item_price($number, $discount_price);
+										/*$english_format_number = number_format($number, 2, '.', '');										
+										echo $english_format_number;*/
+											
+											
+											?></td>
+									  <td valign="top" align="left"><a href="#" onclick="javascript:return addtocard('<?php echo $arinfo1[$i]['product_id']?>')"><img src="images/round_plus.png" width="15" height="17" border="0" /></a>
+							          
+							        <? 
+							          }
+							         
+							        	}
+										}
+							        	else{}
+							        
+							        
+							        ?>
+							        </td></tr>
+									<tr>
+									<td height="5"></td>
+									</tr>
+									</table>
+							       </div> 
+							<?php 
+						} 
+				} 
+				?>
+						</td></tr>
+	<?php } ?>
+      </table></td>
+      <td background="images/red_box_06.jpg">&nbsp;</td>
+    </tr>
+    <tr>
+      <td><img src="images/red_box_07.jpg" width="15" height="17" alt="" /></td>
+      <td background="images/red_box_08.jpg"></td>
+      <td><img src="images/red_box_09.jpg" width="14" height="17" alt="" /></td>
+    </tr>
+  </table>
+    </td>
+    <td width="309" valign="top">
+<div id="floatdiv" style=" position:absolute; width:212px;right:181px;top:57px; padding:0px; border:0px solid #2266AA;">
+  <div style="float:right"><table width="225" border="0" align="right">
+  <tr>
+    <td width="205"><table width="205" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/red_box_01.jpg" width="15" height="39" alt="" /></td>
+        <td width="100%" background="images/red_box_02.jpg" class="message" align="left"><strong style="color:#FFFFFF">YOUR ORDER </strong></td>
+        <td><img src="images/red_box_03.jpg" width="14" height="39" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/red_box_04.jpg">&nbsp;</td>
+        <td><table border="0" width="205" cellspacing="3" cellpadding="0" bgcolor="#FFFFFF" class="bodytext">
+          <tr align="center">
+            <td bgcolor="#FFFFFF"><div id="orderList">
+              <?php  require_once('cart.php');?>
+            </div></td>
+          </tr>
+          <tr>
+            <td width="100%"></td>
+          </tr>
+        </table></td>
+        <td background="images/red_box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/red_box_07.jpg" width="15" height="17" alt="" /></td>
+        <td background="images/red_box_08.jpg"></td>
+        <td><img src="images/red_box_09.jpg" width="14" height="17" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td width="225" align="center"><!--EDIT BELOW CODE TO YOUR OWN MENU--></td>
+  </tr>
+</table></div>
+</div>    </td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td  valign="top">&nbsp;</td>
+    <td valign="top"><div id="refdivebut">&nbsp;</div></td>
+  </tr>
+</table>
+<script type="text/javascript">
+
+
+var winW = 1280, winH = 460;
+
+if (parseInt(navigator.appVersion)>3) {
+ if (navigator.appName=="Netscape") {
+  winW = window.innerWidth;
+  winH = window.innerHeight;
+ }
+ if (navigator.appName.indexOf("Microsoft")!=-1) {
+  winW = document.body.offsetWidth;
+  winH = document.body.offsetHeight;
+  winW=winW-40;
+ }
+}
+
+//alert("Width : "+winW+" height : "+winH);
+var toplimx=(winW/2)+250;
+var toplimy=408;
+
+function set_top_lim(obj)
+{
+    var topValue= 0,leftValue= 0;
+    while(obj){
+	leftValue+= obj.offsetLeft;
+	topValue+= obj.offsetTop;
+	obj= obj.offsetParent;
+    }
+    finalvalue = leftValue + "," + topValue;
+	//toplimx = (leftValue-240);
+	toplimy = topValue;
+	
+}
+//var d = document.getElementById('refdivetop');
+//set_top_lim(d);
+
+
+
+var floatingMenuId = 'floatdiv';
+var floatingMenu =
+{
+    targetX: toplimx,
+    targetY: 10,
+
+    hasInner: typeof(window.innerWidth) == 'number',
+    hasElement: typeof(document.documentElement) == 'object'
+        && typeof(document.documentElement.clientWidth) == 'number',
+
+    menu:
+        document.getElementById
+        ? document.getElementById(floatingMenuId)
+        : document.all
+          ? document.all[floatingMenuId]
+          : document.layers[floatingMenuId]
+};
+floatingMenu.move = function ()
+{
+	//alert(floatingMenu.nextY);
+	if(floatingMenu.nextY>toplimy){
+    floatingMenu.menu.style.left = floatingMenu.nextX + 'px';
+    floatingMenu.menu.style.top = floatingMenu.nextY + 'px';
+	}else{
+    floatingMenu.menu.style.left = toplimx + 'px';
+    floatingMenu.menu.style.top = toplimy + 'px';
+	}
+	//alert(floatingMenu.nextY);
+}
+
+floatingMenu.computeShifts = function ()
+{
+    var de = document.documentElement;
+
+    floatingMenu.shiftX =  
+        floatingMenu.hasInner  
+        ? pageXOffset  
+        : floatingMenu.hasElement  
+          ? de.scrollLeft  
+          : document.body.scrollLeft;  
+    if (floatingMenu.targetX < 0)
+    {
+        floatingMenu.shiftX +=
+            floatingMenu.hasElement
+            ? de.clientWidth
+            : document.body.clientWidth;
+    }
+
+    floatingMenu.shiftY = 
+        floatingMenu.hasInner
+        ? pageYOffset
+        : floatingMenu.hasElement
+          ? de.scrollTop
+          : document.body.scrollTop;
+    if (floatingMenu.targetY < 0)
+    {
+        if (floatingMenu.hasElement && floatingMenu.hasInner)
+        {
+            floatingMenu.shiftY +=
+                de.clientHeight > window.innerHeight
+                ? window.innerHeight
+                : de.clientHeight
+        }
+        else
+        {
+            floatingMenu.shiftY +=
+                floatingMenu.hasElement
+                ? de.clientHeight
+                : document.body.clientHeight;
+        }
+    }
+}
+
+floatingMenu.calculateCornerX = function()
+{
+    if (floatingMenu.targetX != 'center')
+        return floatingMenu.shiftX + floatingMenu.targetX;
+
+    var width = parseInt(floatingMenu.menu.offsetWidth);
+
+    var cornerX =
+        floatingMenu.hasElement
+        ? (floatingMenu.hasInner
+           ? pageXOffset
+           : document.documentElement.scrollLeft) + 
+          (document.documentElement.clientWidth - width)/2
+        : document.body.scrollLeft + 
+          (document.body.clientWidth - width)/2;
+    return cornerX;
+};
+
+floatingMenu.calculateCornerY = function()
+{
+    if (floatingMenu.targetY != 'center')
+        return floatingMenu.shiftY + floatingMenu.targetY;
+
+    var height = parseInt(floatingMenu.menu.offsetHeight);
+    var clientHeight = 
+        floatingMenu.hasElement && floatingMenu.hasInner
+        && document.documentElement.clientHeight 
+            > window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+
+    var cornerY =
+        floatingMenu.hasElement
+        ? (floatingMenu.hasInner  
+           ? pageYOffset
+           : document.documentElement.scrollTop) + 
+          (clientHeight - height)/2
+        : document.body.scrollTop + 
+          (document.body.clientHeight - height)/2;
+    return cornerY;
+};
+
+floatingMenu.doFloat = function()
+{
+    var stepX, stepY;
+
+    floatingMenu.computeShifts();
+
+    var cornerX = floatingMenu.calculateCornerX();
+
+    var stepX = (cornerX - floatingMenu.nextX) * .7;
+    if (Math.abs(stepX) < .5)
+    {
+        stepX = cornerX - floatingMenu.nextX;
+    }
+
+    var cornerY = floatingMenu.calculateCornerY();
+
+    var stepY = (cornerY - floatingMenu.nextY) * .40;
+    if (Math.abs(stepY) < .5)
+    {
+        stepY = cornerY - floatingMenu.nextY;
+    }
+
+    if (Math.abs(stepX) > 0 || Math.abs(stepY) > 0)
+    {
+        floatingMenu.nextX += stepX;
+        floatingMenu.nextY += stepY;
+        floatingMenu.move();
+    }
+
+    setTimeout('floatingMenu.doFloat()', 70);
+};
+
+// addEvent designed by Aaron Moore
+floatingMenu.addEvent = function(element, listener, handler)
+{
+    if(typeof element[listener] != 'function' || typeof element[listener + '_num'] == 'undefined')
+    {
+        element[listener + '_num'] = 0;
+        if (typeof element[listener] == 'function')
+        {
+            element[listener + 0] = element[listener];
+            element[listener + '_num']++;
+        }
+        element[listener] = function(e)
+        {
+            var r = true;
+            e = (e) ? e : window.event;
+            for(var i = element[listener + '_num'] -1; i >= 0; i--)
+            {
+                if(element[listener + i](e) == false)
+                    r = false;
+            }
+            return r;
+        }
+    }
+
+    //if handler is not already stored, assign it
+    for(var i = 0; i < element[listener + '_num']; i++)
+        if(element[listener + i] == handler)
+            return;
+    element[listener + element[listener + '_num']] = handler;
+    element[listener + '_num']++;
+};
+
+floatingMenu.init = function()
+{
+    floatingMenu.initSecondary();
+    floatingMenu.doFloat();
+};
+
+floatingMenu.initSecondary = function()
+{
+    floatingMenu.computeShifts();
+    floatingMenu.nextX = floatingMenu.calculateCornerX();
+    floatingMenu.nextY = floatingMenu.calculateCornerY();
+    floatingMenu.move();
+}
+
+if (document.layers)
+    floatingMenu.addEvent(window, 'onload', floatingMenu.init);
+else
+{
+    floatingMenu.init();
+    floatingMenu.addEvent(window, 'onload',  floatingMenu.initSecondary);
+}
+</script>
+<script language="javascript">
+$(document).ready(function() {
+if (parseInt(navigator.appVersion)>3) {
+ if (navigator.appName=="Netscape") {
+  winW2 = window.innerWidth;
+  winH2 = window.innerHeight;
+ }
+ if (navigator.appName.indexOf("Microsoft")!=-1) {
+  winW2 = document.body.offsetWidth;
+  winH2 = document.body.offsetHeight;
+  winW2=winW2+20;
+ }
+}
+
+var leftlimx=(winW2/2)-482;
+
+$("#floatMenu").css("left",leftlimx);
+});</script>
+

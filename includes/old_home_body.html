@@ -1,0 +1,48 @@
+<table width="98%" border="0" align="center" cellpadding="2" cellspacing="1" class="bodytext">
+                                    <tr>
+                                      <td height="20">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                      <td height="20">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                      <td><strong>Welcome to indian foods online. A new way to order curry online ! </strong></td>
+                                    </tr>
+                                    <tr>
+                                      <td>An easier way to find and order a takeaway.</td>
+                                    </tr>
+                                    <tr>
+                                      <td><img src="images/pic_order_takeway.jpg" width="460" height="108"></td>
+                                    </tr>
+                                    <tr>
+                                      <td><p align="justify">Indian foods online is the fastest growing online food  portal for specially Indian and Bangladeshi Restaurants and Takeaway. Indian  foods online has a dedicated team of stuff with wide experience with Indian  curry industry and this approach is to take the industry one step forward.  Indian foods online will provide this service nationwide and soon we are  expecting all the popular Indian restaurant on board. We will be running  various promotional offers and prize draw from the first 1,000 registered user,  so do not delay, register today for your free gift!!</p></td>
+                                    </tr>
+                                    <tr>
+                                      <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                      <td><img src="images/serving_37.jpg" width="173" height="45" /></td>
+  </tr>
+                                    <tr>
+                                      <td valign="top"><div align="justify">
+                                        <p><span class="stitle">
+										<?php 
+										$query = "SELECT * FROM area ORDER BY name DESC";
+										$result = $db->execQuery($query);
+										$arinfo = $db->resultArray();
+										if(sizeof($arinfo)<= 0)
+										echo 'No Reservation Exist!';
+										for ($i = 0; $i < sizeof($arinfo); $i++) 
+										{
+										?><a href="index-action-restaurant_list-areaid-<?php echo $arinfo[$i]['id']; ?>" class="nav"><?php echo $arinfo[$i]["name"]; ?></a> (<?PHP 
+										$arids=$arinfo[$i]['id']; 
+										$queryc="Select count(*) as totlares from resturant where area_id='$arids' AND aactive=1";
+										$resulttotal=mysql_query($queryc);
+										$rowtotal=mysql_fetch_array($resulttotal);
+										echo  $rowtotal["totlares"];?>), 
+										
+										<?php 										
+										} ?></span></p>
+                                        </div></td>
+                                    </tr>
+                                  </table>

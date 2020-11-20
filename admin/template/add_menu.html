@@ -1,0 +1,61 @@
+<script language="javascript"> 
+
+  
+function validation()
+{
+
+  if (document.edit.categories_name.value == "" )
+  {
+    alert("Category Title is a required field.");
+    document.edit.categories_name.focus();
+    return false;
+  }
+  
+window.opener.location.href = window.opener.location.href;
+
+  if (window.opener.progressWindow)
+		
+  {
+    window.opener.progressWindow.close()
+	
+  }
+	window.opener.location.href="<?=$_SESSION['adminmenupath']?>";
+  return true;
+//win();
+  
+}
+</script>
+<div style="background: #FFFFFF;">
+<form action="index.php?action=insert_new_admin_menu&tabm=rcttb" method="post" enctype="multipart/form-data" name="edit" id="edit" onSubmit="return validation(this)">
+<span class="message"><?PHP echo $message;?></span>
+<table  bgcolor="#FFFFFF">
+ <tr>
+                        <td width="47%" align="right" ><strong>Category Name: </strong></td>
+                        <td width="53%" ><input name="catid" id="catid" value="" type="hidden">
+                            <input name="categories_name" class="textbox_wht" id="categories_name" size="15" value="" type="text"></td>
+    </tr>
+                      <tr>
+
+                        <td align="right" ><strong>Description</strong></td>
+                        <td align="left" ><textarea name="short_description" style="width: 400px; height: 100px;"></textarea>
+						
+						                                
+                                                        
+                                                        
+                                                        
+                                                        
+                                                    </td>
+                      </tr>
+                      <tr>
+                        <td >&nbsp;</td>
+                        <td align="left" >                            <input name="Submit" value="Add Category" class="button_grn" type="submit">
+
+                          </td>
+                      </tr>
+                      <tr>
+                        <td >&nbsp;</td>
+                        <td align="left" >&nbsp;</td>
+                      </tr></table>
+                    
+</form>
+</div>

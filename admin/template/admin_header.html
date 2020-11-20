@@ -1,0 +1,129 @@
+<style type="text/css">
+<!--
+.style2 {font-weight: bold}
+-->
+</style>
+<script type="text/JavaScript">
+<!--
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+//-->
+</script>
+
+<!-- ImageReady Slices (admin.psd) -->
+<TABLE WIDTH=100% BORDER=0 align="center" CELLPADDING=0 CELLSPACING=0>
+	<TR>
+	  <TD><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><IMG SRC="images/admin_01.jpg" WIDTH=33 HEIGHT=108 ALT=""></td>
+          <td><IMG SRC="images/admin_02.jpg" WIDTH=382 HEIGHT=108 ALT=""></td>
+          <td width="100%" background="images/admin_03.jpg"><table width="100" border="0" align="right" cellpadding="0" cellspacing="0" class="bodytext">
+            <tr>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td><a href="index.php?action=home" class="nav">Home</a></td>
+              <td> |</td>
+              <td> <div align="center"><a href="index.php?action=logout" class="nav">Logout</a> </div></td>
+            </tr>
+          </table></td>
+          <td><IMG SRC="images/admin_04.jpg" WIDTH=38 HEIGHT=108 ALT=""></td>
+        </tr>
+      </table></TD>
+  </TR>
+	<TR>
+	  <TD bgcolor="#FFFFFF"><TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0>
+        <TR>
+          <TD><IMG SRC="images/admin_05.jpg" WIDTH=182 HEIGHT=36 ALT=""></TD>
+          <TD width="100%" valign="bottom" background="images/top_bg.jpg"><table width="780" border="0" align="right" cellpadding="0" cellspacing="0">
+            <tr>
+              <td><table width="115" border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td><? if($tabm=="admu"){?><img src="images/top_button_red_01.jpg" width="9" height="29" alt="" /><?}else{?><img src="images/top_button_01.jpg" width="9" height="29" alt="" /><?}?></td>
+                    <td width="100%" <? if($tabm=="admu"){?>background="images/top_button_red_02.jpg" <?}else{?>background="images/top_button_02.jpg"<?}?>><div align="center"><a href="index.php?action=edit_profile&tabm=admu" class="nav1">User Management </a></div></td>
+                    <td><? if($tabm=="admu"){?><img src="images/top_button_red_03.jpg" width="9" height="29" alt="" /><?}else{?><img src="images/top_button_03.jpg" width="9" height="29" alt="" /><?}?></td>
+                  </tr>
+              </table></td>
+              <td><table width="115" border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td><? if($tabm=="rcttb"){?><img src="images/top_button_red_01.jpg" width="9" height="29" alt="" /><?}else{?><img src="images/top_button_01.jpg" width="9" height="29" alt="" /><?}?></td>
+                    <td width="100%" <? if($tabm=="rcttb"){?>background="images/top_button_red_02.jpg" <?}else{?>background="images/top_button_02.jpg"<?}?>><div align="center"><a href="index.php?action=resturantlist&tabm=rcttb" class="nav1">Restaurant Control</a></div></td>
+                    <td><? if($tabm=="rcttb"){?><img src="images/top_button_red_03.jpg" width="9" height="29" alt="" /><?}else{?><img src="images/top_button_03.jpg" width="9" height="29" alt="" /><?}?></td>
+                  </tr>
+              </table></td>
+              <td><table width="115" border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td><? if($tabm=="actd"){?><img src="images/top_button_red_01.jpg" width="9" height="29" alt="" /><?}else{?><img src="images/top_button_01.jpg" width="9" height="29" alt="" /><?}?></td>
+                     <td width="100%" <? if($tabm=="actd"){?>background="images/top_button_red_02.jpg" <?}else{?>background="images/top_button_02.jpg"<?}?>><div align="center"><a href="index.php?action=allretaurant_orderlist&tabm=actd" class="nav1">View All Orders</a></div></td>
+                    <td><? if($tabm=="actd"){?><img src="images/top_button_red_03.jpg" width="9" height="29" alt="" /><?}else{?><img src="images/top_button_03.jpg" width="9" height="29" alt="" /><?}?></td>
+                  </tr>
+              </table></td>
+              <td><table width="90" border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td><? if($tabm=="ainv"){?><img src="images/top_button_red_01.jpg" width="9" height="29" alt="" /><?}else{?><img src="images/top_button_01.jpg" width="9" height="29" alt="" /><?}?></td>
+                    <td width="100%" <? if($tabm=="ainv"){?>background="images/top_button_red_02.jpg" <?}else{?>background="images/top_button_02.jpg"<?}?> ><div align="center"><a href="index.php?action=all_invoices&tabm=ainv" class="nav1">Invoices<br />
+                    </a></div></td>
+                    <td><? if($tabm=="ainv"){?><img src="images/top_button_red_03.jpg" width="9" height="29" alt="" /><?}else{?><img src="images/top_button_03.jpg" width="9" height="29" alt="" /><?}?></td>
+                  </tr>
+              </table></td>
+              <td><table width="130" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td><? if($tabm=="cusm" || $tabm==""){?>
+                      <img src="images/top_button_red_01.jpg" width="9" height="29" alt="" />
+                    <?}else{?>
+                    <img src="images/top_button_01.jpg" width="9" height="29" alt="" />
+                    <?}?></td>
+                  <td width="100%" <? if($tabm=="cusm" || $tabm==""){?>background="images/top_button_red_02.jpg" <?}else{?>background="images/top_button_02.jpg"<?}?>><div align="center"><a href="index.php?action=existing_customer&tabm=" class="nav1">Customer Management </a></div></td>
+                  <td><? if($tabm=="cusm" || $tabm==""){?>
+                      <img src="images/top_button_red_03.jpg" width="9" height="29" alt="" />
+                    <?}else{?>
+                    <img src="images/top_button_03.jpg" width="9" height="29" alt="" />
+                    <?}?></td>
+                </tr>
+              </table></td>
+              <td><table width="100" border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td><img src="images/top_button_01.jpg" width="9" height="29" alt="" /></td>
+                    <td width="100%" background="images/top_button_02.jpg"><div align="center"><a href="#" class="nav1">News Letters</a></div></td>
+                    <td><img src="images/top_button_03.jpg" width="9" height="29" alt="" /></td>
+                  </tr>
+              </table></td>
+              <td><table width="90" border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td><img src="images/top_button_01.jpg" width="9" height="29" alt="" /></td>
+                    <td width="100%" background="images/top_button_02.jpg"><div align="center"><a href="#" class="nav1">CRM</a></div></td>
+                    <td><img src="images/top_button_03.jpg" width="9" height="29" alt="" /></td>
+                  </tr>
+              </table></td>
+              <td><table width="90" border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td><? if($tabm=="cmst"){?><img src="images/top_button_red_01.jpg" width="9" height="29" alt="" /><?}else{?><img src="images/top_button_01.jpg" width="9" height="29" alt="" /><?}?></td>
+                    <td width="100%" <? if($tabm=="cmst"){?>background="images/top_button_red_02.jpg" <?}else{?>background="images/top_button_02.jpg"<?}?>><div align="center"><a href="index.php?action=cms_page_list&tabm=cmst" class="nav1">CMS</a></div></td>
+                    <td><? if($tabm=="cmst"){?><img src="images/top_button_red_03.jpg" width="9" height="29" alt="" /><?}else{?><img src="images/top_button_03.jpg" width="9" height="29" alt="" /><?}?></td>
+                  </tr>
+              </table></td>
+            </tr>
+          </table></TD>
+          <TD><IMG SRC="images/admin_07.jpg" WIDTH=38 HEIGHT=36 ALT=""></TD>
+        </TR>
+        
+      </TABLE></TD>
+  </TR>
+	
+	<TR>
+	  <TD height="27" background="images/index_07.jpg"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><IMG SRC="images/index_05.jpg" WIDTH=33 HEIGHT=27 ALT=""></td>
+          <td><IMG SRC="images/admin_09.jpg" WIDTH=149 HEIGHT=27 ALT=""></td>
+          <td width="100%"><div align="right"><IMG SRC="images/index_08.jpg" WIDTH=155 HEIGHT=27 ALT=""></div></td>
+          <td><IMG SRC="images/index_09.jpg" WIDTH=38 HEIGHT=27 ALT=""></td>
+        </tr>
+      </table></TD>
+  </TR>
+	
+</TABLE>

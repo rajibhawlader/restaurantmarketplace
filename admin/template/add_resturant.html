@@ -1,0 +1,366 @@
+<script language="javascript"> 
+function IsNumeric(sText)
+{
+   var ValidChars = "0123456789";
+   var IsNumber=true;
+   var Char;
+
+ 
+   for (i = 0; i < sText.length && IsNumber == true; i++) 
+      { 
+      Char = sText.charAt(i); 
+      if (ValidChars.indexOf(Char) == -1) 
+         {
+         IsNumber = false;
+         }
+      }
+   return IsNumber;
+   
+   }
+function validation()
+{
+	 if (document.edit.first_name.value == "" )
+  {
+    alert("First Name is a required field.");
+    document.edit.first_name.focus();
+    return false;
+  }
+  
+   if (document.edit.last_name.value == "" )
+  {
+    alert("Last Name is a required field.");
+    document.edit.last_name.focus();
+    return false;
+  }
+  
+ 
+  
+  if (document.edit.address1.value == "" )
+  {
+    alert("ZIP Code is a required field.");
+    document.edit.address1.focus();
+    return false;
+  }
+ /* 
+  if (document.edit.email.value.indexOf("@") == -1 || document.edit.email.value == "")
+  {
+    alert("Please enter a correct email address.");
+    document.edit.email.focus();
+    return false;
+  }
+  
+  if (document.edit.email.value.indexOf(".") == -1 || document.edit.email.value == "")
+  {
+    alert("Please enter a correct email address.");
+    document.edit.email.focus();
+    return false;
+  }*/
+  if (document.edit.rname.value == "" )
+  {
+    alert("Restaurant Name is a required field.");
+    document.edit.rname.focus();
+    return false;
+  }
+  
+   if (document.edit.street.value == "" )
+  {
+    alert("Street Name is a required field.");
+    document.edit.street.focus();
+    return false;
+  }
+  
+ 
+  
+  if (document.edit.zipcode.value == "" )
+  {
+    alert("ZIP Code is a required field.");
+    document.edit.zipcode.focus();
+    return false;
+  }
+    return true;
+  
+}
+</script>
+<script type="text/JavaScript">
+<!--
+
+
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+//-->
+</script>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="4%" height="400" valign="top">&nbsp;</td>
+    <td width="93%" align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td align="center"><table width="99%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+            <td background="images/box_02.jpg"><span class="box_title_text">Add New Restaurant  </span></td>
+            <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+          </tr>
+          <tr>
+            <td background="images/box_04.jpg">&nbsp;</td>
+            <td width="100%" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td><? 
+	$sqlreq="select * from userregistration,resturant  where userregistration.id=resturant.userid and resturant.rid='".$_REQUEST['rid']."'";
+	$resultreq=mysql_query($sqlreq);
+	$rowreq=mysql_fetch_array($resultreq);
+	?></td>
+              </tr>
+              <tr>
+                <td width="92%" height="400" align="left" valign="top"><form action="index.php?action=insert_new_resturant&tabm=rcttb&rid=<? echo $rowreq["rid"]; ?>" method="post" enctype="multipart/form-data" name="edit" id="edit" onSubmit="return validation(this)">
+                    <table width="100%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#00CCCC" class="bodytext">
+                      <? if($message!=""){ ?><tr>
+                        <td colspan="2" align="center" bgcolor="#FFFFFF" ><span class="message"><?php echo $message; ?></span></td>
+                      </tr>
+					  <?}?>
+                      <tr>
+                        <td width="36%" align="center" valign="top" bgcolor="#F0F0F0" class="message"><table width="100%" border="0" cellspacing="2" cellpadding="3" class="bodytext">
+                            <tr>
+                              <td height="20" colspan="2" align="left" bgcolor="#CCCCCC"><strong>&nbsp;&nbsp;Account owner/holder information</strong></td>
+                            </tr>
+                            <tr>
+                              <td width="39%" align="left"><strong>First   Name: *</strong></td>
+                              <td width="61%" align="left"><input type="hidden" name="cid" id="cid" value="<? echo $rowreq["id"]; ?>" />
+                                  <input name="first_name" type="text" class="textbox_wht" id="first_name" tabindex="1" value="<? echo $rowreq["first_name"]; ?>" size="27" /></td>
+                            </tr>
+                            <tr>
+                              <td align="left"><strong>Last Name : 
+                                *</strong></td>
+                              <td align="left"><input name="last_name" type="text" class="textbox_wht" id="last_name" tabindex="2" value="<? echo $rowreq["last_name"]; ?>" size="27" /></td>
+                            </tr>
+                            <tr>
+                              <td align="left" valign="top"><strong>Address: * </strong></td>
+                              <td align="left"><textarea name="address1" cols="20" id="address1" tabindex="3"><? echo strip_tags(html_entity_decode($rowreq["address1"])); ?></textarea></td>
+                            </tr>
+                            <tr>
+                              <td align="left"><strong>Phone: </strong></td>
+                              <td align="left"><input name="phone" type="text" class="textbox_wht" id="phone" tabindex="4" value="<? echo $rowreq["phone"]; ?>" size="27" /></td>
+                            </tr>
+							<tr>
+                              <td align="left"><strong>Mobile: </strong></td>
+                              <td align="left"><input name="mobile" type="text" class="textbox_wht" id="mobile" tabindex="4" value="<? echo $rowreq["mobile"]; ?>" size="27" /></td>
+                            </tr>
+                            <tr>
+                              <td align="left"><strong>Fax: </strong></td>
+                              <td align="left"><input name="fax" type="text" class="textbox_wht" id="fax"  tabindex="5" value="<? echo $rowreq["fax"]; ?>" size="27"/></td>
+                            </tr>
+                            <tr>
+                              <td align="left"><strong>Email: </strong></td>
+                              <td align="left"><input name="email" type="text" class="textbox_wht" id="email" tabindex="6" value="<? echo $rowreq["email"]; ?>" size="27" /></td>
+                            </tr>
+                        </table></td>
+                        <td width="64%" align="center" bgcolor="#F0F0F0" class="message"><table width="100%" border="0" cellpadding="2" cellspacing="2" bgcolor="#F0F0F0"  class="bodytext">
+                            <tr>
+                              <td height="20" colspan="3" align="left" bgcolor="#CCCCCC"><strong>&nbsp;&nbsp;Restaurant Information </strong></td>
+                            </tr>
+                            <tr>
+                              <td width="33%" align="right"><strong>Restaurant  Name:* </strong></td>
+                              <td width="35%" align="left"><input name="rname" type="text" class="textbox_wht" id="rname" tabindex="7" value="<? echo $rowreq["rname"]; ?>" size="27" /></td>
+                              <td width="32%" align="left"><strong>Logo upload : </strong></td>
+                            </tr>
+                            <tr>
+                              <td height="31" align="right"><strong>Area:* </strong></td>
+                              <td align="left"><select name="area_id" id="area_id" class="textbox_wht" tabindex="8">
+                                  <?php
+		
+			$queryar = "SELECT * FROM area where status='1'";
+	$resultar =mysql_query($queryar);
+	while($arofferinfoar = mysql_fetch_assoc($resultar)){
+		
+		?>
+                                  <option value="<? echo $arofferinfoar["id"]; ?>" <? if($rowreq["area_id"]==$arofferinfoar["id"]){?>selected="selected"<?}?> ><? echo $arofferinfoar["name"]; ?></option>
+                                  <?
+						}
+						?>
+                              </select></td>
+                              <td align="left"><input name="c_img" type="file" class="textbox" id="c_img" tabindex="21"/></td>
+                            </tr>
+                            <tr>
+                              <td align="right" valign="top"><strong>Restaurant Type:* </strong></td>
+                              <td align="left" valign="top"><select name="chinise_id" id="chinise_id" class="textbox_wht" tabindex="9">
+                                  <?php
+		
+			$querych = "SELECT * FROM cusin where status='1'";
+	$resultch =mysql_query($querych);
+	while($arofferinfoch = mysql_fetch_assoc($resultch)){
+		
+		?>
+                                  <option value="<? echo $arofferinfoch["id"]; ?>" <? if($rowreq["chinise_id"]==$arofferinfoch["id"]){?>selected="selected"<?}?> ><? echo $arofferinfoch["name"]; ?></option>
+                                  <?
+						}
+						?>
+                              </select></td>
+                              <td align="left"><? if($rowreq["logo"]!=""){ ?>
+                                  <img src="../<?php echo $rowreq["logo"]; ?>"/>
+                                  <?}?></td>
+                            </tr>
+							
+							
+							<tr>
+                              <td width="33%" align="right"><strong>Building   Name:* </strong></td>
+                              <td width="35%" align="left"><input name="building" type="text" class="textbox_wht" id="rname" tabindex="10" value="<? echo $rowreq["building"]; ?>" size="27" /></td>
+                             <td width="32%">&nbsp; </td> 
+                            </tr>
+							
+							
+                            <tr>
+                              <td align="right"><strong>Address1:* </strong></td>
+                              <td align="left"><input name="street" type="text" class="textbox_wht" id="street" tabindex="11" value="<? echo $rowreq["street"]; ?>" size="27" /></td>
+                              <td align="left" valign="top"><strong>Restaurant Description : </strong></td>
+                            </tr>
+							
+							<tr>
+                              <td align="right"><strong>Address2: </strong></td>
+                              <td align="left"><input name="address2" type="text" class="textbox_wht" id="street" tabindex="12" value="<? echo $rowreq["address2"]; ?>" size="27" /></td>
+                              <td align="left" valign="top">&nbsp; </td>
+                            </tr>
+							
+                            <tr>
+                              <td align="right"><strong>City:* </strong></td>
+                              <td align="left"><input name="city" type="text" class="textbox_wht" id="city" tabindex="13" value="<? echo $rowreq["city"]; ?>" size="27" /></td>
+                              <td rowspan="2" align="left" valign="top"><textarea name="rdesc" rows="2" id="rdesc" tabindex="22"><? echo strip_tags(html_entity_decode($rowreq["rdesc"])); ?></textarea></td>
+                            </tr>
+					        
+							<tr>
+                              <td align="right"><strong>County: </strong></td>
+                              <td align="left"><input name="county" type="text" class="textbox_wht" id="street" tabindex="14" value="<? echo $rowreq["County"]; ?>" size="27" /></td>
+                              <td align="left" valign="top">&nbsp; </td>
+                            </tr>
+							
+							
+                            <tr>
+                              <td align="right"><strong>Post Code:* </strong></td><?php $zipcode = explode(" ", $rowreq["zipcode"]);?>
+                              <td align="left"><input style="text-transform:uppercase;" name="zipcode" type="text" class="textbox_wht" id="zipcode" tabindex="15" value="<? echo $zipcode[0]; ?>" size="6" maxlength="4" />&nbsp;<input name="zipcode2" style="text-transform:uppercase;" type="text" class="textbox_wht" id="zipcode2" value="<? echo $zipcode[1]?>" size="6" maxlength="4" /></td>
+                            </tr>
+                            <tr>
+                              <td align="right"><strong>Country: </strong></td>
+                              <td align="left"><select name="country_id" id="country_id" class="textbox_wht" tabindex="16" >
+							  
+							  <option value="United Kingdom">United Kingdom</option>
+							  
+                                  
+                              </select></td>
+                              <td align="left"><strong>Mission/Slogan/Short view : </strong></td>
+                            </tr>
+                            <tr>
+                              <td align="right"><strong>Main Telephone no: </strong></td>
+                              <td align="left"><input name="contact" type="text" class="textbox_wht" id="contact" tabindex="17" value="<? echo $rowreq["contact"]; ?>" size="27" /></td>
+                              <td rowspan="3" align="left" valign="top"><textarea name="keytitle" id="keytitle" tabindex="23"><? echo strip_tags(html_entity_decode($rowreq["keytitle"])); ?></textarea></td>
+                            </tr>
+                            <tr>
+                              <td align="right"><strong>Telephone no 2: </strong></td>
+                              <td align="left"><input name="contact2" type="text" class="textbox_wht" id="contact2" tabindex="18" value="<? echo $rowreq["contact2"]; ?>" size="27" /></td>
+                            </tr>
+                            <tr>
+                              <td align="right"><strong>Telephone no 3: </strong></td>
+                              <td align="left"><input name="contact3" type="text" class="textbox_wht" id="contact3" tabindex="19" value="<? echo $rowreq["contact3"]; ?>" size="27" /></td>
+                            </tr>
+                            <tr>
+                              <td align="right"><strong>Telephone no  4: </strong></td>
+                              <td colspan="2" align="left"><input name="contact4" type="text" class="textbox_wht" id="contact4" tabindex="20" value="<? echo $rowreq["contact4"]; ?>" size="27" /></td>
+                            </tr>
+							
+							
+							<tr>
+                  <td colspan="3"  align="left"><strong>Restaurant image:</strong></td>
+                              
+                            </tr>
+							
+							
+							<tr>
+                           <td colspan="3" align="left">
+<strong>Image1:</strong><input  type="file"  name="image1"  size="27" tabindex="24" />
+ </td>
+</tr>
+
+<tr><td colspan="3" align="left">
+<strong>Image2:</strong><input name="image2" type="file"   size="27" tabindex="25" />
+ </td>
+</tr>
+
+<tr><td colspan="3" align="left">
+<strong>Image3:</strong><input name="image3" type="file"  size="27" tabindex="26" />
+ </td>
+</tr>
+
+<tr><td colspan="3" align="left">
+<strong>Image4:</strong><input name="image4" type="file"   size="27" tabindex="27" />
+ </td>
+</tr>
+<tr><td colspan="3" align="left">
+<strong>Image5:</strong>
+<input name="image5" type="file"   size="27" tabindex="28" />
+ </td>
+</tr>
+<tr><td colspan="3" align="left">
+<strong>Image6:</strong>
+<input name="image6" type="file"  size="27" tabindex="29" />
+ </td>
+</tr>
+<tr><td colspan="3" align="left">
+<strong>Image7:</strong><input name="image7" type="file"  size="27" tabindex="30" />
+ </td>
+</tr>
+<tr><td colspan="3" align="left">
+<strong>Image8:</strong><input name="image8" type="file"   size="27" tabindex="31" />
+ </td>
+</tr>
+							
+							
+							
+					  
+                            
+							<tr><td><strong>Profile</strong></td>
+							<td>			
+							<?php	
+					    include("spaw/spaw.inc.php");
+						$dummy=$rowreq["profile"]; 
+						$contents = new SpawEditor("profile",$dummy);
+						$contents->show();
+				    ?>
+				</td>	</tr>	
+                        </table></td>
+                      </tr>
+					  
+					  
+					  
+					  
+					  
+                      <tr>
+                        <td colspan="2" align="center" bgcolor="#F0F0F0"><input type="submit" name="Submit" value="Submit" tabindex="32" /></td>
+                      </tr>
+                    </table>
+                </form></td>
+              </tr>
+            </table></td>
+            <td background="images/box_06.jpg">&nbsp;</td>
+          </tr>
+          <tr>
+            <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+            <td background="images/box_08.jpg">&nbsp;</td>
+            <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+</table>

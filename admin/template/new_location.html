@@ -1,0 +1,250 @@
+<script language="javascript">
+function checkfield()
+{
+	
+	
+	if (document.user.lname.value == "" )
+  {
+    alert("Location is a required field!");
+    document.user.lname.focus();
+    return false;
+  }
+		
+		
+	return true;
+}
+</script>
+<script type="text/JavaScript">
+<!--
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+//-->
+</script>
+<body onLoad="MM_preloadImages('images/paging_over_01.gif','images/paging_over_03.gif')">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="4%" height="400" valign="top">&nbsp;</td>
+    <td width="84%" align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td align="center"><table width="99%" border="0" align="center" cellpadding="0" cellspacing="0">
+            <tr>
+              <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+              <td background="images/box_02.jpg"><span class="box_title_text">Add New Area For Restaurant </span></td>
+              <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+            </tr>
+            <tr>
+              <td background="images/box_04.jpg">&nbsp;</td>
+              <td width="100%" valign="top"><table width="100%" border="0">
+
+                <tr>
+                  <td align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td align="center"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+                          <tr>
+                            <td class="fieldtext">&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td><table width="80%" border="0" align="center" cellpadding="5" cellspacing="1" class="bodytext">
+                                <form action="index.php?action=insert_new_location&tabm=rcttb" method="post"  name="user" id="user" onSubmit="return checkfield()">
+                                  <tr>
+                                    <td width="134" class="bodytext"><div align="right">Area Name/Title   :</div></td>
+                                    <td colspan="2"><input name="lname" type="text" class="textbox_wht" id="lname" value="" />                                    </td>
+                                  </tr>
+                                  <?php 
+										 if (isset($message) && !empty($message)) {
+										 ?>
+                                  <tr>
+                                    <td colspan="3" align="center" class="message"><?php echo $message; ?></td>
+                                  </tr>
+                                  <?php
+										 }
+										 ?>
+                                  <tr>
+                                    <td width="134">&nbsp;</td>
+                                    <td width="46" ><input type="submit" value="Add" name="submit" class="button_grn" />                                    </td>
+                                    <td width="225" ><div align="left">
+                                        <!--<a href="index.php?action=forgot_password" class="nav">Forgot Password?</a>-->
+                                    </div></td>
+                                  </tr>
+                                </form>
+                            </table></td>
+                          </tr>
+                        </table></td>
+                        </tr>
+                  </table></td>
+                </tr>
+                <tr>
+                  <td align="center">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td align="center"><table width="80%" border="0" cellpadding="4" cellspacing="1" bgcolor="#DFDFDF" class="bodytext">
+                        <!--<tr border=0> 
+          <td colspan="10" class="fieldtext"></td>
+        </tr> -->
+                        <tr>
+                          <!--<td width="79" bgcolor="#EBEDF1" class="fieldtext">Image</td>-->
+                          <td width="120" align="left" valign="top" bgcolor="#F2F2F2" class="fieldtext"><div align="left">Area Name/Title</div></td>
+                          <td width="76" bgcolor="#F2F2F2" class="fieldtext">Action</td>
+                        </tr>
+                          <?php
+	
+			
+				
+					$query = "SELECT * FROM area order by name";	
+					$total_query = "SELECT count(*) FROM area order by name";
+					
+					
+					$ref = $db->execQuery($total_query);
+				$total = $db->result($ref);
+				
+					$targetpage = "index.php?action=new_location&tabm=rcttb"; 	//your file name  (the name of this file)
+					$targetpage .= $query_string;
+					$limit = 50; 								//how many items to show per page
+					$page = $_REQUEST['page'];
+					if($page) 
+						$start = ($page - 1) * $limit; 			//first item to display on this page
+					else
+						$start = 0;								//if no page var is given, set start to 0
+						
+					
+				$pagination = pagination($targetpage, $total, $page, $limit);
+				// pagination end
+					
+				
+			
+		//$result = $db->execQuery($query);
+		//$arinfo = $db->resultArray();
+		//for ($i = 0; $i < sizeof($arinfo); $i++) {
+		$success = $db->checkExists($query);
+		if ($success == true){
+			$qty=15;
+			$query.=" LIMIT $start, $limit";
+			$result = $db->execQuery($query);
+			$arinfo = $db->resultArray($result);
+			if ($_REQUEST["stq"]==""){
+			 $stq=0;
+			}else{
+			 $stq=$_REQUEST["stq"];
+			}
+			$v=($stq/$qty)+1;
+			if (sizeof($arinfo)>1){
+				$ste=$stq+$qty;
+				$st2=sizeof($arinfo) % $qty;
+				
+				if ($ste > sizeof($arinfo)){
+					$ste=sizeof($arinfo);
+				}
+				$st1=(sizeof($arinfo)-$st2)/$qty;
+				for ($z=0; $z <= $st1 ; $z++){
+				
+				if ($v==($z+1)){
+					$pageIn.=($z+1);
+				}else{
+				$pageIn.="<a href=index.php?action=new_location&tabm=rcttb&stq=".($z*$qty)."&h=".$h." class=nav1>".($z+1)."</a>";
+				}
+				}
+			}else{
+				$ste=sizeof($arinfo);
+			}
+			for ($i = 0; $i < sizeof($arinfo); $i++)
+			{
+					
+			
+		?>
+                        <tr class="bodytext">
+                          <!--<td width="62"><?php //echo $arimageinfo[0]["ImgURL"]; ?></td>-->
+                          <td align="left" valign="top" bgcolor="#FFFFFF"><div align="left"><strong><? echo $arinfo[$i]["name"]; ?></strong></div></td>
+                          <td bgcolor="#FFFFFF"><a href="index.php?action=edit_area&amp;lid=<?php echo $arinfo[$i]["id"]; ?>&tabm=rcttb" class="nav">Edit</a>&nbsp;|&nbsp;<a href="index.php?action=location_del&lid=<?php echo $arinfo[$i]["id"]; ?>&tabm=rcttb" class="nav"onclick="return confirm('Are you sure you want to delete this?');">Delete</a></td>
+                        </tr>
+						<?php
+	   }
+	}
+	?>
+                       <!-- <tr class="bodytext">
+                          <td colspan="2" align="center" valign="top" bgcolor="#FFFFFF"><?
+	/*if ($v > 0){
+		echo ("<samp  class=bodytext>Page ".$v." Of ".$z."</samp>");
+	}*/
+	?></td>
+                          </tr>-->
+                        <tr class="bodytext">
+                          <td colspan="2" align="center" valign="top" bgcolor="#FFFFFF">
+						  <?php echo $pagination;?>
+						  
+						  <!--<TABLE WIDTH=60% BORDER=0 CELLPADDING=0 CELLSPACING=0 align="center">
+                            <TR>
+                              <TD><?php
+		if ($v>1){
+		?>
+                                  <a class="nav1" href="index.php?action=new_location&stq=<?php echo(($v-2)*$qty)?>&h=1" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('a','','images/paging_over_01.gif',1)"><img src="images/paging_01.gif" name="a" width="30" height="32" border="0"> </a>
+                                  <?php
+		}else{ ?>
+                                  <img src="images/paging_01.gif" height="32" border="0">
+                                  <?}
+		?>
+                              </TD>
+                              <TD width="100%" background="images/paging_body.gif" height="32" align="center" class="bodytext"><? echo ("Pages- ".$pageIn);?></TD>
+                              <TD><?php
+		 if ($v <$z){
+		 ?>
+                                  <a class="nav1" href="index.php?action=new_location&stq=<?php echo(($v)*$qty)?>&h=1" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('b','','images/paging_over_03.gif',1)"><img src="images/paging_03.gif" name="b" width="30" height="32" border="0"></a>
+                                  <?php
+		 }else{ ?>
+                                  <img src="images/paging_03.gif" width="30" height="32" border="0">
+                                  <?}
+		 ?>
+                              </TD>
+                            </TR>
+                          </TABLE>-->						  
+						  </td>
+                        </tr>
+                        
+	
+                      </table></td>
+                  </tr>
+                <tr>
+                  <td align="center">&nbsp;</td>
+                </tr>
+              </table></td>
+              <td background="images/box_06.jpg">&nbsp;</td>
+            </tr>
+            <tr>
+              <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+              <td background="images/box_08.jpg">&nbsp;</td>
+              <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+            </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+</table>

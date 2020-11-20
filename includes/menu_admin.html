@@ -1,0 +1,135 @@
+<script language="javascript">
+function checkfield()
+{
+	
+	
+	if (document.user.menutitle.value == "" )
+  {
+    alert("Region is a required field!");
+    document.user.menutitle.focus();
+    return false;
+  }
+		
+		
+	return true;
+}
+</script>
+
+<table width="100%" border="0">
+  
+  <tr>
+    <td colspan="2" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="7%">&nbsp;</td>
+        <td width="93%">&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="subtitle14"><img src="images/admin_icon_16.jpg" width="28" height="19" align="absmiddle" /> Resturant Menue Category </td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="20%">&nbsp;</td>
+        <td width="80%"><table width="460" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="9"><img src="images/box_01.gif" width="9" height="9" alt="" /></td>
+            <td background="images/top_line.gif"><img border="0" src="images/top_line.gif" width="1" height="9" /></td>
+            <td width="12"><img src="images/box_03.gif" width="12" height="9" alt="" /></td>
+          </tr>
+          <tr>
+            <td background="images/left_line.gif" width="9">&nbsp;</td>
+            <td><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+              <tr>
+                <td class="fieldtext"><img src="images/icon_management_18.gif" width="42" height="36" border="0" align="absmiddle"/>Add New Menu <span class="subtitle14">Category</span></td>
+              </tr>
+              <tr>
+                <td><table width="100%" border="0" align="center" cellpadding="5" cellspacing="1" class="bodytext">
+                  <form action="index-action-insert_new_menutitle" method="post"  name="user" id="user" onsubmit="return checkfield()">
+                    
+                    <tr>
+                      <td width="134" class="bodytext"><div align="right"> Menu Title :</div></td>
+                      <td colspan="2"><input name="menutitle" type="text" class="textbox" id="menutitle" value="" />                      </td>
+                    </tr>
+                    
+                    <?php 
+										 if (isset($message) && !empty($message)) {
+										 ?>
+                    <tr>
+                      <td colspan="3" align="center" class="message"><?php echo $message; ?></td>
+                    </tr>
+                    <?php
+										 }
+										 ?>
+                    <tr>
+                      <td width="134">&nbsp;</td>
+                      <td width="46" ><input type="submit" value="Add" name="submit" class="textbox" />                        </td>
+                      <td width="225" ><div align="left"><!--<a href="index.php?action=forgot_password" class="nav">Forgot Password?</a>--></div></td>
+                    </tr>
+                  </form>
+                </table></td>
+              </tr>
+            </table></td>
+            <td background="images/right_line.gif" width="12">&nbsp;</td>
+          </tr>
+          <tr>
+            <td width="9"><img src="images/box_07.gif" width="9" height="11" alt="" /></td>
+            <td background="images/bottom_line.gif"><img border="0" src="images/bottom_line.gif" width="2" height="11" /></td>
+            <td width="12"><img src="images/box_09.gif" width="12" height="11" alt="" /></td>
+          </tr>
+        </table></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="20%" align="center">&nbsp;</td>
+    <td width="80%" align="left"><table width="70%" border="0" cellpadding="4" cellspacing="1" bgcolor="#DFDFDF" class="bodytext">
+      <!--<tr border=0> 
+          <td colspan="10" class="fieldtext"></td>
+        </tr> -->
+      <tr>
+        <!--<td width="79" bgcolor="#EBEDF1" class="fieldtext">Image</td>-->
+        <td width="120" align="left" valign="top" bgcolor="#F2F2F2" class="fieldtext"><div align="left">Menu Title </div></td>
+        <td width="76" bgcolor="#F2F2F2" class="fieldtext">Action</td>
+      </tr>
+      <?php
+		
+			$queryli = "SELECT * FROM menu_admin";
+	$resultli =@mysql_query($queryli);
+	while($arofferinfoli = @mysql_fetch_assoc($resultli)){
+				
+			
+			
+		?>
+      <tr class="bodytext1">
+        <!--<td width="62"><?php //echo $arimageinfo[0]["ImgURL"]; ?></td>-->
+        <td align="left" valign="top" bgcolor="#FFFFFF"><div align="left"><strong><? echo $arofferinfoli["menutitle"]; ?></strong></div></td>
+        <td bgcolor="#FFFFFF"><a href="index-action-edit_menutitle-mid-<?php echo $arofferinfoli["mid"]; ?>" class="nav">Edit</a>&nbsp;|&nbsp;<a href="index-action-menutitle_del-mid-<?php echo $arofferinfoli["mid"]; ?>-pType-rent" class="nav"onclick="return confirm('Are you sure you want to delete this?');">Delete</a></td>
+      </tr>
+      <?php
+	   
+	}
+	?>
+    </table></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center">&nbsp;</td>
+  </tr>
+</table>

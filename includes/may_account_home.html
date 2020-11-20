@@ -1,0 +1,72 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  
+  <tr>
+    <td height="500" align="center" valign="top"><table width="99%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+        <td background="images/box_02.jpg"><span class="box_title_text">Account owner/holder Inside </span></td>
+        <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/box_04.jpg">&nbsp;</td>
+        <td width="100%" valign="top"><table width="100%" border="0" align="center" cellpadding="2" cellspacing="1" class="bodytext">
+            <tr>
+              <td height="20">&nbsp;</td>
+            </tr>
+            <tr>
+              <td><strong>Welcome to india foods online.</strong></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+            <?  if($_SESSION['resid']==""){
+        ?>
+            <tr>
+              <td><p>Your restaurant is not ready. Please insert <a href="index-action-new_resturant" class="nav"><strong>restaurant info</strong></a>,  then you will be able to insert menu for sale. &nbsp;&nbsp;</p></td>
+            </tr>
+            <? }else{?>
+            <tr>
+              <td align="center" valign="top"><table width="70%" border="0" cellspacing="2" cellpadding="2" class="bodytext">
+                  <?php
+										$uids=$_SESSION['userid'];
+		
+									$resqueryu="Select * from userregistration where id='$uids'";
+									
+									$resultresu=mysql_query($resqueryu);
+									$rowresu=mysql_fetch_array($resultresu);
+										?>
+                  <tr>
+                    <td align="left"><strong>Welcome <?Php echo $rowresu["first_name"];  ?> <?Php echo $rowresu["last_name"];  ?></strong></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Email:</strong> <?Php echo $rowresu["email"];  ?>, <strong>Phone:</strong> <?Php echo $rowresu["phone"];  ?>, <strong>Fax:</strong> <?Php echo $rowresu["phone"];  ?></td>
+                  </tr>
+                  <tr>
+                    <td><a href="index-action-change_accout" >Change My Profile Info</a> </td>
+                  </tr>
+              </table></td>
+            </tr>
+            <?php }?>
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td valign="top">&nbsp;</td>
+            </tr>
+        </table></td>
+        <td background="images/box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+        <td background="images/box_08.jpg">&nbsp;</td>
+        <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>

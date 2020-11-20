@@ -1,0 +1,268 @@
+<?php
+$customer_id = $_REQUEST["cid"];
+?>
+<script language="javascript"> 
+function IsNumeric(sText)
+{
+   var ValidChars = "0123456789";
+   var IsNumber=true;
+   var Char;
+
+ 
+   for (i = 0; i < sText.length && IsNumber == true; i++) 
+      { 
+      Char = sText.charAt(i); 
+      if (ValidChars.indexOf(Char) == -1) 
+         {
+         IsNumber = false;
+         }
+      }
+   return IsNumber;
+   
+   }
+function validation()
+{
+
+   if (document.edit.customers_address1.value == "" )
+  {
+    alert("Customer Address is a required field.");
+    document.edit.customers_address1.focus();
+    return false;
+  }
+  
+   if (document.edit.customers_town.value == "" )
+  {
+    alert("City is a required field.");
+    document.edit.customers_town.focus();
+    return false;
+  }
+    if (document.edit.customers_postcode.value == "" )
+  {
+    alert("Post Code is a required field.");
+    document.edit.customers_postcode.focus();
+    return false;
+  }
+    if (document.edit.customers_postcode2.value == "" )
+  {
+    alert("Post Code is a required field.");
+    document.edit.customers_postcode2.focus();
+    return false;
+  }
+    if (document.edit.customers_add_label.value == "" )
+  {
+    alert("Address Label is a required field.");
+    document.edit.customers_add_label.focus();
+    return false;
+  }
+
+  return true;
+  
+}
+</script>
+<table width="710" border="0" align="center" cellpadding="0" cellspacing="0">
+  
+  <tr>
+    <td align="center"><?php  require_once('template/customer_cpanel.html');?></td>
+  </tr>
+  <tr>
+    <td height="10"></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" align="left" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="../images/red_box1_01.jpg" width="15" height="39" alt="" /></td>
+        <td width="100%" background="../images/red_box1_02.jpg" class="heading">Address Book</td>
+        <td><img src="../images/red_box1_03.jpg" width="14" height="39" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="../images/red_box1_04.jpg">&nbsp;</td>
+        <td valign="top" bgcolor="#9E0112"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td><table width="100%" border="0" cellpadding="0" cellspacing="0" class="stitle">
+                  <tr>
+                    <td valign="top" bgcolor="#9E0112"><table width="100%" border="0" cellpadding="4" cellspacing="1" class="stitle">
+                        <tbody>
+                          <tr>
+                            <td width="96%" valign="top"><div align="left" class="normal_text">Create and save multiple delivery addresses, so you can easily choose your delivery location.</div></td>
+                          </tr>
+                        </tbody>
+                    </table></td>
+                  </tr>
+                  <tr>
+                    <td valign="top" bgcolor="#9E0112"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="bodytext">
+                <?php
+				$upd="0";
+				$sql="Select * from customers where customers_id='".$customer_id."'";
+				$result=mysql_query($sql);
+				$row=mysql_fetch_array($result);
+				
+				$sql="Select * from customer_address where customers_id='".$customer_id."'";
+				$result = $db->execQuery($sql);
+               	$row2 = $db->resultArray($result);
+				
+				if($_REQUEST['adr_id']!="")
+				{
+					$sql="Select * from customers where customers_id='".$_REQUEST['adr_id']."'";
+					$result=mysql_query($sql);
+					$addinfo=mysql_fetch_array($result);
+					$upd="1";
+				}
+				if($_REQUEST['ca_id']!="")
+				{
+					$sql="Select * from customer_address where customers_id='".$customer_id."' and ca_id='".$_REQUEST['ca_id']."'";
+					$result=mysql_query($sql);
+					$addinfo=mysql_fetch_array($result);
+					$upd="1";
+				}
+
+				?>
+                      <tr>
+                        <td width="95%" valign="middle" align="center"><form action="index.php?action=update_address&cid=<?php echo $customer_id; ?>" method="post" enctype="multipart/form-data" name="edit" id="edit" onsubmit="return validation(this);">
+                          <table width="100%" border="0" cellspacing="2" cellpadding="2" class="normal_text">
+                              
+                              <tr>
+                                <td colspan="2" align="center" valign="middle"><div style="border-top:1px dashed #333333"> </div></td>
+                              </tr>
+                              <tr>
+                                <td colspan="2" align="left" valign="middle" class="address_link"><img src="../images/tick.jpg"/> <a href="index.php?action=address_book&cid=<?=$row["customers_id"]?>&adr_id=<?php echo $row["customers_id"];?>"><?Php echo $row["customers_add_label"];?></a></td>
+                              </tr>
+							  <?php
+							  for($i=0; $i<sizeof($row2); $i++)
+							  {
+							  ?>
+                              <tr>
+                                <td width="35%" align="left" valign="middle" class="address_link"><img src="../images/tick.jpg"/> <a href="index.php?action=address_book&cid=<?=$row["customers_id"]?>&ca_id=<?=$row2[$i]["ca_id"]?>"><?Php echo $row2[$i]["customers_add_label"];?></a></td>
+                                <td width="65%" align="left" valign="middle" class="address_link"><a href="index.php?action=address_delete&cid=<?=$row["customers_id"]?>&ca_id=<?=$row2[$i]["ca_id"]?>">Delete</a></td>
+                              </tr>
+							  <?php } ?>
+                              <tr>
+                                <td colspan="2" align="center" valign="middle"><div style="border-top:1px dashed #333333"> </div></td>
+                              </tr>
+                              <tr>
+                                <td colspan="2" align="center" valign="middle"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="bodytext">
+                                    <tr>
+                                      <td width="95%" valign="middle" align="center" bgcolor="#F0F0F0"></td>
+                                    </tr>
+                                    <tr>
+                                      <td valign="top"><table width="100%" border="0" cellspacing="2" cellpadding="2">
+                                          <tr>
+                                            <td width="50%" align="left" valign="top"><table width="100%" border="0" cellpadding="2" cellspacing="2" class="normal_text">
+                                                <tr>
+                                                  <td colspan="2" align="left" class="cpanel_title2"><strong><?php if($upd==1) echo "Update Your Address"; else echo "Create New Address"; ?></strong></td>
+                                                </tr>
+                                                <tr>
+                                                  <td width="30%" align="left">Address1: </td>
+                                                  <td width="70%" align="left"><input name="customers_address1" type="text"  id="customers_address1" value="<?Php echo $addinfo["customers_address1"];?>" size="25"/>
+                                                    *</td>
+                                                </tr>
+                                                <tr>
+                                                  <td align="left"> Address2: </td>
+                                                  <td align="left"><input name="customers_address2" type="text"  id="customers_address2" value="<?Php echo $addinfo["customers_address2"];?>" size="25"/></td>
+                                                </tr>
+                                                <tr>
+                                                  <td align="left">State: </td>
+                                                  <td align="left"><input name="customers_state" type="text"  id="customers_state" value="<?Php echo $addinfo["customers_state"];?>" size="25"/></td>
+                                                </tr>
+                                                <tr>
+                                                  <td align="left">City: </td>
+                                                  <td align="left"><input name="customers_town" type="text"  id="customers_town" value="<?Php echo $addinfo["customers_town"];?>" size="25"/>
+                                                    *</td>
+                                                </tr>
+                                                <tr>
+                                                  <td align="left">Postcode: <?php $postcode = explode(" ", $addinfo["customers_postcode"]); ?></td>
+                                                  <td align="left"><input name="customers_postcode" type="text"  id="customers_postcode" value="<?Php echo $postcode[0]?>" size="5" maxlength="4"/> <input name="customers_postcode2" type="text"  id="customers_postcode2" value="<?Php echo $postcode[1];?>" size="5" maxlength="4"/>
+                                                    *</td>
+                                                </tr>
+                                                <tr>
+                                                  <td align="left">Country:</td>
+                                                  <td align="left"><select name="customers_country" id="customers_country" style="width:150px" disabled="disabled">
+                                                      <?php
+		
+			$queryril = "SELECT * FROM countries";
+	$resultril =mysql_query($queryril);
+	while($arofferinforil = mysql_fetch_assoc($resultril)){
+		
+		?>
+                                                      <option value="<? echo $arofferinforil["countryName"]; ?>" <?php if($addinfo["customers_country"]==$arofferinforil["countryName"]){?>selected="selected"<?php }?> ><? echo $arofferinforil["countryName"]; ?></option>
+                                                      <?
+						}
+						?>
+                                                  </select></td>
+                                                </tr>
+                                                <tr>
+                                                  <td align="left">Address Label: </td>
+                                                  <td align="left"><input name="customers_add_label" type="text"  id="customers_add_label" value="<?Php echo $addinfo["customers_add_label"];?>" size="25"/> 
+                                                  * </td>
+                                                </tr>
+                                            </table></td>
+                                          </tr>
+                                      </table></td>
+                                    </tr>
+                                </table></td>
+                              </tr>
+                              <tr>
+                                <td colspan="2" align="center" valign="middle"><div style="border-top:1px dashed #000000"> </div></td>
+                              </tr>
+                              
+                              <tr>
+                                <td colspan="2" align="center" valign="middle">&nbsp;</td>
+                              </tr>
+                              <tr>
+                                <td colspan="2" align="center" valign="middle"><table width="100%" border="0" cellpadding="1" cellspacing="1" class="normal_text">
+                                    <?php if( $message!= ""){?>
+                                    <tr>
+                                      <td colspan="2"><div style="font-weight:bold;padding:5px; text-align:center;"><?php echo $message; ?></div></td>
+                                      </tr>
+									 <?php } ?>
+                                    <tr>
+                                      <td align="right">&nbsp;</td>
+                                      <td align="right">
+									  <?php
+									  if($upd==1)
+									  {
+									  	if($_REQUEST['ca_id']!="")
+										{
+									  ?>
+									  <input type="hidden" name="ca_id" id="ca_id" value="<?=$_REQUEST['ca_id']?>" />
+									  <input type="image" src="../images/btn_save_changes.png" width="125" height="25" border="0" name="submit" />
+								  <?php } else { ?>
+								  	    <input type="hidden" name="adr_id" value="<?=$customer_id?>" />	
+								  	   <input type="image" src="../images/btn_save_changes.png" width="125" height="25" border="0" name="submit" />
+								  		 <?php } 
+									  } else { ?>
+									  <input type="hidden" name="new_address" value="store new" />
+									  <input type="image" src="../images/btn_submit_address.png" width="125" height="25" border="0" name="submit" />	
+									   <?php } ?>									  </td>
+                                    </tr>
+                                </table></td>
+                              </tr>
+                            </table>
+                        </form></td>
+                      </tr>
+                      
+                    </table></td>
+                  </tr>
+                  
+                  
+                  
+                  
+              </table></td>
+            </tr>
+            
+            
+        </table></td>
+        <td background="../images/red_box1_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="../images/red_box1_07.jpg" width="15" height="17" alt="" /></td>
+        <td background="../images/red_box1_08.jpg"></td>
+        <td><img src="../images/red_box1_09.jpg" width="14" height="17" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <iframe width=174 height=189 name="gToday:normal:agenda.js" id="gToday:normal:agenda.js" src="calander/ipopeng" scrolling="no" frameborder="0" style="visibility:visible; z-index:999; position:absolute; top:-500px; left:-500px;"></iframe>
+</table>

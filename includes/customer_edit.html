@@ -1,0 +1,359 @@
+<script language="javascript"> 
+function IsNumeric(sText)
+{
+   var ValidChars = "0123456789";
+   var IsNumber=true;
+   var Char;
+
+ 
+   for (i = 0; i < sText.length && IsNumber == true; i++) 
+      { 
+      Char = sText.charAt(i); 
+      if (ValidChars.indexOf(Char) == -1) 
+         {
+         IsNumber = false;
+         }
+      }
+   return IsNumber;
+   
+   }
+function validation()
+{
+
+  if (document.edit.customers_firstname.value == "" )
+  {
+    alert("First Name is a required field.");
+    document.edit.customers_firstname.focus();
+    return false;
+  }
+  
+   if (document.edit.customers_lastname.value == "" )
+  {
+    alert("Last Name is a required field.");
+    document.edit.customers_lastname.focus();
+    return false;
+  }
+
+   if (document.edit.customers_email_address.value.indexOf("@") == -1 || document.edit.customers_email_address.value == "")
+  {
+    alert("Email is a required field!, may be you have missd @ symbol");
+    document.edit.customers_email_address.focus();
+    return false;
+  }
+  
+  if (document.edit.customers_email_address.value.indexOf(".") == -1 || document.edit.customers_email_address.value == "")
+  {
+    alert("Email is a required field!, may be you have missd . symbol");
+    document.edit.customers_email_address.focus();
+    return false;
+  }
+  
+   if (document.edit.customers_telephone.value == "" )
+  {
+    alert("Phone No is a required field.");
+    document.edit.customers_telephone.focus();
+    return false;
+  }
+  
+   if (document.edit.customers_address1.value == "" )
+  {
+    alert("Customer Address is a required field.");
+    document.edit.customers_address1.focus();
+    return false;
+  }
+  
+   if (document.edit.customers_town.value == "" )
+  {
+    alert("City is a required field.");
+    document.edit.customers_town.focus();
+    return false;
+  }
+    if (document.edit.customers_postcode.value == "" )
+  {
+    alert("Post Code is a required field.");
+    document.edit.customers_postcode.focus();
+    return false;
+  }
+ 
+     if (document.edit.customers_postcode2.value == "" )
+  {
+    alert("Post Code is a required field.");
+    document.edit.customers_postcode2.focus();
+    return false;
+  }
+     if (document.edit.customers_add_label.value == "" )
+  {
+    alert("Address Label is a required field.");
+    document.edit.customers_add_label.focus();
+    return false;
+  }
+ 
+return true;
+}
+
+</script>
+<table width="710" border="0" align="right" cellpadding="0" cellspacing="0">
+  
+  <tr>
+    <td align="center"><?php  require_once('includes/account_home.html');?></td>
+  </tr>
+  <tr>
+    <td height="10"></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" align="left" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/red_box1_01.jpg" width="15" height="39" alt="" /></td>
+        <td width="100%" background="images/red_box1_02.jpg" class="heading">Account Info</td>
+        <td><img src="images/red_box1_03.jpg" width="14" height="39" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/red_box1_04.jpg">&nbsp;</td>
+        <td valign="top" bgcolor="#9E0112"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td><table width="100%" border="0" cellpadding="0" cellspacing="0" class="stitle">
+                  <tr>
+                    <td valign="top" bgcolor="#9E0112"><table width="100%" border="0" cellpadding="4" cellspacing="1" class="stitle">
+                        <tbody>
+                          <tr>
+                            <td width="96%" valign="top"><div align="left" class="normal_text">Please Note: Input fields marked with a * are requied fields.</div></td>
+                          </tr>
+                        </tbody>
+                    </table></td>
+                  </tr>
+                  <tr>
+                    <td valign="top" bgcolor="#9E0112"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="bodytext">
+                      <?php
+				
+				$sql="Select * from customers where customers_id='".$_SESSION['customers_id']."'";
+				$result=mysql_query($sql);
+				$row=mysql_fetch_array($result);
+				?>
+                      <tr>
+                        <td width="95%" valign="middle" align="center"><form action="index-action-update_customer-cid-<?php echo $_SESSION['customers_id']; ?>" method="post" enctype="multipart/form-data" name="edit" id="edit" onsubmit="return validation();">
+                          <table width="100%" border="0" cellspacing="2" cellpadding="2">
+                              
+                              <tr>
+                                <td align="center" valign="middle"><div style="border-top:1px dashed #333333"> </div></td>
+                              </tr>
+                              <tr>
+                                <td align="center" valign="middle"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="bodytext">
+                                    <tr>
+                                      <td width="95%" valign="middle" align="center" bgcolor="#F0F0F0"></td>
+                                    </tr>
+                                    <tr>
+                                      <td valign="top"><table width="100%" border="0" cellspacing="2" cellpadding="2">
+                                          <tr>
+                                            <td width="55%" align="left" valign="top"><table width="100%" border="0" cellpadding="2" cellspacing="2" class="normal_text">
+                                                <tr>
+                                                  <td colspan="2" align="left"  class="message"><strong>Your Personal Details </strong></td>
+                                                </tr>
+                                                <tr>
+                                                  <td width="39%" align="left">First Name: </td>
+                                                  <td width="61%" align="left"><input name="customers_firstname" type="text"  id="customers_firstname" value="<?Php echo $row["customers_firstname"];?>" size="25"/>                                                    
+                                                    * </td>
+                                                </tr>
+                                                <tr>
+                                                  <td align="left">Last Name : </td>
+                                                  <td align="left"><input name="customers_lastname" type="text"  id="customers_lastname" value="<?Php echo $row["customers_lastname"];?>" size="25"/>
+                                                    *</td>
+                                                </tr>
+                                                <tr>
+                                                  <td align="left">E-mail Address: </td>
+                                                  <td align="left"><input name="customers_email_address" type="text"  id="customers_email_address" value="<?Php echo $row["customers_email_address"];?>" size="25"/>
+                                                    *
+                                                    <input type="hidden" name="otp" id="otp" value="<?php echo $_SESSION['otp'];?>" /></td>
+                                                </tr>
+                                                <tr>
+                                                  <td align="left">Old Password: </td>
+                                                  <td align="left"><input name="customers_password" type="password"  id="customers_password" value="<?Php echo $row["customers_password"];?>" disabled="disabled"/>
+                                                    *</td>
+                                                </tr>
+                                                <tr>
+                                                  <td align="left">New Password: </td>
+                                                  <td align="left"><input name="newcustomers_password" type="password"  id="newcustomers_password"/>
+                                                    *</td>
+                                                </tr>
+                                                <tr>
+                                                  <td align="left">Phone: </td>
+                                                  <td align="left"><input name="customers_telephone" type="text"  id="customers_telephone" value="<?Php echo $row["customers_telephone"];?>" size="25"/>
+                                                    *</td>
+                                                </tr>
+                                                <tr>
+                                                  <td align="left">Mobile: </td>
+                                                  <td align="left"><input name="customers_fax" type="text"  id="customers_fax" value="<?Php echo $row["customers_fax"];?>" size="25"/></td>
+                                                </tr>
+                                            </table></td>
+                                            <td width="50%" align="left" valign="top"><table width="100%" border="0" cellpadding="2" cellspacing="2" class="normal_text">
+                                                <tr>
+                                                  <td colspan="2" align="left" class="message"><strong>Your Address </strong></td>
+                                                </tr>
+                                                <tr>
+                                                  <td width="30%" align="left">Address1: </td>
+                                                  <td width="70%" align="left"><input name="customers_address1" type="text"  id="customers_address1" value="<?Php echo $row["customers_address1"];?>" size="25"/>
+                                                    *</td>
+                                                </tr>
+                                                <tr>
+                                                  <td align="left"> Address2: </td>
+                                                  <td align="left"><input name="customers_address2" type="text"  id="customers_address2" value="<?Php echo $row["customers_address2"];?>" size="25"/></td>
+                                                </tr>
+                                                <tr>
+                                                  <td align="left">County: </td>
+                                                  <td align="left"><input name="customers_state" type="text"  id="customers_state" value="<?Php echo $row["customers_state"];?>" size="25"/></td>
+                                                </tr>
+                                                <tr>
+                                                  <td align="left">City/Town: </td>
+                                                  <td align="left"><input name="customers_town" type="text"  id="customers_town" value="<?Php echo $row["customers_town"];?>" size="25"/>
+                                                    *</td>
+                                                </tr>
+                                                <tr>
+                                                  <td align="left">Postcode:</td> <?php $postcode = explode(" ", $row["customers_postcode"]);?>
+                                                  <td align="left"><input style="text-transform:uppercase" name="customers_postcode" type="text"  id="customers_postcode" value="<?Php echo $postcode[0]?>" size="5" maxlength="4"/> <input name="customers_postcode2" type="text"  id="customers_postcode2" value="<?Php echo $postcode[1];?>" size="5" maxlength="4" style=" text-transform:uppercase"/>
+                                                    *</td>
+                                                </tr>
+                                                <tr>
+                                                  <td align="left">Country:</td>
+                                                  <td align="left"><select name="customers_country" id="customers_country" style="width:150px">
+                                                     <option value="United Kingdom">United Kingdom</option>
+                                                  </select></td>
+                                                </tr>
+                                                <tr>
+                                                  <td align="left">Address Label:</td>
+                                                  <td align="left"><input name="customers_add_label" type="text"  id="customers_add_label" value="<?Php echo $row["customers_add_label"];?>" size="25"/>
+                                                    *</td>
+                                                </tr>
+                                            </table></td>
+                                          </tr>
+                                      </table></td>
+                                    </tr>
+                                </table></td>
+                              </tr>
+                              <tr>
+                                <td align="center" valign="middle"><div style="border-top:1px dashed #000000"> </div></td>
+                              </tr>
+                              
+                              <tr>
+                                <td align="center" valign="middle"><table width="100%" border="0" cellpadding="4" cellspacing="1" class="normal_text">
+                                  <tbody>
+                                    <tr>
+                                      <td colspan="2" align="left" class="message"><strong>Additional Information :</strong></td>
+                                    </tr>
+                                    <tr>
+                                      <td colspan="2" align="left"><div align="justify">Please input the additional fields below which&nbsp;will help us improve our service.<br />
+                                      </div></td>
+                                    </tr>
+                                    <tr>
+                                      <td width="25%" align="left">Date of birth:</td>
+                                      <td width="75%" align="left">
+									  <?php
+									  list($year, $month, $day) = split('[-]', $row['customers_dob']);
+									  ?>
+
+									  <select name="day" id="day">
+                                        <option value="">-- Day --</option>
+                                        <?php
+				for($j=1; $j<=31; $j++) {
+				?>
+                                        <option value="<?=$j;?>"<?php if ($day==$j) echo "selected";?>>
+                                          <?=$j;?>
+                                          </option>
+                                        <?php } ?>
+                                      </select>
+                                        <select name="month" id="month">
+                                          <option value="">-- Month --</option>
+                                          <option value="01"<?php if ($month=='01') echo "selected";?>>January</option>
+                                          <option value="02"<?php if ($month=='02') echo "selected";?>>February</option>
+                                          <option value="03"<?php if ($month=='03') echo "selected";?>>March</option>
+                                          <option value="04"<?php if ($month=='04') echo "selected";?>>April</option>
+                                          <option value="05"<?php if ($month=='05') echo "selected";?>>May</option>
+                                          <option value="06"<?php if ($month=='06') echo "selected";?>>June</option>
+                                          <option value="07"<?php if ($month=='07') echo "selected";?>>July</option>
+                                          <option value="08"<?php if ($month=='08') echo "selected";?>>August</option>
+                                          <option value="09"<?php if ($month=='09') echo "selected";?>>September</option>
+                                          <option value="10"<?php if ($month=='10') echo "selected";?>>October</option>
+                                          <option value="11"<?php if ($month=='11') echo "selected";?>>November</option>
+                                          <option value="12"<?php if ($month=='12') echo "selected";?>>December</option>
+                                        </select>
+                                        <select name="year" id="year">
+                                          <option value="">-- Year --</option>
+                                          <?php
+				$cy=date("Y");
+				$maxy=$cy-18;
+				$miny=$cy-88;
+				for ($i=$maxy; $i>=$miny; $i--)
+				{
+				?>
+                                          <option value="<?=$i;?>"<?php if ($year==$i) echo "selected";?>>
+                                            <?=$i;?>
+                                            </option>
+                                          <?php } ?>
+                                        </select></td>
+                                    </tr>
+                                    <tr>
+                                      <td align="left">Competition code </span> </td>
+                                      <td align="left"><input name="customers_ccode" type="text" value="<?Php echo $row["customers_ccode"];?>" class="textbox_red"  tabindex="11" size="30" /></td>
+                                    </tr>
+                                    <tr>
+                                      <td align="left">How did you hear about us?</td>
+                                      <td align="left"><select name="customers_howhear" class="textbox_red"  tabindex="24">
+                                        <option value="0">Choose here</option>
+                                        <option value="Direct mail" <?Php if($row["customers_howhear"]=="Direct mail") echo "selected"; ?>>Direct mail</option>
+                                        <option value="A friend" <?Php if($row["customers_howhear"]=="A friend") echo "selected"; ?>>A friend</option>
+                                        <option value="Newspaper" <?Php if($row["customers_howhear"]=="Newspaper") echo "selected"; ?>>Newspaper</option>
+                                        <option value="Radio" <?Php if($row["customers_howhear"]=="Radio") echo "selected"; ?>>Radio</option>
+                                        <option value="Restaurant" <?Php if($row["customers_howhear"]=="Restaurant") echo "selected"; ?>>Restaurant</option>
+                                        <option value="Pizzabox" <?Php if($row["customers_howhear"]=="Pizzabox") echo "selected"; ?>>Pizzabox</option>
+                                        <option value="Menucard" <?Php if($row["customers_howhear"]=="Menucard") echo "selected"; ?>>Menucard</option>
+                                        <option value="Website" <?Php if($row["customers_howhear"]=="Website") echo "selected"; ?>>Website</option>
+                                        <option value="Other" <?Php if($row["customers_howhear"]=="Other") echo "selected"; ?>>Other</option>
+                                      </select>
+                                        <span id="ctl00_ContentPlaceHolder1_ctl00_RequiredFieldValidator1"> </span> <span id="ctl00_ContentPlaceHolder1_ctl00_phoneReqVal"> </span> <span id="ctl00_ContentPlaceHolder1_ctl00_phoneRegExp"> </span> </td>
+                                    </tr>
+                                    <tr>
+                                      <td colspan="2"><div style="border-top:1px dashed #000000"> </div></td>
+                                    </tr>
+                                  </tbody>
+                                </table></td>
+                              </tr>
+                              <tr>
+                                <td align="center" valign="middle"><table width="100%" border="0" cellpadding="1" cellspacing="1" class="normal_text">
+                                    
+                                    <tr>
+                                      <td colspan="2" align="center"><?php echo $message; ?></td>
+                                      </tr>
+                                    <tr>
+                                      <td align="right">&nbsp;</td>
+                                      <td align="right"><input type="image" src="images/btn_save_changes.png" width="125" height="25" border="0" name="submit" /></td>
+                                    </tr>
+                                </table></td>
+                              </tr>
+                            </table>
+                        </form></td>
+                      </tr>
+                      
+                    </table></td>
+                  </tr>
+                  
+                  
+                  
+                  
+              </table></td>
+            </tr>
+            
+            
+        </table></td>
+        <td background="images/red_box1_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/red_box1_07.jpg" width="15" height="17" alt="" /></td>
+        <td background="images/red_box1_08.jpg"></td>
+        <td><img src="images/red_box1_09.jpg" width="14" height="17" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <iframe width=174 height=189 name="gToday:normal:agenda.js" id="gToday:normal:agenda.js" src="calander/ipopeng" scrolling="no" frameborder="0" style="visibility:visible; z-index:999; position:absolute; top:-500px; left:-500px;"></iframe>
+</table>

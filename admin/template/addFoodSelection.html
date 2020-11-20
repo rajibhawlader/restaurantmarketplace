@@ -1,0 +1,146 @@
+<script language="javascript"> 
+function IsNumeric(sText)
+{
+   var ValidChars = "0123456789.";
+   var IsNumber=true;
+   var Char;
+
+ 
+   for (i = 0; i < sText.length && IsNumber == true; i++) 
+      { 
+      Char = sText.charAt(i); 
+      if (ValidChars.indexOf(Char) == -1) 
+         {
+         IsNumber = false;
+         }
+      }
+   return IsNumber;
+   
+   }
+function validation()
+{
+
+  if (document.edit.product_title.value == "" )
+  {
+    alert("Menu Title is a required field.");
+    document.edit.product_title.focus();
+    return false;
+  }if (document.edit.food_code.value == "" )
+  {
+    alert("Food Item Code is a required field.");
+    document.edit.food_code.focus();
+    return false;
+  }
+  if (document.edit.price.value == "" )
+  {
+    alert("Price is a required field!");
+    document.edit.price.focus();
+    return false;
+  }
+  
+   if(!IsNumeric(document.edit.price.value))
+{
+	alert("Enter  Money value at Price.");
+	document.edit.price.value=="";
+	document.edit.price.focus();
+	return false;
+}
+ 
+ window.opener.location.href = window.opener.location.href;
+
+  if (window.opener.progressWindow)
+		
+ {
+    window.opener.progressWindow.close()
+  }
+
+	window.opener.location.href="<?=$_SESSION['adminmenupath']?>";
+
+  return true;
+  
+}
+</script>
+<?php
+//print_r($_REQUEST);
+$cat_id=$_REQUEST['cid'];
+$prod_id=$_REQUEST['prodid'];
+?>
+<div style="background: #FFFFFF;">
+<form action="index.php?action=insert_food_selection_item&tabm=rcttb&cid=<?=$cat_id?>&prodid=<?=$prod_id?>" method="post" enctype="multipart/form-data" name="edit" id="edit" onSubmit="return validation(this)">
+
+<table width="100%" border="0" cellpadding="2" cellspacing="2" bgcolor="#FFFFFF" class="bodytext">
+                             
+                              <tr>
+                                <td colspan="2" align="left"><strong>Add New Selection of Item</strong></td>
+                              </tr>
+                             
+                               <?PHP if($message!=""){?>
+                              <tr>
+                                <td colspan="2" align="center"><span class="message"><?PHP echo $message;
+									  
+									  ?></span></td>
+                              </tr>
+                              <?}?>
+                              <tr>
+                                <td width="40%" align="right"><strong> Category : </strong></td>
+                                <td width="60%" align="left" valign="top"><label class="text_red">
+								<input type="hidden" name="categories_id" value="<?=$cat_id?>">
+                                    <?PHP
+				$rids=$_SESSION['resid'];
+				$querylic = "SELECT categories_name FROM categories where rid='$rids' and categories_id=$cat_id";
+	$resultlic =@mysql_query($querylic);
+	while($arofferinfolic = @mysql_fetch_assoc($resultlic))
+	{
+		echo $arofferinfolic['categories_name'];
+	}
+	?>
+								 </label>
+                           </td>
+                              </tr>
+							  <tr>
+                                <td width="40%" align="right"><strong>Item Name : </strong></td>
+                                <td width="60%" align="left" valign="top"><label class="text_red">
+								<input type="hidden" name="product_id" value="<?=$prod_id?>">
+                                    <?php
+				//$rids=$_SESSION['resid'];
+				$querylpro = "SELECT product_title FROM product where product_id='$prod_id' and categories_id=$cat_id";
+				$resultlpro =@mysql_query($querylpro);
+				while($arofpro = @mysql_fetch_assoc($resultlpro))
+				{
+					echo $arofpro['product_title'];
+				}
+	?>
+								 </label>
+                           </td>
+                              </tr>
+                              <tr>
+                                <td width="40%" align="right"><strong>Selection of Item Name : </strong></td>
+                                <td align="left" valign="top"><input name="product_title" type="text" class="textbox_wht" id="product_title" size="45" /></td>
+                              </tr>
+                              <tr>
+                                <td align="right"><strong>Selection of Item Short Name : </strong></td>
+                                <td align="left" valign="top"><input name="food_code" type="text" class="textbox_wht" id="food_code" size="25" /></td>
+                              </tr>
+                              <tr>
+                                <td align="right" valign="top"><strong>Upload Image  :</strong></td>
+                                <td align="left" valign="top"><input type="file" name="file" /></td>
+                              </tr>
+                              <tr>
+                                <td align="right"><strong>Price : </strong></td>
+                                <td align="left" valign="top"><input name="price" type="text" class="textbox_wht" id="price" size="20" /></td>
+                              </tr>
+                              <tr>
+                                <td align="right" valign="top"><strong>Selection of Item Description : </strong></td>
+                                <td align="left" valign="top"><textarea name="product_desc" cols="25" rows="3" id="product_desc" ></textarea></td>
+                              </tr>
+                              <tr>
+                                <td>&nbsp;</td>
+                                <td align="left"><input type="submit" name="Submit" value="Submit" class="button_grn" /></td>
+                              </tr>
+                              <tr>
+                                <td>&nbsp;</td>
+                                <td align="left">&nbsp;</td>
+                              </tr>
+                            </table>
+</form>
+</div>

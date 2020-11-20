@@ -1,0 +1,21 @@
+<?php
+			 require_once('lib/class.Db.php');
+
+require_once('config.php');
+    $db = new Db(hostname, username, password, databasename);
+		$pid=$_REQUEST["pid"];
+//add by me
+if(strlen($pid)==0)
+$pid=9;
+//end
+
+
+			$queryspdetail = "SELECT * FROM cms_posts where ID='$pid'";
+			$resultpgdetail = $db->execQuery($queryspdetail);
+                $arinfopgdetail = $db->resultArray($resultpgdetail);
+			
+			?>
+<div id="right_cont"><?php  require_once('includes/new_reight_panal.html');?></div>
+<div id="mid_cont"><?php  echo stripslashes($arinfopgdetail[0]["post_content"]);?> 	
+			</div>
+

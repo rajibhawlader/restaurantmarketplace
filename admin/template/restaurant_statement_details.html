@@ -1,0 +1,505 @@
+
+<script type="text/JavaScript">
+<!--
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+//-->
+</script>
+<script type="text/JavaScript">
+<!--
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+//-->
+</script>
+
+<?php 
+
+$query = "SELECT * FROM resturant WHERE rid='".$_SESSION['resid']."'";	
+$result = $db->execQuery($query);
+$rst_info = $db->resultArray($result);
+
+$query = "SELECT * FROM order_statements WHERE stm_id='".$_REQUEST['stm_id']."'";	
+$result = $db->execQuery($query);
+$stm_info = $db->resultArray($result);
+
+$rids=$_SESSION['resid'];
+
+if ($_REQUEST["stm_id"]!="")
+{
+	$query = "SELECT * FROM customer_order  WHERE ordate  between '".$stm_info[0]["stm_sdate"]."' and  '".$stm_info[0]["stm_edate"]."' and rid='$rids'";	
+	$new_customer_query = "SELECT count(c1.orid) FROM customer_order as c1 where c1.ordate  between '".$stm_info[0]["stm_sdate"]."' and  '".$stm_info[0]["stm_edate"]."' and c1.rid='$rids' and (SELECT count(orid) FROM `customer_order` as c2 where c1.customers_id=c2.customers_id) =1 GROUP BY c1.`customers_id`";
+	$new_customers = $db->result($new_customer_query);
+}
+
+$result = $db->execQuery($query);
+$aruserinfo = $db->resultArray($result);
+$ordt=0;
+for($p=0; $p<sizeof($aruserinfo); $p++)
+{
+	$torid=$aruserinfo[$p]["orid"];
+	$sqltpr="select sum(uprice*qantity) as tprice from order_detail where orid='$torid'";
+	$resulttpr=mysql_query($sqltpr);
+	$rowprt=mysql_fetch_array($resulttpr);
+	$ordt+=$rowprt["tprice"];
+}
+
+$query2=$query." GROUP BY customers_id";
+$result2 = $db->execQuery($query2);
+$custinfo = $db->resultArray($result2);
+
+$query2=$query." GROUP BY customers_id";
+$result2 = $db->execQuery($query2);
+$new_custinfo = $db->resultArray($result2);
+
+$query33=$query." and order_type='1'";
+$result33 = $db->execQuery($query33);
+$nodinfo33 = $db->resultArray($result33);
+
+$query3=$query." and order_type='1' and pay_mathod='On Delivery'";
+$result3 = $db->execQuery($query3);
+$nodinfo = $db->resultArray($result3);
+$ordtd=0;
+for($p=0; $p<sizeof($nodinfo); $p++)
+{
+	$torid=$nodinfo[$p]["orid"];
+	$sqltpr="select sum(uprice*qantity) as tprice from order_detail where orid='$torid'";
+	$resulttpr=mysql_query($sqltpr);
+	$rowprt=mysql_fetch_array($resulttpr);
+	$ordtd+=$rowprt["tprice"];
+}
+
+$query44=$query." and order_type='2'";
+$result44 = $db->execQuery($query44);
+$nocinfo44 = $db->resultArray($result44);
+
+$query4=$query." and order_type='2' and pay_mathod='On Delivery'";
+$result4 = $db->execQuery($query4);
+$nocinfo = $db->resultArray($result4);
+$ordtc=0;
+for($p=0; $p<sizeof($nocinfo); $p++)
+{
+	$torid=$nocinfo[$p]["orid"];
+	$sqltpr="select sum(uprice*qantity) as tprice from order_detail where orid='$torid'";
+	$resulttpr=mysql_query($sqltpr);
+	$rowprt=mysql_fetch_array($resulttpr);
+	$ordtc+=$rowprt["tprice"];
+}
+
+$query5=$query." and pay_mathod='Online'";
+$result5 = $db->execQuery($query5);
+$opinfo = $db->resultArray($result5);
+$ordtop=0;
+for($p=0; $p<sizeof($opinfo); $p++)
+{
+	$torid=$opinfo[$p]["orid"];
+	$sqltpr="select sum(uprice*qantity) as tprice from order_detail where orid='$torid'";
+	$resulttpr=mysql_query($sqltpr);
+	$rowprt=mysql_fetch_array($resulttpr);
+	$ordtop+=$rowprt["tprice"];
+}
+
+?>
+
+<body onLoad="MM_preloadImages('images/paging_over_01.gif','images/paging_over_03.gif')">
+<table width="97%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td></td>
+  </tr>
+  <tr>
+    <td align="right" valign="top">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="92%" height="400" align="right" valign="top"><table width="100%" border="0" align="left" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+        <td background="images/box_02.jpg"><span class="box_title_text">&quot;<? echo $_SESSION[rname];?>&quot; Restaurant Management </span></td>
+        <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/box_04.jpg">&nbsp;</td>
+        <td width="100%" valign="top"><table width="100%" border="0" cellspacing="1" cellpadding="1"  class="bodytext">
+            <tr>
+              <td><?php require_once("restaurant_top_nav.html");?></td>
+            </tr>
+            <tr>
+              <td></td>
+            </tr>
+            <tr>
+              <td width="81%" valign="top" bgcolor="#F0F0F0"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+                <tr>
+                  <td height="10"></td>
+                </tr>
+                <tr>
+                  <td><span class="box_title_text">Statement Details </span></td>
+                </tr>
+                <tr>
+                  <td height="10"></td>
+                </tr>
+                <tr>
+                  <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td width="30%" align="center" valign="top">
+					  <div style=" width:90%; border:1px dashed #c0c0c0">
+					    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="bodytext" bgcolor="#f8f8f8">
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left">&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td width="6%">&nbsp;</td>
+                            <td width="94%" align="left"><strong>ACCOUNT : </strong>
+                                <?php 
+								$racno=$_SESSION['resid'];
+							 	if(strlen($racno)==1)
+								{
+									$mkzr='00000';
+								}
+								elseif(strlen($racno)==2)
+								{
+									$mkzr='0000';
+								}
+								elseif(strlen($racno)==3)
+								{
+									$mkzr='000';
+								}
+								elseif(strlen($racno)>=4)
+								{
+									$mkzr='00';
+								}
+								elseif(strlen($racno)>=5)
+								{
+									$mkzr='00';
+								}
+								elseif(strlen($racno)>=6)
+								{
+									$mkzr='';
+								}
+								
+								$acc_num =$mkzr.$racno;
+		 
+								echo 'IFO-'.$acc_num ; ?>                            </td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left">&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left"><strong>
+                              <?=$rst_info[0]['rname']?>
+                            </strong></td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left"><?=$rst_info[0]['street']?>
+                              ,
+                              <?=$rst_info[0]['city']?></td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left"><?=$rst_info[0]['zipcode']?></td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left">Tel :
+                              <?=$rst_info[0]['contact']?></td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left">&nbsp;</td>
+                          </tr>
+                        </table>
+					  </div>					  </td>
+                      <td width="40%" align="center" valign="top">
+					  <div style=" width:90%; border:1px dashed #c0c0c0">
+					  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="bodytext" bgcolor="#f8f8f8">
+                        <tr>
+                          <td>&nbsp;</td>
+                          <td align="left">&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td width="5%">&nbsp;</td>
+                          <td width="79%" align="left"><strong>Orders and Customers</strong></td>
+                          <td width="11%" align="right">&nbsp;</td>
+                          <td width="5%" align="right">&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                          <td align="left">&nbsp;</td>
+                          <td align="right">&nbsp;</td>
+                          <td align="right">&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                          <td align="left">Total Orders</td>
+                          <td align="right"><?php echo sizeof($aruserinfo); ?></td>
+                          <td align="right">&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                          <td align="left">Total Customers</td>
+                          <td align="right"><?php echo sizeof($custinfo); ?></td>
+                          <td align="right">&nbsp;</td>
+                        </tr>
+						<tr>
+                          <td>&nbsp;</td>
+                          <td align="left">New Customers</td>
+                          <td align="right"><?php echo ($new_customers > 0)?$new_customers:0; ?></td>
+                          <td align="right">&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                          <td align="left">Total Deliveries</td>
+                          <td align="right"><?php echo sizeof($nodinfo33); ?></td>
+                          <td align="right">&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                          <td align="left">Total Collections</td>
+                          <td align="right"><?php echo sizeof($nocinfo44); ?></td>
+                          <td align="right">&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                          <td align="left">&nbsp;</td>
+                          <td align="right">&nbsp;</td>
+                          <td align="right">&nbsp;</td>
+                        </tr>
+                      </table>
+					  </div>					  </td>
+                      <td width="30%" align="center" valign="top">
+					  <div style=" width:90%; border:1px dashed #c0c0c0">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="bodytext" bgcolor="#f8f8f8">
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left">&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td width="5%">&nbsp;</td>
+                            <td width="79%" align="left"><strong>Total Revenue</strong></td>
+                            <td width="11%" align="right">&nbsp;</td>
+                            <td width="5%" align="right">&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left">&nbsp;</td>
+                            <td align="right">&nbsp;</td>
+                            <td align="right">&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left">Online Payment</td>
+                            <td align="right">&pound;&nbsp;<?php echo number_format($ordtop, 2, '.', ''); ?></td>
+                            <td align="right">&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left">C.O.D</td>
+                            <td align="right">&pound;&nbsp;<?php echo number_format($ordtd, 2, '.', ''); ?></td>
+                            <td align="right">&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left">C.O.C</td>
+                            <td align="right">&pound;&nbsp;<?php echo number_format($ordtc, 2, '.', ''); ?></td>
+                            <td align="right">&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left">Order Total</td>
+                            <td align="right">&pound;&nbsp;<?php echo number_format($ordt, 2, '.', ''); ?></td>
+                            <td align="right">&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td align="left">&nbsp;</td>
+                            <td align="right">&nbsp;</td>
+                            <td align="right">&nbsp;</td>
+                          </tr>
+                        </table>
+                      </div></td>
+                    </tr>
+                    <tr>
+                      <td colspan="3" align="center" valign="top" height="5"></td>
+                      </tr>
+                    <tr>
+                      <td align="center" valign="top" style="font-size:18px">Statement No:&nbsp;&nbsp; ST-<?php $ono=$_REQUEST['stm_id']; $len=strlen($ono); if($len==1) echo "00000".$ono; elseif($len==2) echo "0000".$ono;elseif($len==3) echo "000".$ono; elseif($len==4) echo "00".$ono; elseif($len==5) echo "0".$ono; ?></td>
+                      <td align="center" valign="top">&nbsp;</td>
+                      <td align="center" valign="top">&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td align="center" valign="top">&nbsp;</td>
+                      <td align="center" valign="top" style="font-size:24px"><strong>INDIAN FOODS ONLINE LTD</strong></td>
+                      <td align="center" valign="top">&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td align="center" valign="top">&nbsp;</td>
+                      <td align="center" valign="top"><strong>185 City Road, Cardiff, CF24 3JB</strong></td>
+                      <td align="center" valign="top">&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td align="center" valign="top">&nbsp;</td>
+                      <td align="center" valign="top"><strong>Tel: 02921 000 218</strong></td>
+                      <td align="center" valign="top">&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td align="center" valign="top">&nbsp;</td>
+                      <td align="center" valign="top">&nbsp;</td>
+                      <td align="center" valign="top">&nbsp;</td>
+                    </tr>
+                    
+                  </table></td>
+                </tr>
+                
+                <tr>
+                  <td align="left">
+				  	<table width="100%" border="0"  style="font-size:18px">
+						<tr>
+							<td align="left">Statement :</td>
+				  			<td align="right">From</td>
+							<td align="center"><?php echo show_date($stm_info[0]["stm_sdate"], "jS F Y");?></td>
+							<td align="left">To</td>
+							<td align="left"><?php echo show_date($stm_info[0]["stm_edate"], "jS F Y");?></td>
+						</tr>
+					</table>
+                </tr>
+                
+                <?php if($message!=""){?>
+                <tr>
+                  <td align="center" class="message"><?php echo $message;?></td>
+                </tr>
+                <?php }?>
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+                
+                <tr>
+                  <td><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#DFDFDF" class="bodytext">
+                      <!--<tr border=0> 
+          <td colspan="10" class="fieldtext"></td>
+        </tr> -->
+                      <tr>
+                        <td width="43" valign="top" bgcolor="#F0F0F0" class="fieldtext" ><strong>SLNo </strong></td>
+                        <td width="50" valign="top" bgcolor="#F0F0F0" class="fieldtext" ><strong>Order No </strong></td>
+                        <td width="45" align="left" valign="top" bgcolor="#F0F0F0" class="fieldtext" ><strong>Date </strong></td>
+                        <td width="54" align="left" valign="top" bgcolor="#F0F0F0" class="fieldtext" ><strong>Time </strong></td>
+                        <td width="112" valign="top" bgcolor="#F0F0F0" class="fieldtext" ><strong>Name </strong></td>
+                        <td width="83" align="left" valign="top" bgcolor="#F0F0F0" class="fieldtext"><strong>Order Type</strong></td>
+                        <td width="94" align="left" valign="top" bgcolor="#F0F0F0" class="fieldtext"><strong>Payment Menthod</strong></td>
+						<td width="94" align="left" valign="top" bgcolor="#F0F0F0" class="fieldtext"><strong>Auth. Code</strong></td>
+                        <td width="72" align="left" valign="top" bgcolor="#F0F0F0" class="fieldtext"><strong>Hand.Fee</strong></td>
+                        <td width="82" align="left" valign="top" bgcolor="#F0F0F0" class="fieldtext"><strong>CC Charges</strong></td>
+                        <td width="86" align="left" valign="top" bgcolor="#F0F0F0" class="fieldtext"><strong>Order Total</strong></td>
+<!--                        <td width="34" align="right" valign="top" bgcolor="#F0F0F0" class="fieldtext" ><strong>Vat </strong></td>
+-->                        <!--                        <td width="84" align="right" valign="top" bgcolor="#F0F0F0" class="fieldtext"><strong>Commission</strong></td>
+-->                        
+                      </tr>
+                      <?php
+			$query.=" order by orid desc";	
+			$success = $db->checkExists($query);
+
+			$result = $db->execQuery($query);
+		
+			$arinfo = $db->resultArray($result);
+			
+			for ($i = 0; $i < sizeof($arinfo); $i++)
+			{
+			
+				$cuid=$arinfo[$i]['customers_id'];	
+				$sqlc="Select * from customers where customers_id=$cuid";
+				$resultc=mysql_query($sqlc);
+				$rowc=mysql_fetch_array($resultc);
+			
+		?>
+                      <tr >
+                        <td width="43" align="right" valign="top" bgcolor="#FFFFFF"><?php $sln=10000; echo $sln+$i+1; ?></td>
+                        <td width="50" align="right" valign="top" bgcolor="#FFFFFF"><a href="index.php?action=orderdetails&tabm=rcttb&orid=<? echo $arinfo[$i]["orid"]; ?>" class="nav6"><?php $ono=$arinfo[$i]["orid"]; $len=strlen($ono); if($len==1) echo "00000".$ono; elseif($len==2) echo "0000".$ono;elseif($len==3) echo "000".$ono; elseif($len==4) echo "00".$ono; elseif($len==5) echo "0".$ono; ?></a></td>
+                        <td width="45" align="right" valign="top" bgcolor="#FFFFFF"><?php list($date, $time) = split('[ ]',$arinfo[$i]["ordate"]); list($year, $month, $day) = split('[-]',$date); echo $day."/".$month."/".$year; ?></td>
+                        <td width="54" align="right" valign="top" bgcolor="#FFFFFF"><?php echo $time; ?></td>
+                        <td width="112" valign="top" bgcolor="#FFFFFF"><a href="index.php?action=orderdetails&tabm=rcttb&orid=<? echo $arinfo[$i]["orid"]; ?>" class="nav6"><?php echo $rowc["customers_firstname"]; ?> <?php echo $rowc["customers_lastname"]; ?></a></td>
+                        <td align="left" valign="top" bgcolor="#FFFFFF"><?php if($arinfo[$i]["order_type"]==1) echo "Delivery"; else echo "Collection"; ?></td>
+                        <td align="left" valign="top" bgcolor="#FFFFFF"><?php if($arinfo[$i]["pay_mathod"] == "On Delivery"){echo "C.O.D";}elseif($arinfo[$i]["pay_mathod"] == "Online"){ echo "Online";}else{echo "C.O.C";} ?></td>
+						<td align="left" valign="top" bgcolor="#FFFFFF"><?php echo ($arinfo[$i]["author_code"] !="")?$arinfo[$i]["author_code"]:( ($arinfo[$i]["pay_mathod"] == "Online")?"Pending":"Manual" ); ?></td>
+						
+                        <!--<td width="62"><?php //echo $arimageinfo[0]["ImgURL"]; ?></td>-->
+                        <td align="right" valign="top" bgcolor="#FFFFFF"><?php $nhfee=$arinfo[$i]["hnd_fee"]; $thf+=$nhfee;
+                         echo number_format($nhfee, 2, '.', '');?></td>
+                        <td align="right" valign="top" bgcolor="#FFFFFF"><?php $ccfee=$arinfo[$i]["ccfee"]; $tcc+=$ccfee;
+                         echo number_format($ccfee, 2, '.', '');?></td>
+						<td align="right" valign="top" bgcolor="#FFFFFF">&pound;&nbsp;<?php 
+					$tcalid=$arinfo[$i]["orid"];
+					$sqltpr="select sum(uprice*qantity) as tprice from order_detail where orid='$tcalid'";
+					$resulttpr=mysql_query($sqltpr);
+					$rowprt=mysql_fetch_array($resulttpr);
+					$number =$rowprt["tprice"];
+                    echo number_format($number, 2, '.', '');
+					$tot+=$number;
+					 ?></td>
+<!--                        <td width="34" align="right" valign="top" bgcolor="#FFFFFF">&pound;&nbsp;<?php $nvat =$arinfo[$i]["vat"]; 
+                        echo number_format($nvat, 2, '.', '');?></td>
+-->                        <!--                        <td align="right" valign="top" bgcolor="#FFFFFF"><?php $ncom=$arinfo[$i]["com_fee"];
+                        echo number_format($ncom, 2, '.', ''); ?></td>
+-->                        
+                      </tr>
+                      <?php
+	   }
+
+	?>
+                      <tr >
+                        <td colspan="7" align="right" valign="top" bgcolor="#FFFFFF">&nbsp;</td>
+                        <td align="right" valign="top" bgcolor="#F0F0F0"><strong>G.Total : </strong></td>
+                        <td align="right" valign="top" bgcolor="#F0F0F0"><strong>&pound;&nbsp;<?php echo number_format($thf, 2, '.', '');?></strong></td>
+                        <td align="right" valign="top" bgcolor="#F0F0F0"><strong>&pound;&nbsp;<?php echo number_format($tcc, 2, '.', '');?></strong></td>
+                        <td align="right" valign="top" bgcolor="#F0F0F0"><strong>&pound;&nbsp;<?php echo number_format($tot, 2, '.', '');?></strong></td>
+                        </tr>
+	
+                  </table></td>
+                </tr>
+                <tr>
+                  <td align="right"><?php echo $pagination;?></td>
+                </tr>
+                
+                
+                <tr>
+                  <td align="center" >&nbsp;</td>
+                </tr>
+  
+              </table>                </td>
+            </tr>
+            
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+        </table></td>
+        <td background="images/box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+        <td background="images/box_08.jpg">&nbsp;</td>
+        <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+      </tr><iframe width=174 height=189 name="gToday:normal:agenda.js" id="gToday:normal:agenda.js" src="calander/ipopeng.htm" scrolling="no" frameborder="0" style="visibility:visible; z-index:999; position:absolute; top:-500px; left:-500px;"></iframe>
+    </table></td>
+  </tr>
+</table>

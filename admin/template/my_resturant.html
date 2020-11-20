@@ -1,0 +1,448 @@
+<?php
+$rids=$_SESSION['resid'];
+$resquery="Select * from resturant where rid='$rids'";
+$resultres=mysql_query($resquery);
+$rowres=mysql_fetch_array($resultres);
+
+if($_REQUEST['del']>0)
+{
+if($_REQUEST['del']==1) { $fieldname=logo; }
+elseif($_REQUEST['del']==2) { $fieldname=image1; }
+elseif($_REQUEST['del']==3) { $fieldname=image2; }
+elseif($_REQUEST['del']==4) { $fieldname=image3; }
+elseif($_REQUEST['del']==5) { $fieldname=image4; }
+elseif($_REQUEST['del']==6) { $fieldname=image5; }
+elseif($_REQUEST['del']==7) { $fieldname=image6; }
+elseif($_REQUEST['del']==8) { $fieldname=image7; }
+elseif($_REQUEST['del']==9) { $fieldname=image8; }
+
+if($_REQUEST['del']>1){
+	$url1="../restaurant_image/small_".$rowres[$fieldname];
+	$url2="../restaurant_image/mid_".$rowres[$fieldname];
+	$url3="../restaurant_image/large_".$rowres[$fieldname];
+	if (file_exists($url1) && file_exists($url2) && file_exists($url3)) {
+	unlink($url1);
+	unlink($url2);
+	unlink($url3);
+	}
+}else
+{
+	$url="../".$rowres[$fieldname];
+	if (file_exists($url)) {
+	unlink($url);
+	}
+}
+$query = "Update resturant set ".$fieldname."='' where rid ='".$rids."'";	
+$result = $db->execQuery($query);
+$message="Image removed successfully.";
+}
+
+$resquery="Select * from resturant where rid='$rids'";
+$resultres=mysql_query($resquery);
+$rowres=mysql_fetch_array($resultres);
+
+?>
+
+<script language="javascript"> 
+function IsNumeric(sText)
+{
+   var ValidChars = "0123456789";
+   var IsNumber=true;
+   var Char;
+
+ 
+   for (i = 0; i < sText.length && IsNumber == true; i++) 
+      { 
+      Char = sText.charAt(i); 
+      if (ValidChars.indexOf(Char) == -1) 
+         {
+         IsNumber = false;
+         }
+      }
+   return IsNumber;
+   
+   }
+function validation()
+{
+
+  if (document.edit.rname.value == "" )
+  {
+    alert("Resturant Name is a required field.");
+    document.edit.rname.focus();
+    return false;
+  }
+  
+   if (document.edit.street.value == "" )
+  {
+    alert("Street Name is a required field.");
+    document.edit.street.focus();
+    return false;
+  }
+  
+ 
+  
+  if (document.edit.zipcode.value == "" )
+  {
+    alert("ZIP Code is a required field.");
+    document.edit.zipcode.focus();
+    return false;
+  }
+  
+  
+  
+  
+
+ 
+  return true;
+  
+}
+</script>
+<script type="text/JavaScript">
+<!--
+
+
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+//-->
+</script>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td width="8%" height="400" valign="top">&nbsp;</td>
+    <td width="92%" align="left" valign="top"><table width="96%" border="0" align="left" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+        <td background="images/box_02.jpg"><span class="box_title_text">&quot;<? echo $_SESSION[rname];?>&quot; Restaurant Management </span></td>
+        <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/box_04.jpg">&nbsp;</td>
+        <td width="100%" valign="top"><table width="100%" border="0" cellspacing="1" cellpadding="1"  class="bodytext">
+            <tr>
+              <td><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#F0F0F0" class="bodytext" id="AutoNumber4">
+                <tr>
+                  <td width="29%">&nbsp;</td>
+                  <td width="2%"><img border="0" src="images/plus.gif" width="9" height="9" /></td>
+                  <td width="26%" align="left"><a class="nav" href="index.php?action=resturant_menu&amp;rid=<?php echo $_SESSION['resid']; ?>&tabm=rcttb">Restaurant Management Home </a></td>
+                  <td width="2%"><img border="0" src="images/plus.gif" width="9" height="9" /></td>
+                  <td width="17%" align="left"><a class="nav" href="index.php?action=my_resturant&tabm=rcttb">Restaurant Profile </a></td>
+                  <td width="2%"><img border="0" src="images/plus.gif" width="9" height="9" /></td>
+                  <td width="22%" align="left"><a class="nav" href="index.php?action=resturant_owner&tabm=rcttb">Restaurant Owner Profile </a></td>
+                </tr>
+              </table></td>
+            </tr>
+            <tr>
+              <td></td>
+            </tr>
+            <tr>
+              <td width="81%" valign="top" bgcolor="#F0F0F0"><table width="100%" border="0" align="left" cellpadding="2" cellspacing="1" bgcolor="#FFFFFF" class="bodytext">
+                <tr>
+                  <td><strong>Update  Restaurant Profile </strong></td>
+                </tr>
+                <tr>
+                  <td align="center" class="message"><?PHP echo $message;
+									  
+									  ?></td>
+                </tr>
+                <tr>
+                  <td align="center"><form action="index.php?action=update_my_resturant&amp;id=<?php echo $rowres["rid"]; ?>&tabm=rcttb" method="post" enctype="multipart/form-data" name="edit" id="edit" onSubmit="return validation(this)">
+                      <table width="90%" border="0" cellspacing="2" cellpadding="2"  class="bodytext">
+                        <tr>
+                          <td width="31%" align="right"><strong>Restaurant  Name: </strong></td>
+                          <td colspan="2" align="left"><input name="rname" type="text" class="textbox_wht" id="rname" value="<?php echo $rowres["rname"]; ?>" size="35" /></td>
+                        </tr>
+                        <tr>
+                          <td align="right"><strong>Area: </strong></td>
+                          <td colspan="2" align="left"><select name="area_id" id="area_id" class="textbox_wht">
+                              <?php
+		
+			$queryar = "SELECT * FROM area where status='1'";
+	$resultar =mysql_query($queryar);
+	while($arofferinfoar = mysql_fetch_assoc($resultar)){
+		
+		?>
+                              <option value="<? echo $arofferinfoar["id"]; ?>" <? if($rowres["area_id"]==$arofferinfoar["id"]){?>selected="selected"<?}?> ><? echo $arofferinfoar["name"]; ?></option>
+                              <?
+						}
+						?>
+                          </select></td>
+                        </tr>
+                        <tr>
+                          <td align="right"><strong>Restaurant Type: </strong></td>
+                          <td colspan="2" align="left"><select name="chinise_id" id="chinise_id" class="textbox_wht">
+                              <?php
+		
+			$querych = "SELECT * FROM cusin where status='1'";
+	$resultch =mysql_query($querych);
+	while($arofferinfoch = mysql_fetch_assoc($resultch)){
+		
+		?>
+                              <option value="<? echo $arofferinfoch["id"]; ?>" <? if($rowres["chinise_id"]==$arofferinfoch["id"]){?>selected="selected"<?}?> ><? echo $arofferinfoch["name"]; ?></option>
+                              <?
+						}
+						?>
+                          </select></td>
+                        </tr>
+						
+						<tr>
+                          <td align="right"><strong>Building Name: </strong></td>
+                          <td colspan="2" align="left"><input name="building" type="text" class="textbox_wht" id="building" value="<?php echo $rowres["building"]; ?>" /></td>
+                        </tr>
+						
+						
+                        <tr>
+                          <td align="right"><strong>Address1 </strong></td>
+                          <td colspan="2" align="left"><input name="street" type="text" class="textbox_wht" id="street" value="<?php echo $rowres["street"]; ?>" /></td>
+                        </tr>
+						
+						<tr>
+                          <td align="right"><strong>Address2 </strong></td>
+                          <td colspan="2" align="left"><input name="address2" type="text" class="textbox_wht" id="address2" value="<?php echo $rowres["address2"]; ?>" /></td>
+                        </tr>
+						
+						<tr>
+                          <td align="right"><strong>County </strong></td>
+                          <td colspan="2" align="left"><input name="county" type="text" class="textbox_wht" id="county" value="<?php echo $rowres["county"]; ?>" /></td>
+                        </tr>
+						
+						
+                        <tr>
+                          <td align="right"><strong>City: </strong></td>
+                          <td colspan="2" align="left"><input name="city" type="text" class="textbox_wht" id="city" value="<?php echo $rowres["city"]; ?>" /></td>
+                        </tr>
+                        <tr>
+                          <td align="right"><strong>Post Code: </strong></td><?php $zipcode = explode(" ", $rowres["zipcode"]);?>
+                          <td colspan="2" align="left"><input name="zipcode" style="text-transform:uppercase;" size="6" maxlength="4" type="text" class="textbox_wht" id="zipcode" value="<?php echo $zipcode[0];?>" /> <input name="zipcode2" style="text-transform:uppercase;" size="6" maxlength="4" type="text" class="textbox_wht" id="zipcode2" value="<?php echo $zipcode[1];?>" /></td>
+                        </tr>
+                        <tr>
+                          <td align="right"><strong>Country: </strong></td>
+                          <td colspan="2" align="left"><select name="country_id" id="country_id" class="textbox_wht">
+							  <option value="United Kingdom">United Kingdom</option>
+                          </select></td>
+                        </tr>
+                        <tr>
+                          <td align="right"><strong>Main Telephone no: </strong></td>
+                          <td colspan="2" align="left"><input name="contact" type="text" class="textbox_wht" id="contact" value="<?php echo $rowres["contact"]; ?>" size="35" /></td>
+                        </tr>
+                        <tr>
+                          <td align="right"><strong>Telephone no 2: </strong></td>
+                          <td colspan="2" align="left"><input name="contact2" type="text" class="textbox_wht" id="contact2" tabindex="15" value="<? echo $rowres["contact2"]; ?>" /></td>
+                        </tr>
+                        <tr>
+                          <td align="right"><strong>Telephone no 3: </strong></td>
+                          <td colspan="2" align="left"><input name="contact3" type="text" class="textbox_wht" id="contact3" tabindex="15" value="<? echo $rowres["contact3"]; ?>" /></td>
+                        </tr>
+                        <tr>
+                          <td align="right"><strong>Telephone no no 4: </strong></td>
+                          <td colspan="2" align="left"><input name="contact4" type="text" class="textbox_wht" id="contact4" tabindex="15" value="<? echo $rowres["contact4"]; ?>" /></td>
+                        </tr>
+                        <tr>
+                          <td align="right"><strong>Web: </strong></td>
+
+                          <td colspan="2" align="left"><input name="web" type="text" class="textbox_wht" id="web" value="<?php echo $rowres["web"];?>" /></td>
+                        </tr>
+                        <tr>
+                          <td align="right" valign="top"><strong>Logo upload : </strong></td>
+                          <td width="31%" align="left" valign="top">
+						  <input name="c_img" type="file" class="textbox" id="c_img"/>                          </td>
+                          <td width="38%" align="left" valign="top">
+						  <?php if($rowres["logo"]!="") 
+						  { 
+						  	$logourl="../".$rowres["logo"];
+						  	if (file_exists($logourl)) 
+						  { ?>
+						  <img src="../<?php echo $rowres["logo"]; ?>" alt="no logo" width="100" height="75"/>&nbsp;&nbsp;<a href="index.php?action=my_resturant&tabm=rcttb&del=1" style="text-decoration:underline; color:#CC0033">Remove Logo</a>
+						  <?php } } ?>
+						  </td>
+                        </tr>
+
+						  <tr>
+                          <td align="right" valign="top"><strong>Image1
+						  
+						  
+                          
+						   </strong></td>
+                          <td width="31%" align="left" valign="top">
+						  <input  type="file"  name="image1" class="textbox" />                          </td>
+                          <td width="38%" align="left" valign="top">
+						  <?php if($rowres["image1"]!="") 
+						  { 
+						  	$logourl="../restaurant_image/small_".$rowres["image1"];
+						  	if (file_exists($logourl)) 
+						  { ?>
+							<img src="../restaurant_image/small_<?php echo $rowres["image1"]; ?>" alt="no image"/>&nbsp;&nbsp;<a href="index.php?action=my_resturant&tabm=rcttb&del=2" style="text-decoration:underline; color:#CC0033">Remove Image</a>
+						  <?php } } ?>
+						  </td>
+                          </tr>
+						  
+						  
+						  <tr>
+                          <td align="right" valign="top"><strong>Image2 </strong></td>
+                          <td width="31%" align="left" valign="top">
+						 <input  type="file"  name="image2" class="textbox" />                          </td>
+                          <td width="38%" align="left" valign="top">
+						  <?php if($rowres["image2"]!="") 
+						  { 
+						  	$logourl="../restaurant_image/small_".$rowres["image2"];
+						  	if (file_exists($logourl)) 
+						  { ?>
+							<img src="../restaurant_image/small_<?php echo $rowres["image2"]; ?>" alt="no image"/>&nbsp;&nbsp;<a href="index.php?action=my_resturant&tabm=rcttb&del=3" style="text-decoration:underline; color:#CC0033">Remove Image</a>
+						  <?php } } ?>
+						  </td>
+                          </tr>
+						  
+						  <tr>
+                          <td align="right" valign="top"><strong>Image3 </strong></td>
+                          <td width="31%" align="left" valign="top">
+						 <input  type="file"  name="image3" class="textbox" />                          </td>
+                          <td width="38%" align="left" valign="top">
+						  <?php if($rowres["image3"]!="") 
+						  { 
+						  	$logourl="../restaurant_image/small_".$rowres["image3"];
+						  	if (file_exists($logourl)) 
+						  { ?>
+							<img src="../restaurant_image/small_<?php echo $rowres["image3"]; ?>" alt="no image"/>&nbsp;&nbsp;<a href="index.php?action=my_resturant&tabm=rcttb&del=4" style="text-decoration:underline; color:#CC0033">Remove Image</a>
+						  <?php } } ?>
+						  </td>
+                          </tr>
+						  <tr>
+                          <td align="right" valign="top"><strong>Image4 </strong></td>
+                          <td width="31%" align="left" valign="top">
+						  <input  type="file"  name="image4" class="textbox" />                          </td>
+                          <td width="38%" align="left" valign="top">
+						  <?php if($rowres["image4"]!="") 
+						  { 
+						  	$logourl="../restaurant_image/small_".$rowres["image4"];
+						  	if (file_exists($logourl)) 
+						  { ?>
+							<img src="../restaurant_image/small_<?php echo $rowres["image4"]; ?>" alt="no image"/>&nbsp;&nbsp;<a href="index.php?action=my_resturant&tabm=rcttb&del=5" style="text-decoration:underline; color:#CC0033">Remove Image</a>
+						  <?php } } ?>
+						  </td>
+                          </tr>
+						  
+						  <tr>
+                          <td align="right" valign="top"><strong>Image5 </strong></td>
+                          <td width="31%" align="left" valign="top">
+						  <input  type="file"  name="image5" class="textbox" />                          </td>
+                          <td width="38%" align="left" valign="top">
+						  <?php if($rowres["image5"]!="") 
+						  { 
+						  	$logourl="../restaurant_image/small_".$rowres["image5"];
+						  	if (file_exists($logourl)) 
+						  { ?>
+							<img src="../restaurant_image/small_<?php echo $rowres["image5"]; ?>" alt="no image"/>&nbsp;&nbsp;<a href="index.php?action=my_resturant&tabm=rcttb&del=6" style="text-decoration:underline; color:#CC0033">Remove Image</a>
+						  <?php } } ?>
+						  </td>
+                          </tr>
+						  
+						  <tr>
+                          <td align="right" valign="top"><strong>Image6 </strong></td>
+                          <td width="31%" align="left" valign="top">
+						  <input  type="file"  name="image6" class="textbox" />                          </td>
+                          <td width="38%" align="left" valign="top">
+						  <?php if($rowres["image6"]!="") 
+						  { 
+						  	$logourl="../restaurant_image/small_".$rowres["image6"];
+						  	if (file_exists($logourl)) 
+						  { ?>
+							<img src="../restaurant_image/small_<?php echo $rowres["image6"]; ?>" alt="no image"/>&nbsp;&nbsp;<a href="index.php?action=my_resturant&tabm=rcttb&del=7" style="text-decoration:underline; color:#CC0033">Remove Image</a>
+						  <?php } } ?>
+						  </td>
+                          </tr>
+						  
+						  <tr>
+                          <td align="right" valign="top"><strong>Image7 </strong></td>
+                          <td width="31%" align="left" valign="top">
+						<input  type="file"  name="image7" class="textbox" />                          </td>
+                          <td width="38%" align="left" valign="top">
+						  <?php if($rowres["image7"]!="") 
+						  { 
+						  	$logourl="../restaurant_image/small_".$rowres["image7"];
+						  	if (file_exists($logourl)) 
+						  { ?>
+							<img src="../restaurant_image/small_<?php echo $rowres["image7"]; ?>" alt="no image"/>&nbsp;&nbsp;<a href="index.php?action=my_resturant&tabm=rcttb&del=8" style="text-decoration:underline; color:#CC0033">Remove Image</a>
+						  <?php } } ?>
+						  </td>
+                          </tr>
+						  <tr>
+                          <td align="right" valign="top"><strong>Image8 </strong></td>
+                          <td width="31%" align="left" valign="top">
+						  <input  type="file"  name="image8" class="textbox" />                          </td>
+                          <td width="38%" align="left" valign="top">
+						  <?php if($rowres["image8"]!="") 
+						  { 
+						  	$logourl="../restaurant_image/small_".$rowres["image8"];
+						  	if (file_exists($logourl)) 
+						  { ?>
+							<img src="../restaurant_image/small_<?php echo $rowres["image8"]; ?>" alt="no image"/>&nbsp;&nbsp;<a href="index.php?action=my_resturant&tabm=rcttb&del=9" style="text-decoration:underline; color:#CC0033">Remove Image</a>
+						  <?php } } ?>
+						  </td>
+                          </tr>
+						
+						
+						
+						
+                        <tr>
+                          <td align="right" valign="top"><strong>Company Description : </strong></td>
+                          <td colspan="2" align="left"><textarea name="rdesc" cols="35" rows="5"  id="rdesc"><?php echo strip_tags(html_entity_decode($rowres["rdesc"])); ?></textarea></td>
+                        </tr>
+                        <tr>
+                          <td align="right" valign="top"><strong>Mission/Slogan/Short view : </strong></td>
+                          <td colspan="2" align="left"><textarea name="keytitle" cols="35" rows="3"  id="keytitle"><?php echo strip_tags(html_entity_decode($rowres["keytitle"])); ?></textarea></td>
+                        </tr>
+						
+                        <tr>
+                          <td align="right" valign="top"><strong>Restaurant Profile: </strong></td>
+                          <td colspan="2" align="left">
+						  
+					<?php	
+					    include("spaw/spaw.inc.php");
+						$dummy=$rowres["profile"]; 
+						$contents = new SpawEditor("profile",$dummy);
+						$contents->show();
+				    ?>
+						  
+						  
+						  </td>
+                        </tr>
+                        <tr>
+                          <td align="right" valign="top">&nbsp;</td>
+                          <td colspan="2" align="left"><input type="submit" name="Submit" value="Update" /></td>
+                        </tr>
+                      </table>
+                  </form></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td valign="top">&nbsp;</td>
+                </tr>
+              </table></td>
+            </tr>
+            
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+        </table></td>
+        <td background="images/box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+        <td background="images/box_08.jpg">&nbsp;</td>
+        <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>

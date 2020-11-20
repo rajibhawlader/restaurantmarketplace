@@ -1,0 +1,118 @@
+<script language="javascript">
+function checklogin()
+{
+	
+	
+	if (document.edit1.username.value.indexOf("@") == -1 || document.edit1.username.value == "")
+  {
+    alert("Email is a required field!, may be you have missd @ symbol");
+    document.edit1.username.focus();
+    return false;
+  }
+  
+  if (document.edit1.username.value.indexOf(".") == -1 || document.edit1.username.value == "")
+  {
+    alert("Email is a required field!, may be you have missd . symbol");
+    document.edit1.username.focus();
+    return false;
+  }
+    if (document.edit1.password.value == "" )
+  {
+    alert("Password is a required field!");
+    document.edit1.password.focus();
+    return false;
+  }
+		
+		
+	return true;
+}
+</script>
+<table width="217" border="0" cellspacing="0" cellpadding="0">
+                                
+                                <tr>
+                                  <td>
+								
+								  <form action="index-action-customer_login" method="post" enctype="multipart/form-data" name="edit1" id="edit1" onsubmit="return checklogin(this)" ><table width="217" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td colspan="2"><img src="images/login_top_32.jpg" width="217" height="38"></td>
+          </tr>
+          <tr>
+            <td colspan="2" valign="top" background="images/login_mid_38.jpg"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>  <table width="90%" border="0" align="center" cellpadding="2" cellspacing="1" class="bodytext">
+                                        <?php if($message!="" and $message=="Invalid Username or Password!"){ ?><tr>
+                                          <td><?PHP echo $message;
+									  
+									  ?></td>
+                                        </tr>
+                                        <?php }?>
+                                       <?Php if($_SESSION['customers_id']==""){?> <tr>
+                                          <td width="34%"><strong>Username </strong></td>
+                                        </tr>
+                                        <tr>
+                                          <td><input name="username" id="username" type="text" class="textbox_wht" size="25"></td>
+                                        </tr>
+                                        
+                                        <tr>
+                                          <td height="5"></td>
+                                        </tr>
+                                        <tr>
+                                          <td><div align="right" class="nrmlink_black">
+                                              <div align="left"><strong>Password</strong></div>
+                                          </div></td>
+                                        </tr>
+                                        
+                                        <tr>
+                                          <td><input name="password" type="password" id="password" class="textbox_wht" size="25"></td>
+                                        </tr>
+                                        <tr>
+                                          <td><a href="#" class="nav">Forgotten your password?</a></td>
+                                        </tr>
+                                        <tr>
+                                          <td><a href="index-action-customer_registration" class="nav3"><strong>Not Registered?</strong></a></td>
+                                        </tr>
+                                        <?php }else{?>
+                                        <tr>
+                                          <td><a href="index-action-customeraccounthome" class="nav">My Account</a> | <a href="index-action-customerlogout" class="nav">Log Out</a></td>
+                                        </tr>
+                                        <?}?>
+                  </table></td>
+              </tr>
+             
+        
+            </table></td>
+          </tr>
+          <tr>
+          <td width="124"><img src="images/login_01.jpg" width="124" height="35"></td>
+            <td width="93"><?Php if($_SESSION['customers_id']==""){?> <input type="image" src="images/login_02.jpg" width="93" height="35" border="0" name="submit" /><?php }else{?><img src="images/login_002.jpg" width="93" height="35" /><?}?></td>
+            <td width="93">&nbsp;</td>
+          </tr>
+        </table>
+                                  </form>
+		
+		<table width="217" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td height="25"></td>
+          </tr>
+          <tr>
+            <td class="customerbox" valign="top"><table width="90%" border="0" cellspacing="2" cellpadding="2" align="center">
+              <tr>
+                <td height="35"></td>
+              </tr>
+              <tr>
+                <td valign="top" class="myrid13">Customer testimonial will be displayed here. </td>
+              </tr>
+              <tr>
+                <td ><strong><a href="index-action-ctestimonial" class="nav4">Live Feedback  </a></strong></td>
+              </tr>
+              <tr>
+                <td class="myrid14">&nbsp;</td>
+              </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td background="images/customer_44.jpg"></td>
+          </tr>
+        </table></td>
+                                </tr>
+</table>

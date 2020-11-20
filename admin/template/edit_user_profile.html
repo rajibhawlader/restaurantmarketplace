@@ -1,0 +1,103 @@
+
+<SCRIPT language=JavaScript>
+function validation()
+{
+  if (document.edit.UserName.value == "" )
+  {
+    alert("User Name is a required field!");
+    document.edit.UserName.focus()
+    return false;
+  }
+  if (document.edit.UserID.value.indexOf("@") == -1 || document.edit.UserID.value 
+== "")
+  {
+    alert("Admin Email is a required field!. info@ibacs.co.uk");
+    document.edit.UserID.focus()
+    return false;
+  }
+
+  if (document.edit.UserID.value.indexOf(".") == -1 || document.edit.UserID.value 
+== "")
+  {
+    alert("Admin Email is a required field!. info@ibacs.co.uk  with [use .]");
+    document.edit.UserID.focus()
+    return false;
+  }
+    
+  if (document.edit.UserPassword.value == "" )
+  {
+    alert("Password is a required field!");
+    document.edit.UserPassword.focus()
+    return false;
+  }
+  
+}
+</script>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="21%" height="400" valign="top">&nbsp;</td>
+    <td width="73%" align="left" valign="top"><table width="60%" border="0" align="left" cellpadding="0" cellspacing="0">
+      <tr>
+        <td colspan="4">&nbsp;</td>
+      </tr>
+      <tr>
+        <td colspan="4">&nbsp;</td>
+      </tr>
+
+      <tr>
+        <td width="9"><img src="images/box_01.gif" width="9" height="9" alt="" /></td>
+        <td width="696" background="images/top_line.gif"><img border="0" src="images/top_line.gif" width="1" height="9" /></td>
+        <td width="14"><img src="images/box_03.gif" width="12" height="9" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/left_line.gif" width="9">&nbsp;</td>
+        <td><div align="center">
+            <?php
+								if (isset($_REQUEST["ID"]) && !empty($_REQUEST["ID"])) 
+									$ID=$_REQUEST["ID"];
+								
+								$query = "SELECT * FROM tbladmininfo WHERE ID = ".$ID."";
+								//echo $query;
+								$result = $db->execQuery($query);
+                                $arinfo = $db->resultArray($result);
+								?>
+            <table width="88%" border="0" cellpadding="4" cellspacing="1" class="bodytext">
+              <form action="<?php echo $PHP_SELF; ?>" method="post" name="edit" id="edit" onsubmit="return validation(this)">
+                <tr>
+                  <td colspan="2" class="admintexttitle" ><div align="left"><img src="images/title_edit_profile.jpg" width="190" height="35" /></div></td>
+                </tr>
+                <tr>
+                  <td width="41%" class="toptext"><font color="#FF0000" size="2">* </font>Admin Name:</td>
+                  <td width="54%"><input type="text" name="UserName" size="28" style="font-family: Verdana; font-size: 8pt; border: 1px solid #006699" value="<?php echo stripslashes($arinfo[0]["UserName"]); ?>" /></td>
+                </tr>
+                <tr>
+                  <td width="41%" class="toptext"><font color="#FF0000" size="2">* </font>Admin Email:</td>
+                  <td width="54%"><input name="UserID" size="28" style="font-family: Verdana; font-size: 8pt; border: 1px solid #006699"  value="<?php echo stripslashes($arinfo[0]["UserID"]); ?>" /></td>
+                </tr>
+                <tr>
+                  <td width="41%" class="toptext"><font color="#FF0000" size="2">* </font>Password:</td>
+                  <td width="54%"><input type="password" name="UserPassword" size="28" style="font-family: Verdana; font-size: 8pt; border: 1px solid #006699"  value="<?php echo $arinfo[0]["UserPassword"]; ?>" /></td>
+                </tr>
+                <tr>
+                  <td width="41%">&nbsp;</td>
+                  <td width="54%"><input type="hidden" name="action" value="update_user" />
+                      <input type="hidden" id="adminID" name="adminID" value="<?php echo $ID; ?>" />
+                      <input type="submit" value="Update" name="submit" class= "button_grn" /></td>
+                </tr>
+              </form>
+            </table>
+        </div></td>
+        <td background="images/right_line.gif" width="14">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="9"><img src="images/box_07.gif" width="9" height="11" alt="" /></td>
+        <td background="images/bottom_line.gif"><img border="0" src="images/bottom_line.gif" width="2" height="11" /></td>
+        <td width="14"><img src="images/box_09.gif" width="12" height="11" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>

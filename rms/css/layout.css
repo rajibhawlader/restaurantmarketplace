@@ -1,0 +1,109 @@
+/**
+ * XRMS page layout foundation
+ *
+ * This stylesheet should only specify the position/shape
+ * and related attributes of major page elements.
+ * (no fonts, colors, or borders - just shape/size)
+ *
+ * Default layout has Sidebar on the right:
+ *  +------------+--------+
+ *  |body        |loginbar|<--- loginbar is floated to top/right
+ *  |+-----------|        |<-+
+ *  ||page_header+--------+  |
+ *  |+-------------------+|  |
+ *  ||navline            ||<-+- navline, loginbar, msg are optional
+ *  |+-------------------+|  |
+ *  ||msg                ||<-+
+ *  |+-------------------+|<---- begin "page body"
+ *  ||Main...            ||
+ *  ||+---------+-------+||
+ *  |||Content  |Sidebar|||
+ *  ||+---------+-------+||
+ *  |+-------------------+|<---- end "page body"
+ *  +---------------------+
+ *
+ * Other "page body" layouts:
+ *      #login-box - centered login form
+ *      #ContentFullWidth large container, no sidebar
+ *
+ * $Id: layout.css,v 1.4 2005/01/03 04:24:42 ebullient Exp $
+ */
+body {
+    margin: 0px;
+}
+#page_header {
+    margin: 2px 2px 0px 2px;
+}
+#loginbar {
+    float: right;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+}
+#navline {
+    clear: both;
+    margin: 0px 2px;
+}
+#msg {
+    margin: 0px 2px;
+}
+/** ----------
+ * Primary page/content body: Main with Content/Sidebar
+ * Include z-index for jscalender (div.calendar);
+ */
+#Main {
+    /* position is important for positioning of Sidebar */
+    position: relative;
+    z-index: 1;         /* below Sidebar and Content */
+    clear: both;
+    margin: 2px;
+    min-width: 40em;
+}
+#Main #Content {
+    position: relative;
+    width: 69.5%
+    min-width: 12em;
+    z-index: 3;         /* Content above Sidebar */
+    /* Match sidebar width for right (by default) margin */
+    margin: 0em 30.5% 0em 0em;
+}
+#Main #Sidebar {
+    position: absolute;
+    z-index: 2;         /* Sidebar below Content */
+    top: 0px;
+    right: 0px;
+    margin: 0px;
+    /* Width needs to match right margin in #Main #Content */
+    width: 30%;
+    min-width: 16em;
+}
+div.calendar {
+    position: relative; /* must define position for z-index */
+    z-index: 4;         /* calendar on top!!                */
+}
+/** ----------
+ * Alternate page/content body: ContentFullWidth (no inner Content/Sidebar)
+ * If this is included inside Main, don't set a margin
+ */
+#ContentFullWidth {
+    clear: both;
+    position: relative;
+    margin: 2px;
+}
+#Main #ContentFullWidth {
+    margin: 0px;
+}
+/** ----------
+ * Alternate page/content body: login-box for login page
+ */
+#loginbox {
+    position: absolute;
+    /** Use negative margins to center height */
+    height: 7em;
+    top: 50%;
+    margin-top: -3.5em;
+    /** Use negative margins to center width */
+    width: 16em;
+    left: 50%;
+    margin-left: -8em;
+}

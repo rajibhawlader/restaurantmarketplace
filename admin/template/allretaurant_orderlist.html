@@ -1,0 +1,357 @@
+<?php if($_SESSION["message"] !=""){$message = $_SESSION["message"]; unset($_SESSION["message"]); }?>
+<script type="text/JavaScript">
+<!--
+function noocheck()
+{
+var today = new Date;
+var year = today.getYear();
+var month = today.getMonth()+1;
+var day = today.getDate();
+if(day<10) day = "0" + day
+if(month<10) month= "0" + month 
+if(year<1000) year+=1900
+var curdate=year+"-"+month+"-"+day;
+	
+	if(document.getElementById('noo').value==0)
+	{
+		alert("There has no order in this time period");
+		document.getElementById('sdate').focus();
+		return false;
+	}
+	if(document.getElementById('sdate').value=="")
+	{
+		alert("Order filter from date is a require field");
+		document.getElementById('sdate').focus();
+		return false;
+	}
+	if(document.getElementById('edate').value=="")
+	{
+		alert("Order filter to date is a require field");
+		document.getElementById('edate').focus();
+		return false;
+	}
+	if(document.getElementById('sdate').value==document.getElementById('edate').value)
+	{
+		alert("Order filter from date and to date can't be same");
+		document.getElementById('sdate').focus();
+		return false;
+	}
+	if(document.getElementById('sdate').value>document.getElementById('edate').value)
+	{
+		alert("Order filter to date can't be smaller than from date");
+		document.getElementById('edate').focus();
+		return false;
+	}
+	
+}
+
+function isChecked(isitchecked){
+	if (isitchecked == true){
+		document.orders.boxchecked.value++;
+	}
+	else {
+		document.orders.boxchecked.value--;
+	}
+}
+
+function checkAll( n, fldName ) {
+  if (!fldName) {
+     fldName = 'cb';
+  }
+	var f = document.orders;
+	var c = f.toggle.checked;
+	var n2 = 0;
+	for (i=0; i < n; i++) {
+		cb = document.getElementById(fldName + '' + i); 
+		if (cb) { 
+			if(cb.disabled == false){
+			cb.checked = c;
+			n2++;
+			}
+		}
+	}
+	if (c) {
+		document.orders.boxchecked.value = n2;
+	} else {
+		document.orders.boxchecked.value = 0;
+	}
+}
+//-->
+</script>
+
+<?php 
+
+$query = "SELECT * FROM resturant WHERE rid='".$_SESSION['resid']."'";	
+$result = $db->execQuery($query);
+$rst_info = $db->resultArray($result);
+
+$rids=$_SESSION['resid'];
+if($_REQUEST["submit"] == "Update"){
+	$query_string = "&submit=Update";
+	$order_type = $_REQUEST["order_type"];
+	$order_ids = $_POST["orids"];
+	if($order_ids){
+	foreach($order_ids as $k){
+		$sql = "UPDATE customer_order SET order_status = '".$order_type."' WHERE orid='".$k."'";
+		$db->execQuery($sql);
+	} 
+	
+	$message = "Order status has been changed successfully";
+	}
+	$query = "SELECT ord.*, r.rname FROM customer_order as ord, resturant as r  WHERE ord.rid = r.rid AND order_status='".$order_type."'";	
+	$total_query = "SELECT count(ord.orid) FROM customer_order as ord, resturant as r  WHERE ord.rid = r.rid AND order_status='".$order_type."'";	
+	
+	$query_string .= "&order_type=".$_REQUEST["order_type"];
+}
+elseif($_REQUEST["submit"] == "Filter"){
+	$query_string = "&submit=Filter";
+	$order_type = $_REQUEST["order_type"];
+	$order_ids = $_POST["orids"];
+	
+	$query = "SELECT ord.*, r.rname FROM customer_order as ord, resturant as r  WHERE ord.rid = r.rid AND order_status='".$order_type."'";	
+	$total_query = "SELECT count(ord.orid) FROM customer_order as ord, resturant as r  WHERE ord.rid = r.rid AND order_status='".$order_type."'";	
+	$query_string .= "&order_type=".$_REQUEST["order_type"];
+}
+elseif($_REQUEST["submit"] != ""){
+	$query = "SELECT ord.*, r.rname FROM customer_order as ord, resturant as r  WHERE ord.rid = r.rid ";
+	$total_query = "SELECT count(ord.orid) FROM customer_order as ord, resturant as r WHERE ord.rid = r.rid ";
+	$query_string = "&submit=true";
+	if($_REQUEST["rname"] !=""){
+	$query .= " and r.rname  LIKE '%%".$_REQUEST["rname"]."%'";
+	$total_query .= " and r.rname  LIKE '%%".$_REQUEST["rname"]."%'";
+	$query_string .= "&rname=".$_REQUEST["rname"];
+	}
+	
+	if ($_REQUEST["sdate"]!="" and $_REQUEST["edate"]!="" )
+	{
+	$query .= " and DATE_FORMAT(ord.ordate, '%Y-%m-%d')  between '".$_REQUEST["sdate"]."' and  '".$_REQUEST["edate"]."' ";	
+	$total_query .= " and DATE_FORMAT(ord.ordate, '%Y-%m-%d')  between '".$_REQUEST["sdate"]."' and  '".$_REQUEST["edate"]."' ";	
+	$query_string .= "&sdate=".$_REQUEST["sdate"]."&edate=".$_REQUEST["edate"];
+	}
+	
+	
+
+}else{
+	$query = "SELECT ord.*, r.rname FROM customer_order as ord, resturant as r  WHERE ord.rid = r.rid ";	
+	$total_query = "SELECT count(ord.orid) FROM customer_order as ord, resturant as r  WHERE ord.rid = r.rid ";	
+}
+$total_query;
+
+$ref = $db->execQuery($total_query);
+$total = $db->result($ref);
+
+	$targetpage = "index.php?action=allretaurant_orderlist&tabm=actd"; 	//your file name  (the name of this file)
+	$targetpage .= $query_string;
+	$limit = 50; 								//how many items to show per page
+	$page = $_REQUEST['page'];
+	if($page) 
+		$start = ($page - 1) * $limit; 			//first item to display on this page
+	else
+		$start = 0;								//if no page var is given, set start to 0
+		
+	
+$pagination = pagination($targetpage, $total, $page, $limit);
+// pagination end	
+
+
+
+$query.=" order by orid desc LIMIT $start, $limit";	
+$result = $db->execQuery($query);
+$arinfo = $db->resultArray($result);
+$noo = sizeof($arinfo);
+
+$order_status = array("Pending", "Confirmed", "Concluded", "Canceled by Customer", "Rejected by Restaurant", "Bad Order");	
+?>
+
+
+<table width="99%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td></td>
+  </tr>
+  <tr>
+    <td align="right" valign="top">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="92%" height="400" align="right" valign="top"><table width="100%" border="0" align="left" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+        <td background="images/box_02.jpg"><span class="box_title_text">View All Orders</span></td>
+        <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/box_04.jpg">&nbsp;</td>
+        <td width="100%" valign="top"><table width="100%" border="0" cellspacing="1" cellpadding="1"  class="bodytext">
+           
+            <tr>
+              <td></td>
+            </tr>
+            <tr>
+              <td width="81%" valign="top" bgcolor="#F0F0F0"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+               
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td align="left"><form action="index.php?action=allretaurant_orderlist&tabm=actd" method="post" name="orderlist" id="orderlist">
+                      <table width="100%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#f0f0f0" class="bodytext">
+                        <tr>
+                          <td width="1%" class="bodytext">&nbsp;</td>
+						  <td width="13%" class="bodytext"><strong>Restaurant Name:</strong></td>
+                          <td width="12%" class="bodytext"><input name="rname"  id="rname" value="<? echo $_REQUEST["rname"];?>" size="20" /></td>
+                          <?php $d=($_REQUEST["sdate"] !="")?$_REQUEST["sdate"]:date('Y-m-d'); $ed=($_REQUEST["edate"] !="")?$_REQUEST["edate"]:date('Y-m-d'); ?>
+                          <td width="14%" class="bodytext"><strong>Order Filter From:</strong> </td>
+                          <td width="17%"><input name="sdate"  id="sdate" value="<? echo $d ?>" size="12" />
+                            <a href="javascript:void(0)" onClick="if(self.gfPop)gfPop.fPopCalendar(document.orderlist.sdate);return false;" ><img class="PopcalTrigger" align="top" src="calander/calbtn.gif" width="34" height="22" border="0" alt=""  /></a>				 
+							  </td>
+                          <td width="3%"><strong>To</strong></td>
+                          <td width="18%"><input name="edate"  id="edate" value="<? echo $ed ?>" size="12"/>
+                              <a href="javascript:void(0)" onClick="if(self.gfPop)gfPop.fPopCalendar(document.orderlist.edate);return false;" ><img class="PopcalTrigger" align="absmiddle" src="calander/calbtn.gif" width="34" height="22" border="0" alt="" /></a></td>
+                          <td width="10%"><input type="submit" name="submit"  class="button_grn"  value="Search" /></td>
+						  <td width="12%">
+						  <input type="hidden" name="noo" id="noo" value="<?=$noo?>">
+						 </td>                          
+                        </tr>
+                      </table>
+                  </form></td>
+                </tr>
+                
+                <?php if($message!=""){?>
+                <tr>
+                  <td align="center" class="message"><?php echo $message;?></td>
+                </tr>
+                <?php }?>
+				 <form action="index.php?action=allretaurant_orderlist&tabm=actd" method="post" id="orders" name="orders">
+                <tr>
+                  <td>
+				 
+				  	<table width="90%">
+						<tr>
+							<td width="80"> 
+<?php $order_status = array("Pending", "Confirmed", "Concluded", "Canceled by Customer", "Rejected by Restaurant", "Bad Order"); ?>
+								<select name="order_type">
+									<option value=""> -- ALL -- </option>
+									
+									 <?php foreach($order_status as $status_key => $status_label){?>
+                              <option value="<?php echo $status_key;?>" <?php if ($_REQUEST["order_type"]== $status_key){?>selected="selected"<?}?> ><?php echo $status_label;?></option>
+                            <?php } ?> 
+								</select>
+							</td>
+							<td width="80"><input type="submit" name="submit" value="Update" /></td>
+							<td align="left" width="80"><input type="submit" name="submit" value="Filter"></td>
+							<td align="left"><a href="index.php?action=allretaurant_orderlist&tabm=actd" class="nav"><strong>Show All</strong></a></td>
+						</tr>
+					</table>
+					
+				  </td>
+                </tr>
+                
+                <tr>
+                  <td><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#DFDFDF" class="bodytext">
+                      <!--<tr border=0> 
+          <td colspan="10" class="fieldtext"></td>
+        </tr> -->
+                      <tr>
+					  	<td width="10" valign="top" bgcolor="#F0F0F0" class="fieldtext" ><input type="checkbox" name="toggle" onclick="javascript: checkAll(<?php echo sizeof($arinfo);?>, 'orids');" value="1" id="toggle"/> </td>
+                        <td width="43" valign="top" bgcolor="#F0F0F0" class="fieldtext" ><strong>SLNo </strong></td>
+                        <td width="50" valign="top" bgcolor="#F0F0F0" class="fieldtext" ><strong>Order No </strong></td>
+						<td valign="top" bgcolor="#F0F0F0" class="fieldtext" ><strong>Restaurant Name</strong></td>
+                        <td width="45" align="left" valign="top" bgcolor="#F0F0F0" class="fieldtext" ><strong>Date </strong></td>
+                      <!--  <td width="54" align="left" valign="top" bgcolor="#F0F0F0" class="fieldtext" ><strong>Time </strong></td>-->
+                        <td width="112" valign="top" bgcolor="#F0F0F0" class="fieldtext" ><strong>Name </strong></td>
+                        <td width="70" align="left" valign="top" bgcolor="#F0F0F0" class="fieldtext"><strong>Order Type</strong></td>
+                        <td width="70" align="left" valign="top" bgcolor="#F0F0F0" class="fieldtext"><strong>Payment Menthod</strong></td>
+						<td width="86" align="left" valign="top" bgcolor="#F0F0F0" class="fieldtext"><strong>Auth. Code</strong></td>
+                        <td width="72" align="left" valign="top" bgcolor="#F0F0F0" class="fieldtext"><strong>Hand.Fee</strong></td>
+                        <td width="82" align="left" valign="top" bgcolor="#F0F0F0" class="fieldtext"><strong>CC Charges</strong></td>
+                        <td width="86" align="left" valign="top" bgcolor="#F0F0F0" class="fieldtext"><strong>Order Total</strong></td>
+						<td width="70" align="center" valign="top" bgcolor="#F0F0F0" class="fieldtext"><strong>Status</strong></td>
+                        <td width="70" align="center" valign="top" bgcolor="#F0F0F0" class="fieldtext"><strong>Action</strong></td>
+                        </tr>
+                      <?php		
+		
+			for ($i = 0; $i < sizeof($arinfo); $i++)
+			{
+			
+				$cuid=$arinfo[$i]['customers_id'];	
+				$sqlc="Select * from customers where customers_id=$cuid";
+				$resultc=mysql_query($sqlc);
+				$rowc=mysql_fetch_array($resultc);
+				
+		?>
+                      <tr >
+					  	<td><input type="checkbox" onclick="javascript: isChecked(this.checked);" name="orids[<?php echo $i;?>]" value="<?php echo $arinfo[$i]["orid"];?>" id="orids<?php echo $i;?>"/></td>
+                        <td align="right" valign="top" bgcolor="#FFFFFF"><?php $sln=10000; echo $sln+$i+$start+1; ?></td>
+                        <td align="right" valign="top" bgcolor="#FFFFFF"><a href="index.php?action=orderdetails&tabm=actd&orid=<? echo $arinfo[$i]["orid"]; ?>" class="nav6"><?php echo order_id($arinfo[$i]["orid"]);?></a></td>
+						<td align="left" valign="top" bgcolor="#FFFFFF"><?php echo $arinfo[$i]["rname"]?></td>
+                        <td align="right" valign="top" bgcolor="#FFFFFF"><?php list($date, $time) = split('[ ]',$arinfo[$i]["ordate"]); list($year, $month, $day) = split('[-]',$date); echo $day."/".$month."/".$year; ?><br /><?php echo $time; ?></td>
+                       
+                        <td valign="top" bgcolor="#FFFFFF"><a href="index.php?action=orderdetails&tabm=actd&orid=<? echo $arinfo[$i]["orid"]; ?>" class="nav6"><?php echo $rowc["customers_firstname"]; ?> <?php echo $rowc["customers_lastname"]; ?></a></td>
+                        <td align="left" valign="top" bgcolor="#FFFFFF"><?php if($arinfo[$i]["order_type"]==1) echo "Delivery"; else echo "Collection"; ?></td>
+                        <td align="left" valign="top" bgcolor="#FFFFFF"><?php if($arinfo[$i]["pay_mathod"] == "On Delivery"){echo "C.O.D";}elseif($arinfo[$i]["pay_mathod"] == "Online"){ echo "Online";}else{echo "C.O.C";} ?></td>
+						<td align="left" valign="top" bgcolor="#FFFFFF"><?php echo ($arinfo[$i]["author_code"] !="")?$arinfo[$i]["author_code"]:( ($arinfo[$i]["pay_mathod"] == "Online")?"Pending":"Manual"); ?></td>
+                        <!--<td width="62"><?php //echo $arimageinfo[0]["ImgURL"]; ?></td>-->
+                        <td align="right" valign="top" bgcolor="#FFFFFF"><?php $nhfee=$arinfo[$i]["hnd_fee"]; $thf+=$nhfee;
+                         echo number_format($nhfee, 2, '.', '');?></td>
+                        <td align="right" valign="top" bgcolor="#FFFFFF"><?php $ccfee=$arinfo[$i]["ccfee"]; $tcc+=$ccfee;
+                         echo number_format($ccfee, 2, '.', '');?></td>
+						<td align="right" valign="top" bgcolor="#FFFFFF">&pound;&nbsp;<?php 
+					$tcalid=$arinfo[$i]["orid"];
+					$sqltpr="select sum(uprice*qantity) as tprice from order_detail where orid='$tcalid'";
+					$resulttpr=mysql_query($sqltpr);
+					$rowprt=mysql_fetch_array($resulttpr);
+					// $number =$rowprt["tprice"];
+					$number = $rowprt["tprice"]+$arinfo[$i]["hnd_fee"];
+					if($arinfo[$i]["pay_mathod"]=="Online"){
+						$number += $arinfo[$i]["ccfee"];					
+					}
+					 if ($arinfo[$i]["order_type"]=="1"){
+					 	$number += $arinfo[$i]["del_cost"];					
+					 }
+                    echo number_format($number, 2, '.', '');
+					$tot+=$number;
+					 ?></td>
+					 <td align="center" valign="top" bgcolor="#FFFFFF"><?php echo $order_status[$arinfo[$i]["order_status"]];?></td>
+						<td align="center" valign="top" bgcolor="#FFFFFF"><a onClick="javascript: return confirm('Are you confirm to delete this order.');" href="index.php?action=order_delete&tabm=actd&id=<? echo $arinfo[$i]["orid"]; ?>" class="nav6">Delete</a></td>
+                        </tr>
+                      <?php
+	   }
+	
+	?>
+                      <tr >
+                        <td colspan="10" align="right" valign="top" bgcolor="#FFFFFF">&nbsp;</td>
+                        <td align="right" valign="top" bgcolor="#F0F0F0"><strong>G.Total : </strong></td>
+                        <td align="right" valign="top" bgcolor="#F0F0F0"><strong>&pound;&nbsp;<?php echo number_format($thf, 2, '.', '');?></strong></td>
+                        <td align="right" valign="top" bgcolor="#F0F0F0"><strong>&pound;&nbsp;<?php echo number_format($tcc, 2, '.', '');?></strong></td>
+                        <td align="right" valign="top" bgcolor="#F0F0F0"><strong>&pound;&nbsp;<?php echo number_format($tot, 2, '.', '');?></strong></td>
+                       
+                      </tr>
+	
+                  </table></td>
+                </tr>
+                <input type="hidden" name="boxchecked" id="boxchecked" /></form>                        
+                <tr>
+                  <td align="center">
+				  	 <?php echo $pagination;?>   
+				  </td>
+                </tr> 
+  				<tr>
+                  <td>&nbsp;</td>
+                </tr>       
+              </table>                
+			  </td>
+            </tr>
+            
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+        </table></td>
+        <td background="images/box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+        <td background="images/box_08.jpg">&nbsp;</td>
+        <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+      </tr><iframe width=174 height=189 name="gToday:normal:agenda.js" id="gToday:normal:agenda.js" src="calander/ipopeng.htm" scrolling="no" frameborder="0" style="visibility:visible; z-index:999; position:absolute; top:-500px; left:-500px;"></iframe>
+    </table></td>
+  </tr>
+</table>

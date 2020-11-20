@@ -1,0 +1,10 @@
+----------------------------------
+BIG NOTE:
+----------------------------------
+At the time of the release of this version of CSLH, Version 3.1.0 
+which is a more clean, modular, extendable , “skinable” version of CSLH
+was being developed.. 
+
+please visit http://www.craftysyntax.com to see if it was released! 
+
+ 

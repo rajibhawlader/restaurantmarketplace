@@ -1,0 +1,293 @@
+<script language="javascript"> 
+function IsNumeric(sText)
+{
+   var ValidChars = "0123456789";
+   var IsNumber=true;
+   var Char;
+
+ 
+   for (i = 0; i < sText.length && IsNumber == true; i++) 
+      { 
+      Char = sText.charAt(i); 
+      if (ValidChars.indexOf(Char) == -1) 
+         {
+         IsNumber = false;
+         }
+      }
+   return IsNumber;
+   
+   }
+function validation()
+{
+
+  if (document.edit.customers_firstname.value == "" )
+  {
+    alert("First Name is a required field.");
+    document.edit.customers_firstname.focus();
+    return false;
+  }
+  
+   if (document.edit.customers_lastname.value == "" )
+  {
+    alert("Last Name is a required field.");
+    document.edit.customers_lastname.focus();
+    return false;
+  }
+  
+ 
+  
+  if (document.edit.customers_dob.value == "" )
+  {
+    alert("DOB is a required field.");
+    document.edit.customers_dob.focus();
+    return false;
+  }
+   if (document.edit.customers_email_address.value.indexOf("@") == -1 || document.edit.customers_email_address.value == "")
+  {
+    alert("Email is a required field!, may be you have missd @ symbol");
+    document.edit.customers_email_address.focus();
+    return false;
+  }
+  
+  if (document.edit.customers_email_address.value.indexOf(".") == -1 || document.edit.customers_email_address.value == "")
+  {
+    alert("Email is a required field!, may be you have missd . symbol");
+    document.edit.customers_email_address.focus();
+    return false;
+  }
+   if (document.edit.customers_address1.value == "" )
+  {
+    alert("Customer Address is a required field.");
+    document.edit.customers_address1.focus();
+    return false;
+  }
+  
+   if (document.edit.customers_town.value == "" )
+  {
+    alert("Town is a required field.");
+    document.edit.customers_town.focus();
+    return false;
+  }
+    if (document.edit.customers_postcode.value == "" )
+  {
+    alert("Post Code is a required field.");
+    document.edit.customers_postcode.focus();
+    return false;
+  }
+   if (document.edit.customers_telephone.value == "" )
+  {
+    alert("Phone No is a required field.");
+    document.edit.customers_telephone.focus();
+    return false;
+  }
+  if (document.edit.customers_password.value == "" )
+  {
+    alert("Password is a required field!");
+    document.edit.customers_password.focus();
+    return false;
+  }
+  
+   if (document.edit.recustomers_password.value == "" )
+  {
+    alert("Re-Type Password is a required field!");
+    document.edit.recustomers_password.focus();
+    return false;
+  }
+  
+  if (document.edit.recustomers_password.value!=document.edit.customers_password.value)
+  {
+    alert("Passwords don't match. Please try again");
+	document.edit.c_password.value = "";
+    document.edit.c_password.focus();
+    return false;
+  }
+ 
+  return true;
+  
+}
+</script>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="center"><table width="99%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+        <td background="images/box_02.jpg"><span class="box_title_text">My Account Information </span></td>
+        <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/box_04.jpg">&nbsp;</td>
+        <td width="100%" valign="top"><table width="100%" border="0" align="center" cellpadding="2" cellspacing="1" class="bodytext">
+          
+          <tr>
+            <td align="center" >&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="center" valign="top"><table width="100%" border="0" cellspacing="2" cellpadding="2">
+              <tr>
+                <td colspan="2" valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0" class="bodytext">
+
+                    <tr>
+                      <td width="3%" >&nbsp;</td>
+                      <td width="95%" valign="middle" align="center" bgcolor="#F0F0F0"><form action="index-action-insert_customer" method="post" enctype="multipart/form-data" name="edit" id="edit" onsubmit="return validation(this)"><table width="100%" border="0" cellspacing="2" cellpadding="2">
+                        <tr>
+                          <td align="center" valign="middle"><table width="100%" border="0" cellpadding="1" cellspacing="1" bgcolor="#FFFFFF" class="bodytext">
+                            <tr>
+                              <td align="left"><strong>Your Personal Details </strong></td>
+                              <td align="left">&nbsp;</td>
+                              <td align="right">* Required information</td>
+                            </tr>
+                            <tr>
+                              <td width="30%" align="right">First Name: </td>
+                              <td colspan="2" align="left"><input name="customers_firstname" type="text" class="textbox_wht" id="customers_firstname"/>
+                                *</td>
+                            </tr>
+                            <tr>
+                              <td align="right">Last Name : </td>
+                              <td colspan="2" align="left"><input name="customers_lastname" type="text" class="textbox_wht" id="customers_lastname"/>
+                                *</td>
+                            </tr>
+                            <tr>
+                              <td align="right" valign="top">DOB: </td>
+                              <td width="26%" align="left" valign="top"><input name="customers_dob" type="text" class="textbox_wht" id="customers_dob"/>
+                                *</td>
+                              <td width="44%" align="left" valign="top"> <a href="javascript:void(0)" onClick="if(self.gfPop)gfPop.fPopCalendar(document.edit.customers_dob);return false;" ><img class="PopcalTrigger" align="absmiddle" src="calander/calender.jpg" width="27" height="29" border="0" alt=""  ></a></td>
+                            </tr>
+                            <tr>
+                              <td align="right">Sex: </td>
+                              <td colspan="2" align="left"><select name="customers_gender" class="textbox_wht" id="customers_gender">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                              </select>
+                                *</td>
+                            </tr>
+                            <tr>
+                              <td align="right">E-mail Address: </td>
+                              <td colspan="2" align="left"><input name="customers_email_address" type="text" class="textbox_wht" id="customers_email_address"/>
+                                *</td>
+                            </tr>
+
+                          </table></td>
+                        </tr>
+                        <tr>
+                          <td align="center" valign="middle"><table width="100%" border="0" cellpadding="1" cellspacing="1" bgcolor="#FFFFFF" class="bodytext">
+                            <tr>
+                              <td colspan="2" align="left"><strong>Your Address </strong></td>
+                            </tr>
+                            <tr>
+                              <td width="30%" align="right">Address1: </td>
+                              <td width="70%" align="left"><input name="customers_address1" type="text" class="textbox_wht" id="customers_address1"/>
+                                *</td>
+                            </tr>
+                            <tr>
+                              <td align="right"> Address2: </td>
+                              <td align="left"><input name="customers_address2" type="text" class="textbox_wht" id="customers_address2"/></td>
+                            </tr>
+                            <tr>
+                              <td align="right">Town: </td>
+                              <td align="left"><input name="customers_town" type="text" class="textbox_wht" id="customers_town"/>
+                                *</td>
+                            </tr>
+
+                            <tr>
+                              <td align="right">State: </td>
+                              <td align="left"><input name="customers_state" type="text" class="textbox_wht" id="customers_state"/></td>
+                            </tr>
+                            <tr>
+                              <td align="right">Country: </td>
+                              <td align="left"><select name="customers_country" id="customers_country" class="textbox_wht">
+                                  <?php
+		
+			$queryril = "SELECT * FROM countries";
+	$resultril =mysql_query($queryril);
+	while($arofferinforil = mysql_fetch_assoc($resultril)){
+		
+		?>
+                                  <option value="<? echo $arofferinforil["countryName"]; ?>" ><? echo $arofferinforil["countryName"]; ?></option>
+                                  <?
+						}
+						?>
+                              </select></td>
+                            </tr>
+                            <tr>
+                              <td align="right">Postcode: </td>
+                              <td align="left"><input name="customers_postcode" type="text" class="textbox_wht" id="customers_postcode"/>
+                                *</td>
+                            </tr>
+
+                          </table></td>
+                        </tr>
+                        <tr>
+                          <td align="center" valign="middle"><table width="100%" border="0" cellpadding="1" cellspacing="1" bgcolor="#FFFFFF" class="bodytext">
+                            <tr>
+                              <td colspan="2" align="left"><strong>Your Contact Information </strong></td>
+                            </tr>
+                            <tr>
+                              <td width="30%" align="right">Phone: </td>
+                              <td width="70%" align="left"><input name="customers_telephone" type="text" class="textbox_wht" id="customers_telephone"/>
+                                *</td>
+                            </tr>
+                            <tr>
+                              <td align="right">Fax: </td>
+                              <td align="left"><input name="customers_fax" type="text" class="textbox_wht" id="customers_fax"/></td>
+                            </tr>
+
+                          </table></td>
+                        </tr>
+                        <tr>
+                          <td align="center" valign="middle"><table width="100%" border="0" cellpadding="1" cellspacing="1" bgcolor="#FFFFFF" class="bodytext">
+                            <tr>
+                              <td colspan="2" align="left"><strong>Your Password </strong></td>
+                            </tr>
+                            <tr>
+                              <td width="30%" align="right">Password: </td>
+                              <td width="70%" align="left"><input name="customers_password" type="password" class="textbox_wht" id="customers_password"/>
+                                *</td>
+                            </tr>
+                            <tr>
+                              <td align="right">Re-Type Password : </td>
+                              <td align="left"><input name="recustomers_password" type="password" class="textbox_wht" id="recustomers_password"/>
+                                *</td>
+                            </tr>
+                            <tr>
+                              <td align="right">&nbsp;</td>
+                              <td align="left"><input type="submit" name="Submit" value="Update" /></td>
+                            </tr>
+                          </table></td>
+                        </tr>
+                      </table></form></td>
+                      <td width="2%" >&nbsp;</td>
+                    </tr>
+                  <tr>
+                    <td >&nbsp;</td>
+                      <td valign="top">&nbsp;</td>
+                      <td >&nbsp;</td>
+                    </tr>
+                  
+                                </table></td>
+                </tr>
+              <tr>
+                <td width="51%">&nbsp;</td>
+                <td width="49%">&nbsp;</td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></td>
+        <td background="images/box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+        <td background="images/box_08.jpg">&nbsp;</td>
+        <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <iframe width=174 height=189 name="gToday:normal:agenda.js" id="gToday:normal:agenda.js" src="calander/ipopeng" scrolling="no" frameborder="0" style="visibility:visible; z-index:999; position:absolute; top:-500px; left:-500px;">
+
+</iframe>
+</table>

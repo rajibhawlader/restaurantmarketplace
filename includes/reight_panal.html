@@ -1,0 +1,61 @@
+<script language="javascript"> 
+
+function validation()
+{
+
+  if (document.edit.PCD.value == "" )
+  {
+    alert("Post Code Needed.");
+    document.edit.PCD.focus();
+    return false;
+  }
+  
+  return true;
+  
+}
+</script><table width="222" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="first" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td><table width="88%" border="0" cellspacing="2" cellpadding="2" align="right">
+          <tr>
+            <td height="140" colspan="2"></td>
+          </tr>
+           <form  method="POST" action="index-action-restaurant_list" name="edit" id="edit" onsubmit="return validation(this)">
+          <tr>
+            <td colspan="2"><input name="PCD" type="text" class="text_box" id="PCD" /></td>
+          </tr>
+          <tr>
+            <td width="165" align="right"><div class="find"><input type="image" src="images/find_30.jpg" width="123" height="26" border="0"/> </div></td>
+            <td>&nbsp;</td>
+          </tr>
+          </form>
+          <tr>
+            <td colspan="2" >&nbsp;</td>
+          </tr>
+          <!--<tr>
+                <td colspan="2" class="join" align="right"><div align="center">Restaurant can <a href=""><strong>join here </strong></a></div></td>
+                </tr>-->
+        </table></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td >&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="22" ></td>
+      </tr>
+      <tr>
+        <td class="join"><div align="center"><span class="join1">Restaurant can</span> <a href="index-action-sign_up"><strong>join here </strong></a></div></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="10"></td>
+  </tr>
+  <tr>
+    <td  valign="top"><img src="images/membership_34.jpg" width="222" height="197" /></td>
+  </tr>
+</table>

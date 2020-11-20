@@ -1,0 +1,89 @@
+/* CSS Document */
+.bleft {
+background-image:url(images/Untitled-2_01.jpg);
+width:23px;
+height:137px;
+background-repeat:no-repeat;
+}
+
+.bmid {
+background-image:url(images/Untitled-2_03.jpg);
+background-repeat:repeat-x;
+height:137px;
+}
+.bright {
+background-image:url(images/Untitled-2_05.jpg);
+width:21px;
+height:137px;
+background-repeat:no-repeat;
+}
+
+
+
+.sleft {
+background-image:url(images/bleft.jpg);
+width:23px;
+height:41px;
+background-repeat:no-repeat;
+}
+
+.smid {
+background-image:url(images/b2.jpg);
+background-repeat:repeat-x;
+height:41px;
+
+}
+.sright {
+background-image:url(images/bright.jpg);
+width:23px;
+height:41px;
+background-repeat:no-repeat;
+}
+
+.border {
+border-left:1px solid #b4872a;
+border-right:1px solid #b4872a;
+}
+
+
+.text {
+font-family:Arial, Helvetica, sans-serif, Verdana;
+font-size:14px;
+color:#666666;
+}
+
+
+.textwhite {
+font-family:Arial, Helvetica, sans-serif, Verdana;
+font-size:13px;
+font-weight:normal;
+color:#ffffff;
+}
+
+
+.textwhite a{
+font-family:Arial, Helvetica, sans-serif, Verdana;
+font-size:13px;
+font-weight:normal;
+color:#edef4c;
+text-decoration:none;
+}
+
+
+.textwhite a:hover{
+font-family:Arial, Helvetica, sans-serif, Verdana;
+font-size:13px;
+font-weight:normal;
+color:#f2c94d;
+}
+
+.hrclass {
+border:1px dotted #999999;
+}
+
+.txtread {
+font-family:Arial, Helvetica, sans-serif, Verdana;
+font-size:15px;
+font-weight:bold;
+color:#f9d320;
+}

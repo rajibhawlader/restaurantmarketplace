@@ -1,0 +1,301 @@
+
+body {
+  color: #000000; 
+  background-color: #DBDBCC;
+	margin: 0;
+	padding: 0;
+	font-family:  Arial, Helvetica, sans-serif;
+	font-size: 12px;	
+} 
+
+.grayheader {
+  color: #000000; 
+  background-color: #EEEEEE;
+	font-family: luxi sans, verdana, geneva, arial, helvetica, sans-serif;
+	font-size: 12px;
+	border-bottom: 1px #08245B solid;
+}
+
+.mainnavheader {
+  color: #000000; 
+  background-color: #D1D1BD;
+	font-family: luxi sans, verdana, geneva, arial, helvetica, sans-serif;
+	font-size: 12px;
+	border-bottom: 1px #08245B solid;
+}
+
+.sectionheader {
+  color: #000000; 
+  background-color: #FFFFFF;
+	font-family: luxi sans, verdana, geneva, arial, helvetica, sans-serif;
+	font-size: 12px;
+	border-bottom: 1px #08245B solid;
+}
+
+.leftnavlink	{
+	text-align: left;
+	font-family: luxi sans, verdana, geneva, arial, helvetica, sans-serif;
+	font-size: 11px;
+}
+
+.leftnavlink a	{
+	position: relative;
+	display: block;
+	text-decoration: none;
+	border: 1px #DBDBCC solid;  /* hidden border holds the proper spacing so mouseover won't jump */
+	margin-left: 1px;
+	margin-right: 1px;
+}
+
+.leftnavlink a:link	{
+	color: #000000;
+	text-decoration: none;
+}
+
+.leftnavlink a:visited	{
+	color: #000000;
+	text-decoration: none;
+}
+
+.leftnavlink a:hover	{
+	color: #000000;
+	background-color: #FFFFEE;
+	text-decoration: none;
+	border: 1px #08245B solid;
+}
+
+.leftnavlink a:active	{
+	color: #ff0000;
+	text-decoration: none;
+}
+
+
+
+input {
+	font-family:  Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	margin: 1;
+	padding: 1;	
+	background-color: #FDFDFD;
+	border: 1px solid #313A46;
+}
+select {
+	margin: 1;
+	padding: 1;	
+	font-family:  Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	background-color: #FDFDFD;
+	border: 1px solid #313A46;
+}
+textarea {
+	margin: 1;
+	padding: 1;	
+	font-family:  Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	background-color: #FDFDFD;
+	border: 1px solid #313A46;
+}
+table {
+	font-family:  Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+.operator {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+}
+.operatorName {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	font-weight: bold;
+}
+.guest {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+.guestName {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+}
+ 
+.tabNav { 
+	font-family:  Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color:#000000; 
+}
+
+	a.tabNav				{ text-decoration:none }
+	a:link.tabNav			{ text-decoration:none }
+	a:hover.tabNav		{ color:#003300; text-decoration:none }
+
+.adminnavtop { 
+	font-family:  Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color:#FFFFFF; 
+}
+	a.adminnavtop				{ text-decoration:none }
+	a:link.adminnavtop			{ text-decoration:none }
+	a:hover.adminnavtop		{ color:#CCFFCC; text-decoration:none }
+
+
+.adminnavleft { 
+	font-family:  Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color:#000066; 
+}
+	a.adminnavleft				{ text-decoration:none }
+	a:link.adminnavleft			{ text-decoration:none }
+	a:hover.adminnavleft		{ color:#006600; text-decoration:none }
+		
+.header { 
+   font-family: Arial, Helvetica, sans-serif; 
+   font-size: 20px; 
+   font-weight: bold; 
+   color: #000000;
+}  
+
+.wh { 
+   font-family: Arial, Helvetica, sans-serif; 
+   font-size: 20px; 
+   font-weight: bold; 
+   color: #000000;
+} 
+
+td {
+	font-family:  Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color:#000000; 
+}
+
+.standbox {
+width: 450px;
+height: 300px;
+margin: 0 0 10px 0;
+padding: 10px;
+border: 1px;
+background: #a5cbf7;
+font-size: 11px;
+}
+
+.loginbox {
+width: 333px;
+height: 248px;
+margin: 0 0 10px 0;
+padding: 10px;
+border: 0px;
+border-top: none;
+background: #F3F3F3 url(images/login.jpg) no-repeat 0 0;
+font-size: 11px;
+}
+
+
+/* tabbed boxes */
+td.tabon {
+	background: #a5cbf7;
+	border-top: outset #ffffff 2px;
+	border-left: outset #ffffff 2px;
+	border-right: outset #cccccc 2px;
+	border-bottom: none;
+}
+td.taboff {
+	background: #d6ebff;
+	border-top: solid #cccccc 1px;
+	border-left: solid #cccccc 1px;
+	border-right: solid #cccccc 1px;
+	border-bottom: solid #cccccc 2px;
+}
+td.tabsp {
+	border-bottom: solid #cccccc 2px;
+}
+td.tabox {
+	background-color: #a5cbf7;
+	border-left: solid #cccccc 2px;
+	border-right: solid #cccccc 2px;
+	border-bottom: solid #cccccc 2px;
+}
+
+A.tabbed:link {
+	color: #08245b;
+	text-decoration: none;
+}
+
+A.tabbed:visited {
+	color: #08245b;
+	text-decoration: none;
+}
+
+A.tabbed:active {
+	color: red;
+	text-decoration: none;
+}
+
+A.tabbed:hover {
+	color: #666666;
+	text-decoration: underline;
+}
+
+TD.tabbed {
+	font-family: Osaka,verdana,Sans-Serif;
+	font-size: 8pt
+}
+
+TR.tabbed {
+	font-family: Osaka,verdana,Sans-Serif;
+	font-size: 8pt
+}
+
+ 
+
+bordertable {
+	border: 1px black solid;
+}
+
+.bordertable{
+ border: 1px black solid;
+}
+
+.button{
+	border: 1px black solid;
+	font-family: Osaka,verdana,Sans-Serif;
+	font-size: 8pt;
+	/*width: 100px; too small for some translations*/
+}
+
+.text{
+	border: 1px black solid;
+	font-family: Osaka,verdana,Sans-Serif;
+	font-size: 8pt;
+	height: 12pt;
+}
+
+/* tabbed boxes */
+td.tabon {
+	background: #a5cbf7;
+	border-top: outset #ffffff 2px;
+	border-left: outset #ffffff 2px;
+	border-right: outset #cccccc 2px;
+	border-bottom: none;
+}
+td.taboff {
+	background: #d6ebff;
+	border-top: solid #cccccc 1px;
+	border-left: solid #cccccc 1px;
+	border-right: solid #cccccc 1px;
+	border-bottom: solid #cccccc 2px;
+}
+td.tabsp {
+	border-bottom: solid #cccccc 2px;
+}
+td.tabox {
+	background-color: #a5cbf7;
+	border-left: solid #cccccc 2px;
+	border-right: solid #cccccc 2px;
+	border-bottom: solid #cccccc 2px;
+}

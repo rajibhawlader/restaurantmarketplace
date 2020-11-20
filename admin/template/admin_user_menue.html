@@ -1,0 +1,36 @@
+<TABLE WIDTH=232 BORDER=0 CELLPADDING=0 CELLSPACING=0>
+  <TR>
+    <TD><IMG SRC="images/left_link_01.jpg" WIDTH=232 HEIGHT=62 ALT=""></TD>
+  </TR>
+  <TR>
+    <TD background="images/left_link_02.jpg"><table width="78%" border="0" align="center" cellpadding="1" cellspacing="1" class="bodytext">
+      <tr>
+        <td width="34%"><a href="index.php?action=edit_profile&amp;tabm=admu" class="nav4"><strong>My Profile </strong></a></td>
+      </tr>
+      <tr>
+        <td><div align="center"><img src="images/left_seperator.jpg" width="165" height="7"></div></td>
+      </tr>
+	     <?php 
+	 if($_SESSION['adminusertype']==1)
+				{
+	  ?>
+      <tr>
+        <td><a href="index.php?action=create_user&amp;tabm=admu" class="nav4"><strong>New Admin User </strong></a><a href="#" class="nav3"></a></td>
+      </tr>
+      <tr>
+        <td><div align="center"><img src="images/left_seperator.jpg" width="165" height="7"></div></td>
+      </tr>
+      <tr>
+        <td><a href="index.php?action=existing_users&amp;tabm=admu" class="nav4"><strong>Existing Admin User </strong></a></td>
+      </tr>
+      <tr>
+        <td><div align="center"><img src="images/left_seperator.jpg" width="165" height="7"></div></td>
+      </tr>
+	  <?php }?>
+      
+    </table></TD>
+  </TR>
+  <TR>
+    <TD><IMG SRC="images/left_link_04.jpg" WIDTH=232 HEIGHT=18 ALT=""></TD>
+  </TR>
+</TABLE>

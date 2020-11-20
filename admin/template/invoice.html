@@ -1,0 +1,164 @@
+<?php 
+$rids=$_SESSION['resid'];
+
+$query = "SELECT * FROM resturant WHERE rid='".$_SESSION['resid']."'";	
+$result = $db->execQuery($query);
+$rst_info = $db->resultArray($result);
+
+$query = "SELECT * FROM resturant_service WHERE rid='".$rids."'";	
+$result = $db->execQuery($query);
+$rst_service = $db->row($result);
+
+
+
+                     
+		$query="SELECT * FROM accounts_invoice WHERE rid='".$_SESSION['resid']."' AND invoice_id='".$_REQUEST["id"]."'";	
+		
+		$result = $db->execQuery($query);
+		$record = $db->row($result);
+
+
+	$query = "SELECT ord.order_type, ord.pay_mathod, ord.pstatus, ord.dstatus, ord.hnd_fee, ord.ccfee, ord.del_cost, (select sum(dtls.uprice * dtls.qantity) as tprice from order_detail as dtls where ord.orid=dtls.orid) as tprice FROM customer_order as ord WHERE ord.orid  IN( ".str_replace("|", ",", trim($record["orders"], "|"))." ) and ord.rid='$rids'";
+	$db->execQuery($query);
+	$order_summery = $db->resultArray();
+	$items_price = 0; $cc_fee = 0; $hnd_fee =0; $del_cost = 0; $balance = 0;
+	if($order_summery){
+		foreach($order_summery as $data){
+			$items_price += $data["tprice"];
+			$cc_fee += ($data["pay_mathod"] == "Online")?$data["ccfee"]:0;
+			$hnd_fee += $data["hnd_fee"];
+			$del_cost += ($data["order_type"] == 1)?$data["del_cost"]:0;
+			
+			//=======
+			$balance += $data["tprice"] + $data["hnd_fee"];
+			if($data["pay_mathod"] == "Online"){
+				$balance +=  $data["ccfee"];
+				$online_transaction += $data["tprice"] + $data["hnd_fee"] + $data["ccfee"];
+				$online_transaction += ($data["order_type"] == 1)?$data["del_cost"]:0;
+			}	
+			$balance += ($data["order_type"] == 1)?$data["del_cost"]:0;
+			
+			
+							
+		}
+	
+	$commission = ($balance * ($rst_service["commission"]/100) );
+	$subtotal = $cc_fee + $commission + $hnd_fee;
+	$vat = ($subtotal * ($rst_service["vat"]/100) );
+	$total = $subtotal + $vat;
+	$cash_sent = $balance - $online_transaction;
+	
+}
+?>
+<div style="background-color:#FFFFFF; padding:10px;">
+	<strong>Invoice - CR-<?php $ono=$record["invoice_id"]; $len=strlen($ono); if($len==1) echo "00000".$ono; elseif($len==2) echo "0000".$ono;elseif($len==3) echo "000".$ono; elseif($len==4) echo "00".$ono; elseif($len==5) echo "0".$ono; ?></strong>
+	<p>
+	For: <br />
+	<?php echo $rst_info[0]['rname'];?> <br /> <?php echo $rst_info[0]['city'];?>  <?php echo $rst_info[0]['zipcode'];?>
+	</p>
+	<p>
+		From: <br />
+		INDIAN FOODS ONLINE LTD<br />
+		185 City Road, Cardiff, CF24 3JB<br />
+		Tel: 02921 000 218
+	</p>
+<table width="400">
+	<tr>
+		<td><strong>Credit card fee:</strong></td>
+		<td align="right"><strong>&pound; <?php echo number_format($cc_fee, 2, ".", "");?></strong></td>
+	</tr>
+	<tr>
+		<td><strong>Handling fee:</strong></td>
+		<td align="right"><strong>&pound; <?php echo number_format($hnd_fee, 2, ".", "");?></strong></td>
+	</tr>
+	<tr>
+		<td><strong>Commission to IFO:</strong></td>
+		<td align="right"><strong>&pound; <?php echo number_format($commission, 2, ".", "");?></strong></td>
+	</tr>
+	<tr>
+		<td colspan="2"><hr /></td>		
+	</tr>	
+	<tr>
+		<td><strong>Subtotal:</strong></td>
+		<td align="right"><strong>&pound; <?php echo number_format($subtotal, 2, ".", "");?></strong></td>
+	</tr>	
+	<tr>
+		<td><strong>+ <?php echo number_format($rst_service["vat"], 2, ".", ""); ?>% vat:</strong></td>
+		<td align="right"><strong>&pound; <?php echo number_format($vat, 2, ".", "");?></strong></td>
+	</tr>	
+	<tr>
+		<td><strong>Invoice total Incl. VAT:</strong></td>
+		<td align="right"><strong>&pound; <?php echo number_format($total, 2, ".", "");?></strong></td>
+	</tr>	
+	<tr>
+		<td colspan="2"><hr /> <br /></td>		
+	</tr>	
+	<tr>
+		<td colspan="2"><strong>BALANCE:</strong> <hr /></td>		
+	</tr>	
+	<tr>
+		<td><strong>Payment (Card):</strong></td>
+		<td align="right"><strong>&pound; <?php echo number_format($online_transaction, 2, ".", "");?></strong></td>
+	</tr>	
+	<tr>
+		<td><strong>Invoice:</strong></td>
+		<td align="right"><strong>- &pound; <?php echo number_format($total, 2, ".", "");?></strong></td>
+	</tr>	
+	
+	<tr>
+		<td><strong>Account Balance:</strong></td>
+		<td align="right"><strong> &pound; <?php echo number_format( $account_balance =($online_transaction - $total), 2, ".", "");?></strong></td>
+	</tr>	
+	<tr>		
+		<td colspan="2">&nbsp;</td>
+	</tr>	
+	<tr>
+		<td><strong>Cash orders sent to you:</strong></td>
+		<td align="right"><strong>&pound; <?php echo number_format( $cash_sent, 2, ".", "");?></strong></td>
+	</tr>
+	<tr>
+		<td colspan="2"><strong>IFO    will <?php if($account_balance < 0){ $account_balance = $account_balance * -1; echo 'take form the restaurant'; }else{ echo 'pay with cheque';}?> &pound; <?php echo number_format( $account_balance, 2, ".", "");?><br />
+		    On account: <?php $racno=$_SESSION['resid'];
+							 	if(strlen($racno)==1)
+								{
+									$mkzr='00000';
+								}
+								elseif(strlen($racno)==2)
+								{
+									$mkzr='0000';
+								}
+								elseif(strlen($racno)==3)
+								{
+									$mkzr='000';
+								}
+								elseif(strlen($racno)>=4)
+								{
+									$mkzr='00';
+								}
+								elseif(strlen($racno)>=5)
+								{
+									$mkzr='00';
+								}
+								elseif(strlen($racno)>=6)
+								{
+									$mkzr='';
+								}
+								
+								$acc_num =$mkzr.$racno;
+		 
+								echo 'IFO-'.$acc_num ; ?> <br />D.</strong> 
+								<?php 
+								$dt=explode(' ',$record["cdate"]);
+								$dd=explode('-',$dt[0]);
+								$tt=explode(':',$dt[1]);
+								echo date('d/m/Y H:i:s',@mktime($tt[0],$tt[1],$tt[2],$dd[1],$dd[2],$dd[0]));
+								?>
+								</td>
+		
+	</tr>	
+	<tr>
+		<td colspan="2"><strong>IFO Reserves the right to detain any none paid amount. <br />If the bank details stated here are incorrect please call us immediatlly, We can only review and amend bank details to one invoice period.</strong></td>
+		
+	</tr>
+</table>	
+</div>

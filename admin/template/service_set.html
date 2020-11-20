@@ -1,0 +1,189 @@
+<script language="javascript"> 
+function IsNumeric(sText)
+{
+   var ValidChars = "0123456789.";
+   var IsNumber=true;
+   var Char;
+
+ 
+   for (i = 0; i < sText.length && IsNumber == true; i++) 
+      { 
+      Char = sText.charAt(i); 
+      if (ValidChars.indexOf(Char) == -1) 
+         {
+         IsNumber = false;
+         }
+      }
+   return IsNumber;
+   
+   }
+   
+function validation()
+{
+  if (IsNumeric(document.edit.commission.value) == false )
+  {
+    alert("Please insert only numeric value.");
+    document.edit.commission.focus();
+    return false;
+  }
+  if (IsNumeric(document.edit.vat.value) == false )
+  {
+    alert("Please insert only numeric value.");
+    document.edit.vat.focus();
+    return false;
+  }
+  if (IsNumeric(document.edit.ccfee.value) == false )
+  {
+    alert("Please insert only numeric value.");
+    document.edit.ccfee.focus();
+    return false;
+  }
+  if (IsNumeric(document.edit.hfee.value) == false )
+  {
+    alert("Please insert only numeric value.");
+    document.edit.hfee.focus();
+    return false;
+  }
+  
+  return true;
+}
+</script>
+	<?php
+			$payBy= array(
+			     			'1' => 'Restaurant',
+							'2' => 'User'
+
+							);
+
+	?>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td width="8%" height="400" valign="top">&nbsp;</td>
+    <td width="92%" align="left" valign="top"><table width="96%" border="0" align="left" cellpadding="0" cellspacing="0">
+      <tr>
+        <td><img src="images/box_01.jpg" width="24" height="30" alt="" /></td>
+        <td background="images/box_02.jpg"><span class="box_title_text">&quot;<? echo $_SESSION[rname];?>&quot; Restaurant Management </span></td>
+        <td><img src="images/box_03.jpg" width="21" height="30" alt="" /></td>
+      </tr>
+      <tr>
+        <td background="images/box_04.jpg">&nbsp;</td>
+        <td width="100%" valign="top"><table width="100%" border="0" cellspacing="1" cellpadding="1"  class="bodytext">
+            <tr>
+              <td><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#F0F0F0" class="bodytext" id="AutoNumber4">
+                <tr>
+                  <td width="8%">&nbsp;</td>
+                  <td width="2%"><img border="0" src="images/plus.gif" width="9" height="9" /></td>
+                  <td width="25%" align="left"><a class="nav" href="index.php?action=resturant_menu&amp;rid=<?php echo $_SESSION['resid']; ?>&tabm=rcttb">Restaurant Management Home </a></td>
+                  <td width="2%"><img border="0" src="images/plus.gif" width="9" height="9" /></td>
+                  <td width="13%"><a class="nav" href="index.php?action=service_set&amp;tabm=rcttb">Service Setting </a></td>
+                  <td width="2%"><img border="0" src="images/plus.gif" width="9" height="9" /></td>
+                  <td width="13%"><a class="nav" href="index.php?action=resturantpolicy_policy&tabm=rcttb">Order Policy </a></td>
+                  <td width="2%"><img border="0" src="images/plus.gif" width="9" height="9" /></td>
+                  <td width="14%"><a class="nav" href="index.php?action=delivery_policy&amp;tabm=rcttb">Delivery Info </a></td>
+                  <td width="2%"><img border="0" src="images/plus.gif" width="9" height="9" /></td>
+                  <td width="17%"><a class="nav" href="index.php?action=delivery_area&amp;tabm=rcttb">Delivery Area </a></td>
+                </tr>
+              </table></td>
+            </tr>
+            <tr>
+              <td></td>
+            </tr>
+            <tr>
+              <td width="81%" valign="top" bgcolor="#F0F0F0"><table width="100%" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#FFFFFF" class="bodytext">
+                
+                <tr>
+                  <td><strong> Restaurant Service Settings</strong></td>
+                </tr>
+                <?Php 
+									$rids=$_SESSION['resid'];
+		
+									$resquery="Select * from resturant_service where rid='$rids'";
+									
+									$resultres=mysql_query($resquery);
+									$rowres=mysql_fetch_array($resultres);
+									?>
+                <tr>
+                  <td align="center" class="message"><?PHP echo $message;
+									  
+									  ?></td>
+                </tr>
+                <tr>
+                  <td align="center"><form action="index.php?action=insert_service_set&tabm=rcttb" method="post" enctype="multipart/form-data" name="edit" id="edit" onSubmit="return validation(this)">
+                      <table width="90%" border="0" cellspacing="2" cellpadding="2"  class="bodytext">
+                        <tr>
+                          <td width="29%" align="right"><strong>Commission Settings: </strong></td>
+                          <td colspan="2" align="left"><input name="commission" type="text" class="textbox_wht" id="commission" value="<?php echo $rowres["commission"]; ?>" size="15"  />                            
+                            <strong>%</strong>&nbsp;&nbsp;&nbsp;<strong>VAT on Commission :
+                            <input name="vat" type="text" class="textbox_wht" id="vat" value="<?php echo $rowres["vat"]; ?>" size="10" />
+                            <strong>%</strong></td>
+                        </tr>
+					   <tr>
+                          <td align="right"><strong>Credit Card Fee: </strong></td>
+                          <td colspan="2" align="left"><input name="ccfee" type="text" class="textbox_wht" id="ccfee" value="<?php echo $rowres["ccfee"]; ?>" size="15" /> 
+                          <strong>&pound; </strong>&nbsp;&nbsp;<strong>Pay By :</strong>
+								<select name="cc_pay">
+									<?php foreach($payBy as $key=>$value):?>
+									<option value="<?=$key;?>"<?php if ($rowres["cc_pay"] == $key){?> selected <?php }?>><?php echo $value;?></option>
+								<?php endforeach; ?>
+								</select>							</td>							
+					   </tr>
+                        <tr>
+                          <td align="right"><strong>Handling Fees: </strong></td>
+                          <td colspan="2" align="left"><input name="hfee" type="text" class="textbox_wht" id="hfee" value="<?php echo $rowres["hfee"]; ?>" size="15" /> 
+                          <strong>&pound;</strong>&nbsp;&nbsp;<strong>Pay By :</strong>
+								<select name="hadeling_pay">
+								<?php foreach($payBy as $key=>$value):?>
+									<option value="<?=$key;?>" <?php if ($rowres["hadeling_pay"] == $key){?> selected <?php }?>><?php echo $value;?></option>
+								<?php endforeach; ?>							  </select>							</td>							
+						  </tr>
+                        
+                        <tr>
+                          <td align="right"><strong>Print Code: </strong></td>
+                          <td width="71%" align="left"><input name="pr_code" type="text" class="textbox_wht" id="pr_code" value="<?php echo $rowres["pr_code"]; ?>" size="15"/>
+                            <input name="rsid" type="hidden" id="rsid" value="<?php echo $rowres["rsid"]; ?>" /></td>
+                        </tr>
+                        <tr>
+                          <td align="right" valign="top">&nbsp;</td>
+                          <td align="left">&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td align="right" valign="top">&nbsp;</td>
+                          <td align="left"><input type="submit" name="Submit" value="Submit" class="button_grn"/></td>
+                        </tr>
+                      </table>
+                  </form></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td valign="top">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td height="250" valign="top">&nbsp;</td>
+                </tr>
+              </table></td>
+            </tr>
+            
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+        </table></td>
+        <td background="images/box_06.jpg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><img src="images/box_07.jpg" width="24" height="31" alt="" /></td>
+        <td background="images/box_08.jpg">&nbsp;</td>
+        <td><img src="images/box_09.jpg" width="21" height="31" alt="" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>

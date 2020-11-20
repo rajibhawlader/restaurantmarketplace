@@ -1,0 +1,47 @@
+.heading {
+	color:#FFFFFF;
+	font-family:"Trebuchet MS",arial,helvetica,sans-serif;
+	font-size:17px;
+	font-weight:normal;
+	letter-spacing:0.2px;
+}
+.box_sub_title_text {
+	color:#FF9933;
+	font-family:Arial,Helvetica,sans-serif;
+	font-size:15px;
+	font-weight:bold;
+}
+.cpanel_title2 {
+color:#FFFFFF;
+font-family:"Trebuchet MS",arial,helvetica,sans-serif;
+font-size:13px;
+font-weight:normal;
+letter-spacing:0.8px;
+}
+
+.normal_text {
+color:#FFFFFF;
+font-family:"Trebuchet MS",arial,helvetica,sans-serif;
+font-size:12px;
+font-weight:normal;
+}
+.cpanel_link:visited, .cpanel_link:hover, .cpanel_link:link{
+color:#FFFFFF;
+font-family:arial,helvetica,sans-serif;
+font-size:13px;
+font-weight:normal;
+text-align:center;
+text-decoration:underline;
+}
+
+.address_link a , address_link{
+border-style:none;
+color:#FF9933;
+text-decoration:none;
+}
+.normal_value {
+color:#CC9966;
+font-family:"Trebuchet MS",arial,helvetica,sans-serif;
+font-size:12px;
+font-weight:normal;
+}
